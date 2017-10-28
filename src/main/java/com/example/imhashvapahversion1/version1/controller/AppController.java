@@ -12,11 +12,7 @@ public class AppController {
         return "app";
     }
 
-    @RequestMapping(value="/sad")
-    String sadd(){
 
-        return "app";
-    }
 
 
 }
