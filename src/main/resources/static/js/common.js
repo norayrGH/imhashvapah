@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+
+
+
+    $('#calendar').fullCalendar({
+        /* 	defaultDate: '2017-10-12',
+            editable: true,
+             */
+
+    });
+
 	$(".auth_buttons").click(function() {
         $(this).next().slideToggle();
         

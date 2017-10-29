@@ -15,8 +15,9 @@
         <link th:href="@{/libs/owl-carousel/owl.carousel.css}" rel="stylesheet" />
         <link th:href="@{/libs/countdown/jquery.countdown.css}" rel="stylesheet" />
         <link th:href="@{/css/fonts.css}" rel="stylesheet" />
-        <link th:href="@{/css/main.css}" rel="stylesheet" />
+        <link th:href="@{/css/main.css}"  rel="stylesheet"  />
         <link th:href="@{/css/media.css}" rel="stylesheet" />
+        <link th:href="@{/libs/fullCalendar/fullcalendar.min.css}" rel="stylesheet" />
 
 
 
@@ -52,12 +53,12 @@
                         <button class="main_mnu_button hidden-md hidden-lg">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <ul>
-                            <li class="active"><a href="#"><img src="./img/6.png" /></a></li>
-                            <li class="active1"><a href="#"><img src="./img/6 finance.png" /></a></li>
-                            <li class="active2"><a href="#"><img src="./img/6 hands.png" /></a></li>
-                            <li class="active3"><a href="#"><img src="./img/6 peoples.png" /></a></li>
-                            <li class="active4"><a href="#"><img src="./img/6 numbers.png" /></a></li>
+                        <ul >
+                            <li class="active"  ><a  class="btn  disabled" href="#"><img src="./img/6.png" /></a></li>
+                            <li class="active1"><a   class="btn  disabled" href="#"><img src="./img/6 finance.png" /></a></li>
+                            <li class="active2"><a   class="btn  disabled" href="#"><img src="./img/6 hands.png" /></a></li>
+                            <li class="active3"><a   class="btn  disabled" href="#"><img src="./img/6 peoples.png" /></a></li>
+                            <li class="active4"><a   class="btn  disabled" href="#"><img src="./img/6 numbers.png" /></a></li>
                         </ul>
                     </nav>
 
@@ -72,10 +73,35 @@
                 </div>
             </div>
         </div>
+
+
     </header>
 
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Գրանցված Ա/Ձ-ներ և կազմակերպություններ </h4>
+            </div>
+            <div class="col-md-2">
 
+            <select class="form-control">
+                <option value="one">Ա/Զ</option>
+                <option value="two">Կազմակերպություն</option>
+            </select>
+            </div>
+
+            <div class="col-md-7">
+
+
+                <div id='calendar'></div>
+
+                <!--CALENDAR-->
+            </div>
+        </div>
+
+
+    </div>
 
 
 
@@ -93,11 +119,15 @@
 
     <script th:src="@{/libs/jquery/jquery-1.11.1.min.js}"></script>
     <script th:src="@{/libs/jquery-mousewheel/jquery.mousewheel.min.js}"></script>
+
     <script th:src="@{/libs/fancybox/jquery.fancybox.pack.js}"></script>
+    <script th:src="@{/libs/fullCalendar/moment.min.js}"></script>
+    <script th:src="@{/libs/fullCalendar/fullcalendar.min.js}"></script>
+
     <script th:src="@{/libs/waypoints/waypoints-1.6.2.min.js}"></script>
     <script th:src="@{/libs/scrollto/jquery.scrollTo.min.js}"></script>
     <script th:src="@{/libs/owl-carousel/owl.carousel.min.js}"></script>
-    <script th:src="@{/js/libs/countdown/jquery.plugin.js}"></script>
+
     <script th:src="@{/libs/countdown/jquery.countdown.min.js}"></script>
     <script th:src="@{/libs/countdown/jquery.countdown-ru.js}"></script>
     <script th:src="@{/libs/landing-nav/navigation.js}"></script>
