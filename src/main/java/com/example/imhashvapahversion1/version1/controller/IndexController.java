@@ -17,10 +17,10 @@ public class IndexController {
 
 
 	@RequestMapping("/login")
-	public String login() {
+	public ModelAndView login(ModelAndView modelAndView) {
 
-
-		return "index";
+		modelAndView.setViewName("index");
+		return modelAndView;
 	}
 
 
