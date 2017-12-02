@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.service;
 
+import com.example.imhashvapahversion1.version1.Entity.User;
 import com.example.imhashvapahversion1.version1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.loadUserByUsername(username);
+       UserDetails user = userRepository.loadUserByUsername(username);
+        System.out.println(
+                user.getUsername()+" "+user.getPassword()
+        );
+        return user;
     }
 }

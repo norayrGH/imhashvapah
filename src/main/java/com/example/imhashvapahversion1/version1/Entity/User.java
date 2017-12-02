@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 @Entity
-public class User implements UserDetails/*,Serializable */{
+public class User implements UserDetails,Serializable {
 
 
     @Id
@@ -24,9 +24,10 @@ public class User implements UserDetails/*,Serializable */{
     private boolean enabled;
     @Column( name = "col_locked" )
     private boolean locked;
-    @Transient
+   @Transient
+
     private Collection<? extends GrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>() {{
-        add(WebSecurityConfig.ACOUNTMANT);
+        add(WebSecurityConfig.ACCOUNTANT);
         add(WebSecurityConfig.ORGANIZATION);
         add(WebSecurityConfig.PERSON);
     }};
@@ -34,8 +35,10 @@ public class User implements UserDetails/*,Serializable */{
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return roles
+                ;
     }
+
 
     @Override
     public String getPassword() {
@@ -64,6 +67,6 @@ public class User implements UserDetails/*,Serializable */{
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled ;
     }
 }
