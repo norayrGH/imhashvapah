@@ -16,9 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final SimpleGrantedAuthority PERSON = new SimpleGrantedAuthority("PERSON");
-    public static final SimpleGrantedAuthority ORGANIZATION = new SimpleGrantedAuthority("ORGANIZATION");
-    public static final SimpleGrantedAuthority ACCOUNTANT = new SimpleGrantedAuthority("ACOUNTMANT");
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
