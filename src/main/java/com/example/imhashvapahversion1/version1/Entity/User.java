@@ -2,14 +2,19 @@ package com.example.imhashvapahversion1.version1.Entity;
 
 import com.example.imhashvapahversion1.version1.Entity.enums.Role;
 import com.example.imhashvapahversion1.version1.config.WebSecurityConfig;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+
 
 @Entity
 public class User implements UserDetails, Serializable {
@@ -59,7 +64,9 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getPassword() {
-        return password;
+
+
+        return password ;
     }
 
     @Override

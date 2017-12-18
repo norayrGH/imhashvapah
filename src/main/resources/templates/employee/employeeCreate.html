@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet" />
+
+</head>
+<body>
+<div class="container">
+<h1>Employee Create</h1>
+
+<form id="myForm" method="post" >
+
+
+    <label>Անվանում</label>
+    <input type="text" th:name="employeeName" th:value="employeeName" />
+
+    <label>ՀԾՀ</label>
+    <input type="text"  th:name="hch" th:value="123123123" />
+    <label>Գրանցման համար</label>
+    <input type="text" th:name="registrationNumber" th:value="123123123" />
+    <label>Գրանցման ամսաթիվ</label>
+    <input type="date" th:name="registrationDate"  />
+    <label>Վկայականի համար</label>
+    <input type="text" th:name="certificateNumber" th:value="123123123" />
+    <label>ՀՎՀՀ</label>
+    <input type="text" th:name="taxpayerIdentificationNumber"  th:value="123123123" />
+    <label>Սկզբն. մնացորդների ամսաթիվ</label>
+    <input type="date" th:name="dateOfOpeningBalances" />
+    <label>Իրավաբանական հասցե</label>
+    <input type="text" th:name="juridicalAddress" th:value="asdasdawd" />
+    <label>Գործունեության հասցե</label>
+    <input type="text" th:name="actingAddress" th:value="asdadsad" />
+
+
+
+    <label>Շրջանառության հարկ վճարող</label>
+    <input type="text" th:name=" circleTaxType" th:value=" circleTaxType" />
+
+    <label>Տնտեսական գործունեության տեսակների դասակարգիչ</label>
+    <input type="text" th:name="circleTaxClassificationOfEconomicActivity" th:value="circleTaxClassifica" />
+    <label>Գործունեության վայր / հասցե</label>
+    <input type="text" th:name="circleTaxActionAddress" th:value="circleTaxActionAddress" />
+    <label>Գործունեության ոլորտի նկարագրություն</label>
+    <input type="text" th:name="circleTaxTypeDesc" th:value="circleTaxTypeDesc" />
+
+
+    <input name="csrfToken" id="csrfToken"
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
+
+
+
+
+
+</form>
+
+<input type="button" id="employeeCreate" th:value="save" />
+</div>
+<script th:src="@{/static/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/static/js/app.js}"></script>
+<script th:src="@{/static/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+    alert($("#csrfToken").val());
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.example.imhashvapahversion1.version1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,8 @@ public class IndexController {
 
 	@Autowired
 	UserRepository userRepository;
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 
 	@RequestMapping("/login")
@@ -41,17 +43,18 @@ public class IndexController {
 
 		return "register";
 	}
-	@PostMapping("/register")
+	@PostMapping("/register" )
 	public String register(@RequestParam(value = "regEmail1") String regEmai
 							,@RequestParam(value = "regPassword") String regPassword
-							,@RequestParam(value = "underwear") String type) {
+							,@RequestParam(value = "underwear") String type
+							,ModelAndView modelAndView) {
 
 
 
 
 		User user = new User();
 		user.setEmail(regEmai);
-		user.setPassword(regPassword);
+		user.setPassword(passwordEncoder.encode(regPassword));
 		user.isEnabled();
 		user.getRoles().add(Role.valueOf(type));
 		userRepository.save(user);
