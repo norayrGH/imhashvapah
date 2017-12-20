@@ -5,69 +5,93 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Title</title>
-    <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet"/>
 
 </head>
 <body>
 <div class="container">
-<h1>Employee Create</h1>
+    <h1>Employee Create</h1>
 
-<form id="myForm" method="post" >
+    <form id="myForm" method="post" th:object="${employee}" enctype="application/x-www-form-urlencoded ">
 
-
-    <label>Անվանում</label>
-    <input type="text" th:name="employeeName" th:value="employeeName" />
-
-    <label>ՀԾՀ</label>
-    <input type="text"  th:name="hch" th:value="123123123" />
-    <label>Գրանցման համար</label>
-    <input type="text" th:name="registrationNumber" th:value="123123123" />
-    <label>Գրանցման ամսաթիվ</label>
-    <input type="date" th:name="registrationDate"  />
-    <label>Վկայականի համար</label>
-    <input type="text" th:name="certificateNumber" th:value="123123123" />
-    <label>ՀՎՀՀ</label>
-    <input type="text" th:name="taxpayerIdentificationNumber"  th:value="123123123" />
-    <label>Սկզբն. մնացորդների ամսաթիվ</label>
-    <input type="date" th:name="dateOfOpeningBalances" />
-    <label>Իրավաբանական հասցե</label>
-    <input type="text" th:name="juridicalAddress" th:value="asdasdawd" />
-    <label>Գործունեության հասցե</label>
-    <input type="text" th:name="actingAddress" th:value="asdadsad" />
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
 
 
 
-    <label>Շրջանառության հարկ վճարող</label>
-    <input type="text" th:name=" circleTaxType" th:value=" circleTaxType" />
+        <label>Անվանում</label>
+        <input th:style="${#fields.hasErrors('employeeName') ? 'border-color: red ;' : ''}" type="text" th:name="employeeName" />
 
-    <label>Տնտեսական գործունեության տեսակների դասակարգիչ</label>
-    <input type="text" th:name="circleTaxClassificationOfEconomicActivity" th:value="circleTaxClassifica" />
-    <label>Գործունեության վայր / հասցե</label>
-    <input type="text" th:name="circleTaxActionAddress" th:value="circleTaxActionAddress" />
-    <label>Գործունեության ոլորտի նկարագրություն</label>
-    <input type="text" th:name="circleTaxTypeDesc" th:value="circleTaxTypeDesc" />
-
-
-    <input name="csrfToken" id="csrfToken"
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}" />
+        <br/>
+        <label>ՀԾՀ</label>
+        <input th:style="${#fields.hasErrors('hch') ? 'border-color: red ;' : ''}" type="text" th:name="hch" />
+        <br/>
+        <label>Գրանցման համար</label>
+        <input type="text" th:style="${#fields.hasErrors('registrationNumber') ? 'border-color: red;' : ''}" th:name="registrationNumber" />
+        <br/>
 
 
 
+        <label >Գրանցման ամսաթիվ</label>
+        <input th:style="${#fields.hasErrors('registrationDate') ? 'border-color: red;' : ''}" type="date" th:name="registrationDate" th:value="*{registrationDate}"/>
+        <br/>
 
 
-</form>
 
-<input type="button" id="employeeCreate" th:value="save" />
+        <label>Վկայականի համար</label>
+        <input type="text" th:style="${#fields.hasErrors('certificateNumber') ? 'border-color: red;' : ''}" th:name="certificateNumber" th:value="123123123"/>
+        <br/>
+
+        <label>ՀՎՀՀ</label>
+        <input type="text" th:style="${#fields.hasErrors('taxpayerIdentificationNumber') ? 'border-color: red;' : ''}" th:name="taxpayerIdentificationNumber" th:value="123123123"/>
+        <br/>
+
+        <label>Սկզբն. մնացորդների ամսաթիվ</label>
+        <input type="date" th:name="dateOfOpeningBalances"/>
+        <br/>
+        <label>Իրավաբանական հասցե</label>
+        <input type="text" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress" th:value="asdasdawd"/>
+        <br/>
+        <label>Գործունեության հասցե</label>
+        <input type="text"  th:style="${#fields.hasErrors('actingAddress') ? 'border-color: red;' : ''}" th:name="actingAddress" th:value="asdadsad"/>
+        <br/>
+
+        <label>Շրջանառության հարկ վճարող</label>
+        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxType') ? 'border-color: red;' : ''}" th:name="circleTaxType" th:field="*{circleTax.circleTaxType}" th:value="*{circleTax.circleTaxType}" />
+        <br/>
+
+
+        <label>Տնտեսական գործունեության տեսակների դասակարգիչ</label>
+        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxClassificationOfEconomicActivity') ? 'border-color: red;' : ''}" th:name="circleTaxClassificationOfEconomicActivity" th:field="*{circleTax.circleTaxClassificationOfEconomicActivity}" th:value="*{circleTax.circleTaxClassificationOfEconomicActivity}" />
+        <br/>
+
+        <label>Գործունեության վայր / հասցե</label>
+        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxActionAddress') ? 'border-color: red;' : ''}" th:name="circleTaxActionAddress"  th:field="*{circleTax.circleTaxActionAddress}" th:value="*{circleTax.circleTaxActionAddress}"/>
+        <br/>
+
+        <label>Գործունեության ոլորտի նկարագրություն</label>
+        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxTypeDesc') ? 'border-color: red;' : ''}"  th:name="circleTaxTypeDesc" th:field="*{circleTax.circleTaxTypeDesc}"  th:value="*{circleTax.circleTaxTypeDesc}"/>
+        <br/>
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+
+        <input type="submit"/>
+
+
+    </form>
+
 </div>
 <script th:src="@{/static/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/static/js/app.js}"></script>
 <script th:src="@{/static/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
-<script type="text/javascript">
-    alert($("#csrfToken").val());
-</script>
+<!--<script type="text/javascript">-->
+<!--alert($("#csrfToken").val());-->
+<!--</script>-->
 </body>
 </html>
