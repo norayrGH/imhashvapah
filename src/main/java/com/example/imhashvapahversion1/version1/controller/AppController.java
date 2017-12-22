@@ -1,6 +1,7 @@
 package com.example.imhashvapahversion1.version1.controller;
 import com.example.imhashvapahversion1.version1.Entity.Employee;
 import com.example.imhashvapahversion1.version1.Entity.action.area.CircleTax;
+import com.example.imhashvapahversion1.version1.Entity.enums.Address;
 import com.example.imhashvapahversion1.version1.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AppController {
@@ -39,7 +42,10 @@ public class AppController {
         CircleTax circleTax = new CircleTax();
         Employee employee = new Employee();
         employee.setCircleTax(circleTax);
+        HashMap addresses =(HashMap) Address.getAddresses();
+
         modelAndView.addObject("employee", employee);
+        modelAndView.addObject("addresses",addresses);
         modelAndView.addObject("allProfiles");
 
 

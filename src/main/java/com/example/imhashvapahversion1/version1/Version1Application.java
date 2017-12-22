@@ -10,7 +10,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class Version1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Version1Application.class, args)        ;
+		SpringApplication.run(Version1Application.class, args);
 	}
 
 }

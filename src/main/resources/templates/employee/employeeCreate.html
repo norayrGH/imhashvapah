@@ -53,7 +53,19 @@
         <input type="date" th:name="dateOfOpeningBalances"/>
         <br/>
         <label>Իրավաբանական հասցե</label>
-        <input type="text" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress" th:value="asdasdawd"/>
+       <!-- <input type="text" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress" th:value="asdasdawd"/>
+        -->
+        <!--<th:select>
+            <li th:each="address: ${addresses}">
+                <span th:text="${address.key}"></span>
+            </li>
+        </th:select>
+-->
+        <select >
+            <option th:each="city :${addresses}" th:text="${city.key}" ></option>
+
+        </select>
+        <select th:if></select>
         <br/>
         <label>Գործունեության հասցե</label>
         <input type="text"  th:style="${#fields.hasErrors('actingAddress') ? 'border-color: red;' : ''}" th:name="actingAddress" th:value="asdadsad"/>
