@@ -65,27 +65,30 @@
             <option th:each="city :${addresses}" th:text="${city.key}" ></option>
 
         </select>
-        <select th:if></select>
+        <section>
+
+        </section>
+
         <br/>
         <label>Գործունեության հասցե</label>
         <input type="text"  th:style="${#fields.hasErrors('actingAddress') ? 'border-color: red;' : ''}" th:name="actingAddress" th:value="asdadsad"/>
         <br/>
 
         <label>Շրջանառության հարկ վճարող</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxType') ? 'border-color: red;' : ''}" th:name="circleTaxType" th:field="*{circleTax.circleTaxType}" th:value="*{circleTax.circleTaxType}" />
+        <input type="text"  th:style="${#fields.hasErrors('circleTax.circleTaxType') ? 'border-color: red;' : ''}" th:name="circleTaxType" th:field="*{circleTax.circleTaxType}" th:value="*{circleTax.circleTaxType}" />
         <br/>
 
 
         <label>Տնտեսական գործունեության տեսակների դասակարգիչ</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxClassificationOfEconomicActivity') ? 'border-color: red;' : ''}" th:name="circleTaxClassificationOfEconomicActivity" th:field="*{circleTax.circleTaxClassificationOfEconomicActivity}" th:value="*{circleTax.circleTaxClassificationOfEconomicActivity}" />
+        <input type="text"  th:style="${#fields.hasErrors('circleTax.circleTaxClassificationOfEconomicActivity') ? 'border-color: red;' : ''}" th:name="circleTaxClassificationOfEconomicActivity" th:field="*{circleTax.circleTaxClassificationOfEconomicActivity}" th:value="*{circleTax.circleTaxClassificationOfEconomicActivity}" />
         <br/>
 
         <label>Գործունեության վայր / հասցե</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxActionAddress') ? 'border-color: red;' : ''}" th:name="circleTaxActionAddress"  th:field="*{circleTax.circleTaxActionAddress}" th:value="*{circleTax.circleTaxActionAddress}"/>
+        <input type="text"  th:style="${#fields.hasErrors('circleTax.circleTaxActionAddress') ? 'border-color: red;' : ''}" th:name="circleTaxActionAddress"  th:field="*{circleTax.circleTaxActionAddress}" th:value="*{circleTax.circleTaxActionAddress}"/>
         <br/>
 
         <label>Գործունեության ոլորտի նկարագրություն</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxTypeDesc') ? 'border-color: red;' : ''}"  th:name="circleTaxTypeDesc" th:field="*{circleTax.circleTaxTypeDesc}"  th:value="*{circleTax.circleTaxTypeDesc}"/>
+        <input type="text"  th:style="${#fields.hasErrors('circleTax.circleTaxTypeDesc') ? 'border-color: red;' : ''}"  th:name="circleTaxTypeDesc" th:field="*{circleTax.circleTaxTypeDesc}"  th:value="*{circleTax.circleTaxTypeDesc}"/>
         <br/>
 
         <input name="csrfToken" id="csrfToken"
