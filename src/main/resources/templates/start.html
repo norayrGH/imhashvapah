@@ -93,7 +93,7 @@
                      <h4>Գրանցված Ա/Ձ-ներ և կազմակերպություններ </h4>
 
                    <tr th:each="employee : ${employeeList}">
-                       <td th:text="${employee.getEmployeeName()}"></td>
+                       <a th:href="'/account/organization/index/'+${employee.getId()}" ><td th:text="${employee.getEmployeeName()}"></td></a>
 
                    </tr>
                 </div>
@@ -111,9 +111,6 @@
                 <!--CALENDAR-->
             </div>
         </div>
-
-
-
     </div>
 
 
