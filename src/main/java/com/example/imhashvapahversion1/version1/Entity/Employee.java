@@ -22,7 +22,7 @@ public class Employee  {
     private String employeeName ;
 
     @Column(name = "employee_hch",unique = true,nullable = false)
-    @NotNull
+    @NotNull( message = "ՀՑՀ  դաշտը անպայման է լրացնելու համար ")
     @Min(value = 10,message = "ՀՑՀ ունի 10 թիվ")
     private Long hch ;
 
@@ -45,7 +45,8 @@ public class Employee  {
     //հարկ վճարողի հաշվառման համար   ՀՎՀՀ
     @Column(name = "employee_taaxpayer_ident_num",unique = true,nullable = false)
     @Min(value=8 , message = "ՀՎՀՀ համարը ունի 8 նիշ")
-    private int taxpayerIdentificationNumber;
+    @NotNull(message = "ՀՎՀՀ դաշտը պարտադիր է լրացման համար ")
+    private String taxpayerIdentificationNumber;
 
 
     //Սկզբն. մնացորդների ամսաթիվ
@@ -120,11 +121,11 @@ public class Employee  {
         this.certificateNumber = certificateNumber;
     }
 
-    public int getTaxpayerIdentificationNumber() {
+    public String getTaxpayerIdentificationNumber() {
         return taxpayerIdentificationNumber;
     }
 
-    public void setTaxpayerIdentificationNumber(int taxpayerIdentificationNumber) {
+    public void setTaxpayerIdentificationNumber(String taxpayerIdentificationNumber) {
         this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
     }
 

@@ -5,6 +5,7 @@ import com.example.imhashvapahversion1.version1.Entity.enums.Address;
 import com.example.imhashvapahversion1.version1.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class AppController {
     public ModelAndView appAction(ModelAndView modelAndView) {
         List<Employee> employeeList = (List<Employee>) employeeRepository.findAll();
         modelAndView.addObject("employeeList",employeeList);
-        modelAndView.setViewName("app");
+        modelAndView.setViewName("start");
         return modelAndView;
     }
 
@@ -43,9 +44,9 @@ public class AppController {
         Employee employee = new Employee();
         employee.setCircleTax(circleTax);
         HashMap addresses =(HashMap) Address.getAddresses();
+        modelAndView.addObject("addresses",addresses);
 
         modelAndView.addObject("employee", employee);
-        modelAndView.addObject("addresses",addresses);
         modelAndView.addObject("allProfiles");
 
 
@@ -61,8 +62,9 @@ public class AppController {
 
 
         if (bindingResult.hasErrors()) {
-
-           modelAndView.setViewName("employee/employeeCreate");
+            HashMap addresses =(HashMap) Address.getAddresses();
+            modelAndView.addObject("addresses",addresses);
+            modelAndView.setViewName("employee/employeeCreate");
             modelAndView.addObject("employee", employee);
             return modelAndView;
 
@@ -73,18 +75,16 @@ public class AppController {
 
                 bindingResult.rejectValue("registrationDate", "form.validation.errors.invalidRegisteredDate");
                 modelAndView.setViewName("employee/employeeCreate");
+                HashMap addresses =(HashMap) Address.getAddresses();
+                modelAndView.addObject("addresses",addresses);
                 modelAndView.addObject("employee", employee);
                 return modelAndView;
             }
         }
 
         employeeRepository.save(employee);
-
-
-        modelAndView.addObject(employee);
-        modelAndView.setViewName("app");
-
-        return modelAndView;
+        ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");
+        return modelAndViewRedirect ;
     }
 
 
