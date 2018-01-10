@@ -9,6 +9,14 @@
     <title>Title</title>
     <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet"/>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            var addresses = [[${addresses}]];
+            console.log(addresses);
+
+        /*]]>*/
+    </script>
 </head>
 <body>
 <div class="container">
@@ -53,6 +61,7 @@
         <input type="date" th:name="dateOfOpeningBalances"/>
         <br/>
         <label>Իրավաբանական հասցե</label>
+<<<<<<< HEAD
        <!-- <input type="text" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress" th:value="asdasdawd"/>
         -->
         <!--<th:select>
@@ -68,6 +77,20 @@
         <section>
 
         </section>
+=======
+        <div id="address">
+
+
+            <div id="cityes">
+
+
+            </div>
+            <div id="regions" >
+
+            </div>
+        </div>
+        <input type="text" id="juridicalAddress" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress" />
+>>>>>>> 39cc0eb7049214db799f8cb8a7ad90d676b2f17d
 
         <br/>
         <label>Գործունեության հասցե</label>
@@ -103,10 +126,11 @@
 
 </div>
 <script th:src="@{/static/js/jquery-3.2.1.min.js}"></script>
-<script th:src="@{/static/js/app.js}"></script>
+<script th:inline="javascript" th:src="@{/static/js/employeeCreate.js}"></script>
 <script th:src="@{/static/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
 <!--<script type="text/javascript">-->
 <!--alert($("#csrfToken").val());-->
 <!--</script>-->
+
 </body>
 </html>
