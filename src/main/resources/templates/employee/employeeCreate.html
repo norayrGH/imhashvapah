@@ -12,8 +12,8 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
 
-            var addresses = [[${addresses}]];
-            console.log(addresses);
+        var addresses = [[${addresses}]];
+        console.log(addresses);
 
         /*]]>*/
     </script>
@@ -26,39 +26,47 @@
 
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
+
         </div>
 
 
 
+
         <label>Անվանում</label>
-        <input th:style="${#fields.hasErrors('employeeName') ? 'border-color: red ;' : ''}" type="text" th:name="employeeName" placeholder="Անվանում "/>
+        <input th:style="*{#fields.hasErrors('employeeName') ? 'border-color: red ;' : ''}" type="text"
+               th:name="employeeName" placeholder="Անվանում "/>
 
         <br/>
         <label>ՀԾՀ</label>
-        <input th:style="${#fields.hasErrors('hch') ? 'border-color: red ;' : ''}" type="text" th:name="hch" placeholder=" Մուտքագրեք հծհ 10 նիշ " />
+        <input th:style="*{#fields.hasErrors('hch') ? 'border-color: red ;' : ''}" type="text" th:name="hch"
+               placeholder=" Մուտքագրեք հծհ 10 նիշ "/>
         <br/>
         <label>Գրանցման համար</label>
-        <input type="text" th:style="${#fields.hasErrors('registrationNumber') ? 'border-color: red;' : ''}" th:name="registrationNumber" placeholder=" Մուտքագրեք գրանցման համար 16 նիշ " />
+        <input type="text" th:style="*{#fields.hasErrors('registrationNumber') ? 'border-color: red;' : ''}"
+               th:name="registrationNumber" placeholder=" Մուտքագրեք գրանցման համար 16 նիշ "/>
         <br/>
 
 
-
-        <label >Գրանցման ամսաթիվ</label>
-        <input th:style="${#fields.hasErrors('registrationDate') ? 'border-color: red;' : ''}" type="date" th:name="registrationDate" th:value="*{registrationDate}"/>
+        <label>Գրանցման ամսաթիվ</label>
+        <input th:style="*{#fields.hasErrors('registrationDate') ? 'border-color: red;' : ''}" type="date"
+               th:name="registrationDate"/>
         <br/>
-
 
 
         <label>Վկայականի համար</label>
-        <input type="text" th:style="${#fields.hasErrors('certificateNumber') ? 'border-color: red;' : ''}" th:name="certificateNumber"  placeholder=" Վկայականի համար 10 նիշ "  />
+        <input type="text" th:style="*{#fields.hasErrors('certificateNumber') ? 'border-color: red;' : ''}"
+               th:name="certificateNumber" placeholder=" Վկայականի համար 10 նիշ "/>
         <br/>
 
         <label>ՀՎՀՀ</label>
-        <input type="text" th:style="${#fields.hasErrors('taxpayerIdentificationNumber') ? 'border-color: red;' : ''}" th:name="taxpayerIdentificationNumber" placeholder=" ՀՀՎՀ համար 8 նիշ " />
+        <input type="text" th:style="*{#fields.hasErrors('taxpayerIdentificationNumber') ? 'border-color: red;' : ''}"
+               th:name="taxpayerIdentificationNumber" placeholder=" ՀՀՎՀ համար 8 նիշ "/>
         <br/>
 
         <label>Սկզբն. մնացորդների ամսաթիվ</label>
-        <input type="date" th:name="dateOfOpeningBalances"/>
+        <input type="date" th:style="*{#fields.hasErrors('dateOfOpeningBalances') ? 'border-color: red;' : ''}"
+               th:name="dateOfOpeningBalances"/>
         <br/>
         <label>Իրավաբանական հասցե</label>
 
@@ -66,52 +74,80 @@
 
 
             <div id="cityes">
-                <select  id="selectCityes"  required="required" placeholder="Ընտրեք քաղաքը" >
-                    <option ></option>
+                <select id="selectCityes" required="required" placeholder="Ընտրեք քաղաքը">
+                    <option></option>
                 </select>
 
             </div>
-            <div id="regions" >
+            <div id="regions">
 
-                <select  id="regionSelect" required="required" >
-                    <option placeholder="Ընտրեք տարածաշրջանը" ></option>
+                <select id="regionSelect" required="required">
+                    <option placeholder="Ընտրեք տարածաշրջանը"></option>
                 </select>
             </div>
-            <div id="street" >
-                <input type="text" id="stritFleet" placeholder="փողոցի անուն , շենք կամ տուն " />
+            <div id="street">
+                <input type="text" id="stritFleet" placeholder="փողոցի անուն , շենք կամ տուն "/>
 
             </div>
         </div>
-        <br />
-        <input type="text" id="juridicalAddress" th:style="${#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}" th:name="juridicalAddress"  />
+        <br/>
+        <input type="text" th:id="juridicalAddress"
+               th:style="*{#fields.hasErrors('juridicalAddress') ? 'border-color: red;' : ''}"
+               th:name="juridicalAddress"/>
 
         <br/>
         <label>Գործունեության հասցե</label>
-        <input type="text"  th:style="${#fields.hasErrors('actingAddress') ? 'border-color: red;' : ''}" th:name="actingAddress"  placeholder="Գործունեության հասցե " />
+        <input type="text" th:style="*{#fields.hasErrors('actingAddress') ? 'border-color: red;' : ''}"
+               th:name="actingAddress" placeholder="Գործունեության հասցե "/>
         <br/>
+            <label>Շրջանառության հարկ վճարող Տեսակ</label>
+            <input type="text"
+                   th:style=" *{#fields.hasErrors('circleTax.circleTaxType') ? 'border-color: red;' : ''}"
+                   th:name="circleTaxType" placeholder=" Շրջհարկի տեսակ "
+                   th:field="*{circleTax.circleTaxType}"
+            />
+            <br/>
 
-        <label>Շրջանառության հարկ վճարող</label>
-        <input type="text" th:style=" ${#fields.hasErrors('circleTax.circleTaxType') ? 'border-color: red;' : ''}" th:name="circleTaxType"  placeholder=" Շրջհարկի տեսակ  "  />
-        <br/>
+            <label>Շրջանառության հարկ վճարող</label>
+            <input type="text"
+                   th:style=" *{#fields.hasErrors('circleTax.circleTaxPayer') ? 'border-color: red;' : ''}"
+                   th:name="circleTaxPayer" placeholder=" Շրջհարկի տեսակ "
+                   th:field="*{circleTax.circleTaxPayer}"
+                      />
+            <br/>
 
 
         <label>Տնտեսական գործունեության տեսակների դասակարգիչ</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxClassificationOfEconomicActivity') ? 'border-color: red;' : ''}" th:name="circleTaxClassificationOfEconomicActivity"  placeholder=" գործունեության տեսակների դասակարգիչ  " />
-        <br />
+        <input type="text"
+               th:style="*{#fields.hasErrors('circleTax.circleTaxClassificationOfEconomicActivity') ? 'border-color: red;' : ''}"
+               th:name="circleTaxClassificationOfEconomicActivity"
+               th:field="*{circleTax.circleTaxClassificationOfEconomicActivity}"
+               placeholder=" գործունեության տեսակների դասակարգիչ" />
+        <br/>
 
         <label>Գործունեության վայր / հասցե</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxActionAddress') ? 'border-color: red;' : ''}" th:name="circleTaxActionAddress"   placeholder=" Գործունեության վայր / հասցե  "  />
-        <br />
+        <input type="text"
+               th:style="*{#fields.hasErrors('circleTax.circleTaxActionAddress') ? 'border-color: red;' : ''}"
+               th:name="circleTaxActionAddress"
+               th:field="*{circleTax.circleTaxActionAddress}"
+               placeholder=" Գործունեության վայր / հասցե "
+
+        />
+        <br/>
 
         <label>Գործունեության ոլորտի նկարագրություն</label>
-        <input type="text" th:style="${#fields.hasErrors('circleTax.circleTaxTypeDesc') ? 'border-color: red;' : ''}"  th:name="circleTaxTypeDesc" placeholder="Գործունեության ոլորտի նկարագրություն" />
-        <br />
+        <input type="text"
+               th:style="*{#fields.hasErrors('circleTax.circleTaxTypeDesc') ? 'border-color: red;' : ''}"
+               th:name="circleTaxTypeDesc"
+               th:field="*{circleTax.circleTaxTypeDesc}"
+               placeholder="Գործունեության ոլորտի նկարագրություն"/>
+        <br/>
 
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}" />
-        <input type="submit" />
+               th:value="${_csrf.token}"/>
+        <input type="submit"/>
 
     </form>
 

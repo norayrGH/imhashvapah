@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity;
 import com.example.imhashvapahversion1.version1.Entity.action.area.CircleTax;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -67,11 +68,10 @@ public class Employee  {
     private String actingAddress;
 
 
-    @NotNull
+
     @OneToOne(cascade=CascadeType.ALL )
     @Valid
     private CircleTax circleTax;
-
 
     public Long getId() {
         return id;
@@ -129,14 +129,6 @@ public class Employee  {
         this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
     }
 
-    public CircleTax getCircleTax() {
-        return circleTax;
-    }
-
-    public void setCircleTax(CircleTax circleTax) {
-        this.circleTax = circleTax;
-    }
-
     public Date getDateOfOpeningBalances() {
         return dateOfOpeningBalances;
     }
@@ -161,22 +153,13 @@ public class Employee  {
         this.actingAddress = actingAddress;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-            "id=" + id +
-            ", employeeName='" + employeeName + '\'' +
-            ", hch=" + hch +
-            ", registrationNumber='" + registrationNumber + '\'' +
-            ", registrationDate=" + registrationDate +
-            ", certificateNumber='" + certificateNumber + '\'' +
-            ", taxpayerIdentificationNumber=" + taxpayerIdentificationNumber +
-            ", circleTax=" + circleTax +
-            ", dateOfOpeningBalances=" + dateOfOpeningBalances +
-            ", juridicalAddress='" + juridicalAddress + '\'' +
-            ", actingAddress='" + actingAddress + '\'' +
-            '}';
-}
+    public CircleTax getCircleTax() {
+        return circleTax;
+    }
+
+    public void setCircleTax(CircleTax circleTax) {
+        this.circleTax = circleTax;
+    }
 }
 
 

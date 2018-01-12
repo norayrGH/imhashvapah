@@ -11,6 +11,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,18 +39,23 @@ public class AppController {
     }
 
     @RequestMapping(value = "/account/employee/create")
-    public ModelAndView employeeCreateAction(ModelAndView modelAndView, BindingResult bindingResult) {
+    public ModelAndView employeeCreateAction(ModelAndView modelAndView) {
+        ValidatorFactory factory =  Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
 
 
         modelAndView.setViewName("employee/employeeCreate");
         CircleTax circleTax = new CircleTax();
+
+        validator.validate(circleTax);
+
         Employee employee = new Employee();
         employee.setCircleTax(circleTax);
         HashMap addresses =(HashMap) Address.getAddresses();
         modelAndView.addObject("addresses",addresses);
 
         modelAndView.addObject("employee", employee);
-        modelAndView.addObject("allProfiles");
+
 
 
         return modelAndView;
@@ -55,7 +63,7 @@ public class AppController {
 
     @RequestMapping(value = "/account/employee/create", method = RequestMethod.POST)
     public ModelAndView employeeUpAction(
-            @Valid Employee employee,
+            @Valid  Employee employee,
             BindingResult bindingResult,
             ModelAndView modelAndView
     ) {
@@ -65,13 +73,14 @@ public class AppController {
             HashMap addresses =(HashMap) Address.getAddresses();
             modelAndView.addObject("addresses",addresses);
             modelAndView.setViewName("employee/employeeCreate");
+
             modelAndView.addObject("employee", employee);
             return modelAndView;
 
 
-        }else{
+        }else if(employee.getRegistrationDate().getTime() > employee.getDateOfOpeningBalances().getTime()){
 
-            if(employee.getRegistrationDate().getTime() > employee.getDateOfOpeningBalances().getTime()) {
+
 
                 bindingResult.rejectValue("registrationDate", "form.validation.errors.invalidRegisteredDate");
                 modelAndView.setViewName("employee/employeeCreate");
@@ -79,8 +88,16 @@ public class AppController {
                 modelAndView.addObject("addresses",addresses);
                 modelAndView.addObject("employee", employee);
                 return modelAndView;
-            }
+            }else if(employee.getCircleTax().getCircleTaxType().equals("")){
+            bindingResult.rejectValue( "","form.validation.errors.invalidCircleTaxType");
+            modelAndView.setViewName("employee/employeeCreate");
+            HashMap addresses =(HashMap) Address.getAddresses();
+            modelAndView.addObject("addresses",addresses);
+            modelAndView.addObject("employee", employee);
+            return modelAndView;
+
         }
+
 
         employeeRepository.save(employee);
         ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");

@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RequestMapping(value = "/public")
 @Controller
-public class IndexController {
+public class 		IndexController {
 
 
 	@Autowired

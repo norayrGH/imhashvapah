@@ -3,10 +3,12 @@ package com.example.imhashvapahversion1.version1.Entity.action.area;
 import com.example.imhashvapahversion1.version1.Entity.Employee;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tbl_circle_tax")
+
 public class CircleTax {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +20,14 @@ public class CircleTax {
     @NotNull(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
     private String circleTaxType;
 
+    //Շրջանառության հարկ վճարող
+    @Column(name = "circle_tax_payer", unique = true, nullable = false)
+    @NotNull(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
+    private String circleTaxPayer;
+
     //Տնտեսական գործունեության տեսակների դասակարգիչ
     @Column(name = "Class_of_econom_act", unique = false, nullable = false)
-    @NotNull(message = "Խնդրում ենք նշել տնտեսական գործունեության տեսակների դասակարգիչ")
+    @NotNull(message = "Խնդրում ենք  նշել տնտեսական գործունեության տեսակների դասակարգիչ")
     private String circleTaxClassificationOfEconomicActivity;
 
     //Գործունեության վայր / հասցե
@@ -36,8 +43,9 @@ public class CircleTax {
     public CircleTax() {
     }
 
-    public CircleTax(String circleTaxType, String circleTaxClassificationOfEconomicActivity, String circleTaxActionAddress, String circleTaxTypeDesc) {
+    public CircleTax(String circleTaxType, String circleTaxPayer, String circleTaxClassificationOfEconomicActivity, String circleTaxActionAddress, String circleTaxTypeDesc) {
         this.circleTaxType = circleTaxType;
+        this.circleTaxPayer = circleTaxPayer;
         this.circleTaxClassificationOfEconomicActivity = circleTaxClassificationOfEconomicActivity;
         this.circleTaxActionAddress = circleTaxActionAddress;
         this.circleTaxTypeDesc = circleTaxTypeDesc;
@@ -57,6 +65,14 @@ public class CircleTax {
 
     public void setCircleTaxType(String circleTaxType) {
         this.circleTaxType = circleTaxType;
+    }
+
+    public String getCircleTaxPayer() {
+        return circleTaxPayer;
+    }
+
+    public void setCircleTaxPayer(String circleTaxPayer) {
+        this.circleTaxPayer = circleTaxPayer;
     }
 
     public String getCircleTaxClassificationOfEconomicActivity() {
