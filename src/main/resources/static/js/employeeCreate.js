@@ -9,10 +9,10 @@ var  stritFleet = $("#stritFleet");
 var address={stritFleet:"",region:"",city:""};
 var textaddress="";
 
+
 $.each( addresses, function( key, value ){
     cityes.append($("<option>").attr({class:"city"}).text(key));
 });
-
 
 $("#stritFleet").focusout(function () {
 
