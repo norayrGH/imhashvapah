@@ -9,9 +9,11 @@ var  stritFleet = $("#stritFleet");
 var address={stritFleet:"",region:"",city:""};
 var textaddress="";
 
+
 $.each( addresses, function( key, value ){
     cityes.append($("<option>").attr({class:"city"}).text(key));
 });
+
 
 
 
@@ -27,14 +29,6 @@ $("#employee").bind('ajax:complete', function() {
 
 
 });
-
-
-
-
-
-
-
-
 
 
 $("#stritFleet").focusout(function () {
@@ -97,57 +91,3 @@ $("#regionSelect").change(function () {
 
 
 });
-
-/*
-
-.append($("<option>").text("text")).appendTo($("#address"))
-*/
-
-  /*  var selectValue = $( this ).val();
-    console.log(selectValue);
-    $("#address").append($("<select>").attr("id","city"));*/
-
-
-
-   /* var circleTax={
-        circleTaxType:values["circleTaxType"],
-        circleTaxClassificationOfEconomicActivity:values["circleTaxClassificationOfEconomicActivity"],
-        circleTaxActionAddress:values["circleTaxActionAddress"],
-        circleTaxTypeDesc:values["circleTaxTypeDesc"]
-
-    };
-
-
-    var employee={
-        employeeName:values["employeeName"],
-        hch:values["hch"],
-        registrationNumber:values["registrationNumber"],
-        registrationDate:values["registrationDate"],
-        certificateNumber:values["certificateNumber"],
-        taxpayerIdentificationNumber:values["taxpayerIdentificationNumber"],
-        actingAddress:values["actingAddress"],
-        dateOfOpeningBalances:values["dateOfOpeningBalances"],
-        juridicalAddress:values["juridicalAddress"],
-        circleTax:circleTax
-
-    };
-    var token = $("#csrfToken").val();
-
-    $.ajaxSetup({
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-TOKEN', token);
-        }
-    });
-
-    $.ajax({
-
-        method : "POST",
-        contentType : "application/json",
-        url : "/account/employee/create",
-        dataType: 'json',
-        data :JSON.stringify(employee),
-        success: function(data){
-            console.log(data);
-        }
-    });
-*/

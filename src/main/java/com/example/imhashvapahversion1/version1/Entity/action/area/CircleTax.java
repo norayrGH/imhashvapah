@@ -25,7 +25,6 @@ public class CircleTax {
     //Շրջանառության հարկ վճարող
     @Column(name = "circle_tax_payer", unique = true, nullable = false)
     @NotEmpty(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
-    @Pattern(regexp = "^[ A-Z ] ")
     private String circleTaxPayer;
 
     //Տնտեսական գործունեության տեսակների դասակարգիչ

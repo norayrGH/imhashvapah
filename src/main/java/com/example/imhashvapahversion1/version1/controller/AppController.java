@@ -60,8 +60,8 @@ public class AppController {
     public ModelAndView  employeeUpAction(
             @Valid Employee employee,
             BindingResult bindingResult,
-            ModelAndView modelAndView,
-            CircleTax circleTax
+            ModelAndView modelAndView
+
     ) {
 
         HashMap addresses = (HashMap) Address.getAddresses();
@@ -82,17 +82,13 @@ public class AppController {
 
             modelAndView.addObject("addresses", addresses);
             modelAndView.addObject("employee" , employee);
-           // modelAndView.addObject("circleTax", circleTax);
+
             return modelAndView;
         }
-        employee.setCircleTax(circleTax);
-
         employeeRepository.save(employee);
-        modelAndView.setViewName("employee/employeeCreate");
-        modelAndView.addObject("addresses",addresses);
-        modelAndView.addObject("circleTax", circleTax);
-      //  ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");
-        return modelAndView;
+
+        ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");
+        return modelAndViewRedirect;
     }
 
 
