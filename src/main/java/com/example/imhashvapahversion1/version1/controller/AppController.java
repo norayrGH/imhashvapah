@@ -1,4 +1,5 @@
 package com.example.imhashvapahversion1.version1.controller;
+
 import com.example.imhashvapahversion1.version1.Entity.Employee;
 import com.example.imhashvapahversion1.version1.Entity.action.area.CircleTax;
 import com.example.imhashvapahversion1.version1.Entity.enums.Address;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -27,7 +29,7 @@ public class AppController {
     @RequestMapping(value = "/account")
     public ModelAndView appAction(ModelAndView modelAndView) {
         List<Employee> employeeList = (List<Employee>) employeeRepository.findAll();
-        modelAndView.addObject("employeeList",employeeList);
+        modelAndView.addObject("employeeList", employeeList);
         modelAndView.setViewName("start");
         return modelAndView;
     }
@@ -40,68 +42,57 @@ public class AppController {
 
     @RequestMapping(value = "/account/employee/create")
     public ModelAndView employeeCreateAction(ModelAndView modelAndView) {
-        ValidatorFactory factory =  Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
 
 
         modelAndView.setViewName("employee/employeeCreate");
         CircleTax circleTax = new CircleTax();
-
-        validator.validate(circleTax);
-
         Employee employee = new Employee();
-        employee.setCircleTax(circleTax);
-        HashMap addresses =(HashMap) Address.getAddresses();
-        modelAndView.addObject("addresses",addresses);
+
+        HashMap addresses = (HashMap) Address.getAddresses();
+        modelAndView.addObject("addresses", addresses);
 
         modelAndView.addObject("employee", employee);
-
-
-
+        modelAndView.addObject("circleTax", circleTax);
         return modelAndView;
     }
 
     @RequestMapping(value = "/account/employee/create", method = RequestMethod.POST)
-    public ModelAndView employeeUpAction(
-            @Valid  Employee employee,
+    public ModelAndView  employeeUpAction(
+            @Valid Employee employee,
             BindingResult bindingResult,
-            ModelAndView modelAndView
+            ModelAndView modelAndView,
+            CircleTax circleTax
     ) {
 
-
+        HashMap addresses = (HashMap) Address.getAddresses();
         if (bindingResult.hasErrors()) {
-            HashMap addresses =(HashMap) Address.getAddresses();
-            modelAndView.addObject("addresses",addresses);
-            modelAndView.setViewName("employee/employeeCreate");
 
+            modelAndView.addObject("addresses", addresses);
+            modelAndView.setViewName("employee/employeeCreate");
             modelAndView.addObject("employee", employee);
+
             return modelAndView;
 
 
-        }else if(employee.getRegistrationDate().getTime() > employee.getDateOfOpeningBalances().getTime()){
+        } else if (employee.getRegistrationDate().getTime() > employee.getDateOfOpeningBalances().getTime()) {
 
 
-
-                bindingResult.rejectValue("registrationDate", "form.validation.errors.invalidRegisteredDate");
-                modelAndView.setViewName("employee/employeeCreate");
-                HashMap addresses =(HashMap) Address.getAddresses();
-                modelAndView.addObject("addresses",addresses);
-                modelAndView.addObject("employee", employee);
-                return modelAndView;
-            }else if(employee.getCircleTax().getCircleTaxType().equals("")){
-            bindingResult.rejectValue( "","form.validation.errors.invalidCircleTaxType");
+            bindingResult.rejectValue("registrationDate", "form.validation.errors.invalidRegisteredDate");
             modelAndView.setViewName("employee/employeeCreate");
-            HashMap addresses =(HashMap) Address.getAddresses();
-            modelAndView.addObject("addresses",addresses);
-            modelAndView.addObject("employee", employee);
-            return modelAndView;
 
+            modelAndView.addObject("addresses", addresses);
+            modelAndView.addObject("employee" , employee);
+           // modelAndView.addObject("circleTax", circleTax);
+            return modelAndView;
         }
-
+        employee.setCircleTax(circleTax);
 
         employeeRepository.save(employee);
-        ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");
-        return modelAndViewRedirect ;
+        modelAndView.setViewName("employee/employeeCreate");
+        modelAndView.addObject("addresses",addresses);
+        modelAndView.addObject("circleTax", circleTax);
+      //  ModelAndView modelAndViewRedirect = new ModelAndView("redirect:/account");
+        return modelAndView;
     }
 
 

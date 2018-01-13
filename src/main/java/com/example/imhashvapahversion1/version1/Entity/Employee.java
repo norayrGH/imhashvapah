@@ -1,8 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity;
 import com.example.imhashvapahversion1.version1.Entity.action.area.CircleTax;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -18,8 +17,9 @@ public class Employee  {
     private Long id ;
     //Անվանում
     @Column(name = "employee_name",unique = true,nullable = false)
-    @NotNull(message = " Անվանում դաշտը հարկավոր է լրացնել")
     @Size(min=2, max=30 , message = " Գրեք ճիշտ Անվանում ")
+    @NotEmpty(message = " Անվանում դաշտը հարկավոր է լրացնել")
+
     private String employeeName ;
 
     @Column(name = "employee_hch",unique = true,nullable = false)
@@ -57,21 +57,41 @@ public class Employee  {
     @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետկ է լրացնել")
     private Date dateOfOpeningBalances ;
 
+    //Գործունեության հասցե
+    @NotEmpty(message = " Գործունեության հասցեն պարտադիր է լրացման համար")
+    @Column(name = "employee_acting_address",unique = false,nullable = false)
+    @Size(min = 10 , message = "Գործունեության հասցեն հարկավոր է լրացնել ")
+    private String actingAddress;
+
     //Իրավաբանական հասցե
+    @NotEmpty(message = "Իրավաբանական հասցե պարտադիր է լրացման համար ")
     @Column(name = "employee_juridical_address",unique = false,nullable = false)
-    @NotNull(message = "Իրավաբանական հասցե պարտադիր է լրացման համար ")
     private String juridicalAddress;
 
-    //Գործունեության հասցե
-    @Column(name = "employee_acting_address",unique = false,nullable = false)
-    @NotNull(message = "Գործունեության հասցեն պարտադիր է լրացման համար ")
-    private String actingAddress;
 
 
 
     @OneToOne(cascade=CascadeType.ALL )
     @Valid
     private CircleTax circleTax;
+
+
+    public Employee() {
+    }
+
+    public Employee(String employeeName, Long hch, String registrationNumber, Date registrationDate, String certificateNumber, String taxpayerIdentificationNumber, Date dateOfOpeningBalances, String juridicalAddress, String actingAddress, CircleTax circleTax) {
+        this.employeeName = employeeName;
+        this.hch = hch;
+        this.registrationNumber = registrationNumber;
+        this.registrationDate = registrationDate;
+        this.certificateNumber = certificateNumber;
+        this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
+        this.dateOfOpeningBalances = dateOfOpeningBalances;
+        this.juridicalAddress = juridicalAddress;
+        this.actingAddress = actingAddress;
+        this.circleTax = circleTax;
+
+    }
 
     public Long getId() {
         return id;
@@ -161,5 +181,6 @@ public class Employee  {
         this.circleTax = circleTax;
     }
 }
+
 
 

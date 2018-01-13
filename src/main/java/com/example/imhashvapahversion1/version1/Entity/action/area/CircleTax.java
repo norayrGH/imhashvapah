@@ -1,10 +1,12 @@
 package com.example.imhashvapahversion1.version1.Entity.action.area;
 
 import com.example.imhashvapahversion1.version1.Entity.Employee;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "tbl_circle_tax")
@@ -17,27 +19,28 @@ public class CircleTax {
 
     //Շրջանառության հարկ վճարող տեսակ
     @Column(name = "circle_tax_type", unique = true, nullable = false)
-    @NotNull(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
+    @NotEmpty(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
     private String circleTaxType;
 
     //Շրջանառության հարկ վճարող
     @Column(name = "circle_tax_payer", unique = true, nullable = false)
-    @NotNull(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
+    @NotEmpty(message = "Շրջհարկի տեսակը պարտիդիր պետկ է նշվի")
+    @Pattern(regexp = "^[ A-Z ] ")
     private String circleTaxPayer;
 
     //Տնտեսական գործունեության տեսակների դասակարգիչ
     @Column(name = "Class_of_econom_act", unique = false, nullable = false)
-    @NotNull(message = "Խնդրում ենք  նշել տնտեսական գործունեության տեսակների դասակարգիչ")
+    @NotEmpty(message = "Խնդրում ենք  նշել տնտեսական գործունեության տեսակների դասակարգիչ")
     private String circleTaxClassificationOfEconomicActivity;
 
     //Գործունեության վայր / հասցե
     @Column(name = "action_address", unique = false, nullable = false)
-    @NotNull(message = "Խնդրում ենք նշել Գործունեության վայր / հասցեն")
+    @NotEmpty(message = "Խնդրում ենք նշել Գործունեության վայր / հասցեն")
     private String circleTaxActionAddress;
 
     //Գործունեության ոլորտի նկարագրություն
     @Column(name = "circle_tax_type_description", unique = false, nullable = false)
-    @NotNull(message = "Խնդրում ենք նշել Գործունեության ոլորտի նկարագրություն")
+    @NotEmpty(message = "Խնդրում ենք նշել Գործունեության ոլորտի նկարագրություն")
     private String circleTaxTypeDesc;
 
     public CircleTax() {

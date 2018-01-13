@@ -14,6 +14,29 @@ $.each( addresses, function( key, value ){
 });
 
 
+
+
+
+
+
+
+
+$("#employee").bind('ajax:complete', function() {
+    alert("ok");
+    $("#circleTax").attr({style:"display:inline;"});
+
+
+});
+
+
+
+
+
+
+
+
+
+
 $("#stritFleet").focusout(function () {
 
     address["stritFleet"]=$("#stritFleet").val();
@@ -35,6 +58,7 @@ $("#selectCityes").change(function () {
       var city = $("#selectCityes").val();
       address["city"] = city;
       var regions = addresses[city];
+      regionselect.append($("<option>"));
     $.each( regions, function( key,value ){
         regionselect.append($("<option>").attr({class:"region"}).text(value));
     });
