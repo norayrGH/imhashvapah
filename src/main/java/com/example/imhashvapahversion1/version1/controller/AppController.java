@@ -6,37 +6,38 @@ import com.example.imhashvapahversion1.version1.Entity.enums.Address;
 import com.example.imhashvapahversion1.version1.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Controller
-public class AppController {
+@Controller("AppController")
+public class AppController extends BaseController{
 
     @Autowired
     EmployeeRepository employeeRepository;
 
     @RequestMapping(value = "/account")
     public ModelAndView appAction(ModelAndView modelAndView) {
+
         List<Employee> employeeList = (List<Employee>) employeeRepository.findAll();
+
+        System.out.println(employeeList.get(0).getEmployeeName());
+        System.out.println(employeeList.get(0).getId());
+
         modelAndView.addObject("employeeList", employeeList);
+        modelAndView.addObject("fragment", this.startViwFragment);
         modelAndView.setViewName("start");
+
         return modelAndView;
     }
 
 
     @RequestMapping(value = "/account/login/success")
-    public String loginSuccessAction() {
+    public final String loginSuccessAction() {
         return "redirect:/account";
     }
 
@@ -44,15 +45,13 @@ public class AppController {
     public ModelAndView employeeCreateAction(ModelAndView modelAndView) {
 
 
-        modelAndView.setViewName("employee/employeeCreate");
-        CircleTax circleTax = new CircleTax();
         Employee employee = new Employee();
-
         HashMap addresses = (HashMap) Address.getAddresses();
         modelAndView.addObject("addresses", addresses);
-
         modelAndView.addObject("employee", employee);
-        modelAndView.addObject("circleTax", circleTax);
+        modelAndView.addObject("fragment",this.employeeCreateFragment);
+        modelAndView.setViewName("start");
+
         return modelAndView;
     }
 
@@ -68,9 +67,9 @@ public class AppController {
         if (bindingResult.hasErrors()) {
 
             modelAndView.addObject("addresses", addresses);
-            modelAndView.setViewName("employee/employeeCreate");
             modelAndView.addObject("employee", employee);
-
+            modelAndView.addObject("fragment",this.employeeCreateFragment);
+            modelAndView.setViewName("start");
             return modelAndView;
 
 
@@ -78,11 +77,11 @@ public class AppController {
 
 
             bindingResult.rejectValue("registrationDate", "form.validation.errors.invalidRegisteredDate");
-            modelAndView.setViewName("employee/employeeCreate");
+            modelAndView.setViewName("start");
 
             modelAndView.addObject("addresses", addresses);
             modelAndView.addObject("employee" , employee);
-
+            modelAndView.addObject("fragment", this.employeeCreateFragment);
             return modelAndView;
         }
         employeeRepository.save(employee);

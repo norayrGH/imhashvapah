@@ -19,17 +19,16 @@ public class Employee  {
     @Column(name = "employee_name",unique = true,nullable = false)
     @Size(min=2, max=30 , message = " Գրեք ճիշտ Անվանում ")
     @NotEmpty(message = " Անվանում դաշտը հարկավոր է լրացնել")
-
     private String employeeName ;
 
     @Column(name = "employee_hch",unique = true,nullable = false)
     @NotNull( message = "ՀՑՀ  դաշտը անպայման է լրացնելու համար ")
-    @Min(value = 10,message = "ՀՑՀ ունի 10 թիվ")
-    private Long hch ;
+    @Pattern(regexp = "([0-9]{10})" ,message = "ՀՑՀ ունի 10 Նիշ")
+    private String hch ;
 
     //Գրանցման համար
     @Column(name = "employee_reg_number",unique = true,nullable = true)
-    @Min(value=16 , message = "Գրանցման համարը ունի 16 նիշ")
+    @Pattern(regexp = "([0-9]{16})" , message = "Գրանցման համարը ունի 16 նիշ")
     private String registrationNumber;
 
     //Գրանցման ամսաթիվ
@@ -40,13 +39,13 @@ public class Employee  {
 
     //Վկայականի համար
     @Column(name = "employee_certificate_num",unique = false,nullable = true)
-    @Min(value=10 , message = "Վկայականի համարը ունի 10 նիշ")
+    @Pattern(regexp = "([0-9]{10})", message = "Վկայականի համարը ունի 10 նիշ")
     private String certificateNumber;
 
     //հարկ վճարողի հաշվառման համար   ՀՎՀՀ
     @Column(name = "employee_taaxpayer_ident_num",unique = true,nullable = false)
-    @Min(value=8 , message = "ՀՎՀՀ համարը ունի 8 նիշ")
     @NotNull(message = "ՀՎՀՀ դաշտը պարտադիր է լրացման համար ")
+    @Pattern(regexp = "([0-9]{8})",message = "ՀՎՀՀ համարը ունի 8 նիշ")
     private String taxpayerIdentificationNumber;
 
 
@@ -79,7 +78,7 @@ public class Employee  {
     public Employee() {
     }
 
-    public Employee(String employeeName, Long hch, String registrationNumber, Date registrationDate, String certificateNumber, String taxpayerIdentificationNumber, Date dateOfOpeningBalances, String juridicalAddress, String actingAddress, CircleTax circleTax) {
+    public Employee(String employeeName, String hch, String registrationNumber, Date registrationDate, String certificateNumber, String taxpayerIdentificationNumber, Date dateOfOpeningBalances, String juridicalAddress, String actingAddress, CircleTax circleTax) {
         this.employeeName = employeeName;
         this.hch = hch;
         this.registrationNumber = registrationNumber;
@@ -109,11 +108,11 @@ public class Employee  {
         this.employeeName = employeeName;
     }
 
-    public Long getHch() {
+    public String getHch() {
         return hch;
     }
 
-    public void setHch(Long hch) {
+    public void setHch(String hch) {
         this.hch = hch;
     }
 

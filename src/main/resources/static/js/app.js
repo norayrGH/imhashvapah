@@ -1,51 +1,97 @@
-$("#employeeCreate").on('click',function () {
 
-    var $inputs = $('#myForm :input');
+var  cityes = $("#selectCityes");
+var  regionselect = $("#regionSelect");
+var  stritFleet = $("#stritFleet");
 
-    var values = {};
-    $inputs.each(function() {
-        values[this.name] = $(this).val();
+
+var address={stritFleet:"",region:"",city:""};
+var textaddress="";
+
+
+$.each( addresses, function( key, value ){
+    cityes.append($("<option>").attr({class:"city"}).text(key));
+});
+
+
+
+
+
+
+
+
+
+
+/*
+$("#employee").bind('ajax:complete', function() {
+    alert("ok");
+    $("#circleTax").attr({style:"display:inline;"});
+
+
+});
+*/
+
+function goBack() {
+    window.history.back();
+}
+
+
+$("#stritFleet").focusout(function () {
+
+    address["stritFleet"]=$("#stritFleet").val();
+    $.each( address, function( key , value ){
+        textaddress+=value;
+        if(key != "city" )
+            textaddress+=",";
     });
-    var circleTax={
-        circleTaxType:values["circleTaxType"],
-        circleTaxClassificationOfEconomicActivity:values["circleTaxClassificationOfEconomicActivity"],
-        circleTaxActionAddress:values["circleTaxActionAddress"],
-        circleTaxTypeDesc:values["circleTaxTypeDesc"]
+    $("#juridicalAddress").val(textaddress);
 
-    };
+    textaddress="";
 
+});
 
-    var employee={
-        employeeName:values["employeeName"],
-        hch:values["hch"],
-        registrationNumber:values["registrationNumber"],
-        registrationDate:values["registrationDate"],
-        certificateNumber:values["certificateNumber"],
-        taxpayerIdentificationNumber:values["taxpayerIdentificationNumber"],
-        actingAddress:values["actingAddress"],
-        dateOfOpeningBalances:values["dateOfOpeningBalances"],
-        juridicalAddress:values["juridicalAddress"],
-        circleTax:circleTax
+$("#selectCityes").change(function () {
+    regionselect.empty();
 
-    };
-    var token = $("#csrfToken").val();
-
-    $.ajaxSetup({
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-TOKEN', token);
-        }
+    address["city"]="";
+    var city = $("#selectCityes").val();
+    address["city"] = city;
+    var regions = addresses[city];
+    regionselect.append($("<option>"));
+    $.each( regions, function( key,value ){
+        regionselect.append($("<option>").attr({class:"region"}).text(value));
     });
 
-    $.ajax({
 
-        method : "POST",
-        contentType : "application/json",
-        url : "/account/employee/create",
-        dataType: 'json',
-        data :JSON.stringify(employee),
-        success: function(data){
-            console.log(data);
-        }
+    $.each( address, function( key, value ){
+        textaddress+=value;
+        if(key != "city" )
+            textaddress+=",";
+
     });
+
+    $("#juridicalAddress").val(textaddress);
+    textaddress="";
+
+});
+
+
+
+$("#regionSelect").change(function () {
+
+    address["region"]="";
+    console.log($("#regionSelect").val());
+    address["region"] = $("#regionSelect").val();
+
+    console.log(address);
+
+    $.each( address, function( key, value ){
+        textaddress+=value;
+        if(key != "city" )
+            textaddress+=",";
+    });
+    $("#juridicalAddress").val(textaddress);
+
+    textaddress="";
+
 
 });
