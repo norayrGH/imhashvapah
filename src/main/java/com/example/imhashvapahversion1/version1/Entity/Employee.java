@@ -11,8 +11,6 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_employee")
 public class Employee  {
-
-
     @Id
     @GeneratedValue
     private Long id ;
@@ -68,11 +66,16 @@ public class Employee  {
     @Column(name = "employee_juridical_address",unique = false,nullable = false)
     private String juridicalAddress;
 
+
+
+
     @OneToOne(cascade=CascadeType.ALL )
     @Valid
     private CircleTax circleTax;
 
-    public  Employee() {
+
+    public Employee() {
+
     }
 
     public Employee(String employeeName, String hch, String registrationNumber, Date registrationDate, String certificateNumber, String taxpayerIdentificationNumber, Date dateOfOpeningBalances, String juridicalAddress, String actingAddress, CircleTax circleTax) {
@@ -90,7 +93,6 @@ public class Employee  {
     }
 
     public Long getId() {
-
 
         return id;
     }

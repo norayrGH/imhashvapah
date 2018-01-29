@@ -10,6 +10,7 @@ public class BaseController {
 
     protected final String cashNavBar = "cashNavBar";
     protected final String cashFragment = "cash";
+
     protected final String cashdeskFragment = "cashdesk";
     protected final String cashInFragment = "cashIn";
     protected final String cashOutFragment = "cashOut";

@@ -88,6 +88,7 @@
     </ul>
 
 </div>
+
 <div class="container" th:fragment="organizationNavBar">
     <nav role="navigation" class="navbar-justified">
 
@@ -100,18 +101,22 @@
         </div>
     </nav>
 </div>
+
 <div class="container" th:fragment="cashNavBar">
     <nav role="navigation" class="navbar-justified">
 
         <div id="cashNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
+
                 <li><a  th:href="@{'/account/cash/' + ${employee.id}}" id="cashResource" >      Դրամական միջոցներ</a></li>
                 <li><a  th:href="@{'/account/cash/cashin/cashdesk/' + ${employee.id}}" id="in"> Մեւտքեր</a></li>
                 <li><a th:href="@{'/account/cash/cashout/cashdesk/' + ${employee.id}}" id="out">Ելքեր</a></li>
+
             </ul>
         </div>
     </nav>
 </div>
+
 <div class="container" th:fragment="cashdesk">
 
     <form th:object="${walletData}" action="/account/cash/cashdesk" th:name="walletDataForm" method="post" >
@@ -212,6 +217,21 @@
         </div>
     </nav>
 </div>
+
+<div class="row" th:fragment="cash">
+
+    <div class="col-md-4" >
+
+
+    </div>
+
+    <div class="col-md-8">
+        <h1>WELCOME CASH !!!</h1>
+
+    </div>
+</div>
+
+
 <div class="container" th:fragment="partnerNavBar">
     <nav role="navigation" class="navbar-justified">
 

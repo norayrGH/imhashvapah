@@ -1,26 +1,32 @@
 package com.example.imhashvapahversion1.version1.controller;
 
 import com.example.imhashvapahversion1.version1.Entity.Employee;
+
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
+
 import com.example.imhashvapahversion1.version1.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
+
 import org.springframework.validation.BindingResult;
+
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import javax.validation.Valid;
-import javax.xml.ws.BindingProvider;
+
 
 @Controller("InnerAppController")
 public class InnerAppController extends BaseController {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @RequestMapping(value = "/account/organization/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "account/organization/{id}", method = RequestMethod.GET)
     public ModelAndView organization(@PathVariable(value = "id") final Long id,    ModelAndView modelAndView ) {
 
 
@@ -34,8 +40,7 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
-
-    @RequestMapping(value = "/account/organization/details/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "account/organization/details/{id}", method = RequestMethod.GET)
     public ModelAndView organizationDetails(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
         Employee employee = employeeRepository.findOne(id);
         modelAndView.setViewName("app/app");
@@ -45,8 +50,7 @@ public class InnerAppController extends BaseController {
         return modelAndView;
 
     }
-
-    @RequestMapping(value = "/account/cash/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "account/cash/{id}", method = RequestMethod.GET)
     public ModelAndView cash(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
@@ -55,6 +59,7 @@ public class InnerAppController extends BaseController {
         modelAndView.addObject("employee", employee);
         modelAndView.addObject("navBar",this.cashNavBar);
         modelAndView.addObject("fragment",this.cashFragment);
+
         modelAndView.addObject("fragmentNavBar",this.cashdeskFragmentNavBar);
 
 
@@ -130,6 +135,11 @@ public class InnerAppController extends BaseController {
         modelAndView.addObject("navBar"  ,this.cashNavBar);
         modelAndView.addObject("fragment",this.cashOutFragment);
         modelAndView.addObject("fragmentNavBar",this.cashOutFragmentNavBar);
+
+
+
+
+
 
         return modelAndView;
     }
