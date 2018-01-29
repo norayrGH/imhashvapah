@@ -1,0 +1,107 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+	.main_mnu ul {
+		display: none;
+		position: absolute;
+		width: 100%;
+		margin-top: 23px;
+
+	}
+
+	.main_mnu ul li {
+		display: block;
+		margin-top: 20px;
+
+	}
+
+	.active {
+		display: none;
+		content: url('../img/building.png');
+
+	}
+
+	.active1 {
+		content: url('../img/prace.png');
+	}
+
+	.active2 {
+		content: url('../img/hands.png');
+	}
+
+	.active3 {
+		content: url('../img/peopales.png');
+	}
+
+	.active4 {
+		content: url('../img/numbers.png');
+	}
+
+	.main_mnu ul li a:hover {
+
+		transform: none;
+	}
+
+	/* Small Devices, Tablets */
+	@media only screen and (max-width: 768px) {
+		.top_links {
+			background-color: #585d61;
+			display: none;
+			margin-top: 15px;
+			padding: 14px;
+			position: absolute;
+			vertical-align: middle;
+			width: 100%;
+		}
+
+	}
+
+	/* Extra Small Devices, Phones */
+	@media only screen and (max-width: 480px) {
+
+	}
+
+	/* Custom, iPhone Retina */
+	@media only screen and (max-width: 320px) {
+
+	}
+
+
+	/*==========  Mobile First Method  ==========*/
+	/* Custom, iPhone Retina */
+	@media only screen and (min-width: 320px) {
+
+	}
+
+	/* Extra Small Devices, Phones */
+	@media only screen and (min-width: 480px) {
+
+	}
+
+	/* Small Devices, Tablets */
+	@media only screen and (min-width: 768px) {
+		.top_links {
+			display: inline-block !important;
+		}
+
+	}
+
+	/* Medium Devices, Desktops */
+	@media only screen and (min-width: 992px) {
+
+		.main_mnu ul {
+			display: block !important;
+		}
+	}
+
+	/* Large Devices, Wide Screens */
+	@media only screen and (min-width: 1200px) {
+
+	}
+}

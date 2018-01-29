@@ -1,0 +1,65 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <meta name="description" content="Создание адаптивного сайта" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/static/css/main.css} "  rel="stylesheet" />
+    <link th:href="@{/static/css/media.css}" rel="stylesheet" />
+    <link th:href="@{/static/fullcalendar-3.8.0/fullcalendar.css}" rel="stylesheet" />
+    <script th:src="@{/static/js/jquery-3.2.1.min.js}" />
+    <script>
+        $(document).ready(function() {
+
+
+
+            $('#calendar').fullCalendar({
+
+            })
+
+        });
+    </script>
+
+</head>
+<body th:object="${employee}">
+
+
+<div th:replace="/fragments/appFragment :: startHeader " />
+
+
+
+
+
+<div th:replace="/fragments/appFragment :: ${navBar}" />
+
+
+
+
+<div class="container">
+ <div class="col-md-4">
+     <th:block th:if="${fragmentNavBar}">
+         <div th:replace="/fragments/appFragment :: ${fragmentNavBar}"/>
+     </th:block>
+
+ </div>
+    <div class="col-md-8">
+        <div th:replace="/fragments/appFragment :: ${fragment}" />
+    </div>
+</div>
+
+
+
+
+
+
+
+<script th:src="@{/static/fullcalendar-3.8.0/lib/moment.min.js}" />
+<script th:src="@{/static/fullcalendar-3.8.0/fullcalendar.js}" />
+<script th:src="@{/static/js/app.js}" />
+</body>
+</html>
