@@ -1,6 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
-import com.example.imhashvapahversion1.version1.Entity.Employee;
+import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ public class WalletData {
     private int cashBbookPapers;
     private int startingNumberCashBookPapers;
     private String notes;
-    private Long employeeId;
+    private Long organizationId;
 
     public WalletData() {
     }
@@ -89,11 +89,11 @@ public class WalletData {
         this.notes = notes;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Long getOrganizationId() {
+        return organizationId;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setOrganizationId(Long organizationId) {
+        this.organizationId = organizationId;
     }
 }

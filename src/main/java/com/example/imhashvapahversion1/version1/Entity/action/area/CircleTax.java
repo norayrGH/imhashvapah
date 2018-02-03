@@ -1,6 +1,4 @@
 package com.example.imhashvapahversion1.version1.Entity.action.area;
-
-import com.example.imhashvapahversion1.version1.Entity.Employee;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;

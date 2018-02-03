@@ -1,10 +1,10 @@
 package com.example.imhashvapahversion1.version1.controller;
 
-import com.example.imhashvapahversion1.version1.Entity.Employee;
+import com.example.imhashvapahversion1.version1.Entity.Organization;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
 
-import com.example.imhashvapahversion1.version1.repository.EmployeeRepository;
+import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -24,17 +24,17 @@ import javax.validation.Valid;
 @Controller("InnerAppController")
 public class InnerAppController extends BaseController {
     @Autowired
-    EmployeeRepository employeeRepository;
+    OrganizationRepository organizationRepository;
 
     @RequestMapping(value = "account/organization/{id}", method = RequestMethod.GET)
     public ModelAndView organization(@PathVariable(value = "id") final Long id,    ModelAndView modelAndView ) {
 
 
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.organizationNavBar);
         modelAndView.addObject("fragment", this.startViwFragment);
 
@@ -42,9 +42,9 @@ public class InnerAppController extends BaseController {
     }
     @RequestMapping(value = "account/organization/details/{id}", method = RequestMethod.GET)
     public ModelAndView organizationDetails(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.organizationNavBar);
         modelAndView.addObject("fragment",this.organizationDetailsFragment);
         return modelAndView;
@@ -54,9 +54,9 @@ public class InnerAppController extends BaseController {
     public ModelAndView cash(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.cashNavBar);
         modelAndView.addObject("fragment",this.cashFragment);
 
@@ -72,9 +72,9 @@ public class InnerAppController extends BaseController {
     public ModelAndView cashdesk(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
         WalletData walletData = new WalletData();
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar",this.cashNavBar);
         modelAndView.addObject("fragment",this.cashdeskFragment);
@@ -88,20 +88,20 @@ public class InnerAppController extends BaseController {
     @RequestMapping(value = "/account/cash/cashdesk", method = RequestMethod.POST)
     public ModelAndView cashdeskCreate(@Valid WalletData walletData, BindingResult bindingResult, ModelAndView modelAndView ){
 
-        Employee employee = employeeRepository.findOne(walletData.getEmployeeId());
+        Organization organization = organizationRepository.findOne(walletData.getOrganizationId());
 
         if(bindingResult.hasErrors()){
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar" ,this.cashNavBar);
             modelAndView.addObject("fragment",this.cashdeskFragment);
             modelAndView.addObject("fragmentNavBar",this.cashdeskFragmentNavBar);
-            modelAndView.addObject("employee", employee);
+            modelAndView.addObject("organization", organization);
             modelAndView.addObject("walletData", walletData);
             return modelAndView;
         }
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar" ,this.cashNavBar);
         modelAndView.addObject("fragment",this.cashdeskFragment);
@@ -113,10 +113,10 @@ public class InnerAppController extends BaseController {
     @RequestMapping(value = "/account/cash/cashin/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashIncashdesk(@PathVariable(value = "id") final Long id,  ModelAndView modelAndView ){
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         WalletData walletData = new WalletData();
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar" ,this.cashNavBar);
         modelAndView.addObject("fragment",this.cashInFragment);
@@ -127,10 +127,10 @@ public class InnerAppController extends BaseController {
     @RequestMapping(value = "/account/cash/cashout/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashOutcashdesk(@PathVariable(value = "id") final Long id,  ModelAndView modelAndView ){
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         WalletData walletData = new WalletData();
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar"  ,this.cashNavBar);
         modelAndView.addObject("fragment",this.cashOutFragment);
@@ -149,9 +149,9 @@ public class InnerAppController extends BaseController {
     public ModelAndView partnerCustomerDebt(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.partnerNavBar);
         modelAndView.addObject("fragment",this.partnerFragment);
 
@@ -166,9 +166,9 @@ public class InnerAppController extends BaseController {
     public ModelAndView employee(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.employeeNavBar);
         modelAndView.addObject("fragment",this.employeeFragment);
 
@@ -183,9 +183,9 @@ public class InnerAppController extends BaseController {
     public ModelAndView reportSummary (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
-        Employee employee = employeeRepository.findOne(id);
+        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("employee", employee);
+        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.reportNavBar);
         modelAndView.addObject("fragment",this.reportFragment);
 

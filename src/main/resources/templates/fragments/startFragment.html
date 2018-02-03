@@ -63,13 +63,13 @@
         <div class="col-md-3">
             <h4>Գրանցված Ա/Ձ-ներ և կազմակերպություններ </h4>
 
-            <tr th:each="employee : ${employeeList}">
-                <a th:href="'/account/organization/'+${employee.getId()}" ><td th:text="${employee.getEmployeeName()}"></td></a>
+            <tr th:each="organization : ${organizationList}">
+                <a th:href="'/account/organization/'+${organization.getId()}" ><td th:text="${organization.getOrganizationName()}"></td></a>
             </tr>
         </div>
         <div class="col-md-2">
 
-            <a href="/account/employee/create">Ա/Զ</a>
+            <a href="/account/organization/create">Ա/Զ</a>
 
         </div>
 
@@ -86,20 +86,20 @@
 
 
 
-<div class="container" th:fragment="employeeCreate" >
-    <h1>Employee Create</h1>
+<div class="container" th:fragment="organizationCreate" >
+    <h1>Organization Create</h1>
 
-    <form id="employee" method="post" th:object="${employee}"  enctype="application/x-www-form-urlencoded ">
+    <form id="organization" method="post" th:object="${organization}"  enctype="application/x-www-form-urlencoded ">
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
             <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
 
         </div>
         <label>Անվանում</label>
-        <input th:style="*{#fields.hasErrors('employeeName') ? 'border-color: red ;' : ''}"
+        <input th:style="*{#fields.hasErrors('organizationName') ? 'border-color: red ;' : ''}"
                type="text"
-               th:name="employeeName"
-               th:field="*{employeeName}"
+               th:name="organizationName"
+               th:field="*{organizationName}"
                placeholder="Անվանում " />
 
         <br/>
