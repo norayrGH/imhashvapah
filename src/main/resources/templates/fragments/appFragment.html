@@ -108,6 +108,7 @@
         <div id="cashNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
 
+
                 <li><a  th:href="@{'/account/cash/' + ${organization.id}}" id="cashResource" >      Դրամական միջոցներ</a></li>
                 <li><a  th:href="@{'/account/cash/cashin/cashdesk/' + ${organization.id}}" id="in"> Մեւտքեր</a></li>
                 <li><a th:href="@{'/account/cash/cashout/cashdesk/' + ${organization.id}}" id="out">Ելքեր</a></li>
@@ -116,7 +117,6 @@
         </div>
     </nav>
 </div>
-
 <div class="container" th:fragment="cashdesk">
 
     <form th:object="${walletData}" action="/account/cash/cashdesk" th:name="walletDataForm" method="post" >
@@ -186,6 +186,7 @@
 
         <div id="cashdeskFragmentNavBar" class="collapse navbar-collapse">
             <ul class=" nav flex-column">
+
                 <li class="nav-item"><a class="nav-link active"   th:href="@{'/account/cash/cashdesk/' + ${organization.id}}" > Դրամապանակի տվյալններ </a></li>
                 <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="terminalData">Տերմինալի տվյալներ</a></li>
                 <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bankAccounts">Բանկային հաշիվներ</a></li>
@@ -198,6 +199,7 @@
 
         <div id="cashInFragmentNavBar" class="collapse navbar-collapse">
             <ul class=" nav flex-column " >
+
                 <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="wallet"> Դրամապանակ </a></li>
                 <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="terminal">Տերմինալ</a></li>
                 <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bank">Բանկ</a></li>
@@ -217,7 +219,6 @@
         </div>
     </nav>
 </div>
-
 <div class="row" th:fragment="cash">
 
     <div class="col-md-4" >
@@ -232,14 +233,57 @@
 </div>
 
 
+
 <div class="container" th:fragment="partnerNavBar">
     <nav role="navigation" class="navbar-justified">
 
         <div id="partnerNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
-                <li><a  th:href="@{'' + ${organization.id}}" id="customers" >Գնորդներ</a></li>
-                <li><a  th:href="@{'' + ${organization.id}}" id="delivery">Մատակարարներ</a></li>
-                <li><a th:href="@{'' + ${organization.id}}" id="anotherPartners">Այլ գործընկերներ</a></li>
+
+                <li><a  th:href="@{'/account/partner/customer/debt/' + ${organization.id}}" id="customers" >Գնորդներ</a></li>
+                <li><a  th:href="@{'/account/partner/supplier/debt/' + ${organization.id}}" id="delivery">Մատակարարներ</a></li>
+                <li><a th:href="@{'/account/partner/otherpartner/debt/' + ${organization.id}}" id="anotherPartners">Այլ գործընկերներ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="partnerFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="partnerFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column">
+                <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="debts" > Պարտքեր </a></li>
+                <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="sellout">Վաճառքներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="payment">Ստացված վճարումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="customerTable">Գնորդների ցանկ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="partnerSupplierFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="partnerSupplierFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column " >
+                <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="supplierDebt"> Պարտքեր</a></li>
+                <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="purchase">Ձեռքբերումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="periodicService">Ծառայություններ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="supplierPayment">Կատարված վճարումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="supplierTable">Մատակարարների ցանկ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="partnerOtherPartnerFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="partnerOtherPartnerFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column " >
+                <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="otherPartnerDebt"> Պարտքեր</a></li>
+                <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="otherPartnerPayment">Վճարումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="group">Խմբեր</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="otherPartnerTable">Այլ գորընկերների ցանկ</a></li>
+
             </ul>
         </div>
     </nav>
@@ -257,14 +301,46 @@
     </div>
 </div>
 
+
+
+
 <div class="container" th:fragment="employeeNavBar">
     <nav role="navigation" class="navbar-justified">
 
         <div id="employeeNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
-                <li><a  th:href="@{'' + ${organization.id}}" id="employeers" >Աշխատակիցներ</a></li>
-                <li><a  th:href="@{'' + ${organization.id}}" id="salary">Վարձատրությունհ</a></li>
+
+
+                <li><a  th:href="@{'/account/employee/' + ${organization.id}}" id="employeers" >Աշխատակիցներ</a></li>
+                <li><a  th:href="@{'/account/employee/debt/' + ${organization.id}}" id="salary">Վարձատրություն</a></li>
                 <li><a th:href="@{'' + ${organization.id}}" id="accounting">Հաշվարկ</a></li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="employeeFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="employeeFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column">
+                <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="employeeDesk" > Աշխատակիցներ </a></li>
+                <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="subdivision">Ստորաբաժանումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="position">Պաշտոններ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="employeeDebtFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="employeeDebtFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column">
+                <li class="nav-item"><a class="nav-link active"   th:href="@{'' + ${organization.id}}" id="employeeDebt" >Պարտք </a></li>
+                <li class="nav-item"><a class="nav-item"  th:href="@{'' + ${organization.id}}" id="employeeSalary">Աշխատավարձեր</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="vacation">Արձակուրդներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="absence">Բացակայություններ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bonus">Պարգևներներ</a></li>
             </ul>
         </div>
     </nav>
@@ -284,13 +360,46 @@
 
 </div>
 
+
+
+
+
 <div class="container" th:fragment="reportNavBar">
     <nav role="navigation" class="navbar-justified">
 
         <div id="reportNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
-                <li><a  th:href="@{'' + ${organization.id}}" id="summaryData" >Ամփոփ տվյալներ</a></li>
-                <li><a  th:href="@{'' + ${organization.id}}" id="tax" >Հարկեր</a></li>
+
+                <li><a  th:href="@{'/account/report/summary/' + ${organization.id}}" id="summaryData" >Ամփոփ տվյալներ</a></li>
+                <li><a  th:href="@{'/account/report/summary/debt/' + ${organization.id}}" id="tax">Հարկեր</a></li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="reportFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="reportFragmentNavBar" class="collapse navbar-collapse">
+            <ul class="nav flex-column">
+                <li><a  th:href="@{'' + ${organization.id}}" id="summary" >Փակում</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="initialBalances">Սկզբնական մնացորդներ</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="turnover">Շրջանառություն</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="profitLoss">Ֆինանսական արդյունք</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="transaction">Գործառություններ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:fragment="reportDebtFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="reportDebtFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column">
+                <li><a  th:href="@{'' + ${organization.id}}" id="reportDebt" >Պարտքեր</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="report">Հաշվետվություններ</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="reportPaidTax">Վճարված հարկեր</a></li>
+                <li><a  th:href="@{'' + ${organization.id}}" id="reportTax">Հարկատեսակներ</a></li>
             </ul>
         </div>
     </nav>
@@ -309,5 +418,6 @@
 
 
 </div>
+
 </body>
 </html>

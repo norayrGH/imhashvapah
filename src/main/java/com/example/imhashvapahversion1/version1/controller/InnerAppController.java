@@ -40,6 +40,7 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
+
     @RequestMapping(value = "account/organization/details/{id}", method = RequestMethod.GET)
     public ModelAndView organizationDetails(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
         Organization organization = organizationRepository.findOne(id);
@@ -50,6 +51,7 @@ public class InnerAppController extends BaseController {
         return modelAndView;
 
     }
+
     @RequestMapping(value = "account/cash/{id}", method = RequestMethod.GET)
     public ModelAndView cash(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
@@ -68,6 +70,7 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
+
     @RequestMapping(value = "/account/cash/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashdesk(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
@@ -85,6 +88,7 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
+
     @RequestMapping(value = "/account/cash/cashdesk", method = RequestMethod.POST)
     public ModelAndView cashdeskCreate(@Valid WalletData walletData, BindingResult bindingResult, ModelAndView modelAndView ){
 
@@ -124,6 +128,7 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
+
     @RequestMapping(value = "/account/cash/cashout/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashOutcashdesk(@PathVariable(value = "id") final Long id,  ModelAndView modelAndView ){
 
@@ -144,7 +149,6 @@ public class InnerAppController extends BaseController {
         return modelAndView;
     }
 
-
     @RequestMapping(value = "account/partner/customer/debt/{id}", method = RequestMethod.GET)
     public ModelAndView partnerCustomerDebt(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
@@ -154,6 +158,43 @@ public class InnerAppController extends BaseController {
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.partnerNavBar);
         modelAndView.addObject("fragment",this.partnerFragment);
+        modelAndView.addObject("fragmentNavBar",this.partnerFragmentNavBar);
+
+
+
+
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "account/partner/supplier/debt/{id}", method = RequestMethod.GET)
+    public ModelAndView partnerSupplierDebt(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+
+
+        Organization organization = organizationRepository.findOne(id) ;
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar",this.partnerNavBar);
+        modelAndView.addObject("fragment",this.partnerSupplierFragment);
+        modelAndView.addObject("fragmentNavBar",this.partnerSupplierFragmentNavBar);
+
+
+
+
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "account/partner/otherpartner/debt/{id}", method = RequestMethod.GET)
+    public ModelAndView partnerOtherPartnerDebt (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+
+
+        Organization organization = organizationRepository.findOne(id) ;
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar",this.partnerNavBar);
+        modelAndView.addObject("fragment",this.partnerOtherPartnerFragment);
+        modelAndView.addObject("fragmentNavBar",this.partnerOtherPartnerFragmentNavBar);
 
 
 
@@ -163,7 +204,7 @@ public class InnerAppController extends BaseController {
     }
 
     @RequestMapping(value = "account/employee/{id}", method = RequestMethod.GET)
-    public ModelAndView employee(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+    public ModelAndView employee (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
         Organization organization = organizationRepository.findOne(id);
@@ -171,6 +212,27 @@ public class InnerAppController extends BaseController {
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.employeeNavBar);
         modelAndView.addObject("fragment",this.employeeFragment);
+        modelAndView.addObject("fragmentNavBar",this.employeeFragmentNavBar);
+
+
+
+
+
+        return modelAndView;
+    }
+
+
+
+    @RequestMapping(value = "account/employee/debt/{id}", method = RequestMethod.GET)
+    public ModelAndView employeeDebt (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+
+
+        Organization organization = organizationRepository.findOne(id) ;
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar",this.employeeNavBar);
+        modelAndView.addObject("fragment",this.employeeDebtFragment);
+        modelAndView.addObject("fragmentNavBar",this.employeeDebtFragmentNavBar);
 
 
 
@@ -180,7 +242,7 @@ public class InnerAppController extends BaseController {
     }
 
     @RequestMapping(value = "account/report/summary/{id}", method = RequestMethod.GET)
-    public ModelAndView reportSummary (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+    public ModelAndView report (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
 
 
         Organization organization = organizationRepository.findOne(id);
@@ -188,6 +250,24 @@ public class InnerAppController extends BaseController {
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar",this.reportNavBar);
         modelAndView.addObject("fragment",this.reportFragment);
+        modelAndView.addObject("fragmentNavBar",this.reportFragmentNavBar);
+
+
+
+
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "account/report/summary/debt/{id}", method = RequestMethod.GET)
+    public ModelAndView reportDebt (@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+
+        Organization organization = organizationRepository.findOne(id) ;
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar",this.reportNavBar);
+        modelAndView.addObject("fragment",this.reportDebtFragment);
+        modelAndView.addObject("fragmentNavBar",this.reportDebtFragmentNavBar);
 
 
 
