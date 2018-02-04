@@ -37,12 +37,14 @@
 
 
 <div class="container">
- <div class="col-md-4">
-     <th:block th:if="${fragmentNavBar}">
-         <div th:replace="/fragments/appFragment :: ${fragmentNavBar}"/>
-     </th:block>
 
- </div>
+    <div class="col-md-4">
+            <th:block th:if="${fragmentNavBar}">
+                <div th:replace="/fragments/appFragment :: ${fragmentNavBar}"/>
+            </th:block>
+    </div>
+
+
     <div class="col-md-8">
         <div th:replace="/fragments/appFragment :: ${fragment}" />
     </div>

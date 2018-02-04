@@ -57,7 +57,7 @@
 
 
 </header>
-    <div class="row" th:fragment="startView">
+<div class="row" th:fragment="startView">
 
         <div class="col-md-5" >
 
@@ -88,6 +88,103 @@
     </ul>
 
 </div>
+<div th:fragment="fixedasset">
+
+
+
+        <div id="filterForm">
+            <a  class="btn btn-info" role="button" th:href="@{'/account/organization/fixedasset/create/' + ${organization.id} }">Ավելացնել </a>
+            <br />
+            <br />
+            <label>Սկիզբ:</label>
+            <input type="date" id="start" name="start" />
+            <label>Վերջ:</label>
+            <input type="date" id="end" name="end" />
+            <input type="checkbox" id="showAll" name="showAll" />
+            <label> Ցուցադրել բոլորը </label>
+        </div>
+
+
+</div>
+<div th:fragment="fixedassetCreate">
+
+
+
+
+        <form method="post" th:object="${fixedAsset}" action="/account/organization/fixedasset/create" id="fixedassetCreate" >
+
+            <div class="alert alert-danger" th:if=" ${#fields.hasErrors('*')} " >
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+
+            <label>Գույքահամար</label>
+            <input th:style="${#fields.hasErrors('inventoryNumber') ? 'border-color: red ;' : ''}"
+                   type="text"
+                   th:name="inventoryNumber"
+                   th:field="*{inventoryNumber}"/>
+            <br />
+            <label>Անվանում</label>
+            <input th:style="${#fields.hasErrors('name') ? 'border-color: red ;' : ''}"
+                   type="text"
+                   th:name="name"
+                   th:field="*{name}" />
+            <br />
+            <label>Տեսակ </label>
+            <input th:style="${#fields.hasErrors('type') ? 'border-color: red;' : ''}"
+                   type="text"
+                   th:name="type"
+                   th:field="*{type}"
+            />
+            <br />
+            <label>Ձեռքբերման ամսաթիվ</label>
+            <input th:style="${#fields.hasErrors('acquiringDate') ? 'border-color: red;' : ''}"
+                   type="date"
+                   th:name="acquiringDate"
+                   th:field="*{acquiringDate}"
+            />
+            <br />
+            <label>Ձեռքբերման գումար</label>
+            <input th:style="${#fields.hasErrors('acquiringАmount') ? 'border-color: red;' : ''}"
+                   type="text"
+                   th:name="acquiringАmount"
+                   th:field="*{acquiringАmount}"
+            />
+            <br />
+            <label>Մաշվածք</label>
+            <input th:style="${#fields.hasErrors('wear') ? 'border-color: red;' : ''}"
+                   type="text"
+                   th:name="wear"
+                   th:field="*{wear}"
+            />
+            <br />
+            <label>Սկզբնական կուտակված մաշվածք</label>
+            <input th:style="${#fields.hasErrors('initialAccumulated') ? 'border-color: red;' : ''}"
+                   type="text"
+                   th:name="initialAccumulated"
+                   th:field="*{initialAccumulated}"
+            />
+            <br />
+            <label>Նշումներ</label>
+            <input th:style="${#fields.hasErrors('nout') ? 'border-color: red;' : ''}"
+                   type="text"
+                   th:name="nout"
+                   th:field="*{nout}"/>
+            <br />
+
+            <input  type="hidden"
+                    th:name="organizationId"
+                    th:value="${organization.getId()}"
+            />
+            <input type="hidden" name="csrfToken" id="csrfToken"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}" />
+            <input type="submit" />
+
+        </form>
+
+
+
+</div>
 
 <div class="container" th:fragment="organizationNavBar">
     <nav role="navigation" class="navbar-justified">
@@ -95,8 +192,8 @@
         <div id="organizationNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
                 <li><a  th:href="@{'/account/organization/' + ${organization.id}}" id="current" >Ընթացիկ</a></li>
-                <li><a  th:href="@{' /account/organization/details/' + ${organization.id}}" id="details">Տվյալներ</a></li>
-                <li><a href="#" id="himnakan">Հիմնական միջոցներ</a></li>
+                <li><a  th:href="@{'/account/organization/details/' + ${organization.id}}" id="details">Տվյալներ</a></li>
+                <li><a  th:href="@{'/account/organization/fixedasset/' + ${organization.id}}" href="#" id="himnakan">Հիմնական միջոցներ</a></li>
             </ul>
         </div>
     </nav>

@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.controller;
 
+import com.example.imhashvapahversion1.version1.Entity.FixedAsset;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
@@ -51,6 +52,51 @@ public class InnerAppController extends BaseController {
         return modelAndView;
 
     }
+
+    @RequestMapping(value = "account/organization/fixedasset/{id}", method = RequestMethod.GET)
+    public ModelAndView organizationFixedasset(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+        Organization organization = organizationRepository.findOne(id);
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("fragment",this.organizationFixedasset);
+        modelAndView.addObject("navBar",this.organizationNavBar);
+        return modelAndView;
+
+    }
+    @RequestMapping(value = "/account/organization/fixedasset/create/{id}", method = RequestMethod.GET)
+    public ModelAndView organizationFixedassetcreate(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
+        Organization organization = organizationRepository.findOne(id);
+        modelAndView.setViewName("app/app");
+        FixedAsset fixedAsset = new FixedAsset();
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("fixedAsset", fixedAsset);
+        modelAndView.addObject("navBar",this.organizationNavBar);
+        modelAndView.addObject("fragment",this.organizationFixedassetCreate);
+        return modelAndView;
+
+    }
+    @RequestMapping(value = "/account/organization/fixedasset/create", method = RequestMethod.POST)
+    public ModelAndView organizationFixedassetcreate(@Valid FixedAsset fixedAsset , ModelAndView modelAndView , BindingResult bindingResult){
+        Organization organization = organizationRepository.findOne(fixedAsset.getOrganizationId());
+        if(bindingResult.hasErrors()){
+            modelAndView.setViewName("app/app");
+            modelAndView.addObject("navBar",this.organizationNavBar);
+            modelAndView.addObject("fragment",this.organizationFixedassetCreate);
+            modelAndView.addObject("fragmentNavBar",this.cashdeskFragmentNavBar);
+            modelAndView.addObject("organization", organization);
+            modelAndView.addObject("fixedAsset", fixedAsset);
+            return modelAndView;
+        }
+
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar",this.organizationNavBar);
+        modelAndView.addObject("fragment",this.organizationFixedassetCreate);
+        return modelAndView;
+
+    }
+
 
     @RequestMapping(value = "account/cash/{id}", method = RequestMethod.GET)
     public ModelAndView cash(@PathVariable(value = "id") final Long id,ModelAndView modelAndView){
@@ -220,7 +266,6 @@ public class InnerAppController extends BaseController {
 
         return modelAndView;
     }
-
 
 
     @RequestMapping(value = "account/employee/debt/{id}", method = RequestMethod.GET)
