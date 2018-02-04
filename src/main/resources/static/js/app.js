@@ -6,6 +6,7 @@ var  stritFleet = $("#stritFleet");
 
 var address={stritFleet:"",region:"",city:""};
 var textaddress="";
+/*
 
 
 $.each( addresses, function( key, value ){
@@ -13,6 +14,7 @@ $.each( addresses, function( key, value ){
 });
 
 
+*/
 
 
 
@@ -48,7 +50,6 @@ $("#stritFleet").focusout(function () {
     textaddress="";
 
 });
-
 $("#selectCityes").change(function () {
     regionselect.empty();
 
@@ -73,9 +74,6 @@ $("#selectCityes").change(function () {
     textaddress="";
 
 });
-
-
-
 $("#regionSelect").change(function () {
 
     address["region"]="";
@@ -94,4 +92,8 @@ $("#regionSelect").change(function () {
     textaddress="";
 
 
+});
+$('#start').change(function() {
+    var date = $("#mob-gig-date-gteq").val();
+    console.log(date, 'change')
 });

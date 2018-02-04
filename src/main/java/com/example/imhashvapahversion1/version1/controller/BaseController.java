@@ -6,6 +6,8 @@ public class BaseController {
     protected final String startViwFragment = "startView";
 
     protected final String organizationDetailsFragment = "details";
+    protected final String organizationFixedasset = "fixedasset";
+    protected final String organizationFixedassetCreate = "fixedassetCreate";
     protected final String organizationNavBar = "organizationNavBar";
 
     protected final String cashNavBar = "cashNavBar";
