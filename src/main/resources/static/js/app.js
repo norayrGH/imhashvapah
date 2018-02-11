@@ -98,10 +98,12 @@ function  showFixedAssets(fixedAssets) {
     tHead.append(tHeadTr);
     fixedAssetsTable.append(tHead);
     var tBody = $("<tbody />");
+
     $.each(fixedAssets, function(i, item) {
+        var date = new Date (item.acquiringDate).toISOString();
         tBody.append($("<tr />").attr({scope:"row"}).append($("<td />").text(item.inventoryNumber)
         ,$("<td />").text(item.name)
-        ,$("<td />").text(item.acquiringDate)
+        ,$("<td />").text(date.substring(0,date.indexOf('T')))
         ,$("<td />").text(item.acquiringАmount)
         ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
                             ,"&nbsp;&nbsp;&nbsp;"

@@ -12,5 +12,7 @@ import java.util.List;
 @Repository
 public interface UniversalRepository extends CrudRepository<FixedAsset,Long> {
     @Query( "Select f from FixedAsset f where f.acquiringDate between ?1 and current_date ")
-    List<FixedAsset> findByRange(@Param("startDate") Date startDate);
+    List<FixedAsset> findByRangeStart(@Param("startDate") Date startDate);
+    @Query( "Select f from FixedAsset f where f.acquiringDate between ?1 and ?2 ")
+    List<FixedAsset> findByRange(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 }

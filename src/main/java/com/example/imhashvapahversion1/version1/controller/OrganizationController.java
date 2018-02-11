@@ -135,22 +135,34 @@ public class OrganizationController extends BaseController {
 
 
 
-        if(dateRange.getStart() != null) {
+        if(dateRange.getStart() != null && dateRange.getEnd()==null) {
             Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
             SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
-
             String starter1 = dmyFormat.format(starter);
             starter = dmyFormat.parse(starter1);
 
-           ArrayList<FixedAsset> resultByStart =  (ArrayList)universalRepository.findByRange(starter);
+           ArrayList<FixedAsset> resultByStart =  (ArrayList)universalRepository.findByRangeStart(starter);
 
 
            return resultByStart ;
 
+        }else if(dateRange.getStart() != null && dateRange.getEnd()!=null)
+        { Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
+          Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
+            SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String starter1 = dmyFormat.format(starter);
+            starter = dmyFormat.parse(starter1);
+            String ender1 = dmyFormat.format(ender);
+            ender = dmyFormat.parse(ender1);
+            ArrayList<FixedAsset> resultByStart =  (ArrayList)universalRepository.findByRange(starter, ender);
+            return resultByStart ;
+
+        } else{
+
+          return  (ArrayList)universalRepository.findAll();
         }
 
 
-    return null;
     }
 
 
