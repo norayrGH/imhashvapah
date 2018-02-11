@@ -123,7 +123,7 @@
         <input type="text" class="datepicker from"/>
         <label>Վերջ:</label>
         <input type="text" class="datepicker to"/>
-        <input type="checkbox" id="showAll" name="showAll"/>
+        <input type="checkbox" class="range-picker" id="showAll" name="showAll"/>
         <label> Ցուցադրել բոլորը </label>
         <input name="csrfToken" id="csrfToken"
                type="hidden"
@@ -146,6 +146,8 @@
                 var newRange = String( $(this).attr('data-range'));
                 var start="" ;
                 var end="";
+                var showAll = Boolean($("#showAll").is(':checked'));
+                console.log(showAll);
                 var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
                 if(newRange.length>11)
                {
@@ -162,7 +164,8 @@
 
                 var DateRang={
                     start:start,
-                    end:end
+                    end:end,
+                    showAll:showAll
                 }
 
                    $.ajax({
@@ -196,7 +199,7 @@
 <div th:fragment="fixedassetCreate">
 
 
-    <form method="post" th:object="${fixedAsset}" action="/account/organization/fixedasset/create"
+    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/' + ${updateOrCreate}"
           id="fixedassetCreate">
 
         <div class="alert alert-danger" th:if=" ${#fields.hasErrors('*')} ">

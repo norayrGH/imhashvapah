@@ -15,4 +15,6 @@ public interface UniversalRepository extends CrudRepository<FixedAsset,Long> {
     List<FixedAsset> findByRangeStart(@Param("startDate") Date startDate);
     @Query( "Select f from FixedAsset f where f.acquiringDate between ?1 and ?2 ")
     List<FixedAsset> findByRange(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+    @Query( "Select f from FixedAsset f where f.acquiringDate < ?1 ")
+    List<FixedAsset>  findByEnd(@Param("endDate")Date ender);
 }

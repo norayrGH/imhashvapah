@@ -100,6 +100,11 @@ function  showFixedAssets(fixedAssets) {
     var tBody = $("<tbody />");
 
     $.each(fixedAssets, function(i, item) {
+
+
+
+
+
         var date = new Date (item.acquiringDate).toISOString();
         tBody.append($("<tr />").attr({scope:"row"}).append($("<td />").text(item.inventoryNumber)
         ,$("<td />").text(item.name)

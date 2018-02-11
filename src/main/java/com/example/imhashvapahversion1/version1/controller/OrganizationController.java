@@ -88,7 +88,7 @@ public class OrganizationController extends BaseController {
     }
 
     @RequestMapping(value = "/fixedasset/create/{id}", method = RequestMethod.GET)
-    public ModelAndView organizationFixedassetcreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    public ModelAndView organizationFixedassetCreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
         Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
         FixedAsset fixedAsset = new FixedAsset();
@@ -96,13 +96,60 @@ public class OrganizationController extends BaseController {
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("fixedAsset", fixedAsset);
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("updateOrCreate", "create");
         modelAndView.addObject("fragment", this.organizationFixedassetCreate);
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = "/fixedasset/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView organizationFixedassetEdit(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        FixedAsset fixedAsset = universalRepository.findOne(id);
+        Organization organization = fixedAsset.getOrganization();
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("fixedAsset", fixedAsset);
+        modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("updateOrCreate", "update");
+        modelAndView.addObject("fragment", this.organizationFixedassetCreate);
+        return modelAndView;
+
+    }
+
+
+    @RequestMapping(value = "/fixedasset/update", method = RequestMethod.POST)
+    public ModelAndView organizationFixedassetupdatePost(@Valid FixedAsset fixedAsset, BindingResult bindingResult, ModelAndView modelAndView) {
+
+
+        if (bindingResult.hasErrors()) {
+
+            modelAndView.setViewName("app/app");
+            modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("fragment", this.organizationFixedassetCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
+            modelAndView.addObject("organization", fixedAsset.getOrganization());
+            modelAndView.addObject("fixedAsset", fixedAsset);
+
+            return modelAndView;
+        }
+
+      /*  universalRepository.save(fixedAsset);
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", fixedAsset.getOrganization());
+        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("fragment", this.organizationFixedasset);*/
+
+
+
+
         return modelAndView;
 
     }
 
     @RequestMapping(value = "/fixedasset/create", method = RequestMethod.POST)
     public ModelAndView organizationFixedassetcreatePost(@Valid FixedAsset fixedAsset, BindingResult bindingResult, ModelAndView modelAndView) {
+
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("app/app");
@@ -127,42 +174,46 @@ public class OrganizationController extends BaseController {
         return modelAndView;
 
     }
-    @RequestMapping(value = "/fixedasset/show")
 
-    @ResponseBody public ArrayList<FixedAsset> organizationFixedassetcreatePost(@RequestBody DateRange dateRange ) throws ParseException {
+    @RequestMapping(value = "/fixedasset/show", method = RequestMethod.POST)
+     public @ResponseBody ArrayList<FixedAsset> organizationFixedassetcreatePost(@RequestBody DateRange dateRange ) throws ParseException {
+        if (dateRange.isShowAll())
+            return (ArrayList) universalRepository.findAll();
 
 
+        SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
-
-        if(dateRange.getStart() != null && dateRange.getEnd()==null) {
+        if (dateRange.getStart() != null && dateRange.getEnd() == null) {
             Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
-            SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
             String starter1 = dmyFormat.format(starter);
             starter = dmyFormat.parse(starter1);
 
-           ArrayList<FixedAsset> resultByStart =  (ArrayList)universalRepository.findByRangeStart(starter);
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRangeStart(starter);
 
 
-           return resultByStart ;
+            return resultByStart;
 
-        }else if(dateRange.getStart() != null && dateRange.getEnd()!=null)
-        { Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
-          Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
-            SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String starter1 = dmyFormat.format(starter);
-            starter = dmyFormat.parse(starter1);
+        } else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
+            Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
             String ender1 = dmyFormat.format(ender);
             ender = dmyFormat.parse(ender1);
-            ArrayList<FixedAsset> resultByStart =  (ArrayList)universalRepository.findByRange(starter, ender);
-            return resultByStart ;
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByEnd( ender);
+            return resultByStart;
+        } else if (dateRange.getStart() != null && dateRange.getEnd() != null) {
+            Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
+            String starter1 = dmyFormat.format(starter);
+            starter = dmyFormat.parse(starter1);
+            Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
+            String ender1 = dmyFormat.format(ender);
+            ender = dmyFormat.parse(ender1);
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRange(starter, ender);
 
-        } else{
 
-          return  (ArrayList)universalRepository.findAll();
+            return resultByStart;
+
         }
-
-
+        return null;
     }
 
 

@@ -12,7 +12,7 @@ public class DateRange {
     private Date start;
 
     private Date end;
-
+    private boolean showAll ;
     public DateRange() {
     }
 
@@ -30,5 +30,13 @@ public class DateRange {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public boolean isShowAll() {
+        return showAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        this.showAll = showAll;
     }
 }
