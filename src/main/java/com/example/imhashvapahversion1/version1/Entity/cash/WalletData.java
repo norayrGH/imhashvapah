@@ -3,9 +3,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class WalletData {
@@ -20,7 +18,8 @@ public class WalletData {
     private int cashBbookPapers;
     private int startingNumberCashBookPapers;
     private String notes;
-    private Long organizationId;
+    @OneToOne
+    private Organization organization;
 
     public WalletData() {
     }
@@ -89,11 +88,11 @@ public class WalletData {
         this.notes = notes;
     }
 
-    public Long getOrganizationId() {
-        return organizationId;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrganizationId(Long organizationId) {
-        this.organizationId = organizationId;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }

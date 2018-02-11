@@ -36,7 +36,7 @@ public class Organization  {
     //Գրանցման ամսաթիվ
     @Column(name = "organization_reg_date",unique = false,nullable = false)
     @NotNull(message = " Գրանցման ամսաթիվ դաշտը պարտադիր է լրացնել ")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd" , iso = DateTimeFormat.ISO.DATE)
     private Date registrationDate;
 
     //Վկայականի համար
@@ -54,7 +54,7 @@ public class Organization  {
     //Սկզբն. մնացորդների ամսաթիվ
     //Բոլոր էջերի սկզբնական մնացորդները պետք է լրացվեն ըստ այս ամսաթվի:
     @Column(name="organization_date_of_open_balances",unique = false,nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
     @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետկ է լրացնել")
     private Date dateOfOpeningBalances ;
 
@@ -75,6 +75,9 @@ public class Organization  {
     @OneToOne(cascade=CascadeType.ALL )
     @Valid
     private CircleTax circleTax;
+
+
+
 
 
     public Organization() {

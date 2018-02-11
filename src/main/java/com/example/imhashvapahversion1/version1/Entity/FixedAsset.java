@@ -28,7 +28,7 @@ public class FixedAsset {
     private String type;
     @Column(name = "fixedAsset_acquiring_date", unique = false, nullable = false)
     @NotNull(message = "Ամսաթիվը պարտադիր է: ")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
     private Date acquiringDate;
     @Column(name = "fixedAsset_acquiring_Amount", unique = false, nullable = false)
     @NotEmpty(message = " Ձեռքբերման գումարը պարտադիր է: ")
@@ -44,14 +44,13 @@ public class FixedAsset {
 
     @Column(name = "fixedAsset_nout", unique = false, nullable = true)
     private String  nout;
-    @Column(name = "fixedAsset_organizationId", unique = false, nullable = false)
-    private Long organizationId ;
-
+    @ManyToOne
+    private Organization organization;
 
     public FixedAsset() {
     }
 
-    public FixedAsset(String inventoryNumber, String name, String type, Date acquiringDate, String acquiringАmount, String wear, String initialAccumulated, String nout, Long organizationId) {
+    public FixedAsset(String inventoryNumber, String name, String type, Date acquiringDate, String acquiringАmount, String wear, String initialAccumulated, String nout, Organization organization) {
         this.inventoryNumber = inventoryNumber;
         this.name = name;
         this.type = type;
@@ -60,7 +59,11 @@ public class FixedAsset {
         this.wear = wear;
         this.initialAccumulated = initialAccumulated;
         this.nout = nout;
-        this.organizationId = organizationId;
+        this.organization = organization;
+    }
+
+    public FixedAsset(Organization organization) {
+        this.organization = organization;
     }
 
     public Long getId() {
@@ -135,11 +138,11 @@ public class FixedAsset {
         this.nout = nout;
     }
 
-    public Long getOrganizationId() {
-        return organizationId;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrganizationId(Long organizationId) {
-        this.organizationId = organizationId;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }
