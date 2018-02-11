@@ -94,22 +94,7 @@
     </ul>
 
 </div>
-<div th:fragment="fixedassetShow">
 
-    <h1>HERE IS !</h1>
-
-    <tr th:each="fixedAsset : ${result}" >
-        <td th:text="${fixedAsset.name} " />
-        <td th:text="${fixedAsset.inventoryNumber} " />
-        <td th:text="${fixedAsset.type} " />
-        <td th:text="${fixedAsset.acquiringDate} " />
-
-        <td th:text="${fixedAsset.wear}" />
-        <td th:text="${fixedAsset.initialAccumulated}" />
-        <td th:text="${fixedAsset.nout}" />
-    </tr>
-
-</div>
 <div th:fragment="fixedasset" >
 
 
@@ -141,6 +126,8 @@
             var result = parts[2]+"-"+parts[1]+"-"+parts[0];
             return new Date(result);
         }
+        $("<input />").attr("id","input1").text("hello").appendTo($("<body>"));
+        var id= $("#input1").attr("id");
         $(function () {
             $('.range-picker').on('change', function () {
                 var newRange = String( $(this).attr('data-range'));

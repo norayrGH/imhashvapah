@@ -514,7 +514,7 @@ function flexibleCompare(a, b) {
 exports.flexibleCompare = flexibleCompare;
 /* Date Utilities
 ----------------------------------------------------------------------------------------------------------------------*/
-exports.dayIDs = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+exports.dayIDs = ['Կիր', 'Երկ', 'Երք', 'Չրք', 'Հնգ', 'Ուրբ', 'Շբթ'];
 exports.unitsDesc = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond']; // descending
 // Diffs the two moments into a Duration where full-days are recorded first, then the remaining time.
 // Moments will have their timezones normalized.
