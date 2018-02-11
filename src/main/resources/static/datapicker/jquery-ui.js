@@ -7233,9 +7233,9 @@
         this.regional = []; // Available regional settings, indexed by language code
         this.regional[ "" ] = { // Default regional settings
             closeText: "Done", // Display text for close link
-            prevText: "Prev", // Display text for previous month link
-            nextText: "Next", // Display text for next month link
-            currentText: "Today", // Display text for current month link
+            prevText: "Նախորդ", // Display text for previous month link
+            nextText: "Հաջորդ", // Display text for next month link
+            currentText: "Այսօր", // Display text for current month link
             monthNames: [ "Հունվար","Փետրվար","Մարտ","Ապրիլ","Մայիս","Հունիս",
                 "Հուլիս","Օգոստոս","Սեպտեմբեր","Հոկտեմբեր","Նոյեմբեր","Դեկտեմբեր" ], // Names of months for drop-down and formatting
             monthNamesShort: [ "Հուն", "Փետ", "Մարտ", "Ապր", "Մայ", "Հուն", "Հուլ", "Օգոս", "Սեպ", "Հոկ", "Նոյ", "Դեկ" ], // For formatting
