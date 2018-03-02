@@ -107,27 +107,24 @@
         <label>Սկիզբ:</label>
         <input type="text" class="datepicker from"/>
         <label>Վերջ:</label>
-        <input type="text" class="datepicker to"/>
-        <input type="checkbox" class="range-picker" id="showAll" name="showAll"/>
+        <input type="text" class="datepicker to" />
+        <input type="checkbox" class="range-picker" id="showAll" name="showAll" />
         <label> Ցուցադրել բոլորը </label>
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}"/>
     </div>
-    <div id="showFixedAssets">
-
-
+    <div id="showFixedAssets" >
     </div>
-
     <script>
         function toDate(dateStr) {
             var parts = dateStr.split("/");
             var result = parts[2]+"-"+parts[1]+"-"+parts[0];
             return new Date(result);
         }
-        $("<input />").attr("id","input1").text("hello").appendTo($("<body>"));
-        var id= $("#input1").attr("id");
+
+
         $(function () {
             $('.range-picker').on('change', function () {
                 var newRange = String( $(this).attr('data-range'));
@@ -145,15 +142,19 @@
                     end =  newRange.substring(newRange.indexOf('-')+1,newRange.length );
                else
                    start=newRange.substring(0, newRange.indexOf('-'));
-
               start = toDate(start);
-               end = toDate(end);
+              end = toDate(end);
+
 
                 var DateRang={
                     start:start,
                     end:end,
                     showAll:showAll
-                }
+                };
+
+                if(showAll==false)
+                    $('#showFixedAssets').empty();
+
 
                    $.ajax({
 
@@ -164,8 +165,10 @@
                         data :JSON.stringify(DateRang),
                        beforeSend: function(xhr){
                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
-                       },  success: function (msg) {
-
+                       },  success: function (msg){
+                            if(msg == null)
+                                $('#showFixedAssets').empty();
+                            else
                            showFixedAssets(msg);
                            //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
                         },
@@ -180,17 +183,15 @@
             });
         });
     </script>
-
-
 </div>
-<div th:fragment="fixedassetCreate">
+<div th:fragment="fixedassetCreate" >
 
 
-    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/' + ${updateOrCreate}"
-          id="fixedassetCreate">
+    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/' + ${updateOrCreate}}"
+          id="fixedassetCreate" >
 
-        <div class="alert alert-danger" th:if=" ${#fields.hasErrors('*')} ">
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <div class="alert alert-danger" th:if=" ${ #fields.hasErrors('*') } ">
+            <p th:each=" err : ${ #fields.errors('*') }" th:text=" ${ err } "></p>
         </div>
 
         <label>Գույքահամար</label>
@@ -246,6 +247,11 @@
                th:name="nout"
                th:field="*{nout}"/>
         <br/>
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="*{id}"
+        />
 
         <input
                 type="hidden"
@@ -300,7 +306,7 @@
 <div class="container" th:fragment="cashdesk">
 
     <form th:object="${walletData}" action="/account/cash/cashdesk" th:name="walletDataForm" method="post">
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')} " >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
             <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
 
@@ -351,7 +357,70 @@
     </form>
 </div>
 <div class="container" th:fragment="cashIn">
-    <p>Welcome cashIn !!!!!!!</p>
+    <div id="filterForm" class="range-picker" >
+        <a class="btn btn-info" role="button"
+           th:href="@{'/account/cash/cashin/cashdesk/create/' + ${organization.id} }">Ավելացնել </a>
+        <br/>
+        <br/>
+        <label>Սկիզբ:</label>
+        <input type="text" class="datepicker from"/>
+        <label>Վերջ:</label>
+        <input type="text" class="datepicker to" />
+        <input type="checkbox" class="range-picker" id="showAll" name="showAll" />
+        <label> Ցուցադրել բոլորը </label>
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+    </div>
+
+</div>
+<div class="container" th:fragment="cashInCreate" >
+    <form th:object="${waletIn}" action="/account/cash/cashdesk" th:name="walletInCreate" method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
+
+        </div>
+        <label>Մուտքի տեսակ</label>
+        <select th:name="inType"
+                class="selectWaletInType"
+                th:field="*{inType}" >
+            <option th:value="0" > --Ընտրել-- </option>
+            <option th:value="9" > Մուտք առևտրի կետից </option>
+            <option th:value="1" > Մուտք ապրանքների իրացումից </option>
+            <option th:value="2" > Մուտք ծառայության մատուցումից </option>
+            <option th:value="3" > Մուտք բանկային հաշվից </option>
+            <option th:value="7" > Փոխառության ստացում </option>
+            <option th:value="8" > Վարկի ստացում </option>
+        </select>
+        <br />
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{inDate}" />
+        <br />
+
+        <label>Մուտքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{inCash}" />
+        <br />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{note}"
+        />
+        <br />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+
+        <input type="submit" class="btn btn-default"/>
+    </form>
 
 </div>
 <div class="container" th:fragment="cashOut">
@@ -621,5 +690,5 @@
 
 </div>
 
-</body>
+</body >
 </html>

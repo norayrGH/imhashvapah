@@ -53,7 +53,7 @@ public class User implements UserDetails, Serializable {
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
         }
@@ -65,8 +65,6 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getPassword() {
-
-
         return password ;
     }
 

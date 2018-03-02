@@ -1,7 +1,10 @@
 package com.example.imhashvapahversion1.version1.controller;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+
+import com.example.imhashvapahversion1.version1.Entity.cash.WaletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
+
 import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.UniversalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +119,21 @@ public class CashController extends BaseController {
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return modelAndView;
+    }
+    @RequestMapping(value = "cashin/cashdesk/create/{id}", method = RequestMethod.GET )
+    public ModelAndView cashIncashdeskCreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView,BindingResult bindingResult) {
+
+        Organization organization = organizationRepository.findOne(id);
+        WaletIn waletIn = new WaletIn();
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("waletIn", waletIn);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return modelAndView;

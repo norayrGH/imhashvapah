@@ -1,24 +1,29 @@
 package com.example.imhashvapahversion1.version1.Entity;
 
+import com.example.imhashvapahversion1.version1.validate.UniqueValidator;
+import com.example.imhashvapahversion1.version1.validate.UniqueValidatorItem;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.security.PrivateKey;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "tbl_fixedAsset")
 public class FixedAsset {
+
+
     @Id
     @GeneratedValue
-    private Long id;
+    public Long id;
     //Անվանում
     @Column(name = "fixedAsset_inventoryNumber", unique = true, nullable = false)
     @NotEmpty(message = "Հիմնական միջոցի գույքահամարը պարտադիր է: ")
-    private String inventoryNumber;
+    public String inventoryNumber;
 
     @Column(name = "fixedAsset_name", unique = false, nullable = false)
     @NotEmpty(message = "Հիմնական միջոցի անվանումը պարտադիր է: ")
@@ -28,7 +33,7 @@ public class FixedAsset {
     private String type;
     @Column(name = "fixedAsset_acquiring_date", unique = false, nullable = false)
     @NotNull(message = "Ամսաթիվը պարտադիր է: ")
-    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date acquiringDate;
     @Column(name = "fixedAsset_acquiring_Amount", unique = false, nullable = false)
     @NotEmpty(message = " Ձեռքբերման գումարը պարտադիր է: ")
@@ -40,10 +45,10 @@ public class FixedAsset {
 
     @Column(name = "fixedAsset_initialAccumulated", unique = false, nullable = false)
     @NotEmpty(message = " Սկզբնական կուտակված մաշվածքը պարտադիր է: ")
-    private String  initialAccumulated;
+    private String initialAccumulated;
 
     @Column(name = "fixedAsset_nout", unique = false, nullable = true)
-    private String  nout;
+    private String nout;
     @ManyToOne
     private Organization organization;
 
@@ -142,7 +147,10 @@ public class FixedAsset {
         return organization;
     }
 
+
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
+
+
 }

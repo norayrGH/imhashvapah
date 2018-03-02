@@ -84,6 +84,7 @@ $("#regionSelect").change(function () {
 
 function  showFixedAssets(fixedAssets) {
 
+
     $('#showFixedAssets').empty();
 
     var fixedAssetsTableTh= ["Գույքահամար","Անվանում","Ամսաթիվ","Ձեռքբերման գումար"];
@@ -132,4 +133,7 @@ $(function () {
             // $(this).closest(".range-picker").trigger('change', from + "-" + to);
         });
     });
+});
+$(".selectWaletInType").change(function () {
+   alert("ok");
 });

@@ -5,23 +5,30 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.UniversalRepository;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.DateUtils;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Calendar;
 import java.util.Locale;
+
 
 @RestController
 @RequestMapping(value = "/account/organization/")
@@ -111,7 +118,7 @@ public class OrganizationController extends BaseController {
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("fixedAsset", fixedAsset);
         modelAndView.addObject("navBar", this.organizationNavBar);
-            modelAndView.addObject("updateOrCreate", "update");
+        modelAndView.addObject("updateOrCreate", "update");
         modelAndView.addObject("fragment", this.organizationFixedassetCreate);
         return modelAndView;
 
@@ -120,25 +127,25 @@ public class OrganizationController extends BaseController {
 
     @RequestMapping(value = "/fixedasset/update", method = RequestMethod.POST)
     public ModelAndView organizationFixedassetupdatePost(@Valid FixedAsset fixedAsset, BindingResult bindingResult, ModelAndView modelAndView) {
-
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.organizationNavBar);
 
         if (bindingResult.hasErrors()) {
 
-            modelAndView.setViewName("app/app");
-            modelAndView.addObject("navBar", this.organizationNavBar);
-            modelAndView.addObject("fragment", this.organizationFixedassetCreate);
-            modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             modelAndView.addObject("organization", fixedAsset.getOrganization());
+            modelAndView.addObject("fragment", this.organizationFixedassetCreate);
+            modelAndView.addObject("updateOrCreate", "update");
             modelAndView.addObject("fixedAsset", fixedAsset);
-
             return modelAndView;
         }
 
-      /*  universalRepository.save(fixedAsset);
-        modelAndView.setViewName("app/app");
+
+        universalRepository.save(fixedAsset);
+
+
+
         modelAndView.addObject("organization", fixedAsset.getOrganization());
-        modelAndView.addObject("navBar", this.organizationNavBar);
-        modelAndView.addObject("fragment", this.organizationFixedasset);*/
+        modelAndView.addObject("fragment", this.organizationFixedasset);
 
 
 
@@ -157,7 +164,8 @@ public class OrganizationController extends BaseController {
             modelAndView.addObject("fragment", this.organizationFixedassetCreate);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             modelAndView.addObject("organization", fixedAsset.getOrganization());
-            modelAndView.addObject("fixedAsset", fixedAsset);
+            modelAndView.addObject("updateOrCreate", "create");
+                modelAndView.addObject("fixedAsset", fixedAsset);
 
             return modelAndView;
         }
@@ -177,40 +185,72 @@ public class OrganizationController extends BaseController {
 
     @RequestMapping(value = "/fixedasset/show", method = RequestMethod.POST)
      public @ResponseBody ArrayList<FixedAsset> organizationFixedassetcreatePost(@RequestBody DateRange dateRange ) throws ParseException {
+
+
+
+
+
         if (dateRange.isShowAll())
             return (ArrayList) universalRepository.findAll();
 
 
-        SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
 
         if (dateRange.getStart() != null && dateRange.getEnd() == null) {
-            Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
-            String starter1 = dmyFormat.format(starter);
-            starter = dmyFormat.parse(starter1);
 
-            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRangeStart(starter);
+            Calendar calStart = Calendar.getInstance();
+            calStart.set(Calendar.YEAR,dateRange.getStart().toLocalDate().getYear());
+            calStart.set(Calendar.MONTH,  dateRange.getStart().toLocalDate().getDayOfMonth() - 1);
+            calStart.set(Calendar.DAY_OF_MONTH, dateRange.getStart().toLocalDate().getMonthValue()+1);
+            calStart.set(Calendar.HOUR_OF_DAY,0);
+            calStart.set(Calendar.MINUTE,0);
+            calStart.set(Calendar.SECOND,0);
+            java.sql.Date dateStart = new java.sql.Date(calStart.getTimeInMillis());
+
+
+            ArrayList resultByStart = (ArrayList) universalRepository.findByRangeStart(dateStart);
 
 
             return resultByStart;
 
         } else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
-            Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
-            String ender1 = dmyFormat.format(ender);
-            ender = dmyFormat.parse(ender1);
-            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByEnd( ender);
+
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.set(Calendar.YEAR,dateRange.getEnd().toLocalDate().getYear());
+            calEnd.set(Calendar.MONTH,  dateRange.getEnd().toLocalDate().getDayOfMonth() - 1);
+            calEnd.set(Calendar.DAY_OF_MONTH, dateRange.getEnd().toLocalDate().getMonthValue()+1);
+            calEnd.set(Calendar.HOUR_OF_DAY,0);
+            calEnd.set(Calendar.MINUTE,0);
+            calEnd.set(Calendar.SECOND,0);
+            java.sql.Date dateEnd = new java.sql.Date(calEnd.getTimeInMillis());
+
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByEnd( dateEnd);
             return resultByStart;
         } else if (dateRange.getStart() != null && dateRange.getEnd() != null) {
-            Date starter = new Date(dateRange.getStart().getYear(), dateRange.getStart().getMonth(), dateRange.getStart().getDay());
-            String starter1 = dmyFormat.format(starter);
-            starter = dmyFormat.parse(starter1);
-            Date ender = new Date(dateRange.getEnd().getYear(), dateRange.getEnd().getMonth(), dateRange.getEnd().getDay());
-            String ender1 = dmyFormat.format(ender);
-            ender = dmyFormat.parse(ender1);
-            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRange(starter, ender);
+            Calendar calStart = Calendar.getInstance();
+            calStart.set(Calendar.YEAR,dateRange.getStart().toLocalDate().getYear());
+            calStart.set(Calendar.MONTH,  dateRange.getStart().toLocalDate().getDayOfMonth() - 1);
+            calStart.set(Calendar.DAY_OF_MONTH, dateRange.getStart().toLocalDate().getMonthValue()+1);
+            calStart.set(Calendar.HOUR_OF_DAY,0);
+            calStart.set(Calendar.MINUTE,0);
+            calStart.set(Calendar.SECOND,0);
+            java.sql.Date dateStart = new java.sql.Date(calStart.getTimeInMillis());
 
 
-            return resultByStart;
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.set(Calendar.YEAR,dateRange.getEnd().toLocalDate().getYear());
+            calEnd.set(Calendar.MONTH,  dateRange.getEnd().toLocalDate().getDayOfMonth() - 1);
+            calEnd.set(Calendar.DAY_OF_MONTH, dateRange.getEnd().toLocalDate().getMonthValue()+1);
+            calEnd.set(Calendar.HOUR_OF_DAY,0);
+            calEnd.set(Calendar.MINUTE,0);
+            calEnd.set(Calendar.SECOND,0);
+            java.sql.Date dateEnd = new java.sql.Date(calEnd.getTimeInMillis());
+
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRange(dateStart, dateEnd);
+
+
+                return resultByStart;
 
         }
         return null;
