@@ -1,9 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity.enums;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DateRange {
 

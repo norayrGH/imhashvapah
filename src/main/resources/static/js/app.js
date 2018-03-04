@@ -84,6 +84,7 @@ $("#regionSelect").change(function () {
 
 function  showFixedAssets(fixedAssets) {
 
+
     $('#showFixedAssets').empty();
 
     var fixedAssetsTableTh= ["Գույքահամար","Անվանում","Ամսաթիվ","Ձեռքբերման գումար"];

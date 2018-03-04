@@ -21,6 +21,7 @@ public class Organization  {
     @Column(name = "organization_name",unique = true,nullable = false)
     @Size(min=2, max=30 , message = " Գրեք ճիշտ Անվանում ")
     @NotEmpty(message = " Անվանում դաշտը հարկավոր է լրացնել")
+
     private String organizationName ;
 
     @Column(name = "organization_hch",unique = true,nullable = false)
