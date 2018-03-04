@@ -306,7 +306,7 @@
 <div class="container" th:fragment="cashdesk">
 
     <form th:object="${walletData}" action="/account/cash/cashdesk" th:name="walletDataForm" method="post">
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')} " >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
             <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
 
@@ -357,7 +357,70 @@
     </form>
 </div>
 <div class="container" th:fragment="cashIn">
-    <p>Welcome cashIn !!!!!!!</p>
+    <div id="filterForm" class="range-picker" >
+        <a class="btn btn-info" role="button"
+           th:href="@{'/account/cash/cashin/cashdesk/create/' + ${organization.id} }">Ավելացնել </a>
+        <br/>
+        <br/>
+        <label>Սկիզբ:</label>
+        <input type="text" class="datepicker from"/>
+        <label>Վերջ:</label>
+        <input type="text" class="datepicker to" />
+        <input type="checkbox" class="range-picker" id="showAll" name="showAll" />
+        <label> Ցուցադրել բոլորը </label>
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+    </div>
+
+</div>
+<div class="container" th:fragment="cashInCreate" >
+    <form th:object="${waletIn}" action="/account/cash/cashdesk" th:name="walletInCreate" method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
+
+        </div>
+        <label>Մուտքի տեսակ</label>
+        <select th:name="inType"
+                class="selectWaletInType"
+                th:field="*{inType}" >
+            <option th:value="0" > --Ընտրել-- </option>
+            <option th:value="9" > Մուտք առևտրի կետից </option>
+            <option th:value="1" > Մուտք ապրանքների իրացումից </option>
+            <option th:value="2" > Մուտք ծառայության մատուցումից </option>
+            <option th:value="3" > Մուտք բանկային հաշվից </option>
+            <option th:value="7" > Փոխառության ստացում </option>
+            <option th:value="8" > Վարկի ստացում </option>
+        </select>
+        <br />
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{inDate}" />
+        <br />
+
+        <label>Մուտքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{inCash}" />
+        <br />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{note}"
+        />
+        <br />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+
+        <input type="submit" class="btn btn-default"/>
+    </form>
 
 </div>
 <div class="container" th:fragment="cashOut">

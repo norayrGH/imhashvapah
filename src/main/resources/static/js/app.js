@@ -134,3 +134,6 @@ $(function () {
         });
     });
 });
+$(".selectWaletInType").change(function () {
+   alert("ok");
+});
