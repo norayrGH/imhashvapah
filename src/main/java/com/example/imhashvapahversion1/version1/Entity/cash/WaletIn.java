@@ -1,32 +1,53 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.sql.Date;
 
 @Entity
-public class WaletIn {
+public class WaletIn<T> {
 
     @Id
     @GeneratedValue
-    private Long id ;
-    @NotEmpty(message = "ընտրեք ")
-  private String inType;
-  private Date inDate;
-  private String inCash;
-  private String note;
+    private Long id;
 
-    public WaletIn(String inType, Date inDate, String inCash, String note) {
-        this.inType = inType;
+    @Any(metaColumn = @Column(name = "what_i_contain"))
+    @Cascade(CascadeType.ALL)
+    @AnyMetaDef(
+            idType = "long",
+            metaType = "string",
+            metaValues = {
+                    @MetaValue(value = "CashInFromBankAccount", targetEntity = CashInFromBankAccount.class),
+                    @MetaValue(value = "CashInFromLoan", targetEntity = CashInFromLoan.class),
+                    @MetaValue(value = "CashInFromServiceProvision", targetEntity = CashInFromServiceProvision.class),
+                    @MetaValue(value = "CashInFromPointOfSale", targetEntity = CashInFromPointOfSale.class),
+                    @MetaValue(value = "CashInFromSaleOfGoods", targetEntity = CashInFromSaleOfGoods.class),
+                    @MetaValue(value = "CashInFromCredit", targetEntity = CashInFromCredit.class)
+            })
+    @JoinColumn(name = "property_id")
+    private T t;
+    private Date inDate;
+    private String inCash;
+    private String note;
+
+    public WaletIn() {
+    }
+
+    public WaletIn(T t) {
+        this.t = t;
+    }
+
+    public WaletIn(T t, Date inDate, String inCash, String note) {
+        this.t = t;
         this.inDate = inDate;
         this.inCash = inCash;
         this.note = note;
-    }
-
-    public WaletIn() {
     }
 
     public Long getId() {
@@ -37,12 +58,12 @@ public class WaletIn {
         this.id = id;
     }
 
-    public String getInType() {
-        return inType;
+    public T getT() {
+        return t;
     }
 
-    public void setInType(String inType) {
-        this.inType = inType;
+    public void setT(T t) {
+        this.t = t;
     }
 
     public Date getInDate() {

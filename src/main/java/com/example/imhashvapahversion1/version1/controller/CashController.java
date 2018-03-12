@@ -124,11 +124,25 @@ public class CashController extends BaseController {
         return modelAndView;
     }
     @RequestMapping(value = "cashin/cashdesk/create/{id}", method = RequestMethod.GET )
-    public ModelAndView cashIncashdeskCreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView,BindingResult bindingResult) {
+    public ModelAndView cashIncashdeskCreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
 
         Organization organization = organizationRepository.findOne(id);
         WaletIn waletIn = new WaletIn();
 
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("waletIn", waletIn);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return modelAndView;
+    }
+    @RequestMapping(value = "cashin/cashdesk/create/selectformchange/cashinfrombankaccount/{id}", method = RequestMethod.POST )
+    public ModelAndView selectCashInFromBankAccount(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+
+        Organization organization = organizationRepository.findOne(id);
+        WaletIn waletIn = new WaletIn();
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("waletIn", waletIn);

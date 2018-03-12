@@ -1,6 +1,8 @@
 package com.example.imhashvapahversion1.version1;
 
+import com.example.imhashvapahversion1.version1.Entity.cash.WaletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.signIn.type.SignInGoodsSale;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromBankAccount;
 import com.example.imhashvapahversion1.version1.repository.WalletInRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +19,18 @@ public class Version1ApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		SignInGoodsSale signInGoodsSale = new SignInGoodsSale();
-		signInGoodsSale.setEntherCash("123000");
 
+
+
+
+	}
+	@Test
+	public void genericHibernate() {
+
+        CashInFromBankAccount cashInFromBankAccount = new CashInFromBankAccount();
+
+		WaletIn<CashInFromBankAccount> in = new WaletIn<CashInFromBankAccount>(cashInFromBankAccount);
+		walletInRepository.save(in);
 
 
 
