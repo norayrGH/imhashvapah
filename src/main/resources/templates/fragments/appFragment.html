@@ -383,9 +383,9 @@
 
         </div>
         <label>Մուտքի տեսակ</label>
-        <select th:name="inType"
+        <select
                 class="selectWaletInType"
-                th:field="*{inType}" >
+                 >
             <option th:value="0" > --Ընտրել-- </option>
             <option th:value="9" > Մուտք առևտրի կետից </option>
             <option th:value="1" > Մուտք ապրանքների իրացումից </option>
@@ -394,6 +394,12 @@
             <option th:value="7" > Փոխառության ստացում </option>
             <option th:value="8" > Վարկի ստացում </option>
         </select>
+        <th:block th:if="">
+
+
+
+            
+        </th:block>
         <br />
         <label>Ամսաթիվ</label>
         <input type="date"
@@ -412,6 +418,17 @@
                th:field="*{note}"
         />
         <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
 
         <input name="csrfToken" id="csrfToken"
                type="hidden"
