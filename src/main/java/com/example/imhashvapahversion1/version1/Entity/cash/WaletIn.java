@@ -25,14 +25,11 @@ public class WaletIn {
         this.inCash = inCash;
         this.note = note;
     }
-
     public WaletIn() {
     }
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -40,23 +37,18 @@ public class WaletIn {
     public String getInType() {
         return inType;
     }
-
     public void setInType(String inType) {
         this.inType = inType;
     }
-
     public Date getInDate() {
         return inDate;
     }
-
     public void setInDate(Date inDate) {
         this.inDate = inDate;
     }
-
     public String getInCash() {
         return inCash;
     }
-
     public void setInCash(String inCash) {
         this.inCash = inCash;
     }
@@ -64,8 +56,8 @@ public class WaletIn {
     public String getNote() {
         return note;
     }
-
     public void setNote(String note) {
         this.note = note;
     }
+
 }
