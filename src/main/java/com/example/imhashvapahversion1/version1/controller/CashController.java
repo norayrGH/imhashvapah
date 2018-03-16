@@ -5,6 +5,8 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WaletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
 
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromSaleOfGoods;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.UniversalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,25 +130,35 @@ public class CashController extends BaseController {
 
         Organization organization = organizationRepository.findOne(id);
         WaletIn waletIn = new WaletIn();
+        waletIn.setOrganization(organization);
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("organization", organization );
         modelAndView.addObject("waletIn", waletIn);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return modelAndView;
+
     }
-    @RequestMapping(value = "cashin/cashdesk/create/selectformchange/cashinfrombankaccount/{id}", method = RequestMethod.POST )
+    @RequestMapping(value = "cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/{id}" , method = RequestMethod.POST )
     public ModelAndView selectCashInFromBankAccount(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
 
         Organization organization = organizationRepository.findOne(id);
         WaletIn waletIn = new WaletIn();
+        waletIn.setOrganization(organization);
+        ClientOrganization clientOrganization = new ClientOrganization();
+        CashInFromSaleOfGoods  cashInFromSaleOfGoods =  new CashInFromSaleOfGoods(clientOrganization);
+
+
+
+        waletIn.setT(cashInFromSaleOfGoods);
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("waletIn", waletIn);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("cashInFormFragment", this.cashInCreateFragmentSaleOfGoods);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 

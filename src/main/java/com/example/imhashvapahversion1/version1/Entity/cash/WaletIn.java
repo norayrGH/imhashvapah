@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
+import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
@@ -35,6 +36,8 @@ public class WaletIn<T> {
     private Date inDate;
     private String inCash;
     private String note;
+    @ManyToOne
+    private Organization organization;
 
     public WaletIn() {
     }
@@ -88,5 +91,13 @@ public class WaletIn<T> {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }
