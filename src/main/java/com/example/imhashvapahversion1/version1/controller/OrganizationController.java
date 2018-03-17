@@ -131,7 +131,6 @@ public class OrganizationController extends BaseController {
         modelAndView.addObject("navBar", this.organizationNavBar);
 
         if (bindingResult.hasErrors()) {
-
             modelAndView.addObject("organization", fixedAsset.getOrganization());
             modelAndView.addObject("fragment", this.organizationFixedassetCreate);
             modelAndView.addObject("updateOrCreate", "update");
