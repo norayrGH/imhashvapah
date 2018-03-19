@@ -14,10 +14,7 @@ import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -150,7 +147,6 @@ public class CashController extends BaseController {
         waletIn.setOrganization(organization);
         ClientOrganization clientOrganization = new ClientOrganization();
         CashInFromSaleOfGoods  cashInFromSaleOfGoods =  new CashInFromSaleOfGoods(clientOrganization);
-
 
 
         waletIn.setT(cashInFromSaleOfGoods);

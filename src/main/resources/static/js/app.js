@@ -135,28 +135,41 @@ $(function () {
     });
 });
 $(".selectWaletInType").change(function () {
-    alert(this);
-  /*  $.ajax({
+    var fragmentNumber = parseInt(this.value);
 
-        method : "POST",
-        contentType : "application/json",
-        url: '/account/cash/cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/'+id,
-        dataType: 'json',
-        data :JSON.stringify(DateRang),
-        beforeSend: function(xhr){
-            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
-        },  success: function (msg){
-            if(msg == null)
-                $('#showFixedAssets').empty();
-            else
-                showFixedAssets(msg);
-            //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
-        },
+    console.log(JSON.stringify(fragmentNumber));
+    var csrf_token = $('#walletInCreate').find('input[name="_csrf"]').val();
 
-        error:
-            function(data){
+    switch (fragmentNumber){
 
-                console.log(data.responseText);
-            }
-    });*/
+        case 1:
+            alert("in ajax");
+            $.ajax({
+
+                method : "POST",
+                contentType : "application/json",
+                url: '/account/cash/cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/'+$("#organizationId").val(),
+
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                },  success: function (msg){
+                    if(msg == null)
+                        $('#showFixedAssets').empty();
+                    else
+                        showFixedAssets(msg);
+                    //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
+                },
+
+                error:
+                    function(data){
+
+                        console.log(data.responseText);
+                    }
+            });
+
+            break;
+
+    }
+
+
 });
