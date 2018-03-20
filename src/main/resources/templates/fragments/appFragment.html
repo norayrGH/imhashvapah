@@ -394,9 +394,9 @@
             <option th:value="7" > Փոխառության ստացում </option>
             <option th:value="8" > Վարկի ստացում </option>
         </select>
-    <th:block th:if="${cashInFormFragment}">
-        <div   th:replace="${cashInFormFragment}"  />
-    </th:block>
+
+        <div   th:replace="/fragments/appFragment :: ${cashInFormFragment}"/>
+
         <br />
         <label>Ամսաթիվ</label>
         <input type="date"
@@ -451,6 +451,10 @@
 
         </select>
 
+
+
+</div>
+<div class="container" th:fragment="nullfragment" >
 
 
 </div>
