@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tbl_organization")
-public class Organization  {
+public class  Organization  {
     @Id
     @GeneratedValue
     private Long id ;

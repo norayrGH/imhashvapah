@@ -135,18 +135,11 @@ $(function () {
     });
 });
 $(".selectWaletInType").change(function () {
-    alert(this);
-  /*  $.ajax({
+    alert(this.val());
+  /*
+   $.ajax({
 
-        method : "POST",
-        contentType : "application/json",
-        url: '/account/cash/cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/'+id,
-        dataType: 'json',
-        data :JSON.stringify(DateRang),
-        beforeSend: function(xhr){
-            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
-        },  success: function (msg){
-            if(msg == null)
+
                 $('#showFixedAssets').empty();
             else
                 showFixedAssets(msg);
@@ -158,5 +151,7 @@ $(".selectWaletInType").change(function () {
 
                 console.log(data.responseText);
             }
-    });*/
+    });
+
+    */
 });
