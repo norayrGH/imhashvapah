@@ -135,23 +135,29 @@ $(function () {
     });
 });
 $(".selectWaletInType").change(function () {
-    alert(this.val());
-  /*
-   $.ajax({
+    var fragmentNumber = parseInt(this.value);
+
+    console.log(JSON.stringify(fragmentNumber));
+    var csrf_token = $('#walletInCreate').find('input[name="_csrf"]').val();
+
+    switch (fragmentNumber){
+
+        case 1:
+            alert("in ajax");
+            $.ajax({
+
+                method : "GET",
+                contentType : "application/json",
+                url: '/account/cash/cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/'+$("#organizationId").val(),
+
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                }
+            });
+
+            break;
+
+    }
 
 
-                $('#showFixedAssets').empty();
-            else
-                showFixedAssets(msg);
-            //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
-        },
-
-        error:
-            function(data){
-
-                console.log(data.responseText);
-            }
-    });
-
-    */
 });

@@ -14,10 +14,7 @@ import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -136,21 +133,21 @@ public class CashController extends BaseController {
         modelAndView.addObject("organization", organization );
         modelAndView.addObject("waletIn", waletIn);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("cashInFormFragment", this.nullFragment);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return modelAndView;
 
     }
-    @RequestMapping(value = "cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/{id}" , method = RequestMethod.POST )
-    public ModelAndView selectCashInFromBankAccount(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @RequestMapping(value = "cashin/cashdesk/create/selectformchange/cashinfromsaleofgoods/{id}" , method = RequestMethod.GET )
+    public  @ResponseBody ModelAndView selectCashInFromBankAccount(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
 
         Organization organization = organizationRepository.findOne(id);
         WaletIn waletIn = new WaletIn();
         waletIn.setOrganization(organization);
         ClientOrganization clientOrganization = new ClientOrganization();
         CashInFromSaleOfGoods  cashInFromSaleOfGoods =  new CashInFromSaleOfGoods(clientOrganization);
-
 
 
         waletIn.setT(cashInFromSaleOfGoods);
