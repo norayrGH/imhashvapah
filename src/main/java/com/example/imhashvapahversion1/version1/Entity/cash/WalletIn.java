@@ -5,14 +5,15 @@ import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
-public class WaletIn<T> {
+public class WalletIn<T> {
 
     @Id
     @GeneratedValue
@@ -33,20 +34,23 @@ public class WaletIn<T> {
             })
     @JoinColumn(name = "property_id")
     private T t;
+    @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inDate;
+    @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը")
     private String inCash;
     private String note;
     @ManyToOne
     private Organization organization;
 
-    public WaletIn() {
+    public WalletIn() {
     }
 
-    public WaletIn(T t) {
+    public WalletIn(T t) {
         this.t = t;
     }
 
-    public WaletIn(T t, Date inDate, String inCash, String note) {
+    public WalletIn(T t, Date inDate, String inCash, String note) {
         this.t = t;
         this.inDate = inDate;
         this.inCash = inCash;

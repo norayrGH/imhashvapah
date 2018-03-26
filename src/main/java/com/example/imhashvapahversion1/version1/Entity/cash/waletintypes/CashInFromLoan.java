@@ -9,4 +9,5 @@ public class CashInFromLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
 }

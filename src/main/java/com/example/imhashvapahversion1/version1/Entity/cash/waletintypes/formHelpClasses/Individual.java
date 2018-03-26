@@ -1,9 +1,9 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+
+import javax.persistence.*;
 
 @Entity
 public class Individual {
@@ -14,12 +14,16 @@ public class Individual {
     private String firstName;
     private String lastName;
 
+    @ManyToOne
+    private Organization organization ;
+
     public Individual() {
     }
 
-    public Individual(String firstName, String lastName) {
+    public Individual(String firstName, String lastName, Organization organization) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.organization = organization;
     }
 
     public Long getId() {
@@ -44,5 +48,13 @@ public class Individual {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }

@@ -376,74 +376,106 @@
 
 </div>
 <div class="container" th:fragment="cashInCreate" >
-    <form th:object="${waletIn}" id="walletInCreate" action="/account/cash/cashdesk" th:name="walletInCreate" method="post" >
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrompointofsale/'  + ${organization.id}}" > Մուտք առևտրի կետից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/'  + ${organization.id}}" > Մուտք ապրանքների իրացումից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromserviceprovision/'  + ${organization.id}}" > Մուտք ծառայության մատուցումից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrombankaccount/'  + ${organization.id}}" > Մուտք բանկային հաշվից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromloan/'  + ${organization.id}}" > Փոխառության ստացում </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromcredit/'  + ${organization.id}}" > Վարկի ստացում </a>
+</div>
+<div class="container" th:fragment="cashInCreateCashInFromSaleOfGoods" >
+
+    <form th:object="${walletIn}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale" id="walletInCreate"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
             <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
 
         </div>
-        <label>Մուտքի տեսակ</label>
-        <select
-                class="selectWaletInType"
-                 >
-            <option th:value="0" > --Ընտրել-- </option>
-            <option th:value="9" > Մուտք առևտրի կետից </option>
-            <option th:value="1" > Մուտք ապրանքների իրացումից </option>
-            <option th:value="2" > Մուտք ծառայության մատուցումից </option>
-            <option th:value="3" > Մուտք բանկային հաշվից </option>
-            <option th:value="7" > Փոխառության ստացում </option>
-            <option th:value="8" > Վարկի ստացում </option>
+
+        <br />
+
+        <label>Գնորդ</label>
+        <select type="text">
+            <option>__Ընտրել__</option>
+
         </select>
-
-        <div   th:replace="/fragments/appFragment :: ${cashInFormFragment}"/>
-
+        <a type="button" th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+        </a>
         <br />
         <label>Ամսաթիվ</label>
         <input type="date"
-               th:name="inDate"
-               th:field="*{inDate}" />
+          th:name="inDate"
+          th:field="*{inDate}"
+        />
         <br />
 
         <label>Մուտքի գումար</label>
         <input type="text"
-               th:name="inCash"
-               th:field="*{inCash}" />
-        <br />
+          th:name="inCash"
+          th:field="*{inCash}"
+        />
+                     <br />
         <label>Նշումներ</label>
         <input type="text"
-               th:name="note"
-               th:field="*{note}"
+                th:name="note"
+                th:field="*{note}"
         />
         <br />
         <input
-                type="hidden"
-                th:field="*{id}"
-                th:value="${id}"
+                 type="hidden"
+                 th:field="*{id}"
+                 th:value="${id}"
         />
 
         <input
-                type="hidden"
-                id="organizationId"
-                th:field="*{organization}"
-                th:value="${organization}"
+                 type="hidden"
+                 id="organizationId"
+                 th:field="*{organization}"
+                 th:value="${organization}"
         />
 
         <input name="csrfToken" id="csrfToken"
-               type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}"
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"
         />
 
 
-        <input type="submit" class="btn btn-default" />
-    </form>
+         <input type="submit" class="btn btn-default" />
+    </form >
 
 </div>
-<div class="container" th:fragment="cashInCreateCashInFromSaleOfGoods" >
+<div class="container" th:fragment="cashInCashInFromSaleOfGoodsCustomer" th:object="${organization}" >
 
-       <!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/organization/'  + ${id}}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/individual/'  + ${id}}" >Անհատ </a>
+
+
+</div>
+<div class="container" th:fragment="cashInCreateCashInFromSaleOfGoodsIndividual" >
+
+    <form th:object="${individual}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale/create/Individual" id="walletInCreate"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-            &lt;!&ndash;<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>&ndash;&gt;
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+          th:name="firstName"
+          th:field="*{firstName}"
+        />
+        <br />
+
+        <label>Ազգանւն</label>
+        <input type="text"
+          th:name="lastName"
+          th:field="*{lastName}"
+        />
+        <br />
 
         </div>-->
         <label>Գնորդ</label>
@@ -675,9 +707,9 @@
         <div id="reportNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
 
-                <li><a th:href="@{'/account/report/summary/'+${organization.id}}" id="summaryData">Ամփոփ տվյալներ</a>
+                <li><a th:href="@{'/account/report/summary/' + ${organization.id}}" id="summaryData">Ամփոփ տվյալներ</a>
                 </li>
-                <li><a th:href="@{'/account/report/summary/debt/'+${organization.id}}" id="tax">Հարկեր</a></li>
+                <li><a th:href="@{'/account/report/summary/debt/' + ${organization.id}}" id="tax">Հարկեր</a></li>
 
             </ul>
         </div>
