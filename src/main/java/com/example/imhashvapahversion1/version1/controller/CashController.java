@@ -7,9 +7,8 @@ import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromSaleOfGoods;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
-import com.example.imhashvapahversion1.version1.repository.UniversalRepository;
-import com.example.imhashvapahversion1.version1.repository.WalletInRepository;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.repository.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -38,8 +39,10 @@ public class CashController extends BaseController {
     @Autowired
     WalletInRepository walletInRepository;
 
-
-
+    @Autowired
+    ClientOrganizationRepository clientOrganizationRepository;
+    @Autowired
+    IndividualRepository individualRepository;
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -146,7 +149,7 @@ public class CashController extends BaseController {
     }
     @RequestMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods/{id}" , method = RequestMethod.GET )
     public   ModelAndView cashinfrompointofsaleCreate(@PathVariable(value = "id") final Long id , ModelAndView modelAndView) {
-
+        List customerList = new ArrayList();
         Organization organization = organizationRepository.findOne(id);
         WalletIn walletIn = new WalletIn();
         walletIn.setOrganization(organization);
@@ -154,8 +157,12 @@ public class CashController extends BaseController {
         CashInFromSaleOfGoods  cashInFromSaleOfGoods = new CashInFromSaleOfGoods(clientOrganization);
         walletIn.setT(cashInFromSaleOfGoods);
 
+        customerList.addAll( (List) clientOrganizationRepository.findAll());
+        customerList.addAll( (List) individualRepository.findAll());
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
+        modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("walletIn", walletIn);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
@@ -205,6 +212,7 @@ public class CashController extends BaseController {
         Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
         ClientOrganization clientOrganization = new ClientOrganization();
+        clientOrganization.setOrganization(organization);
         modelAndView.addObject("clientOrganization", clientOrganization);
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.cashNavBar);
@@ -213,6 +221,60 @@ public class CashController extends BaseController {
 
         return  modelAndView;
     }
+    @PostMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods/create/organization")
+    public   ModelAndView cashinfrompointofsaleCreateOrganization(@Valid ClientOrganization clientOrganization,BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("clientOrganization", clientOrganization);
+            modelAndView.addObject("organization", clientOrganization.getOrganization());
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashInCreateCashInFromSaleOfGoodsClientOrganization);
+            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            return modelAndView;
+        }
+        modelAndView.addObject("clientOrganization", clientOrganization);
+        modelAndView.addObject("organization",clientOrganization.getOrganization());
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        clientOrganizationRepository.save(clientOrganization);
+        return  modelAndView;
+    }
+    @RequestMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods/create/individual/{id}" , method = RequestMethod.GET )
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@PathVariable(value = "id") final Long id , ModelAndView modelAndView) {
+        Organization organization = organizationRepository.findOne(id);
+        modelAndView.setViewName("app/app");
+        Individual individual = new Individual();
+        individual.setOrganization(organization);
+        modelAndView.addObject("individual", individual);
+        modelAndView.addObject("organization", organization);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateCashInFromSaleOfGoodsIndividual);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return  modelAndView;
+    }
+    @PostMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods/create/individual")
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid Individual individual, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("individual", individual);
+            modelAndView.addObject("organization", individual.getOrganization());
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashInCreateCashInFromSaleOfGoodsIndividual);
+            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            return modelAndView;
+        }
+        modelAndView.addObject("individual", individual);
+        modelAndView.addObject("organization",individual.getOrganization());
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        individualRepository.save(individual);
+        return  modelAndView;
+    }
+
+
     @RequestMapping(value = "cashout/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashOutcashdesk(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
 

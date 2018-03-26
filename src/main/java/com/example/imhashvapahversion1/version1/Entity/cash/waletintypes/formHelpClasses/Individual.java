@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHe
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
@@ -10,8 +11,9 @@ public class Individual {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @NotEmpty(message = "Անվան դաշտը անպայման է լրացնել ")
     private String firstName;
+    @NotEmpty(message = "Ազգանուն դաշտը անպայման է լրացնել ")
     private String lastName;
 
     @ManyToOne
@@ -24,6 +26,10 @@ public class Individual {
         this.firstName = firstName;
         this.lastName = lastName;
         this.organization = organization;
+    }
+    public String display (){
+
+        return getLastName() +" "+ getFirstName();
     }
 
     public Long getId() {

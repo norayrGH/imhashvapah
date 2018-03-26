@@ -33,6 +33,7 @@ public class WalletIn<T> {
                     @MetaValue(value = "CashInFromCredit", targetEntity = CashInFromCredit.class)
             })
     @JoinColumn(name = "property_id")
+    @NotNull(message = "Հարկավոր է նշել գնորդին")
     private T t;
     @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

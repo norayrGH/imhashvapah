@@ -393,9 +393,13 @@
         <br />
 
         <label>Գնորդ</label>
-        <select type="text">
-            <option>__Ընտրել__</option>
-
+        <select th:field="*{t}"
+                th:name="t"
+                >
+            <option value=""> __ԸՆՏՐԵԼ__ </option>
+            <option th:each="customer : ${customerList}"
+                    th:value="${customer.id}"
+                    th:text="${customer.display()}" />
         </select>
         <a type="button" th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
@@ -451,57 +455,10 @@
 
 
 </div>
-<div class="container" th:fragment="cashInCreateCashInFromSaleOfGoodsIndividual" >
 
-    <form th:object="${individual}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale/create/Individual" id="walletInCreate"  method="post" >
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-        </div>
-
-        <br />
-
-
-        <label>Անուն</label>
-        <input type="text"
-          th:name="firstName"
-          th:field="*{firstName}"
-        />
-        <br />
-
-        <label>Ազգանւն</label>
-        <input type="text"
-          th:name="lastName"
-          th:field="*{lastName}"
-        />
-        <br />
-
-        <input
-                 type="hidden"
-                 th:field="*{id}"
-                 th:value="${id}"
-        />
-
-        <input
-                 type="hidden"
-                 id="organizationId"
-                 th:field="*{walletIn}"
-                 th:value="${walletIn}"
-        />
-
-        <input name="csrfToken" id="csrfToken"
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"
-        />
-
-
-         <input type="submit" class="btn btn-default" />
-    </form >
-
-</div>
 <div class="container" th:fragment="cashInCreateCashInFromSaleOfGoodsClientOrganization" >
 
-    <form th:object="${clientOrganization}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale/create/organization"  method="post" >
+    <form th:object="${clientOrganization}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/organization"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -516,6 +473,51 @@
         />
         <br />
 
+        <input
+                 type="hidden"
+                 th:field="*{id}"
+                 th:value="${id}"
+        />
+
+        <input
+                 type="hidden"
+                 th:field="*{organization}"
+                 th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"
+        />
+
+
+         <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="cashInCreateCashInFromSaleOfGoodsIndividual" >
+
+    <form th:object="${individual}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/individual"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+          th:name="firstName"
+          th:field="*{firstName}"
+        />
+        <br />
+        <label>Ազգանւն</label>
+        <input type="text"
+               th:name="lastName"
+               th:field="*{lastName}"
+        />
+        <br />
         <input
                  type="hidden"
                  th:field="*{id}"

@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHe
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ public class ClientOrganization {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty(message = "Կազմակերպության անվանումը պարտադիր է ")
     String clientOrganizationName;
 
     @ManyToOne
@@ -24,6 +26,10 @@ public class ClientOrganization {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public String display (){
+
+        return getClientOrganizationName() ;
     }
 
     public String getClientOrganizationName() {
