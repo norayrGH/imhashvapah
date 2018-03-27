@@ -8,7 +8,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+
 import javax.persistence.Entity;
+
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -18,6 +21,9 @@ public class WalletIn<T> {
     @Id
     @GeneratedValue
     private Long id;
+
+
+
 
     @Any(metaColumn = @Column(name = "what_i_contain"))
     @Cascade(CascadeType.ALL)
@@ -33,7 +39,7 @@ public class WalletIn<T> {
                     @MetaValue(value = "CashInFromCredit", targetEntity = CashInFromCredit.class)
             })
     @JoinColumn(name = "property_id")
-    @NotNull(message = "Հարկավոր է նշել գնորդին")
+    @Valid
     private T t;
     @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -51,11 +57,20 @@ public class WalletIn<T> {
         this.t = t;
     }
 
-    public WalletIn(T t, Date inDate, String inCash, String note) {
+    public WalletIn(T t, Date inDate, String inCash, String note, Organization organization) {
         this.t = t;
         this.inDate = inDate;
         this.inCash = inCash;
         this.note = note;
+        this.organization = organization;
+    }
+
+    public T getT() {
+        return t;
+    }
+
+    public void setT(T t) {
+        this.t = t;
     }
 
     public Long getId() {
@@ -66,13 +81,9 @@ public class WalletIn<T> {
         this.id = id;
     }
 
-    public T getT() {
-        return t;
-    }
 
-    public void setT(T t) {
-        this.t = t;
-    }
+
+
 
     public Date getInDate() {
         return inDate;
