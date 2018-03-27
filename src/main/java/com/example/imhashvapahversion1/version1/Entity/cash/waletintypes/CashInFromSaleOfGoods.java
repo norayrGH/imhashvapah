@@ -5,44 +5,27 @@ import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHel
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import java.sql.Date;
 
 @Entity
-public class CashInFromSaleOfGoods<T>{
+public class CashInFromSaleOfGoods{
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private int id;
-    @Cascade(CascadeType.ALL)
-    @Any(metaColumn = @Column(name = "what_i_contain"))
-    @AnyMetaDef(
-            idType = "long",
-            metaType = "string",
-            metaValues = {
-                    @MetaValue(value = "ClientOrganization", targetEntity = ClientOrganization.class),
-                    @MetaValue(value = "Individual", targetEntity = Individual.class)
-            })
-    @JoinColumn(name = "property_id")
+    @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
+    private String customerName;
 
-    private T customer ;
+    private Date contractDate ;
 
-    private Date ContractDate ;
+    private String contractNubmer ;
 
-    private String ContractNubmer ;
-
-    @ManyToOne
-    private WalletIn walletIn;
-
-    public CashInFromSaleOfGoods() {
-    }
-
-    public CashInFromSaleOfGoods(T t) {
-        this.customer = t;
-    }
 
     public int getId() {
         return id;
@@ -52,43 +35,29 @@ public class CashInFromSaleOfGoods<T>{
         this.id = id;
     }
 
-    public T getT() {
-        return customer;
+    public String getCustomer() {
+        return customerName;
     }
 
-    public void setT(T t) {
-        this.customer = t;
+    public void setCustomer(String customer) {
+        this.customerName = customer;
     }
 
     public Date getContractDate() {
-        return ContractDate;
+        return contractDate;
     }
 
     public void setContractDate(Date contractDate) {
-        ContractDate = contractDate;
+        this.contractDate = contractDate;
     }
 
     public String getContractNubmer() {
-        return ContractNubmer;
+        return contractNubmer;
     }
 
     public void setContractNubmer(String contractNubmer) {
-        ContractNubmer = contractNubmer;
+        this.contractNubmer = contractNubmer;
     }
 
-    public T getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(T customer) {
-        this.customer = customer;
-    }
-
-    public WalletIn getWalletIn() {
-        return walletIn;
-    }
-
-    public void setWalletIn(WalletIn walletIn) {
-        this.walletIn = walletIn;
-    }
 }

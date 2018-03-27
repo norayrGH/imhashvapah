@@ -8,7 +8,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+
 import javax.persistence.Entity;
+
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -19,7 +22,13 @@ public class WalletIn<T> {
     @GeneratedValue
     private Long id;
 
-    @Any(metaColumn = @Column(name = "what_i_contain"))
+
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
+    @Valid
+    private CashInFromSaleOfGoods cashInFromSaleOfGoods;
+
+
+   /* @Any(metaColumn = @Column(name = "what_i_contain"))
     @Cascade(CascadeType.ALL)
     @AnyMetaDef(
             idType = "long",
@@ -29,12 +38,12 @@ public class WalletIn<T> {
                     @MetaValue(value = "CashInFromLoan", targetEntity = CashInFromLoan.class),
                     @MetaValue(value = "CashInFromServiceProvision", targetEntity = CashInFromServiceProvision.class),
                     @MetaValue(value = "CashInFromPointOfSale", targetEntity = CashInFromPointOfSale.class),
-                    @MetaValue(value = "CashInFromSaleOfGoods", targetEntity = CashInFromSaleOfGoods.class),
+
                     @MetaValue(value = "CashInFromCredit", targetEntity = CashInFromCredit.class)
             })
     @JoinColumn(name = "property_id")
-    @NotNull(message = "Հարկավոր է նշել գնորդին")
-    private T t;
+
+    private T t;*/
     @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inDate;
@@ -47,15 +56,23 @@ public class WalletIn<T> {
     public WalletIn() {
     }
 
-    public WalletIn(T t) {
-        this.t = t;
-    }
 
-    public WalletIn(T t, Date inDate, String inCash, String note) {
-        this.t = t;
+
+    public WalletIn(CashInFromSaleOfGoods cashInFromSaleOfGoods, T t, Date inDate, String inCash, String note, Organization organization) {
+        this.cashInFromSaleOfGoods = cashInFromSaleOfGoods;
+
         this.inDate = inDate;
         this.inCash = inCash;
         this.note = note;
+        this.organization = organization;
+    }
+
+    public CashInFromSaleOfGoods getCashInFromSaleOfGoods() {
+        return cashInFromSaleOfGoods;
+    }
+
+    public void setCashInFromSaleOfGoods(CashInFromSaleOfGoods cashInFromSaleOfGoods) {
+        this.cashInFromSaleOfGoods = cashInFromSaleOfGoods;
     }
 
     public Long getId() {
@@ -66,13 +83,9 @@ public class WalletIn<T> {
         this.id = id;
     }
 
-    public T getT() {
-        return t;
-    }
 
-    public void setT(T t) {
-        this.t = t;
-    }
+
+
 
     public Date getInDate() {
         return inDate;
