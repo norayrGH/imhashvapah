@@ -35,12 +35,12 @@ public class CashInFromSaleOfGoods{
         this.id = id;
     }
 
-    public String getCustomer() {
+    public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomer(String customer) {
-        this.customerName = customer;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Date getContractDate() {
@@ -58,6 +58,4 @@ public class CashInFromSaleOfGoods{
     public void setContractNubmer(String contractNubmer) {
         this.contractNubmer = contractNubmer;
     }
-
-
 }

@@ -385,7 +385,7 @@
 </div>
 <div class="container" th:fragment="cashInCreateCashInFromSaleOfGoods" >
 
-    <form th:object="${walletIn}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale" id="walletInCreate"  method="post" >
+    <form th:object="${walletIn}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods" id="walletInCreate"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -393,8 +393,8 @@
         <br />
 
         <label>Գնորդ</label>
-        <select th:field="*{cashInFromSaleOfGoods}"
-                th:name="t"
+        <select  th:field="*{t.customerName}"
+                th:name="customerName"
                 >
             <option value=""> __ԸՆՏՐԵԼ__ </option>
             <option th:each="customer : ${customerList}"

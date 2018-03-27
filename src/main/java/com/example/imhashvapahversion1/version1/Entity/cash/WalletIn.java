@@ -23,12 +23,9 @@ public class WalletIn<T> {
     private Long id;
 
 
-    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
-    @Valid
-    private CashInFromSaleOfGoods cashInFromSaleOfGoods;
 
 
-   /* @Any(metaColumn = @Column(name = "what_i_contain"))
+    @Any(metaColumn = @Column(name = "what_i_contain"))
     @Cascade(CascadeType.ALL)
     @AnyMetaDef(
             idType = "long",
@@ -38,12 +35,12 @@ public class WalletIn<T> {
                     @MetaValue(value = "CashInFromLoan", targetEntity = CashInFromLoan.class),
                     @MetaValue(value = "CashInFromServiceProvision", targetEntity = CashInFromServiceProvision.class),
                     @MetaValue(value = "CashInFromPointOfSale", targetEntity = CashInFromPointOfSale.class),
-
+                    @MetaValue(value = "CashInFromSaleOfGoods", targetEntity = CashInFromSaleOfGoods.class),
                     @MetaValue(value = "CashInFromCredit", targetEntity = CashInFromCredit.class)
             })
     @JoinColumn(name = "property_id")
-
-    private T t;*/
+    @Valid
+    private T t;
     @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inDate;
@@ -56,23 +53,24 @@ public class WalletIn<T> {
     public WalletIn() {
     }
 
+    public WalletIn(T t) {
+        this.t = t;
+    }
 
-
-    public WalletIn(CashInFromSaleOfGoods cashInFromSaleOfGoods, T t, Date inDate, String inCash, String note, Organization organization) {
-        this.cashInFromSaleOfGoods = cashInFromSaleOfGoods;
-
+    public WalletIn(T t, Date inDate, String inCash, String note, Organization organization) {
+        this.t = t;
         this.inDate = inDate;
         this.inCash = inCash;
         this.note = note;
         this.organization = organization;
     }
 
-    public CashInFromSaleOfGoods getCashInFromSaleOfGoods() {
-        return cashInFromSaleOfGoods;
+    public T getT() {
+        return t;
     }
 
-    public void setCashInFromSaleOfGoods(CashInFromSaleOfGoods cashInFromSaleOfGoods) {
-        this.cashInFromSaleOfGoods = cashInFromSaleOfGoods;
+    public void setT(T t) {
+        this.t = t;
     }
 
     public Long getId() {
