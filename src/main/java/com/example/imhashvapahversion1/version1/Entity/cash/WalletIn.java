@@ -16,9 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
 public class WalletIn {
-
     @Id
     private Long id;
     @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
@@ -32,5 +30,35 @@ public class WalletIn {
     public WalletIn() {
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getInDate() {
+        return inDate;
+    }
+
+    public void setInDate(Date inDate) {
+        this.inDate = inDate;
+    }
+
+    public String getInCash() {
+        return inCash;
+    }
+
+    public void setInCash(String inCash) {
+        this.inCash = inCash;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

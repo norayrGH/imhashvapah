@@ -1,12 +1,16 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+
 @Entity
 public class CashInFromPointOfSale {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @OneToOne
+    @Valid
+    private WalletIn walletIn;
 }

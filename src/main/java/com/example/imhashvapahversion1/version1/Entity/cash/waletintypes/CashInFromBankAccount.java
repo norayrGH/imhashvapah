@@ -2,10 +2,8 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.Valid;
 
 @Entity
 public class CashInFromBankAccount extends WalletIn {
@@ -13,7 +11,9 @@ public class CashInFromBankAccount extends WalletIn {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String bankAccount;
-
+    @OneToOne
+    @Valid
+    private WalletIn walletIn;
     public CashInFromBankAccount() {
     }
 }
