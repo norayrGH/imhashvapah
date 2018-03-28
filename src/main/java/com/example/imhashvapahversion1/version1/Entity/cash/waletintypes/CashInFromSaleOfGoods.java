@@ -1,6 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.use.classes.WaletInType;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
 import org.hibernate.annotations.*;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
-public class CashInFromSaleOfGoods{
+public class CashInFromSaleOfGoods extends WalletIn{
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private int id;

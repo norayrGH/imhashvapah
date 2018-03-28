@@ -152,16 +152,14 @@ public class CashController extends BaseController {
         List customerList = new ArrayList();
         Organization organization = organizationRepository.findOne(id);
         CashInFromSaleOfGoods  cashInFromSaleOfGoods = new CashInFromSaleOfGoods();
-        WalletIn walletIn = new WalletIn( cashInFromSaleOfGoods );
 
-        walletIn.setOrganization(organization);
         customerList.addAll( (List) clientOrganizationRepository.findAll());
         customerList.addAll( (List) individualRepository.findAll());
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("customerList", customerList);
-        modelAndView.addObject("walletIn", walletIn);
+        modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
@@ -182,7 +180,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             modelAndView.addObject("walletIn", walletIn);
             modelAndView.addObject("customerList", customerList);
-            modelAndView.addObject("organization", walletIn.getOrganization());
+          //  modelAndView.addObject("organization", walletIn.getOrganization());
             return modelAndView;
         }
 
@@ -191,7 +189,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("walletIn", walletIn);
-        modelAndView.addObject("organization", walletIn.getOrganization());
+       // modelAndView.addObject("organization", walletIn.getOrganization());
         walletInRepository.save(walletIn);
         return  modelAndView;
     }
@@ -200,10 +198,10 @@ public class CashController extends BaseController {
     public   ModelAndView cashinfrompointofsaleCreateCustomer(@PathVariable(value = "id") final Long id , ModelAndView modelAndView) {
 
         Organization organization = organizationRepository.findOne(id);
-        WalletIn walletIn = new WalletIn();
-        walletIn.setOrganization(organization);
+
+
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("walletIn", walletIn);
+      //  modelAndView.addObject("walletIn", walletIn);
         modelAndView.addObject("organization",organization);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCashInFromSaleOfGoodsCustomer);
