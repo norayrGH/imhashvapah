@@ -418,6 +418,23 @@
           th:field="*{walletIn.inCash}"
         />
                      <br />
+
+
+
+        <label>Պայմանագրի ամսաթիվ</label>
+        <input type="date"
+               th:name="contractDate"
+               th:field="*{contractDate}"
+        />
+        <br />
+
+
+        <label>Պայմանագրի համար</label>
+        <input type="text"
+               th:name="contractNubmer"
+               th:field="*{contractNubmer}"
+        />
+        <br />
         <label>Նշումներ</label>
         <input type="text"
                 th:name="note"
@@ -448,6 +465,88 @@
     </form >
 
 </div>
+<div class="container" th:fragment="cashInCreateCashInFromServiceProvision" >
+
+    <form th:object="${cashInFromServiceProvision}" action="/account/cash/cashin/cashdesk/create/cashinfromserviceprovision"   method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+        <label>Գնորդ</label>
+        <select th:field="*{customerName}"
+                th:name="customerName"
+        >
+            <option value=""> __ԸՆՏՐԵԼ__ </option>
+            <option th:each="customer : ${customerList}"
+                    th:value="${customer.display()}"
+                    th:text="${customer.display()}" />
+        </select>
+        <a type="button" th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromserviceprovision/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+        </a>
+        <br />
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{walletIn.inDate}"
+        />
+        <br />
+
+        <label>Մուտքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{walletIn.inCash}"
+        />
+        <br />
+
+
+
+        <label>Պայմանագրի ամսաթիվ</label>
+        <input type="date"
+               th:name="contractDate"
+               th:field="*{contractDate}"
+        />
+        <br />
+
+
+        <label>Պայմանագրի համար</label>
+        <input type="text"
+               th:name="contractNubmer"
+               th:field="*{contractNubmer}"
+        />
+        <br />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletIn.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                id="organizationId"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
 <div class="container" th:fragment="cashInCashInFromSaleOfGoodsCustomer" th:object="${organization}" >
 
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/organization/'  + ${id}}" >Կազմակերպություն </a>
@@ -455,7 +554,13 @@
 
 
 </div>
+<div class="container" th:fragment="cashInCashInFromServiceProvisionCustomer" th:object="${organization}" >
 
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/organization/'  + ${id}}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/individual/'  + ${id}}" >Անհատ </a>
+
+
+</div>
 <div class="container" th:fragment="cashInCreateCashInFromSaleOfGoodsClientOrganization" >
 
     <form th:object="${clientOrganization}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/create/organization"  method="post" >

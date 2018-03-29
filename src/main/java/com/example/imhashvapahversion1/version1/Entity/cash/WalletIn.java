@@ -13,14 +13,16 @@ import javax.validation.Valid;
 import javax.persistence.Entity;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity
 public class WalletIn {
     @Id
+    @GeneratedValue
     private Long id;
-    @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
     private Date inDate;
     @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը")
     private String inCash;

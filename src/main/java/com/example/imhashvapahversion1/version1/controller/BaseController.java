@@ -17,9 +17,13 @@ public class BaseController {
     protected final String cashInFragment = "cashIn";
     protected final String cashInCreateFragment = "cashInCreate";
     protected final String cashInCreateFragmentSaleOfGoods = "cashInCreateCashInFromSaleOfGoods" ;
+
+    protected final String cashInCreateCashInFromServiceProvision = "cashInCreateCashInFromServiceProvision";
     protected final String cashInCashInFromSaleOfGoodsCustomer = "cashInCashInFromSaleOfGoodsCustomer" ;
+    protected final String cashInCashInFromServiceProvisionCustomer = "cashInCashInFromServiceProvisionCustomer" ;
     protected final String cashInCreateCashInFromSaleOfGoodsClientOrganization = "cashInCreateCashInFromSaleOfGoodsClientOrganization" ;
     protected final String cashInCreateCashInFromSaleOfGoodsIndividual = "cashInCreateCashInFromSaleOfGoodsIndividual" ;
+
     protected final String nullFragment = "nullfragment" ;
     protected final String cashOutFragment = "cashOut";
     protected final String cashdeskFragmentNavBar = "cashdeskFragmentNavBar";
