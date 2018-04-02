@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class CashInFromServiceProvision {
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue
     private int id;
     @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
     private String customerName;
@@ -25,7 +25,7 @@ public class CashInFromServiceProvision {
 
     @ManyToOne
     private Organization organization;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
     public CashInFromServiceProvision() {

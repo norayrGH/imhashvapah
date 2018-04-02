@@ -2,11 +2,6 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.use.classes.WaletInType;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,17 +9,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import java.util.Date;
-
-import static org.hibernate.annotations.CascadeType.*;
 
 @Entity
 
 public class CashInFromSaleOfGoods {
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue
     private int id;
 
     @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
@@ -35,12 +27,12 @@ public class CashInFromSaleOfGoods {
     private Date contractDate ;
 
     private String contractNubmer ;
-
-    @ManyToOne
-    private Organization organization;
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
+    @ManyToOne
+    private Organization organization;
+
     public CashInFromSaleOfGoods() {
     }
 

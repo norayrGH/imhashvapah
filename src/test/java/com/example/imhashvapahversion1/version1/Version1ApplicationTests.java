@@ -1,7 +1,6 @@
 package com.example.imhashvapahversion1.version1;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.WaletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.signIn.type.SignInGoodsSale;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromBankAccount;
 import com.example.imhashvapahversion1.version1.repository.WalletInRepository;
 import org.junit.Test;

@@ -6,12 +6,12 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CashInFromBankAccount extends WalletIn {
+public class CashInFromBankAccount  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String bankAccount;
-    @OneToOne
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
     public CashInFromBankAccount() {

@@ -10,7 +10,7 @@ public class CashInFromLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @OneToOne
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
 

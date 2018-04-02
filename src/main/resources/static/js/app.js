@@ -123,6 +123,43 @@ function  showFixedAssets(fixedAssets) {
     $('#showFixedAssets').append(fixedAssetsTable);
 
 }
+function  showBankAccount(accounts) {
+
+
+    $('#showBankAccount').empty();
+
+    var bankAccountTableTh= ["Բանկ","Բանկային Հաշիվ","Սկզբնական մնացորդ"];
+    var bankAccountTable = $("<table />")
+        .attr({id:"showBankAccountTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(bankAccountTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    bankAccountTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(bankAccount, function(i, item) {
+
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+           /*  $("<td />").text(item.inventoryNumber)
+            ,$("<td />").text(item.name)
+            ,$("<td />").text(item.acquiringАmount)
+            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+*/
+        ));
+    });
+
+    bankAccountTable.append(tBody);
+
+    $('#showBankAccount').append(bankAccountTable);
+
+}
 $(function () {
     $(".range-picker .datepicker").each(function () {
         $(this).datepicker();
