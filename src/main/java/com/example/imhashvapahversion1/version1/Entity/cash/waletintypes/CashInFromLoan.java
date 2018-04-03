@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
+import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 
 import javax.persistence.*;
@@ -8,10 +9,73 @@ import javax.validation.Valid;
 @Entity
 public class CashInFromLoan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
-    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
+    private String colleagues;
+    private String contractDate;
+    private String forContract;
+    @OneToOne
     @Valid
     private WalletIn walletIn;
+    @ManyToOne
+    private Organization organization;
 
+    public CashInFromLoan() {
+    }
+
+    public CashInFromLoan(String colleagues, String contractDate, String forContract, WalletIn walletIn, Organization organization) {
+        this.colleagues = colleagues;
+        this.contractDate = contractDate;
+        this.forContract = forContract;
+        this.walletIn = walletIn;
+        this.organization = organization;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getColleagues() {
+        return colleagues;
+    }
+
+    public void setColleagues(String colleagues) {
+        this.colleagues = colleagues;
+    }
+
+    public String getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(String contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getForContract() {
+        return forContract;
+    }
+
+    public void setForContract(String forContract) {
+        this.forContract = forContract;
+    }
+
+    public WalletIn getWalletIn() {
+        return walletIn;
+    }
+
+    public void setWalletIn(WalletIn walletIn) {
+        this.walletIn = walletIn;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }

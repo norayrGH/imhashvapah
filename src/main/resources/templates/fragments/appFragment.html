@@ -361,7 +361,7 @@
     <a class="btn btn-info" role="button" th:href="@{'/account/cash/bankaccount/create/' + ${organization.id} }">Ավելացնել </a>
     <div id="showBankAccount" >
     </div>
-    <script>
+    <script th:inline="javascript" >
         $(document).ready(function () {
                 var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
                     $('#showBankAccount').empty();
@@ -417,13 +417,17 @@
         />
         <br />
         <label>Սկզբնական մնացորդի տեսակ</label>
-        <input type="text"
+        <select type="text"
                th:name="openingBalanceType"
-               th:field="*{openingBalanceType}"
-        />
+               th:field="*{openingBalanceType}" >
+
+        <option th:value="Դրական">Դրական</option>
+        <option th:value="Բացասական">Բացասական</option>
+
+        </select>
 
         <br />
-        <label>Սկզբնական մնացորդի </label>
+        <label>Սկզբնական մնացորդ </label>
         <input type="text"
                th:name="openingBalance"
                th:field="*{openingBalance}"
@@ -431,6 +435,7 @@
         <br />
         <label>Ելքերի համարակալումը սկսել</label>
         <input type="text"
+               text="1"
                th:name="startOutNumbering"
                th:field="*{startOutNumbering}"
         />
@@ -466,35 +471,42 @@
         <input type="submit" class="btn btn-default" />
     </form >
     <script>
+        /*<![CDATA[*/
         $("#bankAccount").on('input', function() {
-            var value = $("#bankAccount").val();
-            if(value.length == 5){
-                var csrf_token = $('#bankAccountForm').find('input[name="_csrf"]').val();
-                var accountStartNumbers = $("#bankAccount").val();
 
+
+            if( $("#bankAccount").val().length >= 5) {
+                var csrf_token = $('#bankAccountForm').find('input[name="_csrf"]').val();
+                var accountStartNumbers = $("#bankAccount").val().substring(0, 5);
                 $.ajax({
 
-                    method : "POST",
-                    contentType : "application/json",
+                    method: "POST",
+                    contentType: "application/json",
                     url: '/account/cash/bankaccount/create/getbankname',
-                    dataType: 'json',
-                    data :accountStartNumbers,
-                    beforeSend: function(xhr){
-                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+
+                    data: accountStartNumbers,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRF-TOKEN", csrf_token);
                     },
-                    success: function (msg){
+                    success: function (msg) {
 
-                        $("#bankName").text(msg);
+                        $("#bankName").val(msg);
 
-                        },
+                    },
                     error:
-                        function(data){
+                        function (data) {
 
                             console.log(data.responseText);
                         }
                 });
+            } if( $("#bankAccount").val().length <= 4){
+
+                $("#bankName").val("");
+
             }
+
         });
+        /*]]>*/
     </script>
 </div>
 <div class="container" th:fragment="cashIn">
@@ -524,6 +536,7 @@
             <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromloan/'  + ${organization.id}}" > Փոխառության ստացում </a>
             <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromcredit/'  + ${organization.id}}" > Վարկի ստացում </a>
 </div>
+
 <div class="container" th:fragment="cashInCreateCashInFromPointOfSale" >
 
     <form th:object="${cashInFromPointOfSale}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale" id="walletInCreate"  method="post" >
@@ -533,6 +546,66 @@
 
         <br />
 
+
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{walletIn.inDate}"
+        />
+        <br />
+
+        <label>Մուտքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{walletIn.inCash}"
+        />
+        <br />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletIn.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                id="organizationId"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="cashInCreateFragmentBankAccount" >
+
+    <form th:object="${cashInFromBankAccount}" action="/account/cash/cashin/cashdesk/create/cashinfrombankaccount" id="cashInFrom"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+        <select th:field="*{bankAccount}"
+                th:name="bankAccount"
+        >
+            <option value=""> __ԸՆՏՐԵԼ__ </option>
+            <option th:each="account : ${accountList}"
+                    th:value="${account.bankAccount}"
+                    th:text= "${account.bankName + '--' + account.bankAccount}" />
+        </select>
 
         <label>Ամսաթիվ</label>
         <input type="date"

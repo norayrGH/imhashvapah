@@ -11,12 +11,17 @@ public class BankAccount {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty
+    @NotEmpty( message = "մուտքագրեք հաշվեհամարը ճիշտ")
     private String bankAccount;
+    @NotEmpty( message = "ճիշտ մուտքագրեք հաշվեհամարի առաջին հինգ նիշը ")
     private String bankName;
+    @NotEmpty( message = "հարկավոր է ընտրել մնացորդի տիպը")
     private String openingBalanceType;
+    @NotEmpty( message = "մնացորդի գումարը պարտադիր է ")
     private String openingBalance;
+    @NotEmpty( message = "Մուտքագրեք դրական ամբողջ թիվ:")
     private String startOutNumbering;
+
     private String nout;
     @ManyToOne
     Organization organization;

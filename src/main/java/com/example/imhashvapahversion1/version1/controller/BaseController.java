@@ -19,7 +19,7 @@ public class BaseController {
     protected final String cashInFragment = "cashIn";
     protected final String cashInCreateFragment = "cashInCreate";
     protected final String cashInCreateFragmentSaleOfGoods = "cashInCreateCashInFromSaleOfGoods" ;
-
+    protected final String cashInCreateFragmentBankAccount = "cashInCreateFragmentBankAccount" ;
     protected final String cashInCreateCashInFromServiceProvision = "cashInCreateCashInFromServiceProvision";
     protected final String cashInCashInFromSaleOfGoodsCustomer = "cashInCashInFromSaleOfGoodsCustomer" ;
     protected final String cashInCashInFromServiceProvisionCustomer = "cashInCashInFromServiceProvisionCustomer" ;
