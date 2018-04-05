@@ -464,11 +464,6 @@ public class CashController extends BaseController {
     }
 
 
-
-
-
-
-
     @RequestMapping(value = "cashin/cashdesk/create/cashinfrombankaccount/{id}" , method = RequestMethod.GET )
     public   ModelAndView cashinFromBankAccount(@PathVariable(value = "id") final Long id , ModelAndView modelAndView) {
         ArrayList accountList;
@@ -534,9 +529,9 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("colleaguesList", colleaguesList);
-        modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
+        modelAndView.addObject("cashInFromLoan", cashInFromLoan);
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
+        modelAndView.addObject("fragment", this.cashInCreateCashInFromLoan);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return  modelAndView;

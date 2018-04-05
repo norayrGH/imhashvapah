@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHe
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromLoan;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -39,6 +40,8 @@ public class ClientOrganization {
     public void setClientOrganizationName(String clientOrganizationName) {
         this.clientOrganizationName = clientOrganizationName;
     }
+
+
 
     public Organization getOrganization() {
         return organization;

@@ -21,6 +21,7 @@ public class BaseController {
     protected final String cashInCreateFragmentSaleOfGoods = "cashInCreateCashInFromSaleOfGoods" ;
     protected final String cashInCreateFragmentBankAccount = "cashInCreateFragmentBankAccount" ;
     protected final String cashInCreateCashInFromServiceProvision = "cashInCreateCashInFromServiceProvision";
+    protected final String cashInCreateCashInFromLoan = "cashInCreateCashInFromLoan";
     protected final String cashInCashInFromSaleOfGoodsCustomer = "cashInCashInFromSaleOfGoodsCustomer" ;
     protected final String cashInCashInFromServiceProvisionCustomer = "cashInCashInFromServiceProvisionCustomer" ;
     protected final String cashInCreateCashInFromSaleOfGoodsClientOrganization = "cashInCreateCashInFromSaleOfGoodsClientOrganization" ;
