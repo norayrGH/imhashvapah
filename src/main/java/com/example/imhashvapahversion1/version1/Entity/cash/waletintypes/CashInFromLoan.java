@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -11,10 +12,13 @@ public class CashInFromLoan {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
     private String colleagues;
+    @NotEmpty(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
     private String contractDate;
+    @NotEmpty(message = "հարկավոր է նշել պայմանագրի համարը ")
     private String forContract;
-    @OneToOne
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
     @ManyToOne

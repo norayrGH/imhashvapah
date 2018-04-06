@@ -18,16 +18,15 @@ public class BaseController {
     protected final String bankaccountCreate = "bankaccountCreate";
     protected final String cashInFragment = "cashIn";
     protected final String cashInCreateFragment = "cashInCreate";
+    protected final String customerAndColleaguesCreate = "customerAndColleaguesCreate";
     protected final String cashInCreateFragmentSaleOfGoods = "cashInCreateCashInFromSaleOfGoods" ;
-    protected final String cashInCreateFragmentBankAccount = "cashInCreateFragmentBankAccount" ;
+    protected final String cashInCreateBankAccount = "cashInCreateBankAccount" ;
     protected final String cashInCreateCashInFromServiceProvision = "cashInCreateCashInFromServiceProvision";
+    protected final String cashInCreateCashInFromCredit = "cashInCreateCashInFromCredit";
     protected final String cashInCreateCashInFromLoan = "cashInCreateCashInFromLoan";
-    protected final String cashInCashInFromSaleOfGoodsCustomer = "cashInCashInFromSaleOfGoodsCustomer" ;
-    protected final String cashInCashInFromServiceProvisionCustomer = "cashInCashInFromServiceProvisionCustomer" ;
-    protected final String cashInCreateCashInFromSaleOfGoodsClientOrganization = "cashInCreateCashInFromSaleOfGoodsClientOrganization" ;
-    protected final String cashInCreateCashInFromSaleOfGoodsIndividual = "cashInCreateCashInFromSaleOfGoodsIndividual" ;
+    protected final String createClientOrganization = "createClientOrganization" ;
+    protected final String createIndividual = "createIndividual" ;
     protected final String cashInCreateCashInFromPointOfSale="cashInCreateCashInFromPointOfSale";
-    protected final String nullFragment = "nullfragment" ;
     protected final String cashOutFragment = "cashOut";
     protected final String cashdeskFragmentNavBar = "cashdeskFragmentNavBar";
     protected final String cashInFragmentNavBar = "cashInFragmentNavBar";
@@ -57,6 +56,7 @@ public class BaseController {
     protected final String reportFragmentNavBar = "reportFragmentNavBar";
     protected final String reportDebtFragment = "reportDebtFragment";
     protected final String reportDebtFragmentNavBar = "reportDebtFragmentNavBar";
+
 
 
 }
