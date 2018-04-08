@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 
-public class CashInFromSaleOfGoods {
+public class CashInFromSaleOfGoods implements GetWaletIn {
     @Id
     @GeneratedValue
     private int id;
@@ -77,6 +77,11 @@ public class CashInFromSaleOfGoods {
     }
 
     public WalletIn getWalletIn() {
+        return walletIn;
+    }
+
+    @Override
+    public WalletIn getWalletInImpl() {
         return walletIn;
     }
 

@@ -1,6 +1,8 @@
 package com.example.imhashvapahversion1.version1.Entity.enums;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 
 public class DateRange {

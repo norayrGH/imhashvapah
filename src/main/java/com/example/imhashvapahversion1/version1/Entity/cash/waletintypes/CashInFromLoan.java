@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CashInFromLoan {
+public class CashInFromLoan implements GetWaletIn {
     @Id
     @GeneratedValue
     private int id;
@@ -68,6 +68,10 @@ public class CashInFromLoan {
     }
 
     public WalletIn getWalletIn() {
+        return walletIn;
+    }
+    @Override
+    public WalletIn getWalletInImpl() {
         return walletIn;
     }
 

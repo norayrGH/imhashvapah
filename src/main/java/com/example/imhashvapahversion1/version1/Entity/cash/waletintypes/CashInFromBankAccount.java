@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CashInFromBankAccount  {
+public class CashInFromBankAccount implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
@@ -19,7 +19,7 @@ public class CashInFromBankAccount  {
 
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private WalletIn walletIn;
+    private WalletIn  walletIn;
     public CashInFromBankAccount() {
 
     }
@@ -46,6 +46,10 @@ public class CashInFromBankAccount  {
     }
 
     public WalletIn getWalletIn() {
+        return walletIn;
+    }
+    @Override
+    public WalletIn getWalletInImpl() {
         return walletIn;
     }
 

@@ -5,10 +5,10 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.BankAccount;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
-
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
@@ -20,9 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 @RequestMapping(value="/account/cash/")
@@ -113,7 +111,6 @@ public class CashController extends BaseController {
 
         return modelAndView;
     }
-
     @RequestMapping(value = "bankaccount/create/{id}", method = RequestMethod.GET)
     public ModelAndView bankАccountCreate(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
 
@@ -132,7 +129,6 @@ public class CashController extends BaseController {
         return modelAndView;
     }
     @PostMapping(value = "bankaccount/create/getbankname")
-
     public @ResponseBody String getBankName(@RequestBody Integer accountStartNumbers) {
 
         if (11500 >= accountStartNumbers && accountStartNumbers <= 11554)
@@ -344,15 +340,6 @@ public class CashController extends BaseController {
         bankAccountRepository.save(bankAccount);
         return  modelAndView;
     }
-
-
-
-
-
-
-
-
-
     @RequestMapping(value = "cashdesk", method = RequestMethod.POST)
     public ModelAndView cashdeskCreate(@Valid WalletData walletData, BindingResult bindingResult, ModelAndView modelAndView) {
 
@@ -377,6 +364,12 @@ public class CashController extends BaseController {
 
         return modelAndView;
     }
+
+
+
+
+
+
     @RequestMapping(value = "cashin/cashdesk/{id}", method = RequestMethod.GET)
     public ModelAndView cashIncashdesk(@PathVariable(value = "id") final Long id, ModelAndView modelAndView  ) {
 
@@ -393,6 +386,100 @@ public class CashController extends BaseController {
 
         return modelAndView;
     }
+    @RequestMapping(value = "cashin/cashdesk/show", method = RequestMethod.POST)
+    public @ResponseBody ArrayList cashinCashdeskShow(@RequestBody DateRange dateRange ) throws ParseException {
+
+
+        List<GetWaletIn> temp = new ArrayList();
+        ArrayList showResult = new ArrayList();
+
+        if (dateRange.isShowAll()) {
+
+
+        temp.addAll((ArrayList)cashInFromBankAccountRepository.findAll());
+        temp.addAll((ArrayList)cashInFromCreditRepository.findAll());
+        temp.addAll((ArrayList)cashInFromLoanRepository.findAll());
+        temp.addAll((ArrayList)cashInFromBankAccountRepository.findAll());
+        temp.addAll((ArrayList)cashInFromPointOfSaleRepository.findAll());
+        temp.addAll((ArrayList)cashInFromSaleOfGoodsRepository.findAll());
+        temp.addAll((ArrayList)cashInFromServiceProvisionRepository.findAll());
+
+        for(GetWaletIn each:temp) {
+            showResult.add(each.getWalletInImpl());
+        }
+
+            return showResult;
+        }
+
+
+
+
+        if (dateRange.getStart() != null && dateRange.getEnd() == null) {
+
+
+
+            temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
+           /* temp.addAll((ArrayList)cashInFromCreditRepository.findByRangeStart(dateStart));
+            temp.addAll((ArrayList)cashInFromLoanRepository.findByRangeStart(dateStart));
+            temp.addAll((ArrayList)cashInFromBankAccountRepository.findByRangeStart(dateStart));
+            temp.addAll((ArrayList)cashInFromPointOfSaleRepository.findByRangeStart(dateStart));
+            temp.addAll((ArrayList)cashInFromSaleOfGoodsRepository.findByRangeStart(dateStart));
+            temp.addAll((ArrayList)cashInFromServiceProvisionRepository.findByRangeStart(dateStart));*/
+            for(GetWaletIn each:temp) {
+                showResult.add(each.getWalletInImpl());
+            }
+            return showResult;
+
+        } /*else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
+
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.set(Calendar.YEAR,dateRange.getEnd().toLocalDate().getYear());
+            calEnd.set(Calendar.MONTH,  dateRange.getEnd().toLocalDate().getDayOfMonth() - 1);
+            calEnd.set(Calendar.DAY_OF_MONTH, dateRange.getEnd().toLocalDate().getMonthValue()+1);
+            calEnd.set(Calendar.HOUR_OF_DAY,0);
+            calEnd.set(Calendar.MINUTE,0);
+            calEnd.set(Calendar.SECOND,0);
+            java.sql.Date dateEnd = new java.sql.Date(calEnd.getTimeInMillis());
+
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByEnd( dateEnd);
+            return resultByStart;
+        } else if (dateRange.getStart() != null && dateRange.getEnd() != null) {
+            Calendar calStart = Calendar.getInstance();
+            calStart.set(Calendar.YEAR,dateRange.getStart().toLocalDate().getYear());
+            calStart.set(Calendar.MONTH,  dateRange.getStart().toLocalDate().getDayOfMonth() - 1);
+            calStart.set(Calendar.DAY_OF_MONTH, dateRange.getStart().toLocalDate().getMonthValue()+1);
+            calStart.set(Calendar.HOUR_OF_DAY,0);
+            calStart.set(Calendar.MINUTE,0);
+            calStart.set(Calendar.SECOND,0);
+            java.sql.Date dateStart = new java.sql.Date(calStart.getTimeInMillis());
+
+
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.set(Calendar.YEAR,dateRange.getEnd().toLocalDate().getYear());
+            calEnd.set(Calendar.MONTH,  dateRange.getEnd().toLocalDate().getDayOfMonth() - 1);
+            calEnd.set(Calendar.DAY_OF_MONTH, dateRange.getEnd().toLocalDate().getMonthValue()+1);
+            calEnd.set(Calendar.HOUR_OF_DAY,0);
+            calEnd.set(Calendar.MINUTE,0);
+            calEnd.set(Calendar.SECOND,0);
+            java.sql.Date dateEnd = new java.sql.Date(calEnd.getTimeInMillis());
+
+            ArrayList<FixedAsset> resultByStart = (ArrayList) universalRepository.findByRange(dateStart, dateEnd);
+
+
+            return resultByStart;
+
+        }*/
+        return showResult;
+    }
+
+
+
+
+
+
+
+
+
     @RequestMapping(value = "cashin/cashdesk/create/{id}", method = RequestMethod.GET )
     public ModelAndView cashIncashdeskCreate(@PathVariable(value = "id") final Long id , ModelAndView modelAndView ) {
 
@@ -454,6 +541,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromSaleOfGoods.getOrganization());
+        cashInFromSaleOfGoods.getWalletIn().setInType("Մուտք ապրանքների իրացումից");
         cashInFromSaleOfGoodsRepository.save(cashInFromSaleOfGoods);
         return  modelAndView;
     }
@@ -503,6 +591,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromBankAccount.getOrganization());
+        cashInFromBankAccount.getWalletIn().setInType("Մուտք բանկային հաշվից");
         cashInFromBankAccountRepository.save(cashInFromBankAccount);
         return  modelAndView;
     }
@@ -556,6 +645,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromLoan.getOrganization());
+        cashInFromLoan.getWalletIn().setInType("Փոխառության ստացում");
         cashInFromLoanRepository.save(cashInFromLoan);
         return  modelAndView;
     }
@@ -595,6 +685,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromPointOfSale.getOrganization());
+        cashInFromPointOfSale.getWalletIn().setInType("Մուտք առևտրի կետից");
         cashInFromPointOfSaleRepository.save(cashInFromPointOfSale);
         return  modelAndView;
     }
@@ -645,6 +736,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromServiceProvision.getOrganization());
+        cashInFromServiceProvision.getWalletIn().setInType("Մուտք ծառայության մատուցումից");
         cashInFromServiceProvisionRepository.save(cashInFromServiceProvision);
         return  modelAndView;
     }
@@ -702,6 +794,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         modelAndView.addObject("organization", cashInFromCredit.getOrganization());
         cashInFromCreditRepository.save(cashInFromCredit);
+        cashInFromCredit.getWalletIn().setInType("Վարկի ստացում");
         return  modelAndView;
     }
 

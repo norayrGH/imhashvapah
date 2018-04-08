@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMa
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired

@@ -521,11 +521,80 @@
         <input type="text" class="datepicker to" />
         <input type="checkbox" class="range-picker" id="showAll" name="showAll" />
         <label> Ցուցադրել բոլորը </label>
+
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}"/>
     </div>
+    <div id="showCashIn" >
+    </div>
+    <script>
+        function toDate(dateStr) {
+            var parts = dateStr.split("/");
+
+            return new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+        }
+
+
+        $(function () {
+            $('.range-picker').on('change', function () {
+                var newRange = String( $(this).attr('data-range'));
+                var start="" ;
+                var end="";
+                var showAll = Boolean($("#showAll").is(':checked'));
+
+                var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
+                if(newRange.length>11)
+                {
+                    start = newRange.substring(0, newRange.indexOf('-'));
+                    end   = newRange.substring(newRange.indexOf('-')+1,newRange.length );
+                }
+                else if(newRange.indexOf('-')==0)
+                    end =  newRange.substring(newRange.indexOf('-')+1,newRange.length );
+                else
+                    start=newRange.substring(0, newRange.indexOf('-'));
+                start = toDate(start);
+                end = toDate(end);
+
+                console.log(start);
+                var DateRang={
+                    start:start,
+                    end:end,
+                    showAll:showAll
+                };
+
+                if(showAll==false)
+                    $('#showCashIn').empty();
+
+
+                $.ajax({
+
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/cash/cashin/cashdesk/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRang),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $('#showCashIn').empty();
+                        else
+                            showCashIn(msg);
+
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+
+            });
+        });
+    </script>
 
 </div>
 <div class="container" th:fragment="cashInCreate" >

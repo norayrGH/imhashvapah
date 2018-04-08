@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @Entity
-public class CashInFromServiceProvision {
+public class CashInFromServiceProvision implements GetWaletIn {
     @Id
     @GeneratedValue
     private int id;
@@ -81,6 +81,11 @@ public class CashInFromServiceProvision {
     }
 
     public WalletIn getWalletIn() {
+        return walletIn;
+    }
+
+    @Override
+    public WalletIn getWalletInImpl() {
         return walletIn;
     }
 

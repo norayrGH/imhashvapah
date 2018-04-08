@@ -90,8 +90,8 @@ function  showFixedAssets(fixedAssets) {
     var fixedAssetsTableTh= ["Գույքահամար","Անվանում","Ամսաթիվ","Ձեռքբերման գումար"];
     var fixedAssetsTable = $("<table />")
         .attr({id:"showFixedAssetsTable",class:"table table-hover "});
-   var tHead =$("<thead />");
-   var tHeadTr = $("<tr />");
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
     $.each(fixedAssetsTableTh, function(i, item) {
         tHeadTr.append($("<th />").text(item));
     });
@@ -108,12 +108,12 @@ function  showFixedAssets(fixedAssets) {
 
         var date = new Date (item.acquiringDate).toISOString();
         tBody.append($("<tr />").attr({scope:"row"}).append($("<td />").text(item.inventoryNumber)
-        ,$("<td />").text(item.name)
-        ,$("<td />").text(date.substring(0,date.indexOf('T')))
-        ,$("<td />").text(item.acquiringАmount)
-        ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
-                            ,"&nbsp;&nbsp;&nbsp;"
-                            ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+            ,$("<td />").text(item.name)
+            ,$("<td />").text(date.substring(0,date.indexOf('T')))
+            ,$("<td />").text(item.acquiringАmount)
+            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
 
         ));
     });
@@ -123,6 +123,49 @@ function  showFixedAssets(fixedAssets) {
     $('#showFixedAssets').append(fixedAssetsTable);
 
 }
+function  showCashIn(cashIn) {
+
+
+    $('#showCashIn').empty();
+
+    var cashInTableTh= ["Ամսաթիվ","Գումար","Մուտքի տեսակ"];
+    var cashInTable = $("<table />")
+        .attr({id:"showCashInTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(cashInTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    cashInTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(cashIn, function(i, item) {
+
+
+
+
+
+        var date = new Date (item.inDate).toISOString();
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text(item.id)
+            ,$("<td />").text(date.substring(0,date.indexOf('T')))
+            ,$("<td />").text(item.inCash)
+            ,$("<td />").text(item.inType)
+            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+
+    cashInTable.append(tBody);
+
+    $('#showCashIn').append(cashInTable);
+
+}
+
 function  showBankAccount(accounts) {
 
 
