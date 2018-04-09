@@ -5,7 +5,7 @@ var stritFleet = $("#stritFleet");
 
 var address = {stritFleet: "", region: "", city: ""};
 var textaddress = "";
-
+var chashInTypes={cashinfrombankaccount:"Մուտք բանկային հաշվից",cashinfromcredit:"Վարկի ստացում",cashinfromloan:"Փոխառության ստացում",cashinfrompointofsale:"Մուտք առևտրի կետից",cashinfromsaleofgoods:"Մուտք ապրանքների իրացումից",cashinfromserviceprovision:"Մուտք ծառայության մատուցումից"};
 
 if (cityes.val() != undefined) {
     $.each(addresses, function (key, value) {
@@ -128,7 +128,7 @@ function  showCashIn(cashIn) {
 
     $('#showCashIn').empty();
 
-    var cashInTableTh= ["Ամսաթիվ","Գումար","Մուտքի տեսակ"];
+    var cashInTableTh= ["№","Ամսաթիվ","Գումար","Մուտքի տեսակ"];
     var cashInTable = $("<table />")
         .attr({id:"showCashInTable",class:"table table-hover "});
     var tHead =$("<thead />");
@@ -146,16 +146,15 @@ function  showCashIn(cashIn) {
 
 
 
-
         var date = new Date (item.inDate).toISOString();
         tBody.append($("<tr />").attr({scope:"row"}).append(
             $("<td />").text(item.id)
             ,$("<td />").text(date.substring(0,date.indexOf('T')))
             ,$("<td />").text(item.inCash)
-            ,$("<td />").text(item.inType)
-            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+            ,$("<td />").text(chashInTypes[item.inType])
+            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashdesk/edit/"+item.inType+"/"+item.id , class:"glyphicon glyphicon-pencil"})
                 ,"&nbsp;&nbsp;&nbsp;"
-                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+                ,$("<a />").attr({href:"/account/cash/cashdesk/delete/"+item.inType+"/"+item.id , class:"glyphicon glyphicon-trash"}))
 
         ));
     });

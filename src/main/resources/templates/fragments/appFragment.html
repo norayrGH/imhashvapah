@@ -120,7 +120,7 @@
     <script>
         function toDate(dateStr) {
             var parts = dateStr.split("/");
-            var result = parts[2]+"-"+parts[1]+"-"+parts[0];
+            var result = parts[2]+"-"+parts[0]+"-"+parts[1];
             return new Date(result);
         }
 
@@ -530,6 +530,7 @@
     <div id="showCashIn" >
     </div>
     <script>
+        /*<![CDATA[*/
         function toDate(dateStr) {
             var parts = dateStr.split("/");
 
@@ -594,6 +595,7 @@
 
             });
         });
+        /*]]>*/
     </script>
 
 </div>
@@ -762,8 +764,6 @@
           th:field="*{walletIn.inCash}"
         />
                      <br />
-
-
 
         <label>Պայմանագրի ամսաթիվ</label>
         <input type="date"
