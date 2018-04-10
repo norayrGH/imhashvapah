@@ -418,8 +418,8 @@ public class CashController extends BaseController {
 
 
 
-            temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
-           /* temp.addAll((ArrayList)cashInFromCreditRepository.findByRangeStart(dateStart));
+           /* temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll((ArrayList)cashInFromCreditRepository.findByRangeStart(dateStart));
             temp.addAll((ArrayList)cashInFromLoanRepository.findByRangeStart(dateStart));
             temp.addAll((ArrayList)cashInFromBankAccountRepository.findByRangeStart(dateStart));
             temp.addAll((ArrayList)cashInFromPointOfSaleRepository.findByRangeStart(dateStart));
