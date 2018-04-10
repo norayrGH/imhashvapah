@@ -13,8 +13,8 @@ import java.util.List;
 public interface CashInFromCreditRepository extends CrudRepository<CashInFromCredit,Long> {
     @Query("Select c from CashInFromCredit c INNER JOIN c.walletIn w WHERE w.inDate>=:startDate ")
     ArrayList findByRangeStart(@Param("startDate") Date startDate);
-    @Query( "Select c from CashInFromCredit c INNER JOIN c.walletIn w WHERE w.inDate>:startDate and w.inDate<:endDate ")
+    @Query( "Select c from CashInFromCredit c INNER JOIN c.walletIn w WHERE w.inDate>=:startDate and w.inDate<=:endDate ")
     ArrayList findByRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
-    @Query( "Select c from CashInFromCredit c INNER JOIN c.walletIn w WHERE w.inDate<:endDate ")
+    @Query( "Select c from CashInFromCredit c INNER JOIN c.walletIn w WHERE w.inDate<=:endDate ")
     ArrayList  findByEnd(@Param("endDate")Date endDate);
 }

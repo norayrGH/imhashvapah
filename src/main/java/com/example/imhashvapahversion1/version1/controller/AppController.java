@@ -30,7 +30,6 @@ public class AppController extends BaseController{
         return modelAndView;
     }
 
-
     @RequestMapping(value = "/account/login/success")
     public final String loginSuccessAction() {
         return "redirect:/account";

@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -18,6 +15,7 @@ import java.util.Locale;
 
 
 @Controller
+@RequestMapping("account/partner")
 public class PartnerController extends BaseController {
 
 
@@ -37,7 +35,7 @@ public class PartnerController extends BaseController {
                 return organization.getId().toString();
             }
             @Override
-            public Organization parse(String organizationId, Locale locale) throws ParseException {
+            public Organization parse(String organizationId, Locale locale){
                 return organizationRepository.findOne(Long.parseLong(organizationId));
             }
 
@@ -46,13 +44,10 @@ public class PartnerController extends BaseController {
 
 
 
-    @RequestMapping(value = "account/partner/customer/debt/{id}", method = RequestMethod.GET)
-    public ModelAndView partnerCustomerDebt(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @GetMapping(value = "/customer/debt")
+    public ModelAndView partnerCustomerDebt( ModelAndView modelAndView) {
 
-
-        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
@@ -61,13 +56,10 @@ public class PartnerController extends BaseController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "account/partner/supplier/debt/{id}", method = RequestMethod.GET)
-    public ModelAndView partnerSupplierDebt(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @GetMapping(value = "/supplier/debt")
+    public ModelAndView partnerSupplierDebt( ModelAndView modelAndView) {
 
-
-        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerSupplierFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
@@ -76,13 +68,10 @@ public class PartnerController extends BaseController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "account/partner/otherpartner/debt/{id}", method = RequestMethod.GET)
-    public ModelAndView partnerOtherPartnerDebt(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @GetMapping( value = "/otherpartner/debt")
+    public ModelAndView partnerOtherPartnerDebt( ModelAndView modelAndView) {
 
-
-        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerOtherPartnerFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);

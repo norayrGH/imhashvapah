@@ -45,15 +45,15 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul>
-                        <li class="active"><a th:href="@{'/account/organization/' + ${organization.id}}"><img
+                        <li class="active"><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}"><img
                                 src="/static/img/6.png"/></a></li>
-                        <li class="active1"><a th:href="@{'/account/cash/' + ${organization.id}}"><img
+                        <li class="active1"><a th:href="@{'/account/cash' }"><img
                                 src="/static/img/6 finance.png"/></a></li>
-                        <li class="active2"><a th:href="@{'/account/partner/customer/debt/' + ${organization.id}}"><img
+                        <li class="active2"><a th:href="@{'/account/partner/customer/debt'}"><img
                                 src="/static/img/6 hands.png"/></a></li>
-                        <li class="active3"><a th:href="@{'/account/employee/' + ${organization.id}}"><img
+                        <li class="active3"><a th:href="@{'/account/employee'}"><img
                                 src="/static/img/6 peoples.png"/></a></li>
-                        <li class="active4"><a th:href="@{'/account/report/summary/' + ${organization.id}}"><img
+                        <li class="active4"><a th:href="@{'/account/report/summary'}"><img
                                 src="/static/img/6 numbers.png"/></a></li>
                     </ul>
                 </nav>
@@ -78,19 +78,18 @@
 
     </div>
 </div>
-<div th:fragment="details">
+<div th:fragment="details" >
 
     <ul>
-
-        <li th:text="${organization.getOrganizationName()}"></li>
-        <li th:text="${organization.getHch()}"></li>
-        <li th:text="${organization.getActingAddress()}"></li>
-        <li th:text="${organization.getCertificateNumber()}"></li>
-        <li th:text="${organization.getDateOfOpeningBalances()}"></li>
-        <li th:text="${organization.getJuridicalAddress()}"></li>
-        <li th:text="${organization.getRegistrationDate()}"></li>
-        <li th:text="${organization.getRegistrationNumber()}"></li>
-        <li th:text="${organization.getTaxpayerIdentificationNumber()}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').organizationName}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').hch}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').actingAddress}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').certificateNumber}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').dateOfOpeningBalances}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').juridicalAddress}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').registrationDate}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').registrationNumber}"></li>
+        <li th:text="${#httpSession.getAttribute('organizationId').taxpayerIdentificationNumber}"></li>
     </ul>
 
 </div>
@@ -101,7 +100,7 @@
 
     <div id="filterForm" class="range-picker" >
         <a class="btn btn-info" role="button"
-           th:href="@{'/account/organization/fixedasset/create/' + ${organization.id} }">Ավելացնել </a>
+           th:href="@{'/account/organization/fixedasset/create'}">Ավելացնել </a>
         <br/>
         <br/>
         <label>Սկիզբ:</label>
@@ -187,7 +186,7 @@
 <div th:fragment="fixedassetCreate" >
 
 
-    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/' + ${updateOrCreate}}"
+    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/create'}"
           id="fixedassetCreate" >
 
         <div class="alert alert-danger" th:if=" ${ #fields.hasErrors('*') } ">
@@ -279,9 +278,9 @@
 
         <div id="organizationNavBar" class="collapse navbar-collapse">
             <ul class="nav nav-justified">
-                <li><a th:href="@{'/account/organization/' + ${organization.id}}" id="current">Ընթացիկ</a></li>
-                <li><a th:href="@{'/account/organization/details/' + ${organization.id}}" id="details">Տվյալներ</a></li>
-                <li><a th:href="@{'/account/organization/fixedasset/' + ${organization.id}}" href="#" id="himnakan">Հիմնական
+                <li><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}" id="current">Ընթացիկ</a></li>
+                <li><a th:href="@{'/account/organization/details'}" id="details">Տվյալներ</a></li>
+                <li><a th:href="@{'/account/organization/fixedasset'}" href="#" id="himnakan">Հիմնական
                     միջոցներ</a></li>
             </ul>
         </div>
@@ -295,9 +294,9 @@
             <ul class="nav nav-justified">
 
 
-                <li><a th:href="@{'/account/cash/' + ${organization.id}}" id="cashResource"> Դրամական միջոցներ</a></li>
-                <li><a th:href="@{'/account/cash/cashin/cashdesk/' + ${organization.id}}" id="in"> Մեւտքեր</a></li>
-                <li><a th:href="@{'/account/cash/cashout/cashdesk/' + ${organization.id}}" id="out">Ելքեր</a></li>
+                <li><a th:href="@{'/account/cash'}" id="cashResource"> Դրամական միջոցներ</a></li>
+                <li><a th:href="@{'/account/cash/cashin/cashdesk' }" id="in"> Մուտքեր</a></li>
+                <li><a th:href="@{'/account/cash/cashout/cashdesk' }" id="out">Ելքեր</a></li>
 
             </ul>
         </div>
@@ -358,7 +357,7 @@
 </div>
 <div class="container" th:fragment="bankaccount">
 
-    <a class="btn btn-info" role="button" th:href="@{'/account/cash/bankaccount/create/' + ${organization.id} }">Ավելացնել </a>
+    <a class="btn btn-info" role="button" th:href="@{'/account/cash/bankaccount/create/' }">Ավելացնել </a>
     <div id="showBankAccount" >
     </div>
     <script th:inline="javascript" >
@@ -512,7 +511,7 @@
 <div class="container" th:fragment="cashIn">
     <div id="filterForm" class="range-picker" >
         <a class="btn btn-info" role="button"
-           th:href="@{'/account/cash/cashin/cashdesk/create/' + ${organization.id} }">Ավելացնել </a>
+           th:href="@{'/account/cash/cashin/cashdesk/create/'}">Ավելացնել </a>
         <br/>
         <br/>
         <label>Սկիզբ:</label>
@@ -600,18 +599,18 @@
 
 </div>
 <div class="container" th:fragment="cashInCreate" >
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrompointofsale/'  + ${organization.id}}" > Մուտք առևտրի կետից </a>
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods/'  + ${organization.id}}" > Մուտք ապրանքների իրացումից </a>
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromserviceprovision/'  + ${organization.id}}" > Մուտք ծառայության մատուցումից </a>
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrombankaccount/'  + ${organization.id}}" > Մուտք բանկային հաշվից </a>
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromloan/'  + ${organization.id}}" > Փոխառության ստացում </a>
-            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromcredit/'  + ${organization.id}}" > Վարկի ստացում </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrompointofsale'}" > Մուտք առևտրի կետից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods'}" > Մուտք ապրանքների իրացումից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromserviceprovision'}" > Մուտք ծառայության մատուցումից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfrombankaccount'}" > Մուտք բանկային հաշվից </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromloan'}" > Փոխառության ստացում </a>
+            <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashin/cashdesk/create/cashinfromcredit'}" > Վարկի ստացում </a>
 </div>
 
-<div class="container" th:fragment="customerAndColleaguesCreate" th:object="${organization}" >
+<div class="container" th:fragment="customerAndColleaguesCreate" >
 
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/clientorganization/'  + ${id}}" >Կազմակերպություն </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/individual/'  + ${id}}" >Անհատ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/clientorganization'}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/individual'}" >Անհատ </a>
 
 
 </div>
@@ -747,7 +746,7 @@
                     th:value="${customer.id}"
                     th:text="${customer.display()}" />
         </select>
-        <a type="button" th:href="@{'/account/cash/create/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
         </a>
         <br />
@@ -827,7 +826,7 @@
                     th:value="${colleague.id}"
                     th:text="${colleague.display()}" />
         </select>
-        <a type="button" th:href="@{'/account/cash/create/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
         </a>
         <br />
@@ -909,7 +908,7 @@
                     th:value="${customer.display()}"
                     th:text="${customer.display()}" />
         </select>
-        <a type="button" th:href="@{'/account/cash/create/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
         </a>
         <br />
@@ -991,7 +990,7 @@
                     th:value="${colleague.id}"
                     th:text="${colleague.display()}" />
         </select>
-        <a type="button" th:href="@{'/account/cash/create/customer/' + ${organization.id}}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
         </a>
         <br />
@@ -1135,11 +1134,11 @@
        <ul class=" nav flex-column">
 
            <li class="nav-item"><a class="nav-link active"
-                                   th:href="@{'/account/cash/cashdesk/' + ${organization.id}}"> Դրամապանակի
+                                   th:href="@{'/account/cash/cashdesk'}"> Դրամապանակի
                տվյալններ </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="terminalData">Տերմինալի
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminalData">Տերմինալի
                տվյալներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'/account/cash/bankaccount/' + ${organization.id}}" id="bankAccounts">Բանկային
+           <li class="nav-item"><a class="nav-item" th:href="@{'/account/cash/bankaccount'}" id="bankAccounts">Բանկային
                հաշիվներ</a></li>
        </ul>
    </div>
@@ -1152,11 +1151,11 @@
    <div id="cashInFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column ">
 
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="wallet">
+           <li class="nav-item"><a class="nav-link active" th:href="@{'' }" id="wallet">
                Դրամապանակ </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="terminal">Տերմինալ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminal">Տերմինալ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bank">Բանկ</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="bank">Բանկ</a></li>
        </ul>
    </div>
 </nav>
@@ -1166,10 +1165,10 @@
 
    <div id="cashOutFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column ">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="wallet">
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="wallet">
                Դրամապանակ </a></li>
 
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bank">Բանկ</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="bank">Բանկ</a></li>
        </ul>
    </div>
 </nav>
@@ -1192,9 +1191,9 @@
    <div id="partnerNavBar" class="collapse navbar-collapse">
        <ul class="nav nav-justified">
 
-           <li><a th:href="@{'/account/partner/customer/debt/' + ${organization.id}}" id="customers">Գնորդներ</a></li>
-           <li><a th:href="@{'/account/partner/supplier/debt/' + ${organization.id}}" id="delivery">Մատակարարներ</a></li>
-           <li><a th:href="@{'/account/partner/otherpartner/debt/' + ${organization.id}}" id="anotherPartners">Այլ
+           <li><a th:href="@{'/account/partner/customer/debt'}" id="customers">Գնորդներ</a></li>
+           <li><a th:href="@{'/account/partner/supplier/debt'}" id="delivery">Մատակարարներ</a></li>
+           <li><a th:href="@{'/account/partner/otherpartner/debt/'}" id="anotherPartners">Այլ
                գործընկերներ</a></li>
        </ul>
    </div>
@@ -1205,13 +1204,13 @@
 
    <div id="partnerFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="debts">
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="debts">
                Պարտքեր </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="sellout">Վաճառքներ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="sellout">Վաճառքներ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="payment">Ստացված
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="payment">Ստացված
                վճարումներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="customerTable">Գնորդների
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="customerTable">Գնորդների
                ցանկ</a></li>
        </ul>
    </div>
@@ -1222,15 +1221,15 @@
 
    <div id="partnerSupplierFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column ">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="supplierDebt">
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="supplierDebt">
                Պարտքեր</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="purchase">Ձեռքբերումներ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="purchase">Ձեռքբերումներ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="periodicService">Ծառայություններ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="periodicService">Ծառայություններ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="supplierPayment">Կատարված
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="supplierPayment">Կատարված
                վճարումներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="supplierTable">Մատակարարների
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="supplierTable">Մատակարարների
                ցանկ</a></li>
        </ul>
    </div>
@@ -1241,10 +1240,10 @@
 
    <div id="partnerOtherPartnerFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column ">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="otherPartnerDebt"> Պարտքեր</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="otherPartnerPayment">Վճարումներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="group">Խմբեր</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="otherPartnerTable">Այլ
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="otherPartnerDebt"> Պարտքեր</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="otherPartnerPayment">Վճարումներ</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="group">Խմբեր</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="otherPartnerTable">Այլ
                գորընկերների ցանկ</a></li>
 
        </ul>
@@ -1270,9 +1269,9 @@
        <ul class="nav nav-justified">
 
 
-           <li><a th:href="@{'/account/employee/' + ${organization.id}}" id="employeers">Աշխատակիցներ</a></li>
-           <li><a th:href="@{'/account/employee/debt/' + ${organization.id}}" id="salary">Վարձատրություն</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="accounting">Հաշվարկ</a></li>
+           <li><a th:href="@{'/account/employee'}" id="employeers">Աշխատակիցներ</a></li>
+           <li><a th:href="@{'/account/employee/debt'}" id="salary">Վարձատրություն</a></li>
+           <li><a th:href="@{''}" id="accounting">Հաշվարկ</a></li>
 
        </ul>
    </div>
@@ -1283,11 +1282,11 @@
 
    <div id="employeeFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="employeeDesk">
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="employeeDesk">
                Աշխատակիցներ </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="subdivision">Ստորաբաժանումներ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="subdivision">Ստորաբաժանումներ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}"
+           <li class="nav-item"><a class="nav-item" th:href="@{''}"
                                    id="position">Պաշտոններ</a></li>
        </ul>
    </div>
@@ -1298,15 +1297,15 @@
 
    <div id="employeeDebtFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column">
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' + ${organization.id}}" id="employeeDebt">Պարտք </a>
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="employeeDebt">Պարտք </a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="employeeSalary">Աշխատավարձեր</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="employeeSalary">Աշխատավարձեր</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}"
+           <li class="nav-item"><a class="nav-item" th:href="@{''}"
                                    id="vacation">Արձակուրդներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="absence">Բացակայություններ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="absence">Բացակայություններ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{'' + ${organization.id}}" id="bonus">Պարգևներներ</a>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="bonus">Պարգևներներ</a>
            </li>
        </ul>
    </div>
@@ -1334,9 +1333,9 @@
    <div id="reportNavBar" class="collapse navbar-collapse">
        <ul class="nav nav-justified">
 
-           <li><a th:href="@{'/account/report/summary/' + ${organization.id}}" id="summaryData">Ամփոփ տվյալներ</a>
+           <li><a th:href="@{'/account/report/summary'}" id="summaryData">Ամփոփ տվյալներ</a>
            </li>
-           <li><a th:href="@{'/account/report/summary/debt/' + ${organization.id}}" id="tax">Հարկեր</a></li>
+           <li><a th:href="@{'/account/report/summary/debt'}" id="tax">Հարկեր</a></li>
 
        </ul>
    </div>
@@ -1347,11 +1346,11 @@
 
    <div id="reportFragmentNavBar" class="collapse navbar-collapse">
        <ul class="nav flex-column">
-           <li><a th:href="@{'' + ${organization.id}}" id="summary">Փակում</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="initialBalances">Սկզբնական մնացորդներ</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="turnover">Շրջանառություն</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="profitLoss">Ֆինանսական արդյունք</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="transaction">Գործառություններ</a></li>
+           <li><a th:href="@{''}" id="summary">Փակում</a></li>
+           <li><a th:href="@{''}" id="initialBalances">Սկզբնական մնացորդներ</a></li>
+           <li><a th:href="@{''}" id="turnover">Շրջանառություն</a></li>
+           <li><a th:href="@{''}" id="profitLoss">Ֆինանսական արդյունք</a></li>
+           <li><a th:href="@{''}" id="transaction">Գործառություններ</a></li>
        </ul>
    </div>
 </nav>
@@ -1361,10 +1360,10 @@
 
    <div id="reportDebtFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column">
-           <li><a th:href="@{'' + ${organization.id}}" id="reportDebt">Պարտքեր</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="report">Հաշվետվություններ</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="reportPaidTax">Վճարված հարկեր</a></li>
-           <li><a th:href="@{'' + ${organization.id}}" id="reportTax">Հարկատեսակներ</a></li>
+           <li><a th:href="@{''}" id="reportDebt">Պարտքեր</a></li>
+           <li><a th:href="@{''}" id="report">Հաշվետվություններ</a></li>
+           <li><a th:href="@{''}" id="reportPaidTax">Վճարված հարկեր</a></li>
+           <li><a th:href="@{''}" id="reportTax">Հարկատեսակներ</a></li>
        </ul>
    </div>
 </nav>
