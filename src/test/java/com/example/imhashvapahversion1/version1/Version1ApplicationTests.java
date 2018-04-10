@@ -1,6 +1,5 @@
 package com.example.imhashvapahversion1.version1;
 
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromBankAccount;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.repository.CashInFromBankAccountRepository;
 import org.junit.Test;

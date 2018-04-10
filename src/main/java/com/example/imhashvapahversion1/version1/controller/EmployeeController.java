@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -18,6 +15,7 @@ import java.util.Locale;
 
 
 @Controller
+@RequestMapping("account/employee")
 public class EmployeeController extends BaseController {
 
 
@@ -46,13 +44,10 @@ public class EmployeeController extends BaseController {
 
 
 
-    @RequestMapping(value = "account/employee/{id}", method = RequestMethod.GET)
-    public ModelAndView employee(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @GetMapping(value = "")
+    public ModelAndView employee(ModelAndView modelAndView) {
 
-
-        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.employeeNavBar);
         modelAndView.addObject("fragment", this.employeeFragment);
         modelAndView.addObject("fragmentNavBar", this.employeeFragmentNavBar);
@@ -62,13 +57,11 @@ public class EmployeeController extends BaseController {
     }
 
 
-    @RequestMapping(value = "account/employee/debt/{id}", method = RequestMethod.GET)
-    public ModelAndView employeeDebt(@PathVariable(value = "id") final Long id, ModelAndView modelAndView) {
+    @GetMapping(value = "/debt")
+    public ModelAndView employeeDebt( ModelAndView modelAndView) {
 
 
-        Organization organization = organizationRepository.findOne(id);
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.employeeNavBar);
         modelAndView.addObject("fragment", this.employeeDebtFragment);
         modelAndView.addObject("fragmentNavBar", this.employeeDebtFragmentNavBar);

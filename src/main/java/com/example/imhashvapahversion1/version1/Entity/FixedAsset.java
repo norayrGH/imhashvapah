@@ -10,7 +10,7 @@ import javax.validation.Constraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "tbl_fixedAsset")
@@ -33,7 +33,6 @@ public class FixedAsset {
     private String type;
     @Column(name = "fixedAsset_acquiring_date", unique = false, nullable = false)
     @NotNull(message = "Ամսաթիվը պարտադիր է: ")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date acquiringDate;
     @Column(name = "fixedAsset_acquiring_Amount", unique = false, nullable = false)
     @NotEmpty(message = " Ձեռքբերման գումարը պարտադիր է: ")

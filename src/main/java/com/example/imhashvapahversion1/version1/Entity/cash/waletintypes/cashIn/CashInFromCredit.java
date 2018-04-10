@@ -1,38 +1,34 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
+package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.cashIn;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.GetWaletIn;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CashInFromLoan implements GetWaletIn {
+public class CashInFromCredit implements GetWaletIn {
+
     @Id
     @GeneratedValue
     private int id;
     @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
     private String colleagues;
-    @NotEmpty(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
-    private String contractDate;
-    @NotEmpty(message = "հարկավոր է նշել պայմանագրի համարը ")
-    private String forContract;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
     @ManyToOne
     private Organization organization;
 
-    public CashInFromLoan() {
-    }
-
-    public CashInFromLoan(String colleagues, String contractDate, String forContract, WalletIn walletIn, Organization organization) {
+    public CashInFromCredit(String colleagues, WalletIn walletIn, Organization organization) {
         this.colleagues = colleagues;
-        this.contractDate = contractDate;
-        this.forContract = forContract;
         this.walletIn = walletIn;
         this.organization = organization;
+    }
+
+    public CashInFromCredit() {
     }
 
     public int getId() {
@@ -49,22 +45,6 @@ public class CashInFromLoan implements GetWaletIn {
 
     public void setColleagues(String colleagues) {
         this.colleagues = colleagues;
-    }
-
-    public String getContractDate() {
-        return contractDate;
-    }
-
-    public void setContractDate(String contractDate) {
-        this.contractDate = contractDate;
-    }
-
-    public String getForContract() {
-        return forContract;
-    }
-
-    public void setForContract(String forContract) {
-        this.forContract = forContract;
     }
 
     public WalletIn getWalletIn() {

@@ -1,7 +1,8 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
+package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.cashIn;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.GetWaletIn;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;

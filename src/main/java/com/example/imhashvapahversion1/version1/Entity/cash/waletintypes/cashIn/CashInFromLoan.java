@@ -1,45 +1,37 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes;
+package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.cashIn;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.GetWaletIn;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
-
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import javax.validation.Valid;
 
-import java.util.Date;
-
 @Entity
-
-public class CashInFromSaleOfGoods implements GetWaletIn {
+public class CashInFromLoan implements GetWaletIn {
     @Id
     @GeneratedValue
     private int id;
-
-    @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
-    private String customerName;
-
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date contractDate ;
-
-    private String contractNubmer ;
+    @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
+    private String colleagues;
+    @NotEmpty(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
+    private String contractDate;
+    @NotEmpty(message = "հարկավոր է նշել պայմանագրի համարը ")
+    private String forContract;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletIn walletIn;
     @ManyToOne
     private Organization organization;
 
-    public CashInFromSaleOfGoods() {
+    public CashInFromLoan() {
     }
 
-    public CashInFromSaleOfGoods(String customerName, Date contractDate, String contractNubmer, WalletIn walletIn, Organization organization) {
-        this.customerName = customerName;
+    public CashInFromLoan(String colleagues, String contractDate, String forContract, WalletIn walletIn, Organization organization) {
+        this.colleagues = colleagues;
         this.contractDate = contractDate;
-        this.contractNubmer = contractNubmer;
+        this.forContract = forContract;
         this.walletIn = walletIn;
         this.organization = organization;
     }
@@ -52,34 +44,33 @@ public class CashInFromSaleOfGoods implements GetWaletIn {
         this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getColleagues() {
+        return colleagues;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setColleagues(String colleagues) {
+        this.colleagues = colleagues;
     }
 
-    public Date getContractDate() {
+    public String getContractDate() {
         return contractDate;
     }
 
-    public void setContractDate(Date contractDate) {
+    public void setContractDate(String contractDate) {
         this.contractDate = contractDate;
     }
 
-    public String getContractNubmer() {
-        return contractNubmer;
+    public String getForContract() {
+        return forContract;
     }
 
-    public void setContractNubmer(String contractNubmer) {
-        this.contractNubmer = contractNubmer;
+    public void setForContract(String forContract) {
+        this.forContract = forContract;
     }
 
     public WalletIn getWalletIn() {
         return walletIn;
     }
-
     @Override
     public WalletIn getWalletInImpl() {
         return walletIn;

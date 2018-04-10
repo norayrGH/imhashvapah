@@ -1,8 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.CashInFromLoan;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;

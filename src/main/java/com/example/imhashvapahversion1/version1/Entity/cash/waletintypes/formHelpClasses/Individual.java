@@ -15,7 +15,6 @@ public class Individual {
     private String firstName;
     @NotEmpty(message = "Ազգանուն դաշտը անպայման է լրացնել ")
     private String lastName;
-
     @ManyToOne
     private Organization organization ;
 
