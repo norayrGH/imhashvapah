@@ -50,8 +50,8 @@ public class BaseController {
     protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";
     protected final String individualCustomerCreate = "individualCustomerCreate";
-
-
+    protected final String companyCustomerCreate="companyCustomerCreate";
+    protected final String privateEntrepreneurCustomerCreate="privateEntrepreneurCustomerCreate";
 
     protected final String employeeNavBar = "employeeNavBar";
     protected final String employeeFragment = "employeeFragment";

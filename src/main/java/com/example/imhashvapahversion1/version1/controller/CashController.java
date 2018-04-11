@@ -884,8 +884,8 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
 
-  /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
-    public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+  /* @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
+     public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {
         CashOutForSerivceProvider cashOutForTax = new CashOutForSerivceProvider();
         Tax tax = new Tax();
         WalletOut walletOut  =  new WalletOut();

@@ -1480,6 +1480,7 @@
         </div>
     </div>
 </div>
+
 <div class="container" th:fragment="individualCustomerCreate" >
 
     <form th:object="${individualCustomer}" action="/account/partner/customer/create/individualcustomer"  method="post" >
@@ -1568,9 +1569,164 @@
     </form >
 
 </div>
+<div class="container" th:fragment="companyCustomerCreate" >
+
+    <form th:object="${companyCustomer}" action="/account/partner/customer/create/companycustomer"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+        <label>Անվանում</label>
+        <input type="text"
+               th:name="clientOrganizationName"
+               th:field="*{clientOrganization.clientOrganizationName}"
+        />
+        <br />
+        <label>ՀՎՀՀ</label>
+        <input type="text"
+               th:name="hvhh"
+               th:field="*{hvhh}"
+        />
+        <br />
+        <label>Հարկման կարգ</label>
+        <select th:name="taxType"
+                th:field="*{taxType}"
+        >
+            <option value="ircleTaxPayer">Շրջանառության հարկ վճարող</option>
+            <option value="patentFeePayer">Արտոնագրային վճար վճարող</option>
+            <option value="fixedFeePayer">Հաստատագրված վճար վճարող</option>
+            <option value="AddedValueTaxPayer">Ավելացված արժեքի հարկ վճարող</option>
+        </select>
+        <br />
+        <label>Սկզբնական մնացորդի տեսակ</label>
+        <select th:name="openingBalanceType"
+                th:field="*{openingBalanceType}"
+        >
+            <option value="debt">Պարտք</option>
+            <option value="prepaid">Կանխավճար</option>
+        </select>
+        <br />
+        <label>Սկզբնական մնացորդ</label>
+        <input type="text"
+               th:name="openingBalance"
+               th:field="*{openingBalance}"
+        />
+        <br />
+        <label>Բանկային հաշիվ</label>
+        <input type="text"
+               th:name="bankAccount"
+               th:field="*{bankAccount}"
+        />
+        <br />
+        <label>Հասցե</label>
+        <input type="text"
+               th:name="address"
+               th:field="*{address}"
+        />
+        <br />
 
 
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
 
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="privateEntrepreneurCustomerCreate" >
+
+    <form th:object="${privateEntrepreneurCustomer}" action="/account/partner/customer/create/privateentrepreneurcustomer"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+        <label>Անվանում</label>
+        <input type="text"
+               th:name="privateEntrepreneurName"
+               th:field="*{privateEntrepreneurName}"
+        />
+        <br />
+        <label>ՀՎՀՀ</label>
+        <input type="text"
+               th:name="hvhh"
+               th:field="*{hvhh}"
+        />
+        <br />
+        <label>Հարկման կարգ</label>
+        <select th:name="taxType"
+                th:field="*{taxType}"
+        >
+            <option value="ircleTaxPayer">Շրջանառության հարկ վճարող</option>
+            <option value="patentFeePayer">Արտոնագրային վճար վճարող</option>
+            <option value="fixedFeePayer">Հաստատագրված վճար վճարող</option>
+            <option value="AddedValueTaxPayer">Ավելացված արժեքի հարկ վճարող</option>
+        </select>
+        <br />
+        <label>Սկզբնական մնացորդի տեսակ</label>
+        <select th:name="openingBalanceType"
+                th:field="*{openingBalanceType}"
+        >
+            <option value="debt">Պարտք</option>
+            <option value="prepaid">Կանխավճար</option>
+        </select>
+        <br />
+        <label>Սկզբնական մնացորդ</label>
+        <input type="text"
+               th:name="openingBalance"
+               th:field="*{openingBalance}"
+        />
+        <br />
+        <label>Բանկային հաշիվ</label>
+        <input type="text"
+               th:name="bankAccount"
+               th:field="*{bankAccount}"
+        />
+        <br />
+        <label>Հասցե</label>
+        <input type="text"
+               th:name="address"
+               th:field="*{address}"
+        />
+        <br />
+
+
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
 
 <div th:fragment="cashdeskFragmentNavBar">
 <nav role="navigation" class="navbar-justified">
