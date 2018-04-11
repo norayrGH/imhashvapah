@@ -1,7 +1,7 @@
 package com.example.imhashvapahversion1.version1;
 
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
-import com.example.imhashvapahversion1.version1.repository.CashInFromBankAccountRepository;
+import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromBankAccountRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

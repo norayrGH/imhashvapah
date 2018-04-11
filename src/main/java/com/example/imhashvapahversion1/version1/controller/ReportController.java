@@ -3,14 +3,13 @@ package com.example.imhashvapahversion1.version1.controller;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 
 
-
 import com.example.imhashvapahversion1.version1.repository.OrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.UniversalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.format.Formatter;
 
 import org.springframework.stereotype.Controller;
-
 
 
 import org.springframework.web.bind.WebDataBinder;
@@ -34,7 +33,6 @@ public class ReportController extends BaseController {
     UniversalRepository universalRepository;
 
 
-
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -43,6 +41,7 @@ public class ReportController extends BaseController {
             public String print(Organization organization, Locale locale) {
                 return organization.getId().toString();
             }
+
             @Override
             public Organization parse(String organizationId, Locale locale) {
                 return organizationRepository.findOne(Long.parseLong(organizationId));
@@ -50,9 +49,6 @@ public class ReportController extends BaseController {
 
         });
     }
-
-
-
 
 
     @RequestMapping(value = "/summary", method = RequestMethod.GET)

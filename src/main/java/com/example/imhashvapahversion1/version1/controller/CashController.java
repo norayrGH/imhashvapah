@@ -2,18 +2,21 @@ package com.example.imhashvapahversion1.version1.controller;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 
-import com.example.imhashvapahversion1.version1.Entity.cash.BankAccount;
-import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.WalletData;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.cashIn.*;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.cash.*;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.*;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.*;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForTax;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.repository.*;
+import com.example.imhashvapahversion1.version1.repository.cashIn.*;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.config.TxNamespaceHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +53,8 @@ public class CashController extends BaseController {
     CashInFromCreditRepository cashInFromCreditRepository;
     @Autowired
     WalletDataRepository walletDataRepository;
+    @Autowired
+    CashOutForTaxRepository cashOutForTaxRepository;
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -830,7 +835,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOut);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         return modelAndView;
     }
@@ -839,22 +844,83 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
 
     }
-    @GetMapping(value = "/cashout/cashdesk/cashout/cashdesk/create/cashoutfortax")
-    public ModelAndView cashOutforTaxCreate(ModelAndView modelAndView ) {
 
+    @GetMapping(value = "/cashout/cashdesk/create/cashoutfortax")
+    public ModelAndView cashOutforTaxCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+        CashOutForTax cashOutForTax = new CashOutForTax();
+        Tax tax = new Tax();
+        WalletOut walletOut  =  new WalletOut();
+
+        cashOutForTax.setTax(tax);
+        cashOutForTax.setWalletOut(walletOut);
+        cashOutForTax.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForTax",cashOutForTax);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForTaxCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         return modelAndView;
 }
+    @PostMapping(value = "/cashout/cashdesk/create/cashoutfortax")
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CashOutForTax cashOutForTax, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForTax", cashOutForTax);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForTaxCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        cashOutForTaxRepository.save(cashOutForTax);
+        return  modelAndView;
+    }
+
+  /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
+    public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+        CashOutForSerivceProvider cashOutForTax = new CashOutForSerivceProvider();
+        Tax tax = new Tax();
+        WalletOut walletOut  =  new WalletOut();
+
+        cashOutForTax.setTax(tax);
+        cashOutForTax.setWalletOut(walletOut);
+        cashOutForTax.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForTax",cashOutForTax);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForSerivceProviderCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+        return modelAndView;
+    }
+    @PostMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CashOutForTax cashOutForTax, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForTax", cashOutForTax);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForTaxCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        cashOutForTaxRepository.save(cashOutForTax);
+        return  modelAndView;
+    }
+*/
           /* /cashout/cashdesk/create/cashoutforgoodsprovider
-           /cashout/cashdesk/create/cashoutforserivceprovider
+
            /cashout/cashdesk/create/cashoutforrent
            /cashout/cashdesk/create/cashoutforbankaccount
            /cashout/cashdesk/create/cashoutforcreditpayment

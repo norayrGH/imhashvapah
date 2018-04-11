@@ -29,11 +29,12 @@ public class BaseController {
     protected final String cashInCreateCashInFromPointOfSale="cashInCreateCashInFromPointOfSale";
 
     protected final String cashOut = "cashOut";
+    protected final String cashOutFragmentNavBar = "cashOutFragmentNavBar";
     protected final String cashOutCreate = "cashOutCreate";
-        protected final String cashOutForTaxCreate = "cashOutForTaxCreate";
+    protected final String cashOutForTaxCreate = "cashOutForTaxCreate";
+    protected final String cashOutForSerivceProviderCreate="cashOutForSerivceProviderCreate";
     protected final String cashdeskFragmentNavBar = "cashdeskFragmentNavBar";
     protected final String cashInFragmentNavBar = "cashInFragmentNavBar";
-    protected final String cashOutFragmentNavBar = "cashOutFragmentNavBar";
 
 
 
@@ -42,12 +43,13 @@ public class BaseController {
 
     protected final String partnerNavBar = "partnerNavBar";
     protected final String partnerFragment = "partner";
+    public final String partnerCustomers="partnerCustomers";
     protected final String partnerFragmentNavBar = "partnerFragmentNavBar";
     protected final String partnerSupplierFragment = "partnerSupplierFragment";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";
     protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";
-
+    protected final String individualCustomerCreate = "individualCustomerCreate";
 
 
 

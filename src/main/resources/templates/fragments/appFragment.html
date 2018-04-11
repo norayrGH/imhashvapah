@@ -1211,7 +1211,8 @@
     </script>
 
 </div>
-<div class="container" th:fragment="cashOutCreate" >
+<div class="container" th:fragment="cashOutCreate">
+
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
@@ -1223,6 +1224,354 @@
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
     <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
 </div>
+
+<div class="container" th:fragment="cashOutForBankAccountCreate" >
+
+</div>
+<div class="container" th:fragment="cashOutForBankSpendingCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForCreditPaymentCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForGoodsProviderCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForLoanPaymentCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForOtherExpensesCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForRedemptionPercentCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForRentCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForSalaryCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForSerivceProviderCreate" >
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+</div>
+<div class="container" th:fragment="cashOutForTaxCreate" >
+
+
+    <form th:object="${cashOutForTax}" action="/account/cash/cashout/cashdesk/create/cashoutfortax" id="cashOutForTax"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+        <br />
+
+
+        <label>Հարկատեսակ</label>
+        <select
+               th:name="tax.taxType"
+               th:field="*{tax.taxType}"
+        >
+            <option value="0">-- Ընտրել --</option>
+        </select>
+        <br />
+
+        <label>Բանկային միջնորդավճար</label>
+        <input type="text"
+
+
+        />
+        <br />
+
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{walletOut.outDate}"
+        />
+        <br />
+
+        <label>Ելքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{walletOut.outCash}"
+        />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletOut.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                id="organizationId"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="cashOutForSerivceProviderCreate" >
+
+    <form th:object="${cashOutForTax}" action="/account/cash/cashout/cashdesk/create/cashoutfortax" id="cashOutForTax"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+        <br />
+
+
+        <label>Հարկատեսակ</label>
+        <select
+                th:name="tax.taxType"
+                th:field="*{tax.taxType}"
+        >
+            <option value="0">-- Ընտրել --</option>
+        </select>
+        <br />
+
+        <label>Բանկային միջնորդավճար</label>
+        <input type="text"
+
+
+        />
+        <br />
+
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="inDate"
+               th:field="*{walletOut.outDate}"
+        />
+        <br />
+
+        <label>Ելքի գումար</label>
+        <input type="text"
+               th:name="inCash"
+               th:field="*{walletOut.outCash}"
+        />
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletOut.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                id="organizationId"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="partnerCustomers" >
+    <div class="row col-md-7">
+        <div class="btn-group btn-group-justified ">
+            <a href="/account/partner/customer/create/individualcustomer" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Անհատ</span></a>
+            <a href="/account/partner/customer/create/privateentrepreneurcustomer" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Ա/Զ</span></a>
+            <a href="/account/partner/customer/create/companycustomer" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign">Կազմակերպություն</span></a>
+        </div>
+    </div>
+</div>
+<div class="container" th:fragment="individualCustomerCreate" >
+
+    <form th:object="${individualCustomer}" action="/account/partner/customer/create/individualcustomer"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+               th:name="firstName"
+               th:field="*{individual.firstName}"
+        />
+        <br />
+        <label>Ազգանուն</label>
+        <input type="text"
+               th:name="lastName"
+               th:field="*{individual.lastName}"
+        />
+        <br />
+        <label>Ծննդյան ամսաթիվ</label>
+        <input type="date"
+               th:name="bDate"
+               th:field="*{bDate}"
+        />
+        <br />
+        <label>ՀԾՀ</label>
+        <input type="text"
+               th:name="hch"
+               th:field="*{hch}"
+        />
+        <br />
+        <label>Անձնագրի համար</label>
+        <input type="text"
+               th:name="passportNumber"
+               th:field="*{passportNumber}"
+        />
+        <br />
+        <label>Ում կողմից է տրված</label>
+        <input type="text"
+               th:name="passportViewingDate"
+               th:field="*{passportViewingDate}"
+        />
+        <br />
+        <label>Սկզբնական մնացորդի տեսակ</label>
+        <input type="date"
+               th:name="openingBalanceType"
+               th:field="*{openingBalanceType}"
+        />
+        <br />
+        <label>Սկզբնական մնացորդ</label>
+        <input type="date"
+               th:name="openingBalance"
+               th:field="*{openingBalance}"
+        />
+        <br />
+        <label>Հասցե</label>
+        <input type="text"
+               th:name="address"
+               th:field="*{address}"
+        />
+        <br />
+
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+
+
+
+
 <div th:fragment="cashdeskFragmentNavBar">
 <nav role="navigation" class="navbar-justified">
 
@@ -1376,7 +1725,7 @@
            </li>
            <li class="nav-item"><a class="nav-item" th:href="@{''}" id="payment">Ստացված
                վճարումներ</a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="customerTable">Գնորդների
+           <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/customer'}" id="customerTable">Գնորդների
                ցանկ</a></li>
        </ul>
    </div>

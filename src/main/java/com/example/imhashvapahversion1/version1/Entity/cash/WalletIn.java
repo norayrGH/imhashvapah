@@ -1,14 +1,8 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
-import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.waletintypes.*;
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 
 import javax.persistence.Entity;
 
@@ -24,9 +18,9 @@ public class WalletIn {
 
     private String inType;
 
-    @NotNull(message = "Հարկավոր է նշել մուտքի ամսաթիվը")
+    @NotNull (message ="Հարկավոր է նշել մուտքի ամսաթիվը")
     private Date inDate;
-    @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը")
+    @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը ")
     private String inCash;
     private String note;
 
