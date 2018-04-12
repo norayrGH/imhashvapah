@@ -1,15 +1,13 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.walettypes;
+package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.sql.Date;
 
 @Entity
-public class CompanyCustomer {
+public class CompanyOtherPartner {
     @Id
     @GeneratedValue
     private Long id ;
@@ -18,6 +16,7 @@ public class CompanyCustomer {
     private ClientOrganization clientOrganization;
     private String hvhh;
     private String taxType;
+    private String groupPayer;
     private String openingBalanceType;
     private String openingBalance;
     private String bankAccount;
@@ -27,7 +26,7 @@ public class CompanyCustomer {
     @ManyToOne
     private Organization organization;
 
-    public CompanyCustomer() {
+    public CompanyOtherPartner() {
     }
 
     public Long getId() {
@@ -60,6 +59,14 @@ public class CompanyCustomer {
 
     public void setTaxType(String taxType) {
         this.taxType = taxType;
+    }
+
+    public String getGroupPayer() {
+        return groupPayer;
+    }
+
+    public void setGroupPayer(String groupPayer) {
+        this.groupPayer = groupPayer;
     }
 
     public String getOpeningBalanceType() {

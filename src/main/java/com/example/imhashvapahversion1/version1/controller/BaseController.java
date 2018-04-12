@@ -43,15 +43,22 @@ public class BaseController {
 
     protected final String partnerNavBar = "partnerNavBar";
     protected final String partnerFragment = "partner";
-    public final String partnerCustomers="partnerCustomers";
+    protected final String partnerCustomers="partnerCustomers";
+    protected final String partnerOtherPartner="partnerOtherPartner";
+    protected final String partnerSupplier="partnerSupplier";
     protected final String partnerFragmentNavBar = "partnerFragmentNavBar";
     protected final String partnerSupplierFragment = "partnerSupplierFragment";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";
     protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";
+
     protected final String individualCustomerCreate = "individualCustomerCreate";
-    protected final String companyCustomerCreate="companyCustomerCreate";
     protected final String privateEntrepreneurCustomerCreate="privateEntrepreneurCustomerCreate";
+    protected final String companyCustomerCreate="companyCustomerCreate";
+    protected final String individualOtherPartnerCreate="individualOtherPartnerCreate";
+    protected final String privateEntrepreneurOtherPartnerCreate="privateEntrepreneurOtherPartnerCreate";
+    protected final String companyOtherPartnerCreate="companyOtherPartnerCreate";
+    protected final String individualSupplierCreate="individualSupplierCreate";
 
     protected final String employeeNavBar = "employeeNavBar";
     protected final String employeeFragment = "employeeFragment";

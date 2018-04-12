@@ -1,4 +1,4 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.walettypes;
+package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
