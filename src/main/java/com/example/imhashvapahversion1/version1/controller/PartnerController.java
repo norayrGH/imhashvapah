@@ -7,7 +7,9 @@ import com.example.imhashvapahversion1.version1.Entity.partners.Customers.Privat
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.PrivateEntrepreneurOtherPartner;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.IndividualOtherPartnerRepository;
@@ -311,7 +313,7 @@ public class PartnerController extends BaseController {
 
 
     @GetMapping( value ="/supplier/create/individualsupplier")
-   public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
+    public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         IndividualSupplier individualSupplier = new IndividualSupplier();
         individualSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
        modelAndView.setViewName("app/app");
@@ -343,6 +345,74 @@ public class PartnerController extends BaseController {
         return  modelAndView;
     }
 
+    @GetMapping( value ="/supplier/create/companysupplier")
+    public ModelAndView companySupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
+       CompanySupplier companySupplier = new CompanySupplier();
+       companySupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("companySupplier",companySupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+       modelAndView.addObject("fragment", this.companySupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+
+        return modelAndView;
+    }
+    @PostMapping(value ="/supplier/create/companysupplier")
+    public ModelAndView companySupplierCreate(@Valid  CompanySupplier companySupplier, BindingResult bindingResult , ModelAndView modelAndView) {
+      modelAndView.setViewName("app/app");
+        if(bindingResult.hasErrors()) {
+
+         modelAndView.addObject("companySupplier",companySupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+       modelAndView.addObject("fragment", this.companySupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+            return modelAndView;
+        }
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerOtherPartner);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+        companySupplierRepository.save(companySupplier);
+        return  modelAndView;
+    }
+
+    @GetMapping(value = "/supplier/create/privateentrepreneursupplier")
+    public ModelAndView privateEntrepreneurSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
+        PrivateEntrepreneurSupplier privateEntrepreneurSupplier = new PrivateEntrepreneurSupplier();
+        privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+
+
+
+        return modelAndView;
+    }
+    @PostMapping(value ="/supplier/create/privateentrepreneursupplier")
+    public ModelAndView privateEntrepreneurSupplierCreate(@Valid PrivateEntrepreneurSupplier privateEntrepreneurSupplier, BindingResult bindingResult , ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if(bindingResult.hasErrors()) {
+
+            modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+            return  modelAndView;
+      }
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplier);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        privateEntrepreneurSupplierRepository.save(privateEntrepreneurSupplier);
+        return  modelAndView;
+    }
 
     /*--partner Supplier--*/
 

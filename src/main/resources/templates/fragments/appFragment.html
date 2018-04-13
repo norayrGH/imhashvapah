@@ -1727,7 +1727,7 @@
     </form >
 
 </div>
-
+<!-- OtherPartner -->
 <div class="container" th:fragment="partnerOtherPartner" >
     <div class="row col-md-7">
         <div class="btn-group btn-group-justified ">
@@ -2020,8 +2020,8 @@
     </form >
 
 </div>
-
-
+<!-- _OtherPartner_ -->
+<!-- Supplier -->
 <div class="container" th:fragment="partnerSupplier" >
     <div class="row col-md-7">
         <div class="btn-group btn-group-justified ">
@@ -2136,7 +2136,7 @@
 </div>
 <div class="container" th:fragment="companySupplierCreate" >
 
-    <form th:object="${companyCustomer}" action="/account/partner/customer/create/companycustomer"  method="post" >
+    <form th:object="${companySupplier}" action="/account/partner/supplier/create/companysupplier"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -2178,6 +2178,20 @@
                th:field="*{openingBalance}"
         />
         <br />
+        <label>Մատակարարում է</label>
+        <input type="radio"
+               th:name="supply"
+               th:field="*{supply}"
+               name="supply"
+               value="Ապրանք/Ծառայություն" >Ապրանք/Ծառայություն</input>
+
+        <input type="radio"
+               th:name="supply"
+               th:field="*{supply}"
+               name="supply"
+               value="Վարձակալության ծառայություն"
+        >Վարձակալության ծառայություն</input>
+        <br />
         <label>Բանկային հաշիվ</label>
         <input type="text"
                th:name="bankAccount"
@@ -2215,7 +2229,7 @@
 </div>
 <div class="container" th:fragment="privateEntrepreneurSupplierCreate" >
 
-    <form th:object="${privateEntrepreneurCustomer}" action="/account/partner/customer/create/privateentrepreneurcustomer"  method="post" >
+    <form th:object="${privateEntrepreneurSupplier}" action="/account/partner/supplier/create/privateentrepreneursupplier"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -2257,6 +2271,20 @@
                th:field="*{openingBalance}"
         />
         <br />
+        <label>Մատակարարում է</label>
+        <input type="radio"
+               th:name="supply"
+               th:field="*{supply}"
+               name="supply"
+               value="Ապրանք/Ծառայություն" >Ապրանք/Ծառայություն</input>
+
+        <input type="radio"
+               th:name="supply"
+               th:field="*{supply}"
+               name="supply"
+               value="Վարձակալության ծառայություն"
+        >Վարձակալության ծառայություն</input>
+        <br />
         <label>Բանկային հաշիվ</label>
         <input type="text"
                th:name="bankAccount"
@@ -2292,7 +2320,7 @@
     </form >
 
 </div>
-
+<!-- _Supplier_ -->
 <div th:fragment="cashdeskFragmentNavBar">
 <nav role="navigation" class="navbar-justified">
 

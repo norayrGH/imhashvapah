@@ -59,7 +59,8 @@ public class BaseController {
     protected final String privateEntrepreneurOtherPartnerCreate="privateEntrepreneurOtherPartnerCreate";
     protected final String companyOtherPartnerCreate="companyOtherPartnerCreate";
     protected final String individualSupplierCreate="individualSupplierCreate";
-
+    protected final String companySupplierCreate="companySupplierCreate";
+    protected final String privateEntrepreneurSupplierCreate="privateEntrepreneurSupplierCreate";
     protected final String employeeNavBar = "employeeNavBar";
     protected final String employeeFragment = "employeeFragment";
     protected final String employeeFragmentNavBar = "employeeFragmentNavBar";
