@@ -1,6 +1,8 @@
 package com.example.imhashvapahversion1.version1.controller;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
+import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.PrivateEntrepreneurCustomer;
@@ -27,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -427,6 +431,25 @@ public class PartnerController extends BaseController {
 
 
         return modelAndView;
+    }
+    @PostMapping("/customer/debt/show")
+    public @ResponseBody
+    ArrayList customerDebtShow(@RequestBody DateRange dateRange ) {
+        List<GetWaletIn> temp = new ArrayList();
+        ArrayList showResult = new ArrayList();
+       /* if (dateRange.getStart() != null) {
+            temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromLoanRepository.ndByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromPointOfSaleRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromSaleOfGoodsRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromServiceProvisionRepository.findByRangeStart(dateRange.getStart()));
+            for (GetWaletIn each : temp) {
+                showResult.add(each.getWalletInImpl());
+            }
+            return showResult;
+        }*/
+        return showResult;
     }
 
     @GetMapping(value = "/supplier/debt")

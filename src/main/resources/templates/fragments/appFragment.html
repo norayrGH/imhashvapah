@@ -2514,17 +2514,75 @@
    </div>
 </nav>
 </div>
-<div class="row" th:fragment="partner">
-
-<div class="col-md-4">
+<div class="contaioner" th:fragment="partner">
 
 
-</div>
+    <div id="filterForm" class="range-picker" >
 
-<div class="col-md-8">
-   <h1>WELCOME Partner !!!</h1>
+        <label>Առ:</label>
+        <input type="text" class="datepicker from" />
 
-</div>
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+
+    </div>
+    <div id="showDebt" >
+    </div>
+    <script>
+        function toDate(dateStr) {
+            var parts = dateStr.split("/");
+            var result = parts[2]+"-"+parts[0]+"-"+parts[1];
+            return new Date(result);
+        }
+
+
+        $(function () {
+
+            $('.range-picker').on('change', function () {
+                var newRange = String( $(this).attr('data-range'));
+                var start="" ;
+                var end="";
+                var showAll= false ;
+                var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
+                start = newRange.substring(0, newRange.indexOf('-'));
+                start = toDate(start);
+                end = toDate(end);
+
+                var DateRang={
+                    start:start,
+                    end:null,
+                    showAll:showAll
+                };
+
+                $.ajax({
+
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/partner/customer/debt/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRang),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $('#showFixedAssets').empty();
+                        else
+                            showFixedAssets(msg);
+                        //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+
+            });
+        });
+    </script>
 </div>
 <div class="container" th:fragment="employeeNavBar">
 <nav role="navigation" class="navbar-justified">
