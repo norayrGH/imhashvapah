@@ -123,6 +123,43 @@ function  showFixedAssets(fixedAssets) {
     $('#showFixedAssets').append(fixedAssetsTable);
 
 }
+function  partnerCustomersShow(partnerCustomers) {
+
+
+    $('#partnerCustomersShow').empty();
+
+    var partnerCustomersTableTh= ["Գնորդ","Հեռախոս","Հասցե","ՀՎՀՀ","Գործողություններ"];
+    var partnerCustomersTable = $("<table />")
+        .attr({id:"showFixedAssetsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(partnerCustomersTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    partnerCustomersTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(partnerCustomers, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item)
+            ,$("<td />").text(item)
+            ,$("<td />").text(item)
+            ,$("<td />").text(item)
+            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+
+    partnerCustomersTable.append(tBody);
+
+    $('#partnerCustomersShow').append(partnerCustomersTable);
+
+}
 function  showCashIn(cashIn) {
 
 

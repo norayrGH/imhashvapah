@@ -1480,6 +1480,42 @@
             <a href="/account/partner/customer/create/companycustomer" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign">Կազմակերպություն</span></a>
         </div>
     </div>
+
+    <div id="partnerCustomersShow">
+
+    </div>
+    <script>
+
+
+        $(function () {
+            $(document).ready(function () {
+
+                var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
+                $.ajax({
+
+                    method : "POST",
+                    url: '/account/partner/customer/show',
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $('#partnerCustomersShow').empty();
+                        else
+                            partnerCustomersShow(msg);
+
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+
+            });
+        });
+    </script>
+
 </div>
 <div class="container" th:fragment="individualCustomerCreate" >
 

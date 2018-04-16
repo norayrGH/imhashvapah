@@ -13,6 +13,8 @@ import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Compan
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
 import com.example.imhashvapahversion1.version1.repository.*;
+import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
+import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.IndividualOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.PrivateEntrepreneurOtherPartnerRepository;
@@ -61,6 +63,10 @@ public class PartnerController extends BaseController {
     IndividualSupplierRepository individualSupplierRepository;
     @Autowired
     PrivateEntrepreneurSupplierRepository privateEntrepreneurSupplierRepository;
+    @Autowired
+    CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
+    @Autowired
+    CashInFromServiceProvisionRepository cashInFromServiceProvisionRepository;
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -89,6 +95,15 @@ public class PartnerController extends BaseController {
 
         return modelAndView;
     }
+    @PostMapping("/account/partner/customer/show")
+    public @ResponseBody
+    ArrayList customerShow() {
+        List<GetWaletIn> temp = new ArrayList();
+        ArrayList showResult = new ArrayList();
+
+        return showResult;
+    }
+
     @GetMapping(value = "/customer/create/individualcustomer")
     public ModelAndView partnerCustomer(ModelAndView modelAndView, HttpSession httpSession) {
         IndividualCustomer individualCustomer = new IndividualCustomer();
@@ -437,18 +452,16 @@ public class PartnerController extends BaseController {
     ArrayList customerDebtShow(@RequestBody DateRange dateRange ) {
         List<GetWaletIn> temp = new ArrayList();
         ArrayList showResult = new ArrayList();
-       /* if (dateRange.getStart() != null) {
-            temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromLoanRepository.ndByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromPointOfSaleRepository.findByRangeStart(dateRange.getStart()));
+        if (dateRange.getStart() != null) {
+
             temp.addAll(cashInFromSaleOfGoodsRepository.findByRangeStart(dateRange.getStart()));
             temp.addAll(cashInFromServiceProvisionRepository.findByRangeStart(dateRange.getStart()));
+
             for (GetWaletIn each : temp) {
                 showResult.add(each.getWalletInImpl());
             }
             return showResult;
-        }*/
+        }
         return showResult;
     }
 
