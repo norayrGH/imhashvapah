@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
 
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class PrivateEntrepreneurCustomer {
+public class PrivateEntrepreneurCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
@@ -97,5 +98,15 @@ public class PrivateEntrepreneurCustomer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String getName() {
+        return getPrivateEntrepreneurName();
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
     }
 }

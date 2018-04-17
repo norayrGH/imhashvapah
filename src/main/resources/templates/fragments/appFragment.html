@@ -743,7 +743,7 @@
             <option value=""> __ԸՆՏՐԵԼ__ </option>
             <option th:each="customer : ${customerList}"
                     th:value="${customer.id}"
-                    th:text="${customer.display()}" />
+                    th:text="${customer.displayName()}" />
         </select>
         <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
@@ -823,7 +823,7 @@
             <option value=""> __ԸՆՏՐԵԼ__ </option>
             <option th:each="colleague : ${colleaguesList}"
                     th:value="${colleague.id}"
-                    th:text="${colleague.display()}" />
+                    th:text="${colleague.displayName()}" />
         </select>
         <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
@@ -904,8 +904,8 @@
         >
             <option value=""> __ԸՆՏՐԵԼ__ </option>
             <option th:each="customer : ${customerList}"
-                    th:value="${customer.display()}"
-                    th:text="${customer.display()}" />
+                    th:value="${customer.displayName()}"
+                    th:text="${customer.displayName()}" />
         </select>
         <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
@@ -987,7 +987,7 @@
             <option value=""> __ԸՆՏՐԵԼ__ </option>
             <option th:each="colleague : ${colleaguesList}"
                     th:value="${colleague.id}"
-                    th:text="${colleague.display()}" />
+                    th:text="${colleague.displayName()}" />
         </select>
         <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
@@ -1499,12 +1499,14 @@
 
                 var csrf_token = $("#csrfToken").val();
                 $.ajax({
-
+                    contentType : "application/json",
                     method : "POST",
                     url: '/account/partner/customer/show',
+                    dataType: 'json',
                     beforeSend: function(xhr){
                         xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                     },  success: function (msg){
+                        console.log(msg);
                         if(msg == null)
                             $('#partnerCustomersShow').empty();
                         else

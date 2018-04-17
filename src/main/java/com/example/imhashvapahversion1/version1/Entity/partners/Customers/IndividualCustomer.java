@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 
@@ -8,7 +9,7 @@ import javax.validation.Valid;
 import java.sql.Date;
 
 @Entity
-public class IndividualCustomer {
+public class IndividualCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id;
@@ -98,6 +99,11 @@ public class IndividualCustomer {
         return address;
     }
 
+    @Override
+    public String getHvhh() {
+        return null;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -108,5 +114,15 @@ public class IndividualCustomer {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    @Override
+    public String getName() {
+        return getIndividual().getFirstName()+" "+getIndividual().getLastName();
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
     }
 }

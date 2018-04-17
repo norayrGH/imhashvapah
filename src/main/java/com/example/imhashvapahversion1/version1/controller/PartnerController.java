@@ -1,7 +1,9 @@
 package com.example.imhashvapahversion1.version1.controller;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
@@ -12,6 +14,7 @@ import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.Pri
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.PartnerCustomerShow;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
@@ -29,9 +32,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,6 +72,10 @@ public class PartnerController extends BaseController {
     CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
     @Autowired
     CashInFromServiceProvisionRepository cashInFromServiceProvisionRepository;
+    @Autowired
+    ClientOrganizationRepository clientOrganizationRepository;
+    @Autowired
+    IndividualRepository individualRepository;
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -97,10 +106,19 @@ public class PartnerController extends BaseController {
     }
     @PostMapping("/customer/show")
     public @ResponseBody
-    ArrayList customerShow() {
-        List<GetWaletIn> temp = new ArrayList();
-        ArrayList showResult = new ArrayList();
- 
+    ArrayList<PartnerCustomerShow> customerShow()  {
+        List<GeneralMethods> temp = new ArrayList();
+        ArrayList<PartnerCustomerShow> showResult = new ArrayList();
+        temp.addAll((ArrayList) clientOrganizationRepository.findAll());
+        temp.addAll((ArrayList) individualRepository.findAll());
+        temp.addAll((ArrayList) companyCustomerRepository.findAll());
+        temp.addAll((ArrayList) individualCustomerRepository.findAll());
+        temp.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
+
+        for(GeneralMethods each : temp) {
+
+           showResult.add(  new PartnerCustomerShow(each.getId(),each.getName(),each.getPhoneNumber(),each.getAddress(),each.getHvhh())) ;
+        }
         return showResult;
     }
 
@@ -149,8 +167,9 @@ public class PartnerController extends BaseController {
     }
    @PostMapping(value = "/customer/create/companycustomer")
     public ModelAndView partnerCustomer(@Valid CompanyCustomer companyCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
+       modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
-            modelAndView.setViewName("app/app");
+
             modelAndView.addObject("companyCustomer", companyCustomer);
             modelAndView.addObject("navBar", this.partnerNavBar);
             modelAndView.addObject("fragment", this.companyCustomerCreate);
@@ -163,7 +182,7 @@ public class PartnerController extends BaseController {
        modelAndView.addObject("fragment", this.partnerCustomers);
        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
        companyCustomerRepository.save(companyCustomer);
-         return  modelAndView;
+       return  modelAndView;
     }
 
 

@@ -1,12 +1,13 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
 @Entity
-public class Individual {
+public class Individual implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -25,10 +26,8 @@ public class Individual {
         this.lastName = lastName;
         this.organization = organization;
     }
-    public String display (){
 
-        return getLastName() +" "+ getFirstName();
-    }
+
 
     public Long getId() {
         return id;
@@ -60,5 +59,25 @@ public class Individual {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    @Override
+    public String getName() {
+        return firstName+" "+lastName;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
+
+    @Override
+    public String getAddress() {
+        return null;
+    }
+
+    @Override
+    public String getHvhh() {
+        return null;
     }
 }

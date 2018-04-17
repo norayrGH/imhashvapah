@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
 
@@ -8,7 +9,7 @@ import javax.validation.Valid;
 
 
 @Entity
-public class CompanyCustomer {
+public class CompanyCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
@@ -99,5 +100,15 @@ public class CompanyCustomer {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    @Override
+    public String getName() {
+        return getClientOrganization().getClientOrganizationName();
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
     }
 }

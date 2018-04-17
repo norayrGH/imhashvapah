@@ -1,3 +1,4 @@
+
 var cityes = $("#selectCityes");
 var regionselect = $("#regionSelect");
 var stritFleet = $("#stritFleet");
@@ -128,7 +129,7 @@ function  partnerCustomersShow(partnerCustomers) {
 
     $('#partnerCustomersShow').empty();
 
-    var partnerCustomersTableTh= ["Գնորդ","Հեռախոս","Հասցե","ՀՎՀՀ","Գործողություններ"];
+    var partnerCustomersTableTh= ["Գնորդ","Հեռախոս","Հասցե","ՀՎՀՀ"];
     var partnerCustomersTable = $("<table />")
         .attr({id:"showFixedAssetsTable",class:"table table-hover "});
     var tHead =$("<thead />");
@@ -144,10 +145,10 @@ function  partnerCustomersShow(partnerCustomers) {
     $.each(partnerCustomers, function(i, item) {
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
-             $("<td />").text(item)
-            ,$("<td />").text(item)
-            ,$("<td />").text(item)
-            ,$("<td />").text(item)
+             $("<td />").text(item.customerName)
+            ,$("<td />").text(item.phoneNumber)
+            ,$("<td />").text(item.address)
+            ,$("<td />").text(item.hvhh)
             ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
                 ,"&nbsp;&nbsp;&nbsp;"
                 ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
