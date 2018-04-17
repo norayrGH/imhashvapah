@@ -95,12 +95,12 @@ public class PartnerController extends BaseController {
 
         return modelAndView;
     }
-    @PostMapping("/account/partner/customer/show")
+    @PostMapping("/customer/show")
     public @ResponseBody
     ArrayList customerShow() {
         List<GetWaletIn> temp = new ArrayList();
         ArrayList showResult = new ArrayList();
-
+ 
         return showResult;
     }
 
