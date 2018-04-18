@@ -2,19 +2,24 @@ package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelp
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.service.ClientOrganizationService;
+import com.example.imhashvapahversion1.version1.validate.Unique;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
 @Entity
 public class ClientOrganization implements GeneralMethods {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty(message = "Կազմակերպության անվանումը պարտադիր է ")
+    @Unique(service = ClientOrganizationService.class, fieldName = "clientOrganizationName", message = "Գնորդի անվանումը չի կարող կրկնվել:")
+    @Column()
     private  String clientOrganizationName;
     @ManyToOne
-    private Organization organization ;
+    private Organization organization;
+    
 
     public ClientOrganization() {
     }

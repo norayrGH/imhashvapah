@@ -1,13 +1,8 @@
 package com.example.imhashvapahversion1.version1.Entity;
 
-import com.example.imhashvapahversion1.version1.validate.UniqueValidator;
-import com.example.imhashvapahversion1.version1.validate.UniqueValidatorItem;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import java.sql.Date;

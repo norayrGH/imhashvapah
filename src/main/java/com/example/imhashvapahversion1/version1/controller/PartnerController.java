@@ -3,6 +3,7 @@ package com.example.imhashvapahversion1.version1.controller;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
@@ -116,8 +117,12 @@ public class PartnerController extends BaseController {
         temp.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
 
         for(GeneralMethods each : temp) {
+            PartnerCustomerShow partnerCustomerShow = new PartnerCustomerShow(each.getId(),each.getName(),each.getPhoneNumber(),each.getAddress(),each.getHvhh(),true);
+          if((each instanceof ClientOrganization) || (each instanceof Individual)){
+                partnerCustomerShow.setFull(false);
 
-           showResult.add(  new PartnerCustomerShow(each.getId(),each.getName(),each.getPhoneNumber(),each.getAddress(),each.getHvhh())) ;
+          }
+           showResult.add(partnerCustomerShow ) ;
         }
         return showResult;
     }

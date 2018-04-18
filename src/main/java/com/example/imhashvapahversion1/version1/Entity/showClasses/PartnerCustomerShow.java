@@ -6,13 +6,18 @@ public class PartnerCustomerShow {
     private String phoneNumber;
     private String address;
     private String hvhh;
+    private Boolean full;
 
-    public PartnerCustomerShow(Long id, String customerName, String phoneNumber, String address, String hvhh) {
+    public PartnerCustomerShow() {
+    }
+
+    public PartnerCustomerShow(Long id, String customerName, String phoneNumber, String address, String hvhh, Boolean full) {
         this.id = id;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.hvhh = hvhh;
+        this.full = full;
     }
 
     public Long getId() {
@@ -53,5 +58,13 @@ public class PartnerCustomerShow {
 
     public void setHvhh(String hvhh) {
         this.hvhh = hvhh;
+    }
+
+    public Boolean getFull() {
+        return full;
+    }
+
+    public void setFull(Boolean full) {
+        this.full = full;
     }
 }

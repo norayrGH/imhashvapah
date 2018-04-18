@@ -1,23 +1,34 @@
 package com.example.imhashvapahversion1.version1.validate;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
-import static java.lang.annotation.ElementType.*;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+public class UniqueValidator implements ConstraintValidator<Unique, Object> {
+    @Autowired
+    private ApplicationContext applicationContext;
 
-@Target({TYPE})
-@Retention(RUNTIME)
-@Constraint(validatedBy = {UniqueValidatingValidator.class})
-public @interface UniqueValidator {
-    UniqueValidatorItem[] items();
+    private FieldValueExists service;
+    private String fieldName;
 
-    String message() default "";
+    @Override
+    public void initialize(Unique unique) {
+        Class<? extends FieldValueExists> clazz = unique.service();
+        this.fieldName = unique.fieldName();
+        String serviceQualifier = unique.serviceQualifier();
 
-    Class<?>[] groups() default {};
+        if (!serviceQualifier.equals("")) {
+            this.service = this.applicationContext.getBean(serviceQualifier, clazz);
+        } else {
+            this.service = this.applicationContext.getBean(clazz);
+        }
+    }
 
-    Class<? extends Payload>[] payload() default {};
+    @Override
+    public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
+         Boolean test = !this.service.fieldValueExists(o, this.fieldName);
+        return test;
+    }
 }

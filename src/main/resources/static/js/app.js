@@ -149,9 +149,23 @@ function  partnerCustomersShow(partnerCustomers) {
             ,$("<td />").text(item.phoneNumber)
             ,$("<td />").text(item.address)
             ,$("<td />").text(item.hvhh)
-            ,$("<td />").append($("<a />").attr({href:"/account/organization/fixedasset/edit/"+item.id , class:"glyphicon glyphicon-pencil"})
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {href:"/account/organization/fixedasset/edit/"+item.id ,
+                        class:"glyphicon glyphicon-pencil"}
+                        )
                 ,"&nbsp;&nbsp;&nbsp;"
-                ,$("<a />").attr({href:"/account/organization/fixedasset/delete/"+item.id , class:"glyphicon glyphicon-trash"}))
+                ,$("<a />").attr(
+                    {href:"/account/organization/fixedasset/delete/"+item.id ,
+                        class:"glyphicon glyphicon-trash"}
+                        )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,(item.full==false)?$("<a />").attr(
+                    {class:"glyphicon glyphicon-warning-sign"}
+                ):""
+
+
+            )
 
         ));
     });
