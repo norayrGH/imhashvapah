@@ -15,7 +15,6 @@ public class ClientOrganization implements GeneralMethods {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Unique(service = ClientOrganizationService.class, fieldName = "clientOrganizationName", message = "Գնորդի անվանումը չի կարող կրկնվել:")
-    @Column()
     private  String clientOrganizationName;
     @ManyToOne
     private Organization organization;
@@ -55,6 +54,16 @@ public class ClientOrganization implements GeneralMethods {
     @Override
     public String getName() {
         return clientOrganizationName;
+    }
+
+    @Override
+    public Long getClientOrganizationId() {
+        return this.id;
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return null;
     }
 
     @Override

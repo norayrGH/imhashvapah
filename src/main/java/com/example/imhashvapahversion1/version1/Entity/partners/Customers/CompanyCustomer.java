@@ -108,6 +108,16 @@ public class CompanyCustomer  implements GeneralMethods {
     }
 
     @Override
+    public Long getClientOrganizationId() {
+        return getClientOrganization().getId();
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return null;
+    }
+
+    @Override
     public String getPhoneNumber() {
         return null;
     }

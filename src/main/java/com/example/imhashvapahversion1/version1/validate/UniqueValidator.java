@@ -18,17 +18,22 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
         Class<? extends FieldValueExists> clazz = unique.service();
         this.fieldName = unique.fieldName();
         String serviceQualifier = unique.serviceQualifier();
-
+    if(applicationContext!=null){
         if (!serviceQualifier.equals("")) {
             this.service = this.applicationContext.getBean(serviceQualifier, clazz);
         } else {
             this.service = this.applicationContext.getBean(clazz);
         }
     }
+    }
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-         Boolean test = !this.service.fieldValueExists(o, this.fieldName);
+         Boolean test = true ;
+         if(service!=null)
+             test = !this.service.fieldValueExists(o, this.fieldName);
+
+
         return test;
     }
 }

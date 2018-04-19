@@ -36,10 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 @Controller
@@ -107,23 +104,35 @@ public class PartnerController extends BaseController {
     }
     @PostMapping("/customer/show")
     public @ResponseBody
-    ArrayList<PartnerCustomerShow> customerShow()  {
-        List<GeneralMethods> temp = new ArrayList();
-        ArrayList<PartnerCustomerShow> showResult = new ArrayList();
-        temp.addAll((ArrayList) clientOrganizationRepository.findAll());
-        temp.addAll((ArrayList) individualRepository.findAll());
-        temp.addAll((ArrayList) companyCustomerRepository.findAll());
-        temp.addAll((ArrayList) individualCustomerRepository.findAll());
-        temp.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
+    Set<PartnerCustomerShow> customerShow() {
+        List<GeneralMethods> temp1 = new ArrayList();
+        List<GeneralMethods> temp2 = new ArrayList();
+        Boolean temp = false;
+        PartnerCustomerShow partnerCustomerShow = new PartnerCustomerShow();
+        Set<PartnerCustomerShow> showResult = new HashSet();
+        temp1.addAll((ArrayList) clientOrganizationRepository.findAll());
+        temp1.addAll((ArrayList) individualRepository.findAll());
 
-        for(GeneralMethods each : temp) {
-            PartnerCustomerShow partnerCustomerShow = new PartnerCustomerShow(each.getId(),each.getName(),each.getPhoneNumber(),each.getAddress(),each.getHvhh(),true);
-          if((each instanceof ClientOrganization) || (each instanceof Individual)){
-                partnerCustomerShow.setFull(false);
+        temp2.addAll((ArrayList) companyCustomerRepository.findAll());
+        temp2.addAll((ArrayList) individualCustomerRepository.findAll());
+        temp2.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
 
-          }
-           showResult.add(partnerCustomerShow ) ;
+        for(GeneralMethods each1 : temp1) {
+            for(GeneralMethods each2 : temp2) {
+                if((each1.getId()==each2.getClientOrganizationId() && each1 instanceof ClientOrganization) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
+                    partnerCustomerShow = new PartnerCustomerShow(each2.getId(), each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true);
+                    showResult.add(partnerCustomerShow);
+                    temp=true;
+                }
+
+            }
+            if(temp == false){
+                partnerCustomerShow = new PartnerCustomerShow(each1.getId(), each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false);
+                showResult.add(partnerCustomerShow);
+            }
+            temp=false;
         }
+
         return showResult;
     }
 
@@ -142,8 +151,9 @@ public class PartnerController extends BaseController {
     }
     @PostMapping(value = "/customer/create/individualcustomer")
     public ModelAndView partnerCustomer(@Valid IndividualCustomer individualCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
-       if(bindingResult.hasErrors()) {
-           modelAndView.setViewName("app/app");
+        modelAndView.setViewName("app/app");
+        if(bindingResult.hasErrors()) {
+
            modelAndView.addObject("individualCustomer", individualCustomer);
            modelAndView.addObject("navBar", this.partnerNavBar);
            modelAndView.addObject("fragment", this.individualCustomerCreate);
@@ -340,6 +350,7 @@ public class PartnerController extends BaseController {
         return  modelAndView;
     }
     /*--partner Otherpartner--*/
+
     /*partner Supplier*/
 
     @GetMapping(value = "/supplier")

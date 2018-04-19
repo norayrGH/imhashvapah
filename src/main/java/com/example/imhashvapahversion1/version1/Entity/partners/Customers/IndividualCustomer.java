@@ -122,6 +122,16 @@ public class IndividualCustomer  implements GeneralMethods {
     }
 
     @Override
+    public Long getClientOrganizationId() {
+        return null;
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return getIndividual().getId();
+    }
+
+    @Override
     public String getPhoneNumber() {
         return null;
     }
