@@ -151,7 +151,7 @@ function  partnerCustomersShow(partnerCustomers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/organization/fixedasset/edit/"+item.id ,
+                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+item.id ,
                         class:"glyphicon glyphicon-pencil"}
                         )
                 ,"&nbsp;&nbsp;&nbsp;"

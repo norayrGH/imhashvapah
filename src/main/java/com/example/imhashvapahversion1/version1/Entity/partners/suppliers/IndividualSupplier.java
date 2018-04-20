@@ -23,6 +23,8 @@ public class IndividualSupplier {
     private String supply;
     private String address;
 
+
+
     @ManyToOne
     private Organization organization;
 

@@ -108,7 +108,7 @@ public class PartnerController extends BaseController {
         List<GeneralMethods> temp1 = new ArrayList();
         List<GeneralMethods> temp2 = new ArrayList();
         Boolean temp = false;
-        PartnerCustomerShow partnerCustomerShow = new PartnerCustomerShow();
+        PartnerCustomerShow partnerCustomerShow =null;
         Set<PartnerCustomerShow> showResult = new HashSet();
         temp1.addAll((ArrayList) clientOrganizationRepository.findAll());
         temp1.addAll((ArrayList) individualRepository.findAll());
@@ -119,23 +119,20 @@ public class PartnerController extends BaseController {
 
         for(GeneralMethods each1 : temp1) {
             for(GeneralMethods each2 : temp2) {
-                if((each1.getId()==each2.getClientOrganizationId() && each1 instanceof ClientOrganization) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
-                    partnerCustomerShow = new PartnerCustomerShow(each2.getId(), each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true);
+                if((each1.getId()==each2.getClientOrganizationId() && each1 instanceof ClientOrganization ) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
+                    partnerCustomerShow = new PartnerCustomerShow(each2.getId(), each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
                     showResult.add(partnerCustomerShow);
                     temp=true;
                 }
-
             }
             if(temp == false){
-                partnerCustomerShow = new PartnerCustomerShow(each1.getId(), each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false);
+                partnerCustomerShow = new PartnerCustomerShow(each1.getId(), each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
                 showResult.add(partnerCustomerShow);
             }
             temp=false;
         }
-
         return showResult;
     }
-
     @GetMapping(value = "/customer/create/individualcustomer")
     public ModelAndView partnerCustomer(ModelAndView modelAndView, HttpSession httpSession) {
         IndividualCustomer individualCustomer = new IndividualCustomer();
@@ -149,11 +146,23 @@ public class PartnerController extends BaseController {
 
         return modelAndView;
     }
+    @GetMapping(value = "/customer/edit/individualcustomer/{id}")
+    public ModelAndView individualCustomerEdit(@PathVariable("id")Long id, ModelAndView modelAndView, HttpSession httpSession) {
+        IndividualCustomer individualCustomer =individualCustomerRepository.findOne(id);
+        //individualCustomer.setIndividual(individualRepository.findOne(id));
+        individualCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("individualCustomer",individualCustomer);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.individualCustomerCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        return modelAndView;
+    }
+
     @PostMapping(value = "/customer/create/individualcustomer")
-    public ModelAndView partnerCustomer(@Valid IndividualCustomer individualCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
+    public ModelAndView individualCustomer(@Valid IndividualCustomer individualCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
-
            modelAndView.addObject("individualCustomer", individualCustomer);
            modelAndView.addObject("navBar", this.partnerNavBar);
            modelAndView.addObject("fragment", this.individualCustomerCreate);
@@ -164,9 +173,22 @@ public class PartnerController extends BaseController {
         modelAndView.addObject("fragment", this.partnerCustomers);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         individualCustomerRepository.save(individualCustomer);
-            return  modelAndView;
+        return  modelAndView;
     }
 
+
+    @GetMapping(value = "/customer/edit/companycustomer/{id}")
+    public ModelAndView companyCustomerEdit(@PathVariable("id")Long id, ModelAndView modelAndView, HttpSession httpSession) {
+        CompanyCustomer companyCustomer =companyCustomerRepository.findOne(id);
+
+        companyCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("companyCustomer",companyCustomer);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.individualCustomerCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        return modelAndView;
+    }
     @GetMapping(value = "/customer/create/companycustomer")
     public ModelAndView companyCustomerCreate(ModelAndView modelAndView, HttpSession httpSession) {
         CompanyCustomer companyCustomer = new CompanyCustomer();
@@ -180,7 +202,7 @@ public class PartnerController extends BaseController {
 
         return modelAndView;
     }
-   @PostMapping(value = "/customer/create/companycustomer")
+    @PostMapping(value = "/customer/create/companycustomer")
     public ModelAndView partnerCustomer(@Valid CompanyCustomer companyCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
        modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {

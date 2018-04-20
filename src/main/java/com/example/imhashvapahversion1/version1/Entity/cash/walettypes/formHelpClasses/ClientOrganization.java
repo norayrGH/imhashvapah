@@ -15,10 +15,10 @@ public class ClientOrganization implements GeneralMethods {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Unique(service = ClientOrganizationService.class, fieldName = "clientOrganizationName", message = "Գնորդի անվանումը չի կարող կրկնվել:")
-    private  String clientOrganizationName;
+    private String clientOrganizationName;
     @ManyToOne
     private Organization organization;
-    
+
 
     public ClientOrganization() {
     }
@@ -30,9 +30,10 @@ public class ClientOrganization implements GeneralMethods {
     public void setId(Long id) {
         this.id = id;
     }
-    public String display (){
 
-        return getClientOrganizationName() ;
+    public String display() {
+
+        return getClientOrganizationName();
     }
 
     public String getClientOrganizationName() {

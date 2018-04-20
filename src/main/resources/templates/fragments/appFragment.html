@@ -1540,18 +1540,21 @@
         <input type="text"
                th:name="firstName"
                th:field="*{individual.firstName}"
+               th:value="*{individual?.firstName}"
         />
         <br />
         <label>Ազգանուն</label>
         <input type="text"
                th:name="lastName"
                th:field="*{individual.lastName}"
+               th:value="*{individual?.lastName}"
         />
         <br />
         <label>Ծննդյան ամսաթիվ</label>
         <input type="date"
                th:name="bDate"
                th:field="*{bDate}"
+               th:text="${bDate}"
         />
         <br />
         <label>ՀԾՀ</label>
@@ -1601,6 +1604,11 @@
                 type="hidden"
                 th:field="*{organization}"
                 th:value="${organization}"
+        />
+        <input
+                type="hidden"
+                th:field="*{individual}"
+                th:value="*{individual}"
         />
 
         <input name="csrfToken" id="csrfToken"
