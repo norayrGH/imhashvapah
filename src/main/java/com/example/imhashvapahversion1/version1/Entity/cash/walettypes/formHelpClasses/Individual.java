@@ -67,6 +67,11 @@ public class Individual implements GeneralMethods {
     }
 
     @Override
+    public Long getInnerId() {
+        return null  ;
+    }
+
+    @Override
     public Long getClientOrganizationId() {
         return null;
     }

@@ -108,6 +108,11 @@ public class CompanyCustomer  implements GeneralMethods {
     }
 
     @Override
+    public Long getInnerId() {
+        return getClientOrganization().getId();
+    }
+
+    @Override
     public Long getClientOrganizationId() {
         return getClientOrganization().getId();
     }

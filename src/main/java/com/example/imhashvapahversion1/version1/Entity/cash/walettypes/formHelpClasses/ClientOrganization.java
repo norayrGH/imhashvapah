@@ -58,6 +58,11 @@ public class ClientOrganization implements GeneralMethods {
     }
 
     @Override
+    public Long getInnerId() {
+        return null;
+    }
+
+    @Override
     public Long getClientOrganizationId() {
         return this.id;
     }
