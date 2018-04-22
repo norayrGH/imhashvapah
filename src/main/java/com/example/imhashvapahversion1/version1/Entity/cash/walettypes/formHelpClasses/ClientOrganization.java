@@ -4,17 +4,20 @@ import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.service.ClientOrganizationService;
 import com.example.imhashvapahversion1.version1.validate.Unique;
+import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
 @Entity
+@EqualFields(id = "id", uniqueField = "clientOrganizationName")
 public class ClientOrganization implements GeneralMethods {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Unique(service = ClientOrganizationService.class, fieldName = "clientOrganizationName", message = "Գնորդի անվանումը չի կարող կրկնվել:")
+
+    //@Unique(service = ClientOrganizationService.class, fieldName = "clientOrganizationName", message = "Գնորդի անվանումը չի կարող կրկնվել:")
     private String clientOrganizationName;
     @ManyToOne
     private Organization organization;

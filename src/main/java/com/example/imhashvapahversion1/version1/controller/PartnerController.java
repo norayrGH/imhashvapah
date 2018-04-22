@@ -163,7 +163,6 @@ public class PartnerController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
     }
-
     @PostMapping(value = "/customer/create/individualcustomer")
     public ModelAndView individualCustomer(@Valid IndividualCustomer individualCustomer, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
@@ -182,23 +181,6 @@ public class PartnerController extends BaseController {
     }
 
 
-    @GetMapping(value = "/customer/edit/companycustomer/{id}")
-    public ModelAndView companyCustomerEdit(@PathVariable("id")Long id, ModelAndView modelAndView, HttpSession httpSession) {
-        CompanyCustomer companyCustomer =companyCustomerRepository.findOne(id);
-
-        if(companyCustomer==null){
-            companyCustomer = new CompanyCustomer();
-            companyCustomer.setClientOrganization(clientOrganizationRepository.findOne(id));
-        }
-
-        companyCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("companyCustomer",companyCustomer);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("fragment", this.companyCustomerCreate);
-        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
-        return modelAndView;
-    }
     @GetMapping(value = "/customer/create/companycustomer")
     public ModelAndView companyCustomerCreate(ModelAndView modelAndView, HttpSession httpSession) {
         CompanyCustomer companyCustomer = new CompanyCustomer();
@@ -210,6 +192,22 @@ public class PartnerController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
 
+        return modelAndView;
+    }
+    @GetMapping(value = "/customer/edit/companycustomer")
+    public ModelAndView companyCustomerEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
+        CompanyCustomer companyCustomer = new CompanyCustomer();
+        if(customerId!=0)
+            companyCustomer = companyCustomerRepository.findOne(customerId);
+        else
+            companyCustomer.setClientOrganization(clientOrganizationRepository.findOne(customerInnerId));
+
+        companyCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("companyCustomer",companyCustomer);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.companyCustomerCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
     }
     @PostMapping(value = "/customer/create/companycustomer")

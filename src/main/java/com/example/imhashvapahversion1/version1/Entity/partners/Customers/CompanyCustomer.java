@@ -3,12 +3,14 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
+import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
 
 @Entity
+@EqualFields(id = "id", uniqueField = "clientOrganization")
 public class CompanyCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue

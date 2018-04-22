@@ -33,7 +33,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
          if(service!=null)
              test = !this.service.fieldValueExists(o, this.fieldName);
 
-
         return test;
     }
 }

@@ -1690,6 +1690,11 @@
                 th:field="*{organization}"
                 th:value="${organization}"
         />
+        <input
+                type="hidden"
+                th:field="*{clientOrganization}"
+                th:value="${clientOrganization}"
+        />
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
