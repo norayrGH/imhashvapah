@@ -20,7 +20,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     @Override
     public void initialize(EqualFields constraint) {
         id = constraint.id();
-        uniqueField = constraint.uniqueField();
+         uniqueField = constraint.uniqueField();
     }
  
     @Override
