@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.validate.test;
 
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.repository.ClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.CompanyCustomerRepository;
@@ -10,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
 
 public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Object> {
- 
+    private static Boolean temp = false ;
     private String id;
     private String uniqueField;
     @Autowired
@@ -26,14 +27,26 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     @Override
     public boolean isValid(Object object, ConstraintValidatorContext context) {
         try {
-
             Object matchId = getFieldValue(object, id);
             Object matchuniqueField = getFieldValue(object, uniqueField);
 
-            if (clientOrganizationRepository.existsByName( (String) matchuniqueField ) == null )
+            if( matchuniqueField instanceof ClientOrganization ) {
+
+                temp = true;
+            }
+                else
+                temp = false;
+
+
+
+           ClientOrganization clientOrganization = clientOrganizationRepository.existsByName( (String) matchuniqueField );
+
+            if ( clientOrganization == null )
+                return true;
+            else if(temp==true)
                 return true;
             else
-                 return false;
+                return false;
                 /*return baseFieldValue != null && baseFieldValue.equals(matchFieldValue);*/
 
         } catch (Exception e) {

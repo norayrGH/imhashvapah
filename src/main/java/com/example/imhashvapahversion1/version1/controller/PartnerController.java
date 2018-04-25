@@ -314,7 +314,7 @@ public class PartnerController extends BaseController {
         return  modelAndView;
      }
 
-    @GetMapping(value = "/otherpartner/create/individualotherpartner")
+    @GetMapping(value  = "/otherpartner/create/individualotherpartner")
     public ModelAndView individualOtherPartnerCreate(ModelAndView modelAndView, HttpSession httpSession) {
        IndividualOtherPartner individualOtherPartner = new IndividualOtherPartner();
         individualOtherPartner.setOrganization((Organization) httpSession.getAttribute("organizationId"));
