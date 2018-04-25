@@ -151,7 +151,7 @@ function  partnerCustomersShow(partnerCustomers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+item.id ,
+                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
                         class:"glyphicon glyphicon-pencil"}
                         )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -163,10 +163,7 @@ function  partnerCustomersShow(partnerCustomers) {
                 ,(item.full==false)?$("<a />").attr(
                     {class:"glyphicon glyphicon-warning-sign"}
                 ):""
-
-
             )
-
         ));
     });
 

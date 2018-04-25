@@ -106,6 +106,11 @@ public class PrivateEntrepreneurCustomer  implements GeneralMethods {
     }
 
     @Override
+    public Long getInnerId() {
+        return getId();
+    }
+
+    @Override
     public Long getClientOrganizationId() {
         return null;
     }

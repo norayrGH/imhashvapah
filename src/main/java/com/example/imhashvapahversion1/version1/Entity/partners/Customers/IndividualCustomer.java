@@ -122,6 +122,11 @@ public class IndividualCustomer  implements GeneralMethods {
     }
 
     @Override
+    public Long getInnerId() {
+        return getIndividual().getId();
+    }
+
+    @Override
     public Long getClientOrganizationId() {
         return null;
     }

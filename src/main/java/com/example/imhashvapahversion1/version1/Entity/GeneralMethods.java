@@ -4,6 +4,7 @@ public interface GeneralMethods {
    Long getId();
 
    String getName();
+   Long getInnerId();
    Long getClientOrganizationId();
    Long getIndividualId();
    String getPhoneNumber();

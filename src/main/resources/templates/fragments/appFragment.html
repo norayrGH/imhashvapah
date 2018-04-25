@@ -1632,7 +1632,7 @@
         <br />
         <label>Անվանում</label>
         <input type="text"
-               th:name="clientOrganizationName"
+               th:name=  "clientOrganizationName"
                th:field="*{clientOrganization.clientOrganizationName}"
         />
         <br />
@@ -1689,6 +1689,11 @@
                 type="hidden"
                 th:field="*{organization}"
                 th:value="${organization}"
+        />
+        <input
+                type="hidden"
+                th:field="*{clientOrganization}"
+                th:value="${clientOrganization}"
         />
         <input name="csrfToken" id="csrfToken"
                type="hidden"

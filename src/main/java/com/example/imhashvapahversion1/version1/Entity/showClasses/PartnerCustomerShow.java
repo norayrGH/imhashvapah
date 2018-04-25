@@ -1,19 +1,18 @@
 package com.example.imhashvapahversion1.version1.Entity.showClasses;
 
 public class PartnerCustomerShow {
-    private Long id;
+    private Long[] id;
     private String customerName;
     private String phoneNumber;
     private String address;
     private String hvhh;
-
     private Boolean full;
     private String type;
 
     public PartnerCustomerShow() {
     }
 
-    public PartnerCustomerShow(Long id, String customerName, String phoneNumber, String address, String hvhh, Boolean full, String type) {
+    public PartnerCustomerShow(Long[] id, String customerName, String phoneNumber, String address, String hvhh, Boolean full, String type) {
         this.id = id;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
@@ -23,11 +22,11 @@ public class PartnerCustomerShow {
         this.type = type;
     }
 
-    public Long getId() {
+    public Long[] getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long[] id) {
         this.id = id;
     }
 
@@ -67,15 +66,15 @@ public class PartnerCustomerShow {
         return full;
     }
 
+    public void setFull(Boolean full) {
+        this.full = full;
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public void setFull(Boolean full) {
-        this.full = full;
     }
 }
