@@ -22,7 +22,6 @@ public class ClientOrganization implements GeneralMethods {
     @ManyToOne
     private Organization organization;
 
-
     public ClientOrganization() {
     }
 

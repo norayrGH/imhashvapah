@@ -11,5 +11,7 @@ import java.util.List;
 
 public interface ClientOrganizationRepository extends CrudRepository<ClientOrganization,Long> {
     @Query( "Select c from ClientOrganization c where c.clientOrganizationName like :clientOrganizationName ")
-    ClientOrganization existsByName(@Param("clientOrganizationName")String clientOrganizationName);
+    ClientOrganization getByName( @Param("clientOrganizationName")String clientOrganizationName );
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM ClientOrganization c WHERE c.clientOrganizationName=:companyName")
+    boolean existsByName( @Param("clientOrganizationName")String clientOrganizationName );
 }

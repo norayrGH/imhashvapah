@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 
 public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Object> {
     private static Boolean temp = false ;
+    private static Long ParrentId ;
     private String id;
     private String uniqueField;
     @Autowired
@@ -29,30 +30,34 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
         try {
             Object matchId = getFieldValue(object, id);
             Object matchuniqueField = getFieldValue(object, uniqueField);
+            ClientOrganization clientOrganization = clientOrganizationRepository.getByName( ( String ) matchuniqueField );
 
-            if( matchuniqueField instanceof ClientOrganization ) {
 
-                temp = true;
+
+            if( matchId != null && matchuniqueField instanceof ClientOrganization  ){
+
+
             }
-                else
+            if (temp == true) {
                 temp = false;
 
-
-
-           ClientOrganization clientOrganization = clientOrganizationRepository.existsByName( (String) matchuniqueField );
-
-            if ( clientOrganization == null )
+                setParrentId(null);
                 return true;
-            else if(temp==true)
+            }
+            if (matchuniqueField instanceof ClientOrganization) {
+                setParrentId((Long) matchId);
+                temp = true;
                 return true;
-            else
-                return false;
-                /*return baseFieldValue != null && baseFieldValue.equals(matchFieldValue);*/
+            }
+
+
+            /*return baseFieldValue != null && baseFieldValue.equals(matchFieldValue);*/
 
         } catch (Exception e) {
             // log error
             return false;
         }
+        return false;
     }
  
     private Object getFieldValue(Object object, String fieldName) throws Exception {
@@ -61,5 +66,12 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
         field.setAccessible(true);
         return field.get(object);
     }
- 
+
+    public static Long getParrentId() {
+        return ParrentId;
+    }
+
+    public static void setParrentId(Long parrentId) {
+        ParrentId = parrentId;
+    }
 }
