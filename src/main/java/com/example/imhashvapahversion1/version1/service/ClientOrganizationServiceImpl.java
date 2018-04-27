@@ -22,7 +22,7 @@ public class ClientOrganizationServiceImpl implements ClientOrganizationService 
             return false;
         }
 
-        if(clientOrganizationRepository.existsByName(value.toString())!=null)
+        if(clientOrganizationRepository.getByName(value.toString())!=null)
             return true;
         else
         return false;
