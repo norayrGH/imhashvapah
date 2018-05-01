@@ -10,5 +10,6 @@ import java.sql.Date;
 import java.util.List;
 
 public interface CompanyCustomerRepository  extends CrudRepository<CompanyCustomer,Long>{
-
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM CompanyCustomer c WHERE c.id=:parenId and c.clientOrganization.id=:innerId")
+    boolean existsById( @Param("parenId")Long parenId , @Param("innerId") Long innerId );
 }
