@@ -486,7 +486,8 @@ public class CashController extends BaseController {
          WalletIn walletIn=new WalletIn();
         CashInFromSaleOfGoods cashInFromSaleOfGoods = new CashInFromSaleOfGoods();
         cashInFromSaleOfGoods.setWalletIn(walletIn);
-        cashInFromSaleOfGoods.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        cashInFromSaleOfGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+
         customerList.addAll( (List) clientOrganizationRepository.findAll());
         customerList.addAll( (List) individualRepository.findAll());
 
@@ -534,7 +535,7 @@ public class CashController extends BaseController {
         WalletIn walletIn=new WalletIn();
         CashInFromBankAccount cashInFromBankAccount = new CashInFromBankAccount();
         cashInFromBankAccount.setWalletIn(walletIn);
-        cashInFromBankAccount.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        cashInFromBankAccount.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         accountList=(ArrayList)bankAccountRepository.findAll();
 
 
@@ -633,7 +634,7 @@ public class CashController extends BaseController {
         WalletIn walletIn=new WalletIn();
         CashInFromPointOfSale cashInFromPointOfSale = new CashInFromPointOfSale();
         cashInFromPointOfSale.setWalletIn(walletIn);
-        cashInFromPointOfSale.setOrganization((Organization)httpSession.getAttribute("orgainzationId"));
+        cashInFromPointOfSale.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
         modelAndView.addObject("navBar", this.cashNavBar);
@@ -776,7 +777,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         ClientOrganization clientOrganization = new ClientOrganization();
-        clientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        clientOrganization.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("clientOrganization", clientOrganization);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.createClientOrganization);
@@ -808,7 +809,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         Individual individual = new Individual();
-        individual.setOrganization((Organization) httpSession.getAttribute("organizationId"));;
+        individual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("individual", individual);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.createIndividual);

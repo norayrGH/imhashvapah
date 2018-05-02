@@ -4,9 +4,11 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.util.Date;
 
 @Entity
 public class CashInFromLoan implements GetWaletIn {
@@ -16,7 +18,9 @@ public class CashInFromLoan implements GetWaletIn {
     @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
     private String colleagues;
     @NotEmpty(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
-    private String contractDate;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date contractDate;
     @NotEmpty(message = "հարկավոր է նշել պայմանագրի համարը ")
     private String forContract;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
@@ -28,7 +32,7 @@ public class CashInFromLoan implements GetWaletIn {
     public CashInFromLoan() {
     }
 
-    public CashInFromLoan(String colleagues, String contractDate, String forContract, WalletIn walletIn, Organization organization) {
+    public CashInFromLoan(String colleagues, Date contractDate, String forContract, WalletIn walletIn, Organization organization) {
         this.colleagues = colleagues;
         this.contractDate = contractDate;
         this.forContract = forContract;
@@ -52,11 +56,11 @@ public class CashInFromLoan implements GetWaletIn {
         this.colleagues = colleagues;
     }
 
-    public String getContractDate() {
+    public Date getContractDate() {
         return contractDate;
     }
 
-    public void setContractDate(String contractDate) {
+    public void setContractDate(Date contractDate) {
         this.contractDate = contractDate;
     }
 
