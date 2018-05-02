@@ -4,8 +4,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.Ca
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public interface CashInFromCreditRepository extends CrudRepository<CashInFromCredit,Long> {

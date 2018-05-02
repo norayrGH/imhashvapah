@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 

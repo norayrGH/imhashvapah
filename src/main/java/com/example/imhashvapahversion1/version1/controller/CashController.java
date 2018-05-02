@@ -14,6 +14,7 @@ import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.config.TxNamespaceHandler;
@@ -25,8 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
+import java.sql.Date;
 @Controller
 @RequestMapping(value="/account/cash")
 @SessionAttributes({"modelTrans"})
@@ -71,7 +73,12 @@ public class CashController extends BaseController {
 
         });
     }
-
+ /*   @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }*/
     @GetMapping(value = "")
     public ModelAndView cash(ModelAndView modelAndView) {
 

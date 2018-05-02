@@ -195,10 +195,13 @@ function  showCashIn(cashIn) {
 
 
 
-        var date = new Date (item.inDate).toISOString();
+        var date = new Date (item.inDate);
+        date.setDate(date.getDate());
+       var  test = new Date(date).toISOString();
+        console.log(test);
         tBody.append($("<tr />").attr({scope:"row"}).append(
-            $("<td />").text(item.id)
-            ,$("<td />").text(date.substring(0,date.indexOf('T')))
+             $("<td />").text(item.id)
+            ,$("<td />").text(test.substring(0,test.indexOf('T')))
             ,$("<td />").text(item.inCash)
             ,$("<td />").text(chashInTypes[item.inType])
             ,$("<td />").append($("<a />").attr({href:"/account/cash/cashdesk/edit/"+item.inType+"/"+item.id , class:"glyphicon glyphicon-pencil"})

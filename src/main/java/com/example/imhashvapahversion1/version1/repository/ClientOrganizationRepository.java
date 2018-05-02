@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 public interface ClientOrganizationRepository extends CrudRepository<ClientOrganization,Long> {
     @Query( "Select c from ClientOrganization c where c.clientOrganizationName like :clientOrganizationName ")

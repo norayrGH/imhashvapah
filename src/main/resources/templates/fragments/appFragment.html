@@ -531,7 +531,7 @@
         /*<![CDATA[*/
         function toDate(dateStr) {
             var parts = dateStr.split("/");
-
+            console.log(new Date(parts[2] + "-" + parts[0] + "-" + parts[1]));
             return new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
         }
 
@@ -562,7 +562,7 @@
                     end:end,
                     showAll:showAll
                 };
-
+                console.log(DateRang);
                 if(showAll==false)
                     $('#showCashIn').empty();
 
@@ -628,6 +628,7 @@
         <input type="date"
                th:name="inDate"
                th:field="*{walletIn.inDate}"
+
         />
         <br />
 
@@ -2445,7 +2446,7 @@
         /*<![CDATA[*/
         function toDate(dateStr) {
             var parts = dateStr.split("/");
-
+            console.log(new Date(parts[2] + "-" + parts[0] + "-" + parts[1]));
             return new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
         }
 

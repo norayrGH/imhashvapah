@@ -24,7 +24,7 @@ public class CashInFromSaleOfGoods implements GetWaletIn {
     private String customerName;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private Date contractDate ;
 
     private String contractNubmer ;
