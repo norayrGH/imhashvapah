@@ -39,52 +39,29 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     @Override
     public boolean isValid(Object object, ConstraintValidatorContext context) {
 
-       /* existByName=clientOrganizationRepository.existsByName((String) matchuniqueField);
-        existByid = companyCustomerRepository.existsById(parrentId, clientOrganization.getId());
-        clientOrganization = clientOrganizationRepository.getByName((String) matchuniqueField);
-*/
-        //ApplicationContextProvider.getBean();
         try {
             matchId = getFieldValue(object, id);
             matchuniqueField = getFieldValue(object, uniqueField);
 
-            if (!(matchuniqueField instanceof String)) {
+             if (!(matchuniqueField instanceof String)) {
                 parrentId = (Long) matchId;
-
             }
-
-
         } catch (Exception e) {
-
-
             return true;
         }
-
         if (matchuniqueField instanceof String) {
-
             if (clientOrganizationRepository.existsByName((String) matchuniqueField)) {
                 clientOrganization = clientOrganizationRepository.getByName((String) matchuniqueField);
                 if (companyCustomerRepository.existsById(parrentId, clientOrganization.getId())) {
-
-
                     return true;
                 } else {
-
-
                     return false;
-
-
                 }
             } else {
-
-
                 return true;
-
-
             }
 
         }
-
         return true;
     }
 

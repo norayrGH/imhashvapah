@@ -18,9 +18,9 @@ public class CashInFromServiceProvision implements GetWaletIn {
     @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
     private String customerName;
 
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractDate ;
-
 
     private String contractNubmer ;
 
