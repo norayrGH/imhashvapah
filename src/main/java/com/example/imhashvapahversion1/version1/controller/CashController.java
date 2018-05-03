@@ -890,6 +890,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         cashOutForTaxRepository.save(cashOutForTax);
         return  modelAndView;
+
     }
 
   /* @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
