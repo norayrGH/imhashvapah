@@ -33,10 +33,6 @@ public class WalletIn {
     }
 
 
-
-
-
-
     public Long getId() {
         return id;
     }

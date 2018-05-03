@@ -10,6 +10,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.C
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
@@ -58,6 +59,8 @@ public class CashController extends BaseController {
     @Autowired
     CashOutForTaxRepository cashOutForTaxRepository;
     @InitBinder()
+
+
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
 
@@ -73,12 +76,15 @@ public class CashController extends BaseController {
 
         });
     }
+
  /*   @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }*/
+
+
     @GetMapping(value = "")
     public ModelAndView cash(ModelAndView modelAndView) {
 
@@ -91,22 +97,34 @@ public class CashController extends BaseController {
 
         return modelAndView;
     }
+
+
     @PostMapping(value = "/show")
     public @ResponseBody ArrayList cashShow(@RequestBody DateRange dateRange ) {
-        List<GetWaletIn> temp = new ArrayList();
+        List<GetWaletIn> temp= new ArrayList();
         ArrayList showResult = new ArrayList();
+        FinancialMeans financialMeans = new FinancialMeans();
+        Long openingPalanceSum = 0L;
          if (dateRange.getStart() != null && dateRange.getEnd() == null) {
-            temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromLoanRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromPointOfSaleRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromSaleOfGoodsRepository.findByRangeStart(dateRange.getStart()));
-            temp.addAll(cashInFromServiceProvisionRepository.findByRangeStart(dateRange.getStart()));
-            for(GetWaletIn each:temp) {
-                showResult.add(each.getWalletInImpl());
-            }
-            return showResult;
-        }else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
+
+             //temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
+             temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
+             temp.addAll(cashInFromLoanRepository.findByRangeStart(dateRange.getStart()));
+             temp.addAll(cashInFromPointOfSaleRepository.findByRangeStart(dateRange.getStart()));
+             temp.addAll(cashInFromSaleOfGoodsRepository.findByRangeStart(dateRange.getStart()));
+             temp.addAll(cashInFromServiceProvisionRepository.findByRangeStart(dateRange.getStart()));
+
+             for (GetWaletIn each : temp) {
+
+                each.getWalletInImpl().getInCash();
+
+
+             }
+
+             return showResult;
+         }
+
+       /* }else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
             temp.addAll(cashInFromBankAccountRepository.findByEnd(dateRange.getEnd()));
             temp.addAll(cashInFromCreditRepository.findByEnd(dateRange.getEnd()));
             temp.addAll(cashInFromLoanRepository.findByEnd(dateRange.getEnd()));
@@ -128,9 +146,11 @@ public class CashController extends BaseController {
                 showResult.add(each.getWalletInImpl());
             }
             return showResult;
-        }
+        }*/
+
         return showResult;
     }
+
 
     @GetMapping(value = "/cashdesk")
     public ModelAndView cashdesk( ModelAndView modelAndView, HttpSession httpSession) {
@@ -478,7 +498,6 @@ public class CashController extends BaseController {
     }
 
 
-
     @GetMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods")
     public   ModelAndView cashinfromsaleofGoodsCreate(ModelAndView modelAndView, HttpSession httpSession) {
         List customerList = new ArrayList();
@@ -486,7 +505,7 @@ public class CashController extends BaseController {
          WalletIn walletIn=new WalletIn();
         CashInFromSaleOfGoods cashInFromSaleOfGoods = new CashInFromSaleOfGoods();
         cashInFromSaleOfGoods.setWalletIn(walletIn);
-        cashInFromSaleOfGoods.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        cashInFromSaleOfGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         customerList.addAll( (List) clientOrganizationRepository.findAll());
         customerList.addAll( (List) individualRepository.findAll());
 
@@ -534,7 +553,7 @@ public class CashController extends BaseController {
         WalletIn walletIn=new WalletIn();
         CashInFromBankAccount cashInFromBankAccount = new CashInFromBankAccount();
         cashInFromBankAccount.setWalletIn(walletIn);
-        cashInFromBankAccount.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        cashInFromBankAccount.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         accountList=(ArrayList)bankAccountRepository.findAll();
 
 
@@ -633,7 +652,7 @@ public class CashController extends BaseController {
         WalletIn walletIn=new WalletIn();
         CashInFromPointOfSale cashInFromPointOfSale = new CashInFromPointOfSale();
         cashInFromPointOfSale.setWalletIn(walletIn);
-        cashInFromPointOfSale.setOrganization((Organization)httpSession.getAttribute("orgainzationId"));
+        cashInFromPointOfSale.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
         modelAndView.addObject("navBar", this.cashNavBar);
@@ -873,6 +892,7 @@ public class CashController extends BaseController {
 
         return modelAndView;
 }
+
     @PostMapping(value = "/cashout/cashdesk/create/cashoutfortax")
     public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CashOutForTax cashOutForTax, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");

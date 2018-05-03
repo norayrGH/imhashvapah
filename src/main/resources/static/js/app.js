@@ -194,7 +194,6 @@ function  showCashIn(cashIn) {
 
 
 
-
         var date = new Date (item.inDate);
         date.setDate(date.getDate());
        var  test = new Date(date).toISOString();
