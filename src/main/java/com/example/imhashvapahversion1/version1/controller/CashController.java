@@ -58,6 +58,8 @@ public class CashController extends BaseController {
     WalletDataRepository walletDataRepository;
     @Autowired
     CashOutForTaxRepository cashOutForTaxRepository;
+    @Autowired
+    WalletInRepository walletInRepository;
     @InitBinder()
 
 
@@ -101,52 +103,42 @@ public class CashController extends BaseController {
 
     @PostMapping(value = "/show")
     public @ResponseBody ArrayList cashShow(@RequestBody DateRange dateRange ) {
-        List<GetWaletIn> temp= new ArrayList();
+
         ArrayList showResult = new ArrayList();
         FinancialMeans financialMeans = new FinancialMeans();
         Long openingPalanceSum = 0L;
+        Long inSum = 0L;
          if (dateRange.getStart() != null && dateRange.getEnd() == null) {
+             openingPalanceSum = walletInRepository.returnSumOfInsByStart(dateRange.getStart());
+             inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
 
-             //temp.addAll(cashInFromBankAccountRepository.findByRangeStart(dateRange.getStart()));
-             temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
-             temp.addAll(cashInFromLoanRepository.findByRangeStart(dateRange.getStart()));
-             temp.addAll(cashInFromPointOfSaleRepository.findByRangeStart(dateRange.getStart()));
-             temp.addAll(cashInFromSaleOfGoodsRepository.findByRangeStart(dateRange.getStart()));
-             temp.addAll(cashInFromServiceProvisionRepository.findByRangeStart(dateRange.getStart()));
-
-             for (GetWaletIn each : temp) {
-
-                each.getWalletInImpl().getInCash();
-
-
-             }
+                financialMeans.setOpeningPalance(openingPalanceSum);
+                financialMeans.setIn(inSum);
+                financialMeans.setName("Դրամարկղ");
+             showResult.add(financialMeans);
 
              return showResult;
-         }
+         } else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
+             openingPalanceSum = walletInRepository.returnSumOfInsByEnd(dateRange.getEnd());
+             inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
 
-       /* }else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
-            temp.addAll(cashInFromBankAccountRepository.findByEnd(dateRange.getEnd()));
-            temp.addAll(cashInFromCreditRepository.findByEnd(dateRange.getEnd()));
-            temp.addAll(cashInFromLoanRepository.findByEnd(dateRange.getEnd()));
-            temp.addAll(cashInFromPointOfSaleRepository.findByEnd(dateRange.getEnd()));
-            temp.addAll(cashInFromSaleOfGoodsRepository.findByEnd(dateRange.getEnd()));
-            temp.addAll(cashInFromServiceProvisionRepository.findByEnd(dateRange.getEnd()));
-            for(GetWaletIn each:temp) {
-                showResult.add(each.getWalletInImpl());
-            }
-            return showResult;
+             financialMeans.setOpeningPalance(openingPalanceSum);
+             financialMeans.setIn(inSum);
+             financialMeans.setName("Դրամարկղ");
+             showResult.add(financialMeans);
+
+             return showResult;
         }else if (dateRange.getStart() != null && dateRange.getEnd() != null) {
-             temp.addAll(cashInFromBankAccountRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            temp.addAll(cashInFromCreditRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            temp.addAll(cashInFromLoanRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            temp.addAll(cashInFromPointOfSaleRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            temp.addAll(cashInFromSaleOfGoodsRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            temp.addAll(cashInFromServiceProvisionRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
-            for(GetWaletIn each:temp) {
-                showResult.add(each.getWalletInImpl());
-            }
-            return showResult;
-        }*/
+             openingPalanceSum = walletInRepository.returnSumOfInsByRange(dateRange.getStart(),dateRange.getEnd());
+             inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
+
+             financialMeans.setOpeningPalance(openingPalanceSum);
+             financialMeans.setIn(inSum);
+             financialMeans.setName("Դրամարկղ");
+             showResult.add(financialMeans);
+
+             return showResult;
+        }
 
         return showResult;
     }

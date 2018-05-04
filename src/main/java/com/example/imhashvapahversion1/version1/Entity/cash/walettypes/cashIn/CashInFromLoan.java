@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,7 +18,7 @@ public class CashInFromLoan implements GetWaletIn {
     private Long id;
     @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
     private String colleagues;
-    @NotEmpty(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
+    @NotNull(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractDate;

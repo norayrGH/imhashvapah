@@ -19,4 +19,7 @@ public interface CashInFromBankAccountRepository extends CrudRepository<CashInFr
     ArrayList findByRange(@Param("startDate") Date startDate , @Param("endDate") Date endDate);
     @Query( "Select c from CashInFromBankAccount c INNER JOIN c.walletIn w WHERE w.inDate<=:endDate ")
     ArrayList findByEnd(@Param("endDate")Date endDate);
+
+
+
 }

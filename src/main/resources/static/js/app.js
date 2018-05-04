@@ -237,8 +237,9 @@ function showCash(cash){
 
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
-             $("<td />").text(item )
-
+             $("<td />").attr("class", "font-weight-bold").text(item.name ),
+             $("<td />").text(item.openingPalance ),
+             $("<td />").text(item.in )
 
         ));
     });
