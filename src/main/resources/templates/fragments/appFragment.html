@@ -2081,15 +2081,21 @@
 <!-- _OtherPartner_ -->
 <!-- Supplier -->
 <div class="container" th:fragment="partnerSupplier" >
+    <input name="csrfToken" id="csrfToken"
+           type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"
+    />
     <div class="row col-md-7">
         <div class="btn-group btn-group-justified ">
             <a href="/account/partner/supplier/create/individualsupplier" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Անհատ</span></a>
             <a href="/account/partner/supplier/create/privateentrepreneursupplier" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Ա/Զ</span></a>
             <a href="/account/partner/supplier/create/companysupplier" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign">Կազմակերպություն</span></a>
         </div>
-        <div id="partnerSupplierShow">
+        <div id="partnerSuppliersShow">
 
         </div>
+
         <script>
 
 
@@ -2124,6 +2130,7 @@
             });
         </script>
     </div>
+
 </div>
 <div class="container" th:fragment="individualSupplierCreate" >
 
@@ -2188,23 +2195,29 @@
         <input type="radio"
                th:name="supply"
                th:field="*{supply}"
-               name="supply"
+
                value="Ապրանք/Ծառայություն" >Ապրանք/Ծառայություն</input>
 
         <input type="radio"
                th:name="supply"
                th:field="*{supply}"
-               name="supply"
-               value="Վարձակալության ծառայություն"
-        >Վարձակալության ծառայություն</input>
+
+               value="Վարձակալության/ծառայություն"
+        >Վարձակալության/ծառայություն</input>
         <br />
+
         <label>Հասցե</label>
         <input type="text"
                th:name="address"
                th:field="*{address}"
         />
         <br />
-
+        <label>Հեռախոսահամարներ</label>
+        <input type="text"
+               th:name="phoneNumber"
+               th:field="*{phoneNumber}"
+        />
+        <br />
         <input
                 type="hidden"
                 th:field="*{id}"
@@ -2283,8 +2296,8 @@
                th:name="supply"
                th:field="*{supply}"
                name="supply"
-               value="Վարձակալության ծառայություն"
-        >Վարձակալության ծառայություն</input>
+               value="Վարձակալության/ծառայություն"
+        >Վարձակալության/ծառայություն</input>
         <br />
         <label>Բանկային հաշիվ</label>
         <input type="text"
@@ -2376,13 +2389,19 @@
                th:name="supply"
                th:field="*{supply}"
                name="supply"
-               value="Վարձակալության ծառայություն"
-        >Վարձակալության ծառայություն</input>
+               value="Վարձակալության/ծառայություն"
+        >Վարձակալության/ծառայություն</input>
         <br />
         <label>Բանկային հաշիվ</label>
         <input type="text"
                th:name="bankAccount"
                th:field="*{bankAccount}"
+        />
+        <br />
+        <label>Հեռախոսահամարներ</label>
+        <input type="text"
+               th:name="phoneNumber"
+               th:field="*{phoneNumber}"
         />
         <br />
         <label>Հասցե</label>

@@ -172,7 +172,7 @@ function  partnerCustomersShow(partnerCustomers) {
     $('#partnerCustomersShow').append(partnerCustomersTable);
 
 }
-function  partnerSuppliersShow(partnerCustomers) {
+function  partnerSuppliersShow(partnerSuppliers) {
 
 
     $('#partnerSuppliersShow').empty();
@@ -199,7 +199,7 @@ function  partnerSuppliersShow(partnerCustomers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':item.type.includes("PrivateEntrepreneur")?'privateentrepreneursupplier/':'companysupplier')+'?'+'supplierId='+item.id[0]  ,
                         class:"glyphicon glyphicon-pencil"}
                         )
                 ,"&nbsp;&nbsp;&nbsp;"

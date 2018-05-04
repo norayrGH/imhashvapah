@@ -1,14 +1,16 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.util.Date;
 @Entity
-public class IndividualSupplier {
+public class IndividualSupplier implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,9 +28,10 @@ public class IndividualSupplier {
     private String passportViewingDate;
     private String openingBalanceType;
     private String openingBalance;
+    @NotEmpty
     private String supply;
     private String address;
-
+    private String phoneNumber;
 
 
     @ManyToOne
@@ -41,8 +44,45 @@ public class IndividualSupplier {
         return id;
     }
 
+    @Override
+    public String getName() {
+        return individual.getFirstName()+" "+individual.getLastName();
+    }
+
+    @Override
+    public Long getInnerId() {
+        return individual.getId();
+    }
+
+    @Override
+    public Long getClientOrganizationId() {
+        return null;
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return individual.getId();
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(Date outDate) {
+        this.outDate = outDate;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Individual getIndividual() {
@@ -111,6 +151,11 @@ public class IndividualSupplier {
 
     public String getAddress() {
         return address;
+    }
+
+    @Override
+    public String getHvhh() {
+        return null;
     }
 
     public void setAddress(String address) {

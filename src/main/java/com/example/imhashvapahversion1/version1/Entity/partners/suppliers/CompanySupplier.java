@@ -1,13 +1,15 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CompanySupplier {
+public class CompanySupplier implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
@@ -22,7 +24,7 @@ public class CompanySupplier {
     private String supply;
     private String bankAccount;
     private String address;
-
+    private String phoneNumber;
     @ManyToOne
     private Organization organization;
 
@@ -31,6 +33,35 @@ public class CompanySupplier {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return clientOrganization.getClientOrganizationName();
+    }
+
+    @Override
+    public Long getInnerId() {
+        return clientOrganization.getId();
+    }
+
+    @Override
+    public Long getClientOrganizationId() {
+        return clientOrganization.getId();
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return null;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setId(Long id) {
