@@ -2087,6 +2087,42 @@
             <a href="/account/partner/supplier/create/privateentrepreneursupplier" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Ա/Զ</span></a>
             <a href="/account/partner/supplier/create/companysupplier" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign">Կազմակերպություն</span></a>
         </div>
+        <div id="partnerSupplierShow">
+
+        </div>
+        <script>
+
+
+            $(function () {
+                $(document).ready(function () {
+
+                    var csrf_token = $("#csrfToken").val();
+                    $.ajax({
+                        contentType : "application/json",
+                        method : "POST",
+                        url: '/account/partner/supplier/show',
+                        dataType: 'json',
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            console.log(msg);
+                            if(msg == null)
+                                $('#partnerSupplierShow').empty();
+                            else
+                                partnerSuppliersShow(msg);
+
+                        },
+
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+
+                });
+            });
+        </script>
     </div>
 </div>
 <div class="container" th:fragment="individualSupplierCreate" >

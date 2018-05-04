@@ -172,6 +172,54 @@ function  partnerCustomersShow(partnerCustomers) {
     $('#partnerCustomersShow').append(partnerCustomersTable);
 
 }
+function  partnerSuppliersShow(partnerCustomers) {
+
+
+    $('#partnerSuppliersShow').empty();
+
+    var partnerSuppliersTableTh= ["Մատակարար","Հեռախոս","Հասցե","ՀՎՀՀ"];
+    var partnerSuppliersTable = $("<table />")
+        .attr({id:"partnerSuppliersTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(partnerSuppliersTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    partnerSuppliersTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(partnerSuppliers, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.suplllierName)
+            ,$("<td />").text(item.phoneNumber)
+            ,$("<td />").text(item.address)
+            ,$("<td />").text(item.hvhh)
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                        class:"glyphicon glyphicon-pencil"}
+                        )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr(
+                    {href:"/account/organization/fixedasset/delete/"+item.id ,
+                        class:"glyphicon glyphicon-trash"}
+                        )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,(item.full==false)?$("<a />").attr(
+                    {class:"glyphicon glyphicon-warning-sign"}
+                ):""
+            )
+        ));
+    });
+
+    partnerSuppliersTable.append(tBody);
+
+    $('#partnerSuppliersShow').append(partnerSuppliersTable);
+
+}
 function  showCashIn(cashIn) {
 
 
@@ -237,7 +285,7 @@ function showCash(cash){
 
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
-             $("<td />").attr("class", "font-weight-bold").text(item.name ),
+             $("<td />").text(item.name ).attr({"style":"font-weight: bold;"}),
              $("<td />").text(item.openingPalance ),
              $("<td />").text(item.in )
 

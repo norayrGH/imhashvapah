@@ -15,10 +15,10 @@ import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.config.TxNamespaceHandler;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.*;
-import java.sql.Date;
+
 @Controller
 @RequestMapping(value="/account/cash")
 @SessionAttributes({"modelTrans"})
@@ -108,6 +108,9 @@ public class CashController extends BaseController {
         FinancialMeans financialMeans = new FinancialMeans();
         Long openingPalanceSum = 0L;
         Long inSum = 0L;
+        Long outSum = 0L;
+        Long finalBalanceSum = 0L;
+
          if (dateRange.getStart() != null && dateRange.getEnd() == null) {
              openingPalanceSum = walletInRepository.returnSumOfInsByStart(dateRange.getStart());
              inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
@@ -904,7 +907,7 @@ public class CashController extends BaseController {
 
     }
 
-  /* @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
+ /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
      public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {
         CashOutForSerivceProvider cashOutForTax = new CashOutForSerivceProvider();
         Tax tax = new Tax();

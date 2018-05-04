@@ -15,7 +15,9 @@ import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.Pri
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.PartnerCustomerShow;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
@@ -120,7 +122,7 @@ public class PartnerController extends BaseController {
 
         for(GeneralMethods each1 : temp1) {
             for(GeneralMethods each2 : temp2) {
-                if((each1.getId()==each2.getClientOrganizationId() && each1 instanceof ClientOrganization ) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
+                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof ClientOrganization ) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
                     partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
                     showResult.add(partnerCustomerShow);
                     temp=true;
@@ -395,7 +397,31 @@ public class PartnerController extends BaseController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/supplier/show")
+    public @ResponseBody Set<SupplierShow> supplierPartnerShow() {
+        List<GeneralMethods> temp2 = new ArrayList();
+        Boolean temp = false;
+        SupplierShow supplierShow = null;
+        Set<SupplierShow> showResult = new HashSet();
 
+        temp2.addAll((ArrayList)privateEntrepreneurSupplierRepository.findAll());
+        temp2.addAll((ArrayList)companySupplierRepository.findAll());
+        temp2.addAll((ArrayList)individualSupplierRepository.findAll());
+
+
+
+
+            for(GeneralMethods each2 : temp2) {
+
+
+                    supplierShow = new SupplierShow(new Long[]{each2.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true, each2.getClass().getSimpleName());
+                    showResult.add(supplierShow);
+
+
+            }
+
+        return showResult;
+    }
     @GetMapping( value ="/supplier/create/individualsupplier")
     public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         IndividualSupplier individualSupplier = new IndividualSupplier();

@@ -1,12 +1,11 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class WalletOut {
@@ -17,6 +16,8 @@ public class WalletOut {
     private String outType;
 
     @NotNull(message = "Հարկավոր է նշել Ելքի ամսաթիվը")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date outDate;
     @NotEmpty(message ="Հարկավոր է նշել Ելքի գումարը")
     private String outCash;

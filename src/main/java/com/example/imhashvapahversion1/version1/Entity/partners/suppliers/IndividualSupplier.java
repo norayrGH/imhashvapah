@@ -2,10 +2,11 @@ package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.sql.Date;
+import java.util.Date;
 @Entity
 public class IndividualSupplier {
     @Id
@@ -14,6 +15,11 @@ public class IndividualSupplier {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private Individual individual;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date outDate;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date bDate;
     private String hch;
     private String passportNumber;
