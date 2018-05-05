@@ -1,7 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -13,7 +13,7 @@ public class IndividualOtherPartner {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private Individual individual;
+    private OtherPartnerIndividual individual;
     private Date bDate;
     private String hch;
     private String groupPayer;
@@ -37,11 +37,11 @@ public class IndividualOtherPartner {
         this.id = id;
     }
 
-    public Individual getIndividual() {
+    public OtherPartnerIndividual getIndividual() {
         return individual;
     }
 
-    public void setIndividual(Individual individual) {
+    public void setIndividual(OtherPartnerIndividual individual) {
         this.individual = individual;
     }
 

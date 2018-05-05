@@ -5,15 +5,20 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.*;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForTax;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
+
+import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
+import com.example.imhashvapahversion1.version1.repository.customer.CustomerIndividualRepository;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerClientOrganizationRepository;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerIndividualRepository;
+
+import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierClientOrganizationRepository;
+import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierIndividualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.format.Formatter;
@@ -40,10 +45,20 @@ public class CashController extends BaseController {
     OrganizationRepository organizationRepository;
     @Autowired
     CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
+
+
     @Autowired
-    ClientOrganizationRepository clientOrganizationRepository;
+    CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
-    IndividualRepository individualRepository;
+    CustomerIndividualRepository customerIndividualRepository;
+    @Autowired
+    OtherPartnerClientOrganizationRepository otherPartnerClientOrganizationRepository;
+    @Autowired
+    OtherPartnerIndividualRepository otherPartnerIndividualRepository;
+    @Autowired
+    SupplierClientOrganizationRepository supplierClientOrganizationRepository;
+    @Autowired
+    SupplierIndividualRepository supplierIndividualRepository;
     @Autowired
     CashInFromPointOfSaleRepository cashInFromPointOfSaleRepository;
     @Autowired
@@ -501,8 +516,9 @@ public class CashController extends BaseController {
         CashInFromSaleOfGoods cashInFromSaleOfGoods = new CashInFromSaleOfGoods();
         cashInFromSaleOfGoods.setWalletIn(walletIn);
         cashInFromSaleOfGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        customerList.addAll( (List) clientOrganizationRepository.findAll());
-        customerList.addAll( (List) individualRepository.findAll());
+
+        customerList.addAll( (List) customerClientOrganizationRepository.findAll());
+        customerList.addAll( (List) customerIndividualRepository.findAll());
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("customerList", customerList);
@@ -518,9 +534,9 @@ public class CashController extends BaseController {
         List customerList = new ArrayList();
         if (bindingResult.hasErrors()) {
 
+            customerList.addAll( (List) customerClientOrganizationRepository.findAll());
+            customerList.addAll( (List) customerIndividualRepository.findAll());
 
-            customerList.addAll( (List) clientOrganizationRepository.findAll());
-            customerList.addAll( (List) individualRepository.findAll());
 
             modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
             modelAndView.addObject("customerList", customerList);
@@ -596,8 +612,8 @@ public class CashController extends BaseController {
         CashInFromLoan cashInFromLoan = new CashInFromLoan();
         cashInFromLoan.setWalletIn(walletIn);
         cashInFromLoan.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        colleaguesList.addAll( (List) clientOrganizationRepository.findAll() );
-        colleaguesList.addAll( (List) individualRepository.findAll() );
+        colleaguesList.addAll( (List) otherPartnerClientOrganizationRepository.findAll() );
+        colleaguesList.addAll( (List) otherPartnerIndividualRepository.findAll() );
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("colleaguesList", colleaguesList);
@@ -617,8 +633,8 @@ public class CashController extends BaseController {
             WalletIn walletIn=new WalletIn();
             cashInFromLoan.setWalletIn(walletIn);
             cashInFromLoan.setOrganization(cashInFromLoan.getOrganization());
-            colleaguesList.addAll( (List) clientOrganizationRepository.findAll() );
-            colleaguesList.addAll( (List) individualRepository.findAll() );
+            colleaguesList.addAll( (List) otherPartnerClientOrganizationRepository.findAll() );
+            colleaguesList.addAll( (List) otherPartnerIndividualRepository.findAll() );
 
             modelAndView.setViewName("app/app");
             modelAndView.addObject("organization",cashInFromLoan.getOrganization());
@@ -685,8 +701,8 @@ public class CashController extends BaseController {
         CashInFromServiceProvision cashInFromServiceProvision = new CashInFromServiceProvision();
         cashInFromServiceProvision.setWalletIn(walletIn);
         cashInFromServiceProvision.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        customerList.addAll( (List) clientOrganizationRepository.findAll());
-        customerList.addAll( (List) individualRepository.findAll());
+        customerList.addAll( (List) customerClientOrganizationRepository.findAll());
+        customerList.addAll( (List) customerIndividualRepository.findAll());
         modelAndView.setViewName("app/app");
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("cashInFromServiceProvision", cashInFromServiceProvision);
@@ -700,9 +716,8 @@ public class CashController extends BaseController {
         List customerList = new ArrayList();
         if (bindingResult.hasErrors()) {
 
-
-            customerList.addAll( (List) clientOrganizationRepository.findAll());
-            customerList.addAll( (List) individualRepository.findAll());
+            customerList.addAll( (List) customerClientOrganizationRepository.findAll());
+            customerList.addAll( (List) customerIndividualRepository.findAll());
 
             modelAndView.addObject("cashInFromServiceProvision", cashInFromServiceProvision);
             modelAndView.addObject("customerList", customerList);
@@ -731,8 +746,9 @@ public class CashController extends BaseController {
         CashInFromCredit cashInFromCredit = new CashInFromCredit();
         cashInFromCredit.setWalletIn(walletIn);
         cashInFromCredit.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        colleaguesList.addAll( (List) clientOrganizationRepository.findAll() );
-        colleaguesList.addAll( (List) individualRepository.findAll() );
+        colleaguesList.addAll( (List) otherPartnerClientOrganizationRepository.findAll() );
+        colleaguesList.addAll( (List) otherPartnerIndividualRepository.findAll() );
+
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("colleaguesList", colleaguesList);
@@ -752,8 +768,9 @@ public class CashController extends BaseController {
             WalletIn walletIn=new WalletIn();
             cashInFromCredit.setWalletIn(walletIn);
             cashInFromCredit.setOrganization((Organization)httpSession.getAttribute("organizationId"));
-            colleaguesList.addAll( (List) clientOrganizationRepository.findAll() );
-            colleaguesList.addAll( (List) individualRepository.findAll() );
+            colleaguesList.addAll( (List) otherPartnerClientOrganizationRepository.findAll() );
+            colleaguesList.addAll( (List) otherPartnerIndividualRepository.findAll() );
+
 
             modelAndView.setViewName("app/app");
             modelAndView.addObject("organization",cashInFromCredit.getOrganization());
@@ -786,12 +803,12 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
     @GetMapping(value = "create/customer/clientorganization" )
-    public   ModelAndView cashinfrompointofsaleCreateOrganization( ModelAndView modelAndView ,HttpSession httpSession) {
+    public   ModelAndView cashinfrompointofsaleCreateOrganization( ModelAndView modelAndView,HttpSession httpSession) {
 
         modelAndView.setViewName("app/app");
-        ClientOrganization clientOrganization = new ClientOrganization();
+        /*ClientOrganization clientOrganization = new ClientOrganization();
         clientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
-        modelAndView.addObject("clientOrganization", clientOrganization);
+        modelAndView.addObject("clientOrganization", clientOrganization);*/
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.createClientOrganization);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
@@ -799,31 +816,31 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
     @PostMapping(value = "create/customer/clientorganization")
-    public   ModelAndView cashinfrompointofsaleCreateOrganization(@Valid ClientOrganization clientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
+    public   ModelAndView cashinfrompointofsaleCreateOrganization(/*@Valid ClientOrganization clientOrganization,*/ BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("clientOrganization", clientOrganization);
-            modelAndView.addObject("organization", clientOrganization.getOrganization());
+            /*modelAndView.addObject("clientOrganization", clientOrganization);
+            modelAndView.addObject("organization", clientOrganization.getOrganization());*/
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.createClientOrganization);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
         }
-        modelAndView.addObject("clientOrganization", clientOrganization);
-        modelAndView.addObject("organization",clientOrganization.getOrganization());
+        /*modelAndView.addObject("clientOrganization", clientOrganization);
+        modelAndView.addObject("organization",clientOrganization.getOrganization());*/
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-        clientOrganizationRepository.save(clientOrganization);
+        //clientOrganizationRepository.save(clientOrganization);
         return  modelAndView;
     }
     @GetMapping(value = "create/customer/individual" )
     public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
 
         modelAndView.setViewName("app/app");
-        Individual individual = new Individual();
+       /* Individual individual = new Individual();
         individual.setOrganization((Organization) httpSession.getAttribute("organizationId"));;
-        modelAndView.addObject("individual", individual);
+        modelAndView.addObject("individual", individual);*/
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.createIndividual);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
@@ -831,22 +848,22 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
     @PostMapping(value = "create/customer/individual")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid Individual individual, BindingResult bindingResult, ModelAndView modelAndView) {
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(/*@Valid Individual individual,*/ BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("individual", individual);
-            modelAndView.addObject("organization", individual.getOrganization());
+           /* modelAndView.addObject("individual", individual);
+            modelAndView.addObject("organization", individual.getOrganization());*/
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.createIndividual);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
         }
-        modelAndView.addObject("individual", individual);
-        modelAndView.addObject("organization",individual.getOrganization());
+       /* modelAndView.addObject("individual", individual);
+        modelAndView.addObject("organization",individual.getOrganization());*/
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-        individualRepository.save(individual);
+        //individualRepository.save(individual);
         return  modelAndView;
     }
 

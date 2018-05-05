@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -15,7 +15,7 @@ public class IndividualCustomer  implements GeneralMethods {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private Individual individual;
+    private CustomerIndividual individual;
     private Date bDate;
     private String hch;
     private String passportNumber;
@@ -23,7 +23,7 @@ public class IndividualCustomer  implements GeneralMethods {
     private String openingBalanceType;
     private String openingBalance;
     private String address;
-
+    private String phoneNumber;
     @ManyToOne
     private Organization organization;
 
@@ -39,11 +39,11 @@ public class IndividualCustomer  implements GeneralMethods {
         this.id = id;
     }
 
-    public Individual getIndividual() {
+    public CustomerIndividual getIndividual() {
         return individual;
     }
 
-    public void setIndividual(Individual individual) {
+    public void setIndividual(CustomerIndividual individual) {
         this.individual = individual;
     }
 
@@ -136,8 +136,12 @@ public class IndividualCustomer  implements GeneralMethods {
         return getIndividual().getId();
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String getPhoneNumber() {
-        return null;
+        return phoneNumber ;
     }
 }

@@ -2,8 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -15,7 +14,7 @@ public class CompanySupplier implements GeneralMethods {
     private Long id ;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private ClientOrganization clientOrganization;
+    private SupplierClientOrganization clientOrganization;
 
     private String hvhh;
     private String taxType;
@@ -31,6 +30,7 @@ public class CompanySupplier implements GeneralMethods {
     public CompanySupplier() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -55,27 +55,19 @@ public class CompanySupplier implements GeneralMethods {
         return null;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public ClientOrganization getClientOrganization() {
+    public SupplierClientOrganization getClientOrganization() {
         return clientOrganization;
     }
 
-    public void setClientOrganization(ClientOrganization clientOrganization) {
+    public void setClientOrganization(SupplierClientOrganization clientOrganization) {
         this.clientOrganization = clientOrganization;
     }
 
+    @Override
     public String getHvhh() {
         return hvhh;
     }
@@ -124,12 +116,22 @@ public class CompanySupplier implements GeneralMethods {
         this.bankAccount = bankAccount;
     }
 
+    @Override
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Organization getOrganization() {

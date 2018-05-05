@@ -4,4 +4,5 @@ import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Privat
 import org.springframework.data.repository.CrudRepository;
 
 public interface PrivateEntrepreneurSupplierRepository extends CrudRepository<PrivateEntrepreneurSupplier,Long> {
+
 }

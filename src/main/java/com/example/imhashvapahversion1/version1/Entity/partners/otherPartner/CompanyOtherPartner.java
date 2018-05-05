@@ -1,7 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -13,7 +13,7 @@ public class CompanyOtherPartner {
     private Long id ;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private ClientOrganization clientOrganization;
+    private OtherPartnerClientOrganization otherPartnerClientOrganization;
     private String hvhh;
     private String taxType;
     private String groupPayer;
@@ -21,7 +21,7 @@ public class CompanyOtherPartner {
     private String openingBalance;
     private String bankAccount;
     private String address;
-
+    private String phoneNumber;
 
     @ManyToOne
     private Organization organization;
@@ -37,12 +37,12 @@ public class CompanyOtherPartner {
         this.id = id;
     }
 
-    public ClientOrganization getClientOrganization() {
-        return clientOrganization;
+    public OtherPartnerClientOrganization getOtherPartnerClientOrganization() {
+        return otherPartnerClientOrganization;
     }
 
-    public void setClientOrganization(ClientOrganization clientOrganization) {
-        this.clientOrganization = clientOrganization;
+    public void setOtherPartnerClientOrganization(OtherPartnerClientOrganization otherPartnerClientOrganization) {
+        this.otherPartnerClientOrganization = otherPartnerClientOrganization;
     }
 
     public String getHvhh() {
@@ -99,6 +99,14 @@ public class CompanyOtherPartner {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Organization getOrganization() {

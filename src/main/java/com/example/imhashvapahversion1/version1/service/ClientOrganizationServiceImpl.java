@@ -1,6 +1,7 @@
 package com.example.imhashvapahversion1.version1.service;
 
-import com.example.imhashvapahversion1.version1.repository.ClientOrganizationRepository;
+
+import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -8,7 +9,7 @@ import org.springframework.util.Assert;
 @Service
 public class ClientOrganizationServiceImpl implements ClientOrganizationService {
     @Autowired
-    private ClientOrganizationRepository clientOrganizationRepository;
+    private CustomerClientOrganizationRepository clientOrganizationRepository;
 
     @Override
     public boolean fieldValueExists(Object value, String fieldName) throws UnsupportedOperationException {

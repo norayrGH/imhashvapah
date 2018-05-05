@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +16,7 @@ public class IndividualSupplier implements GeneralMethods {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private Individual individual;
+    private SupplierIndividual individual;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date outDate;
@@ -85,11 +85,11 @@ public class IndividualSupplier implements GeneralMethods {
         this.phoneNumber = phoneNumber;
     }
 
-    public Individual getIndividual() {
+    public SupplierIndividual getIndividual() {
         return individual;
     }
 
-    public void setIndividual(Individual individual) {
+    public void setIndividual(SupplierIndividual individual) {
         this.individual = individual;
     }
 

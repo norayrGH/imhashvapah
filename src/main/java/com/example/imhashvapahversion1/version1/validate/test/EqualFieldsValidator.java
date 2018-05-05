@@ -1,10 +1,8 @@
 package com.example.imhashvapahversion1.version1.validate.test;
 
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
-import com.example.imhashvapahversion1.version1.config.ApplicationContextProvider;
-import com.example.imhashvapahversion1.version1.repository.ClientOrganizationRepository;
-import com.example.imhashvapahversion1.version1.repository.CompanyCustomerRepository;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
+import com.example.imhashvapahversion1.version1.repository.customer.CompanyCustomerRepository;
+import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -18,14 +16,14 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     /* private static short firstInitial = 0;*/
     private String id;
     private String uniqueField;
-    private ClientOrganization clientOrganization = null;
+    private CustomerClientOrganization clientOrganization = null;
     private Object matchId;
     private Object matchuniqueField;
     private Boolean existByName;
     private Boolean existByid;
 
     @Autowired
-    private ClientOrganizationRepository clientOrganizationRepository;
+    private CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
     private CompanyCustomerRepository companyCustomerRepository;
 
@@ -50,8 +48,8 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
             return true;
         }
         if (matchuniqueField instanceof String) {
-            if (clientOrganizationRepository.existsByName((String) matchuniqueField)) {
-                clientOrganization = clientOrganizationRepository.getByName((String) matchuniqueField);
+            if (customerClientOrganizationRepository.existsByName((String) matchuniqueField)) {
+                clientOrganization = customerClientOrganizationRepository.getByName((String) matchuniqueField);
                 if (companyCustomerRepository.existsById(parrentId, clientOrganization.getId())) {
                     return true;
                 } else {

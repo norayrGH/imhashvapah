@@ -3,8 +3,8 @@ package com.example.imhashvapahversion1.version1.controller;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Individual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
@@ -15,12 +15,13 @@ import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.Pri
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
-import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.PartnerCustomerShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
+import com.example.imhashvapahversion1.version1.repository.customer.*;
+
 import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.IndividualOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.PrivateEntrepreneurOtherPartnerRepository;
@@ -28,7 +29,6 @@ import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupp
 import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -36,7 +36,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
@@ -74,9 +73,9 @@ public class PartnerController extends BaseController {
     @Autowired
     CashInFromServiceProvisionRepository cashInFromServiceProvisionRepository;
     @Autowired
-    ClientOrganizationRepository clientOrganizationRepository;
+    CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
-    IndividualRepository individualRepository;
+    CustomerIndividualRepository customerIndividualRepository;
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -113,8 +112,8 @@ public class PartnerController extends BaseController {
         Boolean temp = false;
         PartnerCustomerShow partnerCustomerShow = null;
         Set<PartnerCustomerShow> showResult = new HashSet();
-        temp1.addAll((ArrayList) clientOrganizationRepository.findAll());
-        temp1.addAll((ArrayList) individualRepository.findAll());
+        temp1.addAll((ArrayList) customerClientOrganizationRepository.findAll());
+        temp1.addAll((ArrayList) customerIndividualRepository.findAll());
 
         temp2.addAll((ArrayList) companyCustomerRepository.findAll());
         temp2.addAll((ArrayList) individualCustomerRepository.findAll());
@@ -122,7 +121,7 @@ public class PartnerController extends BaseController {
 
         for(GeneralMethods each1 : temp1) {
             for(GeneralMethods each2 : temp2) {
-                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof ClientOrganization ) || ( each1 instanceof Individual && each1.getId()==each2.getIndividualId())){
+                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof CustomerClientOrganization) || ( each1 instanceof CustomerIndividual && each1.getId()==each2.getIndividualId())){
                     partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
                     showResult.add(partnerCustomerShow);
                     temp=true;
@@ -155,7 +154,7 @@ public class PartnerController extends BaseController {
         if(customerId!=0)
             individualCustomer = individualCustomerRepository.findOne(customerId);
         else
-            individualCustomer.setIndividual(individualRepository.findOne(customerInnerId));
+            individualCustomer.setIndividual(customerIndividualRepository.findOne(customerInnerId));
 
         individualCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
@@ -202,7 +201,7 @@ public class PartnerController extends BaseController {
         if(customerId!=0)
             companyCustomer = companyCustomerRepository.findOne(customerId);
         else
-            companyCustomer.setClientOrganization(clientOrganizationRepository.findOne(customerInnerId));
+            companyCustomer.setCustomerClientOrganization( customerClientOrganizationRepository.findOne(customerInnerId));
 
         companyCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");

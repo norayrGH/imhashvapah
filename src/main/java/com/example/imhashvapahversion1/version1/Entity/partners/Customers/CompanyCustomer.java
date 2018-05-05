@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.ClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class CompanyCustomer  implements GeneralMethods {
     private Long id ;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private ClientOrganization clientOrganization;
+    private CustomerClientOrganization customerClientOrganization;
 
     private String hvhh;
     private String taxType;
@@ -25,7 +25,7 @@ public class CompanyCustomer  implements GeneralMethods {
     private String openingBalance;
     private String bankAccount;
     private String address;
-
+    private String phoneNumber;
     @ManyToOne
     private Organization organization;
 
@@ -40,12 +40,12 @@ public class CompanyCustomer  implements GeneralMethods {
         this.id = id;
     }
 
-    public ClientOrganization getClientOrganization() {
-        return clientOrganization;
+    public CustomerClientOrganization getCustomerClientOrganization() {
+        return customerClientOrganization;
     }
 
-    public void setClientOrganization(ClientOrganization clientOrganization) {
-        this.clientOrganization = clientOrganization;
+    public void setCustomerClientOrganization(CustomerClientOrganization customerClientOrganization) {
+        this.customerClientOrganization = customerClientOrganization;
     }
 
     public String getHvhh() {
@@ -106,17 +106,17 @@ public class CompanyCustomer  implements GeneralMethods {
 
     @Override
     public String getName() {
-        return getClientOrganization().getClientOrganizationName();
+        return customerClientOrganization.getClientOrganizationName();
     }
 
     @Override
     public Long getInnerId() {
-        return getClientOrganization().getId();
+        return customerClientOrganization.getId();
     }
 
     @Override
     public Long getClientOrganizationId() {
-        return getClientOrganization().getId();
+        return customerClientOrganization.getId();
     }
 
     @Override
@@ -124,8 +124,12 @@ public class CompanyCustomer  implements GeneralMethods {
         return null;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String getPhoneNumber() {
-        return null;
+        return phoneNumber;
     }
 }
