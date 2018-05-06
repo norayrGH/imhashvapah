@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.validate.test;
 
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
-import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
+
 import com.example.imhashvapahversion1.version1.repository.customer.CompanyCustomerRepository;
 import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
@@ -75,7 +75,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                             return true;
                         else
                         {
-                            context.buildConstraintViolationWithTemplate("email.unique.violation");
+                            context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ արդեն գոյություն ունի  ").addConstraintViolation();
                             return false;
                         }
                     }
