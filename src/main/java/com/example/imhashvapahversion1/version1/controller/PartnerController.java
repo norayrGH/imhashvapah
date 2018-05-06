@@ -201,7 +201,7 @@ public class PartnerController extends BaseController {
         if(customerId!=0)
             companyCustomer = companyCustomerRepository.findOne(customerId);
         else
-            companyCustomer.setCustomerClientOrganization( customerClientOrganizationRepository.findOne(customerInnerId));
+            companyCustomer.setClientOrganization( customerClientOrganizationRepository.findOne(customerInnerId));
 
         companyCustomer.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");

@@ -19,5 +19,7 @@ public @interface EqualFields {
     String id();
  
     String uniqueField();
+
+    String hvhh();
  
 }

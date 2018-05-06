@@ -10,14 +10,14 @@ import javax.validation.Valid;
 
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganization")
+@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh")
 public class CompanyCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private CustomerClientOrganization customerClientOrganization;
+    private CustomerClientOrganization clientOrganization;
 
     private String hvhh;
     private String taxType;
@@ -40,12 +40,12 @@ public class CompanyCustomer  implements GeneralMethods {
         this.id = id;
     }
 
-    public CustomerClientOrganization getCustomerClientOrganization() {
-        return customerClientOrganization;
+    public CustomerClientOrganization getClientOrganization() {
+        return clientOrganization;
     }
 
-    public void setCustomerClientOrganization(CustomerClientOrganization customerClientOrganization) {
-        this.customerClientOrganization = customerClientOrganization;
+    public void setClientOrganization(CustomerClientOrganization clientOrganization) {
+        this.clientOrganization = clientOrganization;
     }
 
     public String getHvhh() {
@@ -106,17 +106,17 @@ public class CompanyCustomer  implements GeneralMethods {
 
     @Override
     public String getName() {
-        return customerClientOrganization.getClientOrganizationName();
+        return clientOrganization.getClientOrganizationName();
     }
 
     @Override
     public Long getInnerId() {
-        return customerClientOrganization.getId();
+        return clientOrganization.getId();
     }
 
     @Override
     public Long getClientOrganizationId() {
-        return customerClientOrganization.getId();
+        return clientOrganization.getId();
     }
 
     @Override

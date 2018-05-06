@@ -22,6 +22,7 @@ public class IndividualOtherPartner {
     private String openingBalanceType;
     private String openingBalance;
     private String address;
+    private String phoneNumber;
 
     @ManyToOne
     private Organization organization;
@@ -63,6 +64,14 @@ public class IndividualOtherPartner {
 
     public String getGroupPayer() {
         return groupPayer;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setGroupPayer(String groupPayer) {

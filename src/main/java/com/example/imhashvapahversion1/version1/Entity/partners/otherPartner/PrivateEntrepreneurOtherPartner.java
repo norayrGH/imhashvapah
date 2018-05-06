@@ -22,6 +22,7 @@ public class PrivateEntrepreneurOtherPartner {
     private String openingBalance;
     private String bankAccount;
     private String address;
+    private String phoneNumber;
     @ManyToOne
     private Organization organization;
 
@@ -94,6 +95,14 @@ public class PrivateEntrepreneurOtherPartner {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setAddress(String address) {

@@ -608,9 +608,14 @@
 
 <div class="container" th:fragment="customerAndColleaguesCreate" >
 
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/clientorganization'}" >Կազմակերպություն </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/individual'}" >Անհատ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/customerclientorganization'}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/customer/customerindividual'}" >Անհատ </a>
 
+</div>
+<div class="container" th:fragment="customerAndColleaguesCreateOtherPartner" >
+
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/otherpartner/otherpartnerclientorganization'}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/otherpartner/otherpartnerindividual'}" >Անհատ </a>
 
 </div>
 
@@ -825,8 +830,8 @@
                     th:value="${colleague.id}"
                     th:text="${colleague.getName()}" />
         </select>
-        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
+            <span class="glyphicon glyphicon-plus-sign"></span> Այլ գործընկեր
         </a>
         <br />
         <label>Ամսաթիվ</label>
@@ -1035,9 +1040,9 @@
 
 </div>
 
-<div class="container" th:fragment="createClientOrganization" >
+<div class="container" th:fragment="createCustomerClientOrganization" >
 
-    <form th:object="${clientOrganization}" action="/account/cash/create/customer/clientorganization"  method="post" >
+    <form th:object="${customerClientOrganization}" action="/account/cash/create/customer/customerclientorganization"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -1076,9 +1081,9 @@
 
 </div>
 
-<div class="container" th:fragment="createIndividual" >
+<div class="container" th:fragment="createCustomerIndividual" >
 
-    <form th:object="${individual}" action="/account/cash/create/customer/individual"  method="post" >
+    <form th:object="${customerIndividual}" action="/account/cash/create/customer/customerindividual"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -1090,6 +1095,95 @@
         <input type="text"
                th:name="firstName"
                th:field="*{firstName}"
+
+        />
+        <br />
+        <label>Ազգանուն</label>
+        <input type="text"
+               th:name="lastName"
+               th:field="*{lastName}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+
+<div class="container" th:fragment="createOtherPartnerClientOrganization" >
+
+    <form th:object="${otherPartnerClientOrganization}" action="/account/cash/create/otherpartner/otherpartnerclientorganization"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+               th:name="clientOrganizationName"
+               th:field="*{clientOrganizationName}"
+        />
+        <br />
+
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+
+<div class="container" th:fragment="createOtherPartnerIndividual" >
+
+    <form th:object="${customerIndividual}" action="/account/cash/create/customer/customerindividual"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+               th:name="firstName"
+               th:field="*{firstName}"
+
         />
         <br />
         <label>Ազգանուն</label>

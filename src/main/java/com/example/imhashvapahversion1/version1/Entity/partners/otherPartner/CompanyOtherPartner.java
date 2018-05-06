@@ -2,18 +2,20 @@ package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
+import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
+@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh" )
 public class CompanyOtherPartner {
     @Id
     @GeneratedValue
     private Long id ;
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
-    private OtherPartnerClientOrganization otherPartnerClientOrganization;
+    private OtherPartnerClientOrganization clientOrganization;
     private String hvhh;
     private String taxType;
     private String groupPayer;
@@ -37,12 +39,12 @@ public class CompanyOtherPartner {
         this.id = id;
     }
 
-    public OtherPartnerClientOrganization getOtherPartnerClientOrganization() {
-        return otherPartnerClientOrganization;
+    public OtherPartnerClientOrganization getClientOrganization() {
+        return clientOrganization;
     }
 
-    public void setOtherPartnerClientOrganization(OtherPartnerClientOrganization otherPartnerClientOrganization) {
-        this.otherPartnerClientOrganization = otherPartnerClientOrganization;
+    public void setClientOrganization(OtherPartnerClientOrganization clientOrganization) {
+        this.clientOrganization = clientOrganization;
     }
 
     public String getHvhh() {

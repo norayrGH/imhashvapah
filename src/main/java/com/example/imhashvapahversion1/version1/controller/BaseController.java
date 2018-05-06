@@ -19,13 +19,16 @@ public class BaseController {
     protected final String cashInFragment = "cashIn";
     protected final String cashInCreateFragment = "cashInCreate";
     protected final String customerAndColleaguesCreate = "customerAndColleaguesCreate";
+    protected final String customerAndColleaguesCreateOtherPartner = "customerAndColleaguesCreateOtherPartner";
     protected final String cashInCreateFragmentSaleOfGoods = "cashInCreateCashInFromSaleOfGoods" ;
     protected final String cashInCreateBankAccount = "cashInCreateBankAccount" ;
     protected final String cashInCreateCashInFromServiceProvision = "cashInCreateCashInFromServiceProvision";
     protected final String cashInCreateCashInFromCredit = "cashInCreateCashInFromCredit";
     protected final String cashInCreateCashInFromLoan = "cashInCreateCashInFromLoan";
-    protected final String createClientOrganization = "createClientOrganization" ;
-    protected final String createIndividual = "createIndividual" ;
+    protected final String createCustomerClientOrganization = "createCustomerClientOrganization" ;
+    protected final String createOtherPartnerClientOrganization = "createOtherPartnerClientOrganization" ;
+    protected final String createCustomerIndividual = "createCustomerIndividual" ;
+    protected final String createOtherPartnerIndividual = "createOtherPartnerIndividual" ;
     protected final String cashInCreateCashInFromPointOfSale="cashInCreateCashInFromPointOfSale";
 
     protected final String cashOut = "cashOut";
