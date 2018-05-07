@@ -4,9 +4,11 @@ import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -18,7 +20,7 @@ public class CompanyCustomer  implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private CustomerClientOrganization clientOrganization;
-
+    @NotEmpty(message = "Հարկավորէ մուտքագրել ՀՎՀՀ")
     private String hvhh;
     private String taxType;
     private String openingBalanceType;
