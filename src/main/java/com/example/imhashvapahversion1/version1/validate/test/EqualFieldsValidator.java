@@ -19,7 +19,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     private static String testHvhh = null;
     private static int valid = 0;
     private static int validationCount = 0;
-
+    private  static boolean accept;
     private String id;
     private String parrentHvhh;
     private String uniqueField;
@@ -29,6 +29,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     private Object matchuniqueField;
     private Object hvhh;
     private String currentObject;
+
 
     @Autowired
     private CustomerClientOrganizationRepository customerClientOrganizationRepository;
@@ -66,6 +67,45 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
         } catch (Exception e) {
             return true;
         }
+        if(accept==true){
+            accept =false;
+            validationCount=0;
+            testHvhh="";
+            return true;
+        }
+        if(validationCount==1 ){
+            if(curentObjectName.equals("CustomerClientOrganization")){
+                if(companyCustomerRepository.existsByHvhh(testHvhh)){
+                    if(parrentId == companyCustomerRepository.getIdByHvhh(testHvhh)){
+                        validationCount=0;
+                        testHvhh = "";
+                        return true;
+
+                    }else{
+                        validationCount=0;
+                        testHvhh="";
+                        return false;
+                    }
+                }
+
+            }
+
+            if(curentObjectName.equals("OtherPartnerClientOrganization")){
+                if(companyOtherPartnerRepository.existsByHvhh( testHvhh)){
+                    if(parrentId == companyOtherPartnerRepository.getIdByHvhh( testHvhh)){
+                        validationCount=0;
+                        return true;
+
+                    }else{
+                        validationCount=0;
+                        return false;
+                    }
+
+                }
+
+            }
+
+        }
 
         if (validationCount == 0 && curentObjectName.equals("CustomerClientOrganization")) {
 
@@ -90,57 +130,41 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 return false;
             }
         }
-       /*if (matchuniqueField instanceof String) {
-            if(curentObjectName.equals( "CustomerClientOrganization")){
-                 if (customerClientOrganizationRepository.existsByName((String) matchuniqueField)) {
 
-
-
-                }
-                if (customerClientOrganizationRepository.existsByName((String) matchuniqueField)) {
-                    clientOrganization = customerClientOrganizationRepository.getByName((String) matchuniqueField);
-                    if (companyCustomerRepository.existsById(parrentId, clientOrganization.getId())) {
-                        return true;
-                    } else {
-                        if(!testHvhh.equals("")){
-
-                        if(!companyCustomerRepository.existsByHvhh(testHvhh))
-                            return true;
-                        else
-                        {
-                            context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ արդեն գոյություն ունի  ").addConstraintViolation();
-                            return false;
-                        }
-                    }
-                    }
-                    }*/
-/*
-
-
-        if (curentObjectName.equals("OtherPartnerClientOrganization")) {
-            if (otherPartnerClientOrganizationRepository.existsByName((String) matchuniqueField)) {
-                otherPartnerClientOrganization = otherPartnerClientOrganizationRepository.getByName((String) matchuniqueField);
-                if (companyOtherPartnerRepository.existsById(parrentId, otherPartnerClientOrganization.getId())) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
+        if(hvhh!=null & matchId==null & curentObjectName.equals("CompanyCustomer"))
+        { testHvhh = (String) hvhh;
+            if(companyCustomerRepository.existsByHvhh((String) hvhh)){
+               validationCount++;
+                return true;
+            }else {
+                accept = true;
+                validationCount++;
                 return true;
             }
+        }
 
+        if(hvhh!=null & matchId==null & curentObjectName.equals("CompanyOtherPartner"))
+        {
+            testHvhh = (String) hvhh;
+            if(companyOtherPartnerRepository.existsByHvhh((String) hvhh)) {
+               validationCount++;
+               return true;
+
+            }else{
+                accept = true;
+                validationCount++;
+                return true;
+            }
+        }
+
+        if(matchId!=null && validationCount==0){
+            testHvhh = (String) hvhh;
+            parrentId = (Long) matchId;
+            validationCount++;
+            return true ;
         }
 
 
-    }
-        if(!(matchuniqueField instanceof String))
-
-    {
-        parrentId = (Long) matchId;
-        testHvhh = (String) hvhh;
-    }
-        return true;
-*/
 return true;
     }
 
