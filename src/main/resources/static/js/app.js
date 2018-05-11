@@ -172,6 +172,56 @@ function  partnerCustomersShow(partnerCustomers) {
     $('#partnerCustomersShow').append(partnerCustomersTable);
 
 }
+function  partnerOtherPartnerShow(partnerOtherPartner) {
+
+
+    $('#partnerOtherPartnerShow').empty();
+
+    var partnerOtherPartnerTableTh= ["Գնորդ","Հեռախոս","Հասցե","ՀՎՀՀ"];
+    var partnerOtherPartnerTable = $("<table />")
+        .attr({id:"showFixedAssetsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(partnerOtherPartnerTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    partnerOtherPartnerTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(partnerOtherPartner, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.customerName)
+            ,$("<td />").text(item.phoneNumber)
+            ,$("<td />").text(item.address)
+            ,$("<td />").text(item.hvhh)
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {href:"/account/partner/otherpartner/edit/"+(item.type.includes("Individual")?'individualotherpartner/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                        class:"glyphicon glyphicon-pencil"}
+                )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr(
+                    {href:"/account/organization/fixedasset/delete/"+item.id ,
+                        class:"glyphicon glyphicon-trash"}
+                )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,(item.full==false)?$("<a />").attr(
+                    {
+                        class:"glyphicon glyphicon-warning-sign"
+                    }
+                ):""
+            )
+        ));
+    });
+
+    partnerOtherPartnerTable.append(tBody);
+
+    $('#partnerOtherPartnerShow').append(partnerOtherPartnerTable);
+
+}
 function  partnerSuppliersShow(partnerSuppliers) {
 
 

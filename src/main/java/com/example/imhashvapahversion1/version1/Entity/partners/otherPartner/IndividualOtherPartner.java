@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import java.sql.Date;
 @Entity
-public class IndividualOtherPartner {
+public class IndividualOtherPartner  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id;
@@ -32,6 +33,26 @@ public class IndividualOtherPartner {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return individual.getName();
+    }
+
+    @Override
+    public Long getInnerId() {
+        return individual.getId();
+    }
+
+    @Override
+    public Long getClientOrganizationId() {
+        return null;
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return individual.getId();
     }
 
     public void setId(Long id) {
@@ -112,6 +133,11 @@ public class IndividualOtherPartner {
 
     public String getAddress() {
         return address;
+    }
+
+    @Override
+    public String getHvhh() {
+        return null;
     }
 
     public void setAddress(String address) {

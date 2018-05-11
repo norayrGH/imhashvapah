@@ -27,6 +27,7 @@ public class BaseController {
     protected final String cashInCreateCashInFromLoan = "cashInCreateCashInFromLoan";
     protected final String createCustomerClientOrganization = "createCustomerClientOrganization" ;
     protected final String createOtherPartnerClientOrganization = "createOtherPartnerClientOrganization" ;
+
     protected final String createCustomerIndividual = "createCustomerIndividual" ;
     protected final String createOtherPartnerIndividual = "createOtherPartnerIndividual" ;
     protected final String cashInCreateCashInFromPointOfSale="cashInCreateCashInFromPointOfSale";

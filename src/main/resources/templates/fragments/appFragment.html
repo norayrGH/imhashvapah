@@ -1171,7 +1171,7 @@
 
 <div class="container" th:fragment="createOtherPartnerIndividual" >
 
-    <form th:object="${customerIndividual}" action="/account/cash/create/customer/customerindividual"  method="post" >
+    <form th:object="${otherPartnerIndividual}" action="/account/cash/create/otherpartner/otherpartnerindividual"  method="post" >
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
@@ -1881,6 +1881,11 @@
 </div>
 <!-- OtherPartner -->
 <div class="container" th:fragment="partnerOtherPartner" >
+    <input name="csrfToken" id="csrfToken"
+           type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"
+    />
     <div class="row col-md-7">
         <div class="btn-group btn-group-justified ">
             <a href="/account/partner/otherpartner/create/individualotherpartner" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"> Անհատ</span></a>
@@ -1888,6 +1893,44 @@
             <a href="/account/partner/otherpartner/create/companyotherpartner" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign">Կազմակերպություն</span></a>
         </div>
     </div>
+
+    <div id="partnerOtherPartnerShow">
+
+    </div>
+    <script>
+
+
+        $(function () {
+            $(document).ready(function () {
+
+                var csrf_token = $("#csrfToken").val();
+                $.ajax({
+                    contentType : "application/json",
+                    method : "POST",
+                    url: '/account/partner/otherpartner/show',
+                    dataType: 'json',
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN", csrf_token);
+                    },  success: function (msg){
+                        console.log(msg);
+                        if(msg == null)
+                            $('#partnerOtherPartnerShow').empty();
+                        else
+                            partnerOtherPartnerShow(msg);
+
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+
+            });
+        });
+    </script>
+
 </div>
 <div class="container" th:fragment="companyOtherPartnerCreate" >
 
@@ -1969,6 +2012,11 @@
                 th:field="*{organization}"
                 th:value="${organization}"
         />
+        <input
+                type="hidden"
+                th:field="*{clientOrganization}"
+                th:value="${clientOrganization}"
+        />
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
@@ -2019,6 +2067,7 @@
         <input type="date"
                th:name="bDate"
                th:field="*{bDate}"
+               th:text="${bDate}"
         />
         <br />
         <label>ՀԾՀ</label>
@@ -2043,6 +2092,8 @@
         <input type="date"
                th:name="openingBalanceType"
                th:field="*{openingBalanceType}"
+
+
         />
         <br />
         <label>Սկզբնական մնացորդ</label>
@@ -2063,11 +2114,15 @@
                 th:field="*{id}"
                 th:value="${id}"
         />
-
         <input
                 type="hidden"
                 th:field="*{organization}"
                 th:value="${organization}"
+        />
+        <input
+                type="hidden"
+                th:field="*{individual}"
+                th:value="${individual}"
         />
 
         <input name="csrfToken" id="csrfToken"
@@ -2252,6 +2307,9 @@
         <input type="date"
                th:name="bDate"
                th:field="*{bDate}"
+               th:text="${bDate}"
+
+
         />
         <br />
         <label>ՀԾՀ</label>

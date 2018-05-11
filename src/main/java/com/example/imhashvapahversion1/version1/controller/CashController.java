@@ -623,6 +623,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateCashInFromLoan);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return  modelAndView;
     }
@@ -893,6 +894,50 @@ public class CashController extends BaseController {
 
 
 
+    @GetMapping(value = "create/otherpartner/otherpartnerindividual" )
+    public   ModelAndView otherPartnerIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+
+        modelAndView.setViewName("app/app");
+        OtherPartnerIndividual otherPartnerIndividual =new OtherPartnerIndividual() ;
+        otherPartnerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return  modelAndView;
+    }
+    @PostMapping(value = "create/otherpartner/otherpartnerindividual")
+    public   ModelAndView otherPartnerIndividual(@Valid OtherPartnerIndividual otherPartnerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
+            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        otherPartnerIndividualRepository.save(otherPartnerIndividual);
+        return  modelAndView;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -982,27 +1027,6 @@ public class CashController extends BaseController {
         otherPartnerIndividualRepository.save(otherPartnerIndividual);
         return modelAndView;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

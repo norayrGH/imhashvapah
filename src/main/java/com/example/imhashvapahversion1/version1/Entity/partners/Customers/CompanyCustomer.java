@@ -20,8 +20,10 @@ public class CompanyCustomer  implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private CustomerClientOrganization clientOrganization;
+
     @NotEmpty(message = "Հարկավորէ մուտքագրել ՀՎՀՀ")
     private String hvhh;
+    @NotEmpty(message = "Հարկավոր է նշել հարկի տեսակը")
     private String taxType;
     private String openingBalanceType;
     private String openingBalance;

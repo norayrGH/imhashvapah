@@ -5,6 +5,8 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
@@ -22,9 +24,7 @@ import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSale
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
 import com.example.imhashvapahversion1.version1.repository.customer.*;
 
-import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
-import com.example.imhashvapahversion1.version1.repository.otherpartners.IndividualOtherPartnerRepository;
-import com.example.imhashvapahversion1.version1.repository.otherpartners.PrivateEntrepreneurOtherPartnerRepository;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.*;
 import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
@@ -76,6 +76,12 @@ public class PartnerController extends BaseController {
     CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
     CustomerIndividualRepository customerIndividualRepository;
+    @Autowired
+    OtherPartnerClientOrganizationRepository otherPartnerClientOrganizationRepository;
+    @Autowired
+    OtherPartnerIndividualRepository otherPartnerIndividualRepository;
+
+
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -174,6 +180,7 @@ public class PartnerController extends BaseController {
            modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
            return modelAndView;
        }
+        individualCustomer.getIndividual().setOrganization(individualCustomer.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerCustomers);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
@@ -268,7 +275,7 @@ public class PartnerController extends BaseController {
     /*--partner Customers--*/
 
 
-    /*partner Otherpartner*/
+    /* partner Otherpartner */
 
     @GetMapping(value = "/otherpartner")
     public ModelAndView partnersOtherPartner( ModelAndView modelAndView) {
@@ -280,6 +287,41 @@ public class PartnerController extends BaseController {
 
 
         return modelAndView;
+    }
+    @PostMapping("/otherpartner/show")
+    public @ResponseBody Set partnersOtherPartnerShow() {
+
+
+            List<GeneralMethods> temp1 = new ArrayList();
+            List<GeneralMethods> temp2 = new ArrayList();
+            Boolean temp = false;
+            PartnerCustomerShow partnerCustomerShow = null;
+            Set<PartnerCustomerShow> showResult = new HashSet();
+            temp1.addAll((ArrayList) otherPartnerClientOrganizationRepository.findAll());
+            temp1.addAll((ArrayList) otherPartnerIndividualRepository.findAll());
+
+            temp2.addAll((ArrayList) companyOtherPartnerRepository.findAll());
+            temp2.addAll((ArrayList) individualOtherPartnerRepository.findAll());
+            temp2.addAll((ArrayList) privateEntrepreneurOtherPartnerRepository.findAll());
+
+            for(GeneralMethods each1 : temp1) {
+                for(GeneralMethods each2 : temp2) {
+                    if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof OtherPartnerClientOrganization) || ( each1 instanceof OtherPartnerIndividual && each1.getId()==each2.getIndividualId())){
+
+                        partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
+                        showResult.add(partnerCustomerShow);
+                        temp=true;
+
+                    }
+                }
+                if(temp == false){
+
+                    partnerCustomerShow = new PartnerCustomerShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
+                    showResult.add(partnerCustomerShow);
+                }
+                temp=false;
+            }
+            return showResult;
     }
 
     @GetMapping(value = "/otherpartner/create/companyotherpartner")
@@ -307,7 +349,7 @@ public class PartnerController extends BaseController {
             return modelAndView;
         }
 
-
+        companyOtherPartner.getClientOrganization().setOrganization(companyOtherPartner.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
@@ -319,19 +361,37 @@ public class PartnerController extends BaseController {
     public ModelAndView individualOtherPartnerCreate(ModelAndView modelAndView, HttpSession httpSession) {
        IndividualOtherPartner individualOtherPartner = new IndividualOtherPartner();
         individualOtherPartner.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualOtherPartner",individualOtherPartner);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
+        return modelAndView;
+    }
+    @GetMapping(value = "/otherpartner/edit/individualotherpartner")
+    public ModelAndView individualOtherPartnerEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
+        IndividualOtherPartner individualOtherPartner = new IndividualOtherPartner();
+        if(customerId!=0)
+            individualOtherPartner = individualOtherPartnerRepository.findOne(customerId);
+        else
+            individualOtherPartner.setIndividual(otherPartnerIndividualRepository.findOne(customerInnerId));
 
+        individualOtherPartner.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("individualOtherPartner",individualOtherPartner);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
     }
     @PostMapping(value = "/otherpartner/create/individualotherpartner")
     public ModelAndView individualOtherPartnerCreate(@Valid IndividualOtherPartner individualOtherPartner, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
+
+
 
             modelAndView.addObject("individualOtherPartner",individualOtherPartner);
             modelAndView.addObject("navBar", this.partnerNavBar);
@@ -340,7 +400,7 @@ public class PartnerController extends BaseController {
             return modelAndView;
         }
 
-
+        individualOtherPartner.getIndividual().setOrganization(individualOtherPartner.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
@@ -530,14 +590,13 @@ public class PartnerController extends BaseController {
     public ModelAndView privateEntrepreneurSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         PrivateEntrepreneurSupplier privateEntrepreneurSupplier = new PrivateEntrepreneurSupplier();
         privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
-
-
-
 
         return modelAndView;
     }

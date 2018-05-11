@@ -5,16 +5,17 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.service.ClientOrganizationService;
 import com.example.imhashvapahversion1.version1.validate.Unique;
 import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganizationName",hvhh = "",message = "")
+@EqualFields(id = "id", uniqueField = "clientOrganizationName",hvhh = "", message = "")
 public class CustomerClientOrganization implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @NotEmpty(message = "հարկավոր է մուտքագրել կազմակերպության անվանումը")
     private String clientOrganizationName;
     @ManyToOne
     private Organization organization;
