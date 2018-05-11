@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh")
+@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh",message = "")
 public class CompanyCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue

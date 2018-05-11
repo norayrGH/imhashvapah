@@ -84,6 +84,8 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                     }else{
                         validationCount=0;
                         testHvhh="";
+                        context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ-ով կազմակերպություն գոյություն ունի").addConstraintViolation();
+
                         return false;
                     }
                 }
@@ -94,10 +96,13 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 if(companyOtherPartnerRepository.existsByHvhh( testHvhh)){
                     if(parrentId == companyOtherPartnerRepository.getIdByHvhh( testHvhh)){
                         validationCount=0;
+                        testHvhh="";
                         return true;
 
                     }else{
                         validationCount=0;
+                        testHvhh="";
+                        context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ-ով կազմակերպություն գոյություն ունի").addConstraintViolation();
                         return false;
                     }
 
@@ -115,6 +120,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 return true;
             } else {
                 validationCount=0;
+                context.buildConstraintViolationWithTemplate("նման անունով կազմակերպութույն գոյություն ունի").addConstraintViolation();
                 return false;
             }
         }
@@ -127,6 +133,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 return true;
             } else {
                 validationCount=0;
+                context.buildConstraintViolationWithTemplate("նման անունով կազմակերպութույն գոյություն ունի").addConstraintViolation();
                 return false;
             }
         }

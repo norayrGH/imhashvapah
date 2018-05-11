@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh" )
+@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh" ,message = "")
 public class CompanyOtherPartner {
     @Id
     @GeneratedValue

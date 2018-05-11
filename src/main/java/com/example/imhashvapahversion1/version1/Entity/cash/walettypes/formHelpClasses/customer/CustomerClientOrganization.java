@@ -9,7 +9,7 @@ import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
 import javax.persistence.*;
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganizationName",hvhh = "")
+@EqualFields(id = "id", uniqueField = "clientOrganizationName",hvhh = "",message = "")
 public class CustomerClientOrganization implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

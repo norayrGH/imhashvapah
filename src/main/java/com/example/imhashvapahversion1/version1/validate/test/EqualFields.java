@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = {EqualFieldsValidator.class})
 public @interface EqualFields {
  
-    String message() default "WTF!!";
+    String message() ;
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
  
