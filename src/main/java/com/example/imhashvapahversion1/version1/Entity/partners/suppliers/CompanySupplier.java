@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 @Entity
-public class CompanySupplier implements GeneralMethods {
+public class CompanySupplier extends Supplier implements GeneralMethods  {
     @Id
     @GeneratedValue
     private Long id ;

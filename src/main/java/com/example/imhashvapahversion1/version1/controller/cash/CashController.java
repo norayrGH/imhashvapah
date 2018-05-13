@@ -1,4 +1,4 @@
-package com.example.imhashvapahversion1.version1.controller;
+package com.example.imhashvapahversion1.version1.controller.cash;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 
@@ -12,6 +12,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
+import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
@@ -805,6 +806,16 @@ public class CashController extends BaseController {
 
         return  modelAndView;
     }
+    @GetMapping(value = "create/supplier")
+    public   ModelAndView cashCreateSupplier( ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.customerAndColleaguesCreateSupplier);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+        return  modelAndView;
+    }
 
     @GetMapping(value = "create/otherpartner")
     public   ModelAndView cashinfrompointofsaleCreateotherPartner( ModelAndView modelAndView) {
@@ -852,12 +863,6 @@ public class CashController extends BaseController {
 
 
 
-
-
-
-
-
-
     @GetMapping(value = "create/otherpartner/otherpartnerclientorganization" )
     public   ModelAndView otherPartnerCreateOrganization( ModelAndView modelAndView,HttpSession httpSession) {
 
@@ -891,9 +896,6 @@ public class CashController extends BaseController {
      }
 
 
-
-
-
     @GetMapping(value = "create/otherpartner/otherpartnerindividual" )
     public   ModelAndView otherPartnerIndividual( ModelAndView modelAndView,HttpSession httpSession) {
 
@@ -925,34 +927,6 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping(value = "create/customer/customerindividual" )
     public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
 
@@ -981,114 +955,9 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         customerIndividualRepository.save(customerIndividual);
-        return  modelAndView;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @GetMapping(value = "create/otherpartner/otherpartnerindividual" )
-    public   ModelAndView createOtherPartnerIndividual( ModelAndView modelAndView,HttpSession httpSession) {
-
-        modelAndView.setViewName("app/app");
-        OtherPartnerIndividual otherPartnerIndividual = new OtherPartnerIndividual();
-        otherPartnerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-
-         return  modelAndView;
-    }
-    @PostMapping(value = "create/otherpartner/otherpartnerindividual")
-   public   ModelAndView createOtherPartnerIndividual(@Valid OtherPartnerIndividual otherPartnerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("app/app");
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
-            modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
-            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-            return modelAndView;
-        }
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashInCreateFragment);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-        otherPartnerIndividualRepository.save(otherPartnerIndividual);
         return modelAndView;
     }
 
-
-
-
-
-
-    @GetMapping(value = "/cashout/cashdesk" )
-    public ModelAndView cashOutcashDesk(ModelAndView modelAndView ) {
-
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOut);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-
-        return modelAndView;
-    }
-    @GetMapping(value = "/cashоut/cashdesk/create")
-    public ModelAndView cashOutcashdeskCreate(ModelAndView modelAndView ) {
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-        return modelAndView;
-
-    }
-
-    @GetMapping(value = "/cashout/cashdesk/create/cashoutfortax")
-    public ModelAndView cashOutforTaxCreate(ModelAndView modelAndView ,HttpSession httpSession) {
-        CashOutForTax cashOutForTax = new CashOutForTax();
-        Tax tax = new Tax();
-        WalletOut walletOut  =  new WalletOut();
-
-        cashOutForTax.setTax(tax);
-        cashOutForTax.setWalletOut(walletOut);
-        cashOutForTax.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("cashOutForTax",cashOutForTax);
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutForTaxCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-
-        return modelAndView;
-}
-
-    @PostMapping(value = "/cashout/cashdesk/create/cashoutfortax")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CashOutForTax cashOutForTax, BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("app/app");
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("cashOutForTax", cashOutForTax);
-            modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.cashOutForTaxCreate);
-            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-            return modelAndView;
-        }
-
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-        cashOutForTaxRepository.save(cashOutForTax);
-        return  modelAndView;
-
-    }
 
  /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
      public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {

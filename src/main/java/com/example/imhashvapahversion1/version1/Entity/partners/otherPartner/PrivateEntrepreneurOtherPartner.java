@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -7,17 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Pattern;
 
 @Entity
-public class PrivateEntrepreneurOtherPartner {
+public class PrivateEntrepreneurOtherPartner implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
     private String privateEntrepreneurName ;
-    @NotEmpty
+    @NotEmpty(message = "հարկավոր է մուտքագրել ՀՎՀՀ-ն")
     private String hvhh;
     private String taxType;
     private String groupPayer;
+    @Pattern(regexp = "prepaid",message = "Անհնար է վարկատու կամ փոխատու գործընկերոջը տալ կանխավճար։ Խնդրում ենք ընտրել պարտք տեսակը սկզբնական մնացորդների համար, եթե այն նույնիսկ զրո է։")
     private String openingBalanceType;
     private String openingBalance;
     private String bankAccount;
@@ -31,6 +34,26 @@ public class PrivateEntrepreneurOtherPartner {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return privateEntrepreneurName;
+    }
+
+    @Override
+    public Long getInnerId() {
+        return null;
+    }
+
+    @Override
+    public Long getClientOrganizationId() {
+        return null;
+    }
+
+    @Override
+    public Long getIndividualId() {
+        return null;
     }
 
     public void setId(Long id) {

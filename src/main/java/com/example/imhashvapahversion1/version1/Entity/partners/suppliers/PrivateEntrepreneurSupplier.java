@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PrivateEntrepreneurSupplier implements GeneralMethods {
+public class PrivateEntrepreneurSupplier extends Supplier implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
@@ -24,6 +24,7 @@ public class PrivateEntrepreneurSupplier implements GeneralMethods {
     private String bankAccount;
     private String address;
     private String phoneNumber;
+
     @ManyToOne
     private Organization organization;
 

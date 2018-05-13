@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class PrivateEntrepreneurCustomer  implements GeneralMethods {
+public class    PrivateEntrepreneurCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;

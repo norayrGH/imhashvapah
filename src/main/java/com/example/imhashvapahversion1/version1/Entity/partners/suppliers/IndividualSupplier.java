@@ -9,8 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.util.Date;
+
 @Entity
-public class IndividualSupplier implements GeneralMethods {
+public class IndividualSupplier extends Supplier implements GeneralMethods{
     @Id
     @GeneratedValue
     private Long id;
