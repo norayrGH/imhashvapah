@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @Entity
-public class IndividualSupplier extends Supplier implements GeneralMethods{
+public class IndividualSupplier implements GeneralMethods{
     @Id
     @GeneratedValue
     private Long id;

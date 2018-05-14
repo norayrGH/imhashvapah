@@ -13,14 +13,26 @@ import sun.text.SupplementaryCharacterData;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity
+
+@SecondaryTables({
+        @SecondaryTable(name="CompanySupplier", pkJoinColumns={
+                @PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
+        }),
+        @SecondaryTable(name="IndividualSupplier", pkJoinColumns={
+                @PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
+        })
+
+})
 public class CashOutForGoodsProvider {
     @Id
     @GeneratedValue
     private Long id;
+    private String supplierName;
     //Ամսաթիվ
     @NotNull(message = "հարկավոր է նշել Ելքի ամսաթիվը")
     private Date outDate;
@@ -35,17 +47,90 @@ public class CashOutForGoodsProvider {
     private String contractNumber;
     //Նշումներ
     private String note;
-    @ManyToOne
-    private CompanySupplier companySupplier;
-    @ManyToOne
-    private IndividualSupplier individualSupplier;
-    @ManyToOne
-    private PrivateEntrepreneurSupplier privateEntrepreneurSupplier;
+
     @ManyToOne
     private Organization organization;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletOut walletOut;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public Date getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(Date outDate) {
+        this.outDate = outDate;
+    }
+
+    public String getOutSum() {
+        return outSum;
+    }
+
+    public void setOutSum(String outSum) {
+        this.outSum = outSum;
+    }
+
+    public String getBankCommissions() {
+        return bankCommissions;
+    }
+
+    public void setBankCommissions(String bankCommissions) {
+        this.bankCommissions = bankCommissions;
+    }
+
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public WalletOut getWalletOut() {
+        return walletOut;
+    }
+
+    public void setWalletOut(WalletOut walletOut) {
+        this.walletOut = walletOut;
+    }
 }

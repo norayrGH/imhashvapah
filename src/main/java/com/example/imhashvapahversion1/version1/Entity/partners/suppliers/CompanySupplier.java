@@ -6,9 +6,11 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.io.Serializable;
 
 @Entity
-public class CompanySupplier extends Supplier implements GeneralMethods  {
+public class CompanySupplier implements GeneralMethods {
+
     @Id
     @GeneratedValue
     private Long id ;

@@ -9,11 +9,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Entity
-@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh",message = "")
-public class CompanyCustomer  implements GeneralMethods {
+@EqualFields(id = "id", uniqueField = "clientOrganization", hvhh = "hvhh",message = "")
+public class CompanyCustomer  implements GeneralMethods,Serializable{
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     private Long id ;

@@ -89,6 +89,7 @@ public class CashOutController extends BaseController {
 
 
         CashOutForGoodsProvider cashOutForGoodsProvider = new CashOutForGoodsProvider();
+        cashOutForGoodsProvider.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashOutForGoodsProvider", cashOutForGoodsProvider);
         modelAndView.addObject("navBar", this.cashNavBar);

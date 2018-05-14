@@ -92,6 +92,7 @@ public class PartnerController extends BaseController {
         });
     }
 
+
     /*partner Customers*/
     @GetMapping(value = "/customer")
     public ModelAndView partners( ModelAndView modelAndView) {
