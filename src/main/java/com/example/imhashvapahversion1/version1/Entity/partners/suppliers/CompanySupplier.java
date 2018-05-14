@@ -29,6 +29,7 @@ public class CompanySupplier implements GeneralMethods {
     @ManyToOne
     private Organization organization;
 
+
     public CompanySupplier() {
     }
 

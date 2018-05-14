@@ -12,33 +12,16 @@ import sun.text.SupplementaryCharacterData;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
 import java.util.Date;
 
 
 @Entity
-
-@SecondaryTables({
-        @SecondaryTable(name="CompanySupplier", pkJoinColumns={
-                @PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
-        }),
-        @SecondaryTable(name="IndividualSupplier", pkJoinColumns={
-                @PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
-        })
-
-})
 public class CashOutForGoodsProvider {
     @Id
     @GeneratedValue
     private Long id;
     private String supplierName;
-    //Ամսաթիվ
-    @NotNull(message = "հարկավոր է նշել Ելքի ամսաթիվը")
-    private Date outDate;
-    //Ելքի գումար
-    @NotNull(message = "հարկավոր է նշել Ելքի գումարը")
-    private String outSum;
     //Բանկային միջնորդավճար
     private String bankCommissions;
     //Պայմանագրի ամսաթիվ
@@ -47,12 +30,40 @@ public class CashOutForGoodsProvider {
     private String contractNumber;
     //Նշումներ
     private String note;
+    @Transient
+    private Long supplierId;
+    @Transient
+    private String supplierType;
 
+    @ManyToOne
+    private CompanySupplier companySupplier;
+    @ManyToOne
+    private IndividualSupplier individualSupplier;
+    @ManyToOne
+    private PrivateEntrepreneurSupplier privateEntrepreneurSupplier;
     @ManyToOne
     private Organization organization;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletOut walletOut;
+
+    public CashOutForGoodsProvider() {
+    }
+
+    public CashOutForGoodsProvider(String supplierName, String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
+        this.supplierName = supplierName;
+        this.bankCommissions = bankCommissions;
+        this.contractDate = contractDate;
+        this.contractNumber = contractNumber;
+        this.note = note;
+        this.supplierId = supplierId;
+        this.supplierType = supplierType;
+        this.companySupplier = companySupplier;
+        this.individualSupplier = individualSupplier;
+        this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
+        this.organization = organization;
+        this.walletOut = walletOut;
+    }
 
     public Long getId() {
         return id;
@@ -70,20 +81,28 @@ public class CashOutForGoodsProvider {
         this.supplierName = supplierName;
     }
 
-    public Date getOutDate() {
-        return outDate;
+    public CompanySupplier getCompanySupplier() {
+        return companySupplier;
     }
 
-    public void setOutDate(Date outDate) {
-        this.outDate = outDate;
+    public void setCompanySupplier(CompanySupplier companySupplier) {
+        this.companySupplier = companySupplier;
     }
 
-    public String getOutSum() {
-        return outSum;
+    public IndividualSupplier getIndividualSupplier() {
+        return individualSupplier;
     }
 
-    public void setOutSum(String outSum) {
-        this.outSum = outSum;
+    public void setIndividualSupplier(IndividualSupplier individualSupplier) {
+        this.individualSupplier = individualSupplier;
+    }
+
+    public PrivateEntrepreneurSupplier getPrivateEntrepreneurSupplier() {
+        return privateEntrepreneurSupplier;
+    }
+
+    public void setPrivateEntrepreneurSupplier(PrivateEntrepreneurSupplier privateEntrepreneurSupplier) {
+        this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
     }
 
     public String getBankCommissions() {
@@ -132,5 +151,21 @@ public class CashOutForGoodsProvider {
 
     public void setWalletOut(WalletOut walletOut) {
         this.walletOut = walletOut;
+    }
+
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierType() {
+        return supplierType;
+    }
+
+    public void setSupplierType(String supplierType) {
+        this.supplierType = supplierType;
     }
 }
