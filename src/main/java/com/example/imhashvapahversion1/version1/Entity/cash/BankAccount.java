@@ -14,7 +14,7 @@ public class BankAccount {
     @NotEmpty( message = "մուտքագրեք հաշվեհամարը ճիշտ")
     private String bankAccount;
     @NotEmpty( message = "ճիշտ մուտքագրեք հաշվեհամարի առաջին հինգ նիշը ")
-    private String bankName;
+        private String bankName;
     @NotEmpty( message = "հարկավոր է ընտրել մնացորդի տիպը")
     private String openingBalanceType;
     @NotEmpty( message = "մնացորդի գումարը պարտադիր է ")

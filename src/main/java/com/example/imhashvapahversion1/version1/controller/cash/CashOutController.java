@@ -1,20 +1,25 @@
 package com.example.imhashvapahversion1.version1.controller.cash;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.BankAccount;
 import com.example.imhashvapahversion1.version1.Entity.cash.Tax;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.*;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
+import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
+import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
+import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.PrivateEntrepreneurOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Supplier;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
-import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
-import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
-import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
-import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
+import com.example.imhashvapahversion1.version1.repository.BankAccountRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.*;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.IndividualOtherPartnerRepository;
+import com.example.imhashvapahversion1.version1.repository.otherpartners.PrivateEntrepreneurOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
@@ -29,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -44,12 +50,30 @@ public class CashOutController extends BaseController {
     @Autowired
     CashOutForRentRepository cashOutForRentRepository;
     @Autowired
+    CashOutForBankAccountRepository cashOutForBankAccountRepository;
+    @Autowired
+    CashOutForCreditPaymentRepository cashOutForCreditPaymentRepository;
+    @Autowired
+    CashOutForRedemptionPercentRepository  cashOutForRedemptionPercentRepository;
+    @Autowired
+    CashOutForLoanPaymentRepsitory cashOutForRedemptionPercentRepsitory;
+    @Autowired
     CompanySupplierRepository companySupplierRepository;
     @Autowired
     IndividualSupplierRepository individualSupplierRepository;
     @Autowired
     PrivateEntrepreneurSupplierRepository privateEntrepreneurSupplierRepository;
+    @Autowired
+    CompanyOtherPartnerRepository companyOtherPartnerRepository;
+    @Autowired
+    IndividualOtherPartnerRepository individualOtherPartnerRepository;
+    @Autowired
+    PrivateEntrepreneurOtherPartnerRepository privateEntrepreneurOtherPartnerRepository;
+
+    @Autowired
+    BankAccountRepository bankAccountRepository;
     private List<Supplier> suppliers=null;
+
 
     @GetMapping(value = "/cashout/cashdesk" )
     public ModelAndView cashOutcashDesk(ModelAndView modelAndView ) {
@@ -318,28 +342,11 @@ public class CashOutController extends BaseController {
     /*--CashOutForRent--*/
 
     /*CashOutForBankAccount*/
-
     @GetMapping(value = "cashout/cashdesk/create/cashoutforbankaccount")
     public ModelAndView cashOutForBankAccountCreate(ModelAndView modelAndView ,HttpSession httpSession) {
 
-        suppliers = new ArrayList();
-        List<CompanySupplier> companySuppliers ;
-        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findBySupplyForRent();
-        List<IndividualSupplier> individualSuppliers;
-        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findBySupplyForRent();
-        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
-        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findBySupplyForRent();
-
-        for(CompanySupplier supplier:companySuppliers){
-            suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
-        }
-        for(IndividualSupplier supplier:individualSuppliers){
-            suppliers.add(new Supplier(supplier.getId(),"IndividualSupplier",supplier.getName()));
-        }
-        for(PrivateEntrepreneurSupplier supplier:privateEntrepreneurSuppliers){
-            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
-        }
-
+        List <BankAccount> bankAccounts = new ArrayList();
+        bankAccounts.addAll((Collection<? extends BankAccount>) bankAccountRepository.findAll());
 
         CashOutForBankAccount cashOutForBankAccount  = new CashOutForBankAccount();
         WalletOut walletOut = new WalletOut();
@@ -347,20 +354,75 @@ public class CashOutController extends BaseController {
         cashOutForBankAccount.setWalletOut(walletOut);
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashOutForBankAccount", cashOutForBankAccount);
-        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("bankAccounts", bankAccounts);
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutForBankAccountCreate );
+        modelAndView.addObject("fragment", this.cashOutForBankAccountCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
     }
     @PostMapping(value = "cashout/cashdesk/create/cashoutforbankaccount")
-    public ModelAndView cashOutForBankAccountCreate(@Valid CashOutForRent cashOutForRent, BindingResult bindingResult, ModelAndView modelAndView) {
+    public ModelAndView cashOutForBankAccountCreate(@Valid CashOutForBankAccount cashOutForBankAccount, BindingResult bindingResult, ModelAndView modelAndView) {
+        List <BankAccount> bankAccounts = new ArrayList();
+        bankAccounts.addAll((Collection<? extends BankAccount>) bankAccountRepository.findAll());
+
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("cashOutForRent", cashOutForRent);
+            modelAndView.addObject("cashOutForBankAccount", cashOutForBankAccount);
+            modelAndView.addObject("bankAccounts", bankAccounts);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForBankAccountCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        cashOutForBankAccount.setBankAccount(bankAccountRepository.findOne(cashOutForBankAccount.getBankAccountId()));
+
+        cashOutForBankAccountRepository.save(cashOutForBankAccount);
+        return  modelAndView;
+    }
+    /*--CashOutForBankAccount--*/
+    /*CashOutForCreditPayment*/
+    @GetMapping(value = "cashout/cashdesk/create/cashoutforcreditpayment")
+    public ModelAndView   cashOutForCreditPaymentCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+
+        suppliers = new ArrayList();
+       List<CompanyOtherPartner> companyOtherPartners = (List) companyOtherPartnerRepository.findAll();
+       List<IndividualOtherPartner> individualOtherPartners=(List<IndividualOtherPartner>) individualOtherPartnerRepository.findAll();
+        List<PrivateEntrepreneurOtherPartner>  privateEntrepreneurOtherPartners= (List<PrivateEntrepreneurOtherPartner>) privateEntrepreneurOtherPartnerRepository.findAll();
+
+        for(CompanyOtherPartner supplier:companyOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"CompanyOtherPartner",supplier.getName()));
+        }
+        for(IndividualOtherPartner supplier:individualOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualOtherPartner",supplier.getName()));
+        }
+        for(PrivateEntrepreneurOtherPartner supplier:privateEntrepreneurOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurOtherPartner",supplier.getName()));
+        }
+
+        CashOutForCreditPayment cashOutForCreditPayment = new CashOutForCreditPayment();
+        WalletOut walletOut = new WalletOut();
+        cashOutForCreditPayment.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        cashOutForCreditPayment.setWalletOut(walletOut);
+        modelAndView.setViewName("app/app");
+         modelAndView.addObject("cashOutForCreditPayment", cashOutForCreditPayment);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForCreditPaymentCreate );
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value = "cashout/cashdesk/create/cashoutforcreditpayment")
+    public   ModelAndView cashOutForCreditPaymentCreate(@Valid CashOutForCreditPayment cashOutForCreditPayment, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForRent", cashOutForCreditPayment);
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.cashOutForRentCreate);
+            modelAndView.addObject("fragment", this.cashOutForCreditPaymentCreate);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
@@ -369,19 +431,144 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
-        if(cashOutForRent.getSupplierType().equals("CompanySupplier")){
-            cashOutForRent.setCompanySupplier(companySupplierRepository.findOne(cashOutForRent.getSupplierId()));
+        if( cashOutForCreditPayment.getOtherPartnerType().equals("CompanyOtherPartner")){
+            cashOutForCreditPayment.setCompanyOtherPartner(companyOtherPartnerRepository.findOne(cashOutForCreditPayment.getOtherPartnerId()));
         }
-        if(cashOutForRent.getSupplierType().equals("IndividualSupplier")){
-            cashOutForRent.setIndividualSupplier(individualSupplierRepository.findOne(cashOutForRent.getSupplierId()));
+        if( cashOutForCreditPayment.getOtherPartnerType().equals("IndividualOtherPartner")){
+            cashOutForCreditPayment.setIndividualOtherPartner(individualOtherPartnerRepository.findOne(cashOutForCreditPayment.getOtherPartnerId()));
         }
-        if(cashOutForRent.getSupplierType().equals("PrivateEntrepreneurSupplier")){
-            cashOutForRent.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(cashOutForRent.getSupplierId()));
+        if( cashOutForCreditPayment.getOtherPartnerType().equals(" PrivateEntrepreneurOtherPartner")){
+            cashOutForCreditPayment.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForCreditPayment.getOtherPartnerId()));
         }
 
-        cashOutForRentRepository.save(cashOutForRent);
+        cashOutForCreditPaymentRepository.save(cashOutForCreditPayment);
+        return  modelAndView;
+    }
+    /*--CashOutForCreditPayment--*/
+    /*CashOutForRedemptionPercent*/
+    @GetMapping(value = "cashout/cashdesk/create/cashoutforredemptionpercent")
+    public ModelAndView   CashOutForRedemptionPercentCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+
+        suppliers = new ArrayList();
+        List<CompanyOtherPartner> companyOtherPartners = (List) companyOtherPartnerRepository.findAll();
+        List<IndividualOtherPartner> individualOtherPartners=(List<IndividualOtherPartner>) individualOtherPartnerRepository.findAll();
+        List<PrivateEntrepreneurOtherPartner>  privateEntrepreneurOtherPartners= (List<PrivateEntrepreneurOtherPartner>) privateEntrepreneurOtherPartnerRepository.findAll();
+
+         for(CompanyOtherPartner supplier:companyOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"CompanyOtherPartner",supplier.getName()));
+        }
+        for(IndividualOtherPartner supplier:individualOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualOtherPartner",supplier.getName()));
+        }
+        for(PrivateEntrepreneurOtherPartner supplier:privateEntrepreneurOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurOtherPartner",supplier.getName()));
+        }
+
+        CashOutForRedemptionPercent cashOutForRedemptionPercent = new CashOutForRedemptionPercent();
+         WalletOut walletOut = new WalletOut();
+        cashOutForRedemptionPercent.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        cashOutForRedemptionPercent.setWalletOut(walletOut);
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForRedemptionPercent", cashOutForRedemptionPercent);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForRedemptionPercentCreate );
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+       return modelAndView;
+    }
+     @PostMapping(value = "cashout/cashdesk/create/cashoutforredemptionpercent")
+    public   ModelAndView CashOutForRedemptionPercentCreate(@Valid CashOutForRedemptionPercent cashOutForRedemptionPercent, BindingResult bindingResult, ModelAndView modelAndView) {
+       modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForRedemptionPercent", cashOutForRedemptionPercent);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForRedemptionPercentCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+       modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+        if( cashOutForRedemptionPercent.getOtherPartnerType().equals("CompanyOtherPartner")){
+            cashOutForRedemptionPercent.setCompanyOtherPartner(companyOtherPartnerRepository.findOne(cashOutForRedemptionPercent.getOtherPartnerId()));
+        }
+        if( cashOutForRedemptionPercent.getOtherPartnerType().equals("IndividualOtherPartner")){
+            cashOutForRedemptionPercent.setIndividualOtherPartner(individualOtherPartnerRepository.findOne(cashOutForRedemptionPercent.getOtherPartnerId()));
+        }
+        if( cashOutForRedemptionPercent.getOtherPartnerType().equals(" PrivateEntrepreneurOtherPartner")){
+            cashOutForRedemptionPercent.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForRedemptionPercent.getOtherPartnerId()));
+        }
+
+         cashOutForRedemptionPercentRepository.save(cashOutForRedemptionPercent);
+        return  modelAndView;
+    }
+    /*--CashOutForRedemptionPercent--*/
+    /*CashOutForLoanPayment*/
+    @GetMapping(value = "cashout/cashdesk/create/cashoutforloanpayment")
+    public ModelAndView   CashOutForLoanPaymentCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+
+        suppliers = new ArrayList();
+        List<CompanyOtherPartner> companyOtherPartners = (List) companyOtherPartnerRepository.findAll();
+        List<IndividualOtherPartner> individualOtherPartners=(List<IndividualOtherPartner>) individualOtherPartnerRepository.findAll();
+        List<PrivateEntrepreneurOtherPartner>  privateEntrepreneurOtherPartners= (List<PrivateEntrepreneurOtherPartner>) privateEntrepreneurOtherPartnerRepository.findAll();
+
+        for(CompanyOtherPartner supplier:companyOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"CompanyOtherPartner",supplier.getName()));
+        }
+        for(IndividualOtherPartner supplier:individualOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualOtherPartner",supplier.getName()));
+        }
+        for(PrivateEntrepreneurOtherPartner supplier:privateEntrepreneurOtherPartners){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurOtherPartner",supplier.getName()));
+        }
+
+        CashOutForLoanPayment  cashOutForLoanPayment = new CashOutForLoanPayment();
+          WalletOut walletOut = new WalletOut();
+        cashOutForLoanPayment.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        cashOutForLoanPayment.setWalletOut(walletOut);
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForLoanPayment", cashOutForLoanPayment);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForLoanPaymentCreate );
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value = "cashout/cashdesk/create/cashoutforloanpayment")
+    public   ModelAndView CashOutForLoanPaymentCreate(@Valid CashOutForLoanPayment cashOutForLoanPayment, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForLoanPayment", cashOutForLoanPayment);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.cashNavBar);
+          modelAndView.addObject("fragment", this.cashOutForLoanPaymentCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+        if( cashOutForLoanPayment.getOtherPartnerType().equals("CompanyOtherPartner")){
+            cashOutForLoanPayment.setCompanyOtherPartner(companyOtherPartnerRepository.findOne(cashOutForLoanPayment.getOtherPartnerId()));
+        }
+        if( cashOutForLoanPayment.getOtherPartnerType().equals("IndividualOtherPartner")){
+            cashOutForLoanPayment.setIndividualOtherPartner(individualOtherPartnerRepository.findOne(cashOutForLoanPayment.getOtherPartnerId()));
+        }
+        if( cashOutForLoanPayment.getOtherPartnerType().equals(" PrivateEntrepreneurOtherPartner")){
+            cashOutForLoanPayment.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForLoanPayment.getOtherPartnerId()));
+        }
+
+        cashOutForRedemptionPercentRepsitory.save(cashOutForLoanPayment);
         return  modelAndView;
     }
 
-    /*--CashOutForBankAccount--*/
+    /*--CashOutForLoanPayment--*/
+
+    /*CashOutForBankSpending*/
+    /*--CashOutForBankSpending--*/
 }

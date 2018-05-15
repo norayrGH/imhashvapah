@@ -11,7 +11,8 @@ public class CashOutForBankAccount {
     @Id
     @GeneratedValue
     private Long id;
-
+    @Transient
+    private Long bankAccountId;
     @ManyToOne
     private Organization organization;
     @ManyToOne
@@ -23,7 +24,9 @@ public class CashOutForBankAccount {
     public CashOutForBankAccount() {
     }
 
-    public CashOutForBankAccount(Organization organization, BankAccount bankAccount, WalletOut walletOut) {
+    public CashOutForBankAccount( Long bankAccountId, Organization organization, BankAccount bankAccount, WalletOut walletOut) {
+
+        this.bankAccountId = bankAccountId;
         this.organization = organization;
         this.bankAccount = bankAccount;
         this.walletOut = walletOut;
@@ -35,6 +38,15 @@ public class CashOutForBankAccount {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public Long getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(Long bankAccountId) {
+        this.bankAccountId = bankAccountId;
     }
 
     public Organization getOrganization() {
