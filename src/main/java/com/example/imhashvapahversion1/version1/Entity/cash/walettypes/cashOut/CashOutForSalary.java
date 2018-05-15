@@ -15,4 +15,5 @@ public class CashOutForSalary {
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid
     private WalletOut walletOut;
+
 }

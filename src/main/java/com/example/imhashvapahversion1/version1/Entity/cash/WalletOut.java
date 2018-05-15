@@ -14,10 +14,9 @@ public class WalletOut {
     private Long id;
 
     private String outType;
-
-    @NotNull(message = "Հարկավոր է նշել Ելքի ամսաթիվը")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Հարկավոր է նշել Ելքի ամսաթիվը")
     private Date outDate;
     @NotEmpty(message ="Հարկավոր է նշել Ելքի գումարը")
     private String outCash;

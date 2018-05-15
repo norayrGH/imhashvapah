@@ -7,6 +7,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import org.springframework.format.annotation.DateTimeFormat;
 import sun.text.SupplementaryCharacterData;
 
 
@@ -25,6 +26,8 @@ public class CashOutForGoodsProvider {
     //Բանկային միջնորդավճար
     private String bankCommissions;
     //Պայմանագրի ամսաթիվ
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractDate;
     //Պայմանագրի համար
     private String contractNumber;

@@ -9,4 +9,6 @@ import java.util.ArrayList;
 public interface IndividualSupplierRepository extends CrudRepository<IndividualSupplier,Long>{
     @Query("Select i from IndividualSupplier i WHERE i.supply='Ապրանք/Ծառայություն'")
     ArrayList findBySupplyGoodsAndServices();
+    @Query("Select c from IndividualSupplier c WHERE c.supply='Վարձակալության/ծառայություն'")
+    ArrayList findBySupplyForRent();
 }
