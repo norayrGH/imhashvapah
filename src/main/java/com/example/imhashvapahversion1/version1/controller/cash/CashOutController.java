@@ -570,5 +570,7 @@ public class CashOutController extends BaseController {
     /*--CashOutForLoanPayment--*/
 
     /*CashOutForBankSpending*/
+
+
     /*--CashOutForBankSpending--*/
 }
