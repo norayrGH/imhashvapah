@@ -44,6 +44,8 @@ public class BaseController {
     protected final String cashOutForCreditPaymentCreate="cashOutForCreditPaymentCreate";
     protected final String cashOutForRedemptionPercentCreate="cashOutForRedemptionPercentCreate";
     protected final String cashOutForLoanPaymentCreate="cashOutForLoanPaymentCreate";
+    protected final String cashOutForBankSpendingCreate="cashOutForBankSpendingCreate";
+    protected final String cashOutForOtherExpensesCreate="cashOutForOtherExpensesCreate";
     protected final String cashdeskFragmentNavBar = "cashdeskFragmentNavBar";
     protected final String cashInFragmentNavBar = "cashInFragmentNavBar";
 

@@ -58,6 +58,10 @@ public class CashOutController extends BaseController {
     @Autowired
     CashOutForLoanPaymentRepsitory cashOutForRedemptionPercentRepsitory;
     @Autowired
+    CashOutForBankSpendingRepository cashOutForBankSpendingRepository;
+    @Autowired
+    CashOutForOtherExpensesRepository cashOutForOtherExpensesRepository;
+    @Autowired
     CompanySupplierRepository companySupplierRepository;
     @Autowired
     IndividualSupplierRepository individualSupplierRepository;
@@ -571,6 +575,80 @@ public class CashOutController extends BaseController {
 
     /*CashOutForBankSpending*/
 
+    @GetMapping(value = "cashout/cashdesk/create/cashoutforbankspending")
+    public ModelAndView   CashOutForBankSpendingCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+
+
+        CashOutForBankSpending  cashOutForBankSpending = new CashOutForBankSpending();
+        WalletOut walletOut = new WalletOut();
+        cashOutForBankSpending.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        cashOutForBankSpending.setWalletOut(walletOut);
+       modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForBankSpending", cashOutForBankSpending);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForBankSpendingCreate );
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+         return modelAndView;
+    }
+    @PostMapping(value = "cashout/cashdesk/create/cashoutforbankspending")
+    public   ModelAndView CashOutForBankSpendingCreate(@Valid CashOutForBankSpending cashOutForBankSpending, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForBankSpending", cashOutForBankSpending);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForBankSpendingCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+
+        cashOutForBankSpendingRepository.save(cashOutForBankSpending);
+        return  modelAndView;
+    }
 
     /*--CashOutForBankSpending--*/
+    /*CashOutForOtherExpenses*/
+    @GetMapping(value = "cashout/cashdesk/create/cashoutforotherexpenses")
+    public ModelAndView   CashOutForOtherExpensesCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+
+
+        CashOutForOtherExpenses  cashOutForOtherExpenses = new CashOutForOtherExpenses();
+         WalletOut walletOut = new WalletOut();
+        cashOutForOtherExpenses.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        cashOutForOtherExpenses.setWalletOut(walletOut);
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("cashOutForOtherExpenses", cashOutForOtherExpenses);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutForOtherExpensesCreate );
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value = "cashout/cashdesk/create/cashoutforotherexpenses")
+    public   ModelAndView CashOutForOtherExpensesCreate(@Valid CashOutForOtherExpenses cashOutForOtherExpenses, BindingResult bindingResult, ModelAndView modelAndView) {
+      modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("cashOutForOtherExpenses", cashOutForOtherExpenses);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.cashOutForOtherExpensesCreate);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+          modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+
+        cashOutForOtherExpensesRepository.save(cashOutForOtherExpenses);
+        return  modelAndView;
+    }
+    /*--CashOutForOtherExpenses--*/
 }

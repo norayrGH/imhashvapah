@@ -1384,16 +1384,50 @@
 
 </div>
 <div class="container" th:fragment="cashOutForBankSpendingCreate" >
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+    <form th:object="${cashOutForBankSpending}" action="/account/cash/cashout/cashdesk/create/cashoutforbankspending" id="cashOutForBankSpendingCreate"  method="post" >
+
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="outDate"
+               th:field="*{walletOut.outDate}"
+        />
+        <br />
+        <label>Ելքի գումար</label>
+        <input type="text"
+               th:name="outCash"
+               th:field="*{walletOut.outCash}"
+        />
+        <br />
+
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletOut.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+        <input type="submit" class="btn btn-default" />
+    </form>
 </div>
 <div class="container" th:fragment="cashOutForCreditPaymentCreate" >
 
@@ -1507,8 +1541,7 @@
 
             <label>Մատակարար</label>
             <select id="selectedSupplier"
-                    th:field="*{supplierName}"
-                        th:name="supplierName"
+
 
             >
                 <option value=""> __ԸՆՏՐԵԼ__ </option>
@@ -1636,7 +1669,7 @@
             />
         </select>
 
-        <a type="button" th:href="@{'/account/cash/create/otherPartner'}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
         </a>
         <br />
@@ -1724,16 +1757,57 @@
 
 </div>
 <div class="container" th:fragment="cashOutForOtherExpensesCreate" >
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutfortax'}" > Հարկ </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider'}" > Վճարում մատակարարին ապրանքների համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforserivceprovider'}" > Վճարում մատակարարին ծառայության համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforrent'}" > Վճարում վարձակալության համար </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankaccount'}" > Վճարում բանկային հաշվին </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforcreditpayment'}" > Վարկի մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent'}" > Վարկի տոկոսի մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforloanpayment'}" > Փոխառության մարում </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforbankspending'}" > Բանկային ծախս </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/cashout/cashdesk/create/cashoutforotherexpenses'}" > Այլ ծախսեր </a>
+    <form th:object="${cashOutForOtherExpenses}" action="/account/cash/cashout/cashdesk/create/cashoutforotherexpenses" id="cashOutForOtherExpensesCreate"  method="post" >
+
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <label>Ամսաթիվ</label>
+        <input type="date"
+               th:name="outDate"
+               th:field="*{walletOut.outDate}"
+        />
+        <br />
+        <label>Ելքի գումար</label>
+        <input type="text"
+               th:name="outCash"
+               th:field="*{walletOut.outCash}"
+        />
+        <br />
+        <label>Բանկային միջնորդավճար</label>
+        <input type="text"
+               th:name="bankCommissions"
+               th:field="*{bankCommissions}"
+        />
+        <br />
+
+        <label>Նշումներ</label>
+        <input type="text"
+               th:name="note"
+               th:field="*{walletOut.note}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+        <input type="submit" class="btn btn-default" />
+    </form>
+
 </div>
 <div class="container" th:fragment="cashOutForRedemptionPercentCreate" >
 
@@ -1757,7 +1831,7 @@
             />
         </select>
 
-        <a type="button" th:href="@{'/account/cash/create/otherPartner'}" class="btn btn-default btn-sm" >
+        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
         </a>
         <br />

@@ -2,11 +2,18 @@ package com.example.imhashvapahversion1.version1.controller.partner;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForGoodsProvider;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Debt;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
@@ -33,7 +40,13 @@ public class SupllierController extends BaseController {
     IndividualSupplierRepository individualSupplierRepository;
     @Autowired
     PrivateEntrepreneurSupplierRepository privateEntrepreneurSupplierRepository;
+    @Autowired
+    CashOutForSerivceProviderRepository cashOutForSerivceProviderRepository;
+    @Autowired
+    CashOutForRentRepository cashOutForRentRepository;
+    @Autowired
 
+    CashOutForGoodsProviderRepository cashOutForGoodsProviderRepository;
 
     @GetMapping(value = "/supplier")
     public ModelAndView supplierPartner(ModelAndView modelAndView) {
@@ -67,8 +80,79 @@ public class SupllierController extends BaseController {
     }
     @GetMapping(value = "/supplier/debt")
     public ModelAndView partnerSupplierDebt( ModelAndView modelAndView) {
+        List<Debt> debts= new ArrayList<>();
+        Debt debt = new Debt();
+
+        List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier> privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+
+       List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findAll();
+        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findAll();
+        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findAll();
+
+
+        for(CompanySupplier companySupplier : companySuppliers)
+        {
+            debt.setName(companySupplier.getName());
+            debt.setId(companySupplier.getId());
+            debt.setType("CompanySupplier");
+            for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
+                if(cashOutForGoodsProvider.getCompanySupplier()!=null)
+                    if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
+                }
+            }
+            for(CashOutForSerivceProvider cashOutForSerivceProvider: cashOutForSerivceProviders){
+                if(cashOutForSerivceProvider.getCompanySupplier()!=null)
+                    if(cashOutForSerivceProvider.getCompanySupplier().getId()==companySupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForSerivceProvider.getWalletOut().getOutCash()));
+                    }
+            }
+            for(CashOutForRent cashOutForRent : cashOutForRents){
+                if(cashOutForRent.getCompanySupplier()!=null)
+                    if(cashOutForRent.getCompanySupplier().getId()==companySupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
+                    }
+            }
+            debts.add(debt);
+          debt = new Debt();
+        }
+
+        for(IndividualSupplier individualSupplier : individualSuppliers)
+        {
+            debt.setName(individualSupplier.getName());
+            debt.setId(individualSupplier.getId());
+            debt.setType("IndividualSupplier");
+            for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
+                if(cashOutForGoodsProvider.getIndividualSupplier()!=null)
+                    if(cashOutForGoodsProvider.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
+
+                }
+            }
+            for(CashOutForSerivceProvider cashOutForSerivceProvider: cashOutForSerivceProviders){
+                if(cashOutForSerivceProvider.getIndividualSupplier()!=null)
+                    if(cashOutForSerivceProvider.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForSerivceProvider.getWalletOut().getOutCash()));
+                    }
+            }
+            for(CashOutForRent cashOutForRent : cashOutForRents){
+                if(cashOutForRent.getIndividualSupplier()!=null)
+                    if(cashOutForRent.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
+                    }
+            }
+            debts.add(debt);
+            debt = new Debt();
+        }
+
+
+
+
 
         modelAndView.setViewName("app/app");
+        modelAndView.addObject("debts",debts);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerSupplierFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
