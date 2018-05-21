@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 @Controller
-@RequestMapping("account/partner")
+@RequestMapping("account/partner/supplier")
 public class SupllierController extends BaseController {
 
 
@@ -35,7 +35,7 @@ public class SupllierController extends BaseController {
     PrivateEntrepreneurSupplierRepository privateEntrepreneurSupplierRepository;
 
 
-    @GetMapping(value = "/supplier")
+    @GetMapping(value = "")
     public ModelAndView supplierPartner(ModelAndView modelAndView) {
 
         modelAndView.setViewName("app/app");
@@ -46,7 +46,7 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
-    @PostMapping(value = "/supplier/show")
+    @PostMapping(value = "/show")
     public @ResponseBody
     Set<SupplierShow> supplierPartnerShow() {
         List<GeneralMethods> temp2 = new ArrayList();
@@ -65,25 +65,23 @@ public class SupllierController extends BaseController {
 
         return showResult;
     }
-    @GetMapping(value = "/supplier/debt")
+    @GetMapping(value = "/debt")
     public ModelAndView partnerSupplierDebt( ModelAndView modelAndView) {
+
+
+
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerSupplierFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
-
-
         return modelAndView;
     }
 
-
-
-    @GetMapping(value = "/supplier/edit/privateentrepreneursupplier")
+    @GetMapping(value = "/edit/privateentrepreneursupplier")
     public ModelAndView privateentrepreneursupplierEdit(@RequestParam("supplierId")Long supplierId, ModelAndView modelAndView, HttpSession httpSession){
         PrivateEntrepreneurSupplier privateEntrepreneurSupplier  = new PrivateEntrepreneurSupplier();
         privateEntrepreneurSupplier = privateEntrepreneurSupplierRepository.findOne(supplierId);
-
 
         privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
@@ -94,7 +92,7 @@ public class SupllierController extends BaseController {
         return modelAndView;
 
     }
-    @GetMapping(value = "/supplier/edit/individualsupplier")
+    @GetMapping(value = "/edit/individualsupplier")
     public ModelAndView individualsupplierdit(@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView, HttpSession httpSession){
 
         IndividualSupplier individualSupplier;
@@ -109,7 +107,7 @@ public class SupllierController extends BaseController {
         return modelAndView;
 
     }
-    @GetMapping(value = "/supplier/edit/companysupplier")
+    @GetMapping(value = "/edit/companysupplier")
     public ModelAndView companysupplierEdit(@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView, HttpSession httpSession){
         CompanySupplier companySupplier = companySupplierRepository.findOne(supplierId);
 
@@ -123,8 +121,7 @@ public class SupllierController extends BaseController {
         return modelAndView;
     }
 
-
-    @GetMapping( value ="/supplier/create/individualsupplier")
+    @GetMapping( value ="/create/individualsupplier")
     public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         IndividualSupplier individualSupplier = new IndividualSupplier();
         individualSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
@@ -137,7 +134,7 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
-    @PostMapping(value ="/supplier/create/individualsupplier")
+    @PostMapping(value ="/create/individualsupplier")
     public ModelAndView individualSupplierCreate(@Valid IndividualSupplier individualSupplier, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
@@ -157,7 +154,7 @@ public class SupllierController extends BaseController {
         return  modelAndView;
     }
 
-    @GetMapping( value ="/supplier/create/companysupplier")
+    @GetMapping( value ="/create/companysupplier")
     public ModelAndView companySupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         CompanySupplier companySupplier = new CompanySupplier();
         companySupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
@@ -170,7 +167,7 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
-    @PostMapping(value ="/supplier/create/companysupplier")
+    @PostMapping(value ="/create/companysupplier")
     public ModelAndView companySupplierCreate(@Valid CompanySupplier companySupplier, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
@@ -190,7 +187,7 @@ public class SupllierController extends BaseController {
         return  modelAndView;
     }
 
-    @GetMapping(value = "/supplier/create/privateentrepreneursupplier")
+    @GetMapping(value = "/create/privateentrepreneursupplier")
     public ModelAndView privateEntrepreneurSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
         PrivateEntrepreneurSupplier privateEntrepreneurSupplier = new PrivateEntrepreneurSupplier();
         privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
@@ -204,7 +201,7 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
-    @PostMapping(value ="/supplier/create/privateentrepreneursupplier")
+    @PostMapping(value ="/create/privateentrepreneursupplier")
     public ModelAndView privateEntrepreneurSupplierCreate(@Valid PrivateEntrepreneurSupplier privateEntrepreneurSupplier, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if(bindingResult.hasErrors()) {
