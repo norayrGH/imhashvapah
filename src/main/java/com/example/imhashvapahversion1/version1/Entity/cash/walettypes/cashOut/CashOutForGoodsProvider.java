@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
@@ -22,7 +23,6 @@ public class CashOutForGoodsProvider {
     @Id
     @GeneratedValue
     private Long id;
-    private String supplierName;
     //Բանկային միջնորդավճար
     private String bankCommissions;
     //Պայմանագրի ամսաթիվ
@@ -53,8 +53,8 @@ public class CashOutForGoodsProvider {
     public CashOutForGoodsProvider() {
     }
 
-    public CashOutForGoodsProvider(String supplierName, String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
-        this.supplierName = supplierName;
+    public CashOutForGoodsProvider( String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
+
         this.bankCommissions = bankCommissions;
         this.contractDate = contractDate;
         this.contractNumber = contractNumber;
@@ -76,13 +76,6 @@ public class CashOutForGoodsProvider {
         this.id = id;
     }
 
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
 
     public CompanySupplier getCompanySupplier() {
         return companySupplier;
@@ -166,6 +159,14 @@ public class CashOutForGoodsProvider {
 
     public String getSupplierType() {
         return supplierType;
+    }
+
+    public GeneralMethods getSupplier(){
+        if(companySupplier!=null)
+        return companySupplier;
+        if(individualSupplier!=null)
+            return individualSupplier;
+        return privateEntrepreneurSupplier;
     }
 
     public void setSupplierType(String supplierType) {

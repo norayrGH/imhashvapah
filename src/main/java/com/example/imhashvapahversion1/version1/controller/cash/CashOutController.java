@@ -615,7 +615,7 @@ public class CashOutController extends BaseController {
     /*--CashOutForBankSpending--*/
     /*CashOutForOtherExpenses*/
     @GetMapping(value = "cashout/cashdesk/create/cashoutforotherexpenses")
-   public ModelAndView   CashOutForOtherExpensesCreate(ModelAndView modelAndView ,HttpSession httpSession) {
+    public ModelAndView   CashOutForOtherExpensesCreate(ModelAndView modelAndView ,HttpSession httpSession) {
 
 
         CashOutForOtherExpenses  cashOutForOtherExpenses = new CashOutForOtherExpenses();
@@ -650,6 +650,5 @@ public class CashOutController extends BaseController {
         cashOutForOtherExpensesRepository.save(cashOutForOtherExpenses);
         return  modelAndView;
     }
-
     /*--CashOutForOtherExpenses--*/
 }
