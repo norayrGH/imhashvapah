@@ -3416,6 +3416,44 @@
    </div>
 </nav>
 </div>
+
+
+<div th:fragment="partnerSupplierFragment">
+    <div class="row">
+        <div class='col-md-3'>
+            <div class="form-group">
+                <div class='input-group' id='datetimepicker1' >
+                    <span class="input-group-addon" >
+                            <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <input type="text" class="form-control" id="datepicker" />
+
+                    <input name="csrfToken" id="csrfToken"
+                           type="hidden"
+
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript" >
+    $(document).ready(function() {
+        alert("ok");
+        $( "#datepicker" ).datepicker();
+        $( ".hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0) ).on("change", function() {
+            console.log($(".hasDatepicker").datepicker( "getDate" ));
+        });
+    });
+
+
+</script>
+</div>
+
+
 <div th:fragment="partnerSupplierFragmentNavBar">
 <nav role="navigation" class="navbar-justified">
 

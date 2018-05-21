@@ -383,17 +383,27 @@ function  showBankAccount(accounts) {
     $('#showBankAccount').append(bankAccountTable);
 
 }
+//new DATE PIKER
+
+
+
+
+
+
 $(function () {
     $(".range-picker .datepicker").each(function () {
         $(this).datepicker();
         $(this).on('change', function () {
             var from = $(".range-picker .datepicker.from").val();
-            var to = $(".range-picker .datepicker.to").val();
+            var to =   $(".range-picker .datepicker.to").val();
             $(this).closest(".range-picker").attr('data-range', from + "-" + to);
             // $(this).closest(".range-picker").trigger('change', from + "-" + to);
         });
     });
 });
+
+
+
 $(".selectWaletInType").change(function () {
     var fragmentNumber = parseInt(this.value);
 

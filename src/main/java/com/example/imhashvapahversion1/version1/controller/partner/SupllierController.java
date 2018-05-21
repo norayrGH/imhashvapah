@@ -147,9 +147,32 @@ public class SupllierController extends BaseController {
             debt = new Debt();
         }
 
-
-
-
+        for(PrivateEntrepreneurSupplier privateEntrepreneurSupplier : privateEntrepreneurSuppliers)
+        {
+            debt.setName(privateEntrepreneurSupplier.getName());
+            debt.setId(privateEntrepreneurSupplier.getId());
+            debt.setType("PrivateEntrepreneurSupplier");
+            for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
+                if(cashOutForGoodsProvider.getPrivateEntrepreneurSupplier()!=null)
+                    if(cashOutForGoodsProvider.getPrivateEntrepreneurSupplier().getId()==privateEntrepreneurSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
+                    }
+            }
+            for(CashOutForSerivceProvider cashOutForSerivceProvider: cashOutForSerivceProviders){
+                if(cashOutForSerivceProvider.getPrivateEntrepreneurSupplier()!=null)
+                    if(cashOutForSerivceProvider.getPrivateEntrepreneurSupplier().getId()==privateEntrepreneurSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForSerivceProvider.getWalletOut().getOutCash()));
+                    }
+            }
+            for(CashOutForRent cashOutForRent : cashOutForRents){
+                if(cashOutForRent.getPrivateEntrepreneurSupplier()!=null)
+                    if(cashOutForRent.getPrivateEntrepreneurSupplier().getId()==privateEntrepreneurSupplier.getId()){
+                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
+                    }
+            }
+            debts.add(debt);
+            debt = new Debt();
+        }
 
 
 
