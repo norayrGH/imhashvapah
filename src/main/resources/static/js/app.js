@@ -13,7 +13,11 @@ if (cityes.val() != undefined) {
         cityes.append($("<option>").attr({class: "city"}).text(key));
     });
 }
-
+function toDate(dateStr) {
+    var parts = dateStr.split("/");
+    console.log(new Date(parts[2] + "-" + parts[0] + "-" + parts[1]));
+    return new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+}
 
 $("#employee").bind('ajax:complete', function () {
 

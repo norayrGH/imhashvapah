@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public interface WalletInRepository extends CrudRepository<WalletIn, Long> {
+
     @Query("Select sum(w.inCash) from WalletIn w where w.inDate>=:startDate")
     Long returnSumOfInsByStart(@Param("startDate") Date startDate);
     @Query("Select sum(w.inCash) from WalletIn w where w.inDate>=:startDate and w.inDate<=:endDate ")
@@ -17,5 +18,8 @@ public interface WalletInRepository extends CrudRepository<WalletIn, Long> {
     Long returnSumOfInsByEnd(@Param("endDate") Date endDate);
     @Query("Select sum(w.inCash) from WalletIn w ")
     Long returnAllSumOfIns();
+
+
+
 
 }

@@ -29,8 +29,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     private Object matchuniqueField;
     private Object hvhh;
     private String currentObject;
-
-
     @Autowired
     private CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
@@ -39,7 +37,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     OtherPartnerClientOrganizationRepository otherPartnerClientOrganizationRepository;
     @Autowired
     CompanyOtherPartnerRepository companyOtherPartnerRepository;
-
     @Override
     public void initialize(EqualFields constraint) {
         id = constraint.id();
@@ -175,12 +172,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
 
 return true;
     }
-
-
-
-
-
-
 
     private Object getFieldValue(Object object, String fieldName) throws Exception {
         Class<?> clazz = object.getClass();
