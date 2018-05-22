@@ -91,7 +91,7 @@ public class SupllierController extends BaseController {
     }
     @PostMapping(value = "/debt/show")
     public @ResponseBody ArrayList supplierDebt(@RequestBody DateRange dateRange ) {
-        ArrayList<Debt> debts= new ArrayList<>();
+        ArrayList<Debt> debts = new ArrayList<>();
         Debt debt = new Debt();
 
         List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
@@ -107,11 +107,17 @@ public class SupllierController extends BaseController {
             debt.setName(companySupplier.getName());
             debt.setId(companySupplier.getId());
             debt.setType("CompanySupplier");
+            if(companySupplier.getOpeningBalanceType().equals("prepaid"))
+                debt.setPrepayment(Integer.valueOf(companySupplier.getOpeningBalance()));
+            else
+                debt.setDebt(Integer.valueOf(companySupplier.getOpeningBalance()));
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
-                    if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
+                    if(cashOutForGoodsProvider.getCompanySupplier().getId() == companySupplier.getId()){
 
-                                debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash());
+
+
+                        debt.setPrepayment(debt.getPrepayment() + Integer.valueOf( cashOutForGoodsProvider.getWalletOut().getOutCash() ));
 
 
                     }
@@ -128,6 +134,7 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+
             debts.add(debt);
             debt = new Debt();
         }
@@ -232,6 +239,8 @@ public class SupllierController extends BaseController {
 
     @GetMapping( value ="/create/individualsupplier")
     public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
+
+
         IndividualSupplier individualSupplier = new IndividualSupplier();
         individualSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.setViewName("app/app");
