@@ -274,6 +274,46 @@ function  partnerSuppliersShow(partnerSuppliers) {
     $('#partnerSuppliersShow').append(partnerSuppliersTable);
 
 }
+function  partnerSuppliersDebtShow(partnerSuppliersDebts) {
+    $('#supplierShowDebt').empty();
+
+    var partnerSuppliersDebtTableTh= ["Մատակարար","Կանխավճար","Պարտք"];
+    var partnerSuppliersDebtTable = $("<table />")
+        .attr({id:"partnerSuppliersDebtTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(partnerSuppliersDebtTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Տեսնել"));
+   tHead.append(tHeadTr);
+    partnerSuppliersDebtTable.append(tHead);
+     var tBody = $("<tbody />");
+
+    $.each(partnerSuppliersDebts, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.name)
+            ,$("<td />").text(item.prepayment)
+            ,$("<td />").text(item.debt)
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {
+                        href:"/account/partner/supplier/debt/details/?supplierType="+item.type+'&'+'supplierId='+item.id ,
+                        class:"glyphicon glyphicon-tasks"
+                    }
+                        )
+
+
+            )
+        ));
+    });
+
+    partnerSuppliersDebtTable.append(tBody);
+    console.log(partnerSuppliersDebtTable);
+    $("#supplierShowDebt").append(partnerSuppliersDebtTable);
+
+}
 function  showCashIn(cashIn) {
 
 

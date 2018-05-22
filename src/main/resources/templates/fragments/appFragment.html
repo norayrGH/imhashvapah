@@ -3438,18 +3438,89 @@
             </div>
         </div>
     </div>
+    <div id="supplierShowDebt" >
+
+    </div>
 
 
 <script type="text/javascript" >
 
     $(document).ready(function() {
-        alert("ok");
+        var DateRang={
+            start:null,
+            end:null,
+            showAll:null
+        };
+        var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
+
         $( "#datepicker" ).datepicker();
-        $( ".hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0) ).on("change", function() {
-            console.log($(".hasDatepicker").datepicker( "getDate" ));
+       var datePicker= $( ".hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0) );
+
+        DateRang ={
+            start:datePicker.datepicker("getDate"),
+            end:null,
+            showAll:null
+        }
+        console.log(DateRang);
+        $.ajax({
+
+            method : "POST",
+            contentType : "application/json",
+            url: '/account/partner/supplier/debt/show',
+            dataType: 'json',
+            data :JSON.stringify(DateRang),
+            beforeSend: function(xhr){
+                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+            },  success: function (msg){
+                if(msg == null)
+                    $('#supplierShowDebt').empty();
+                else
+                {
+                    console.log(msg);
+                    partnerSuppliersDebtShow(msg);
+                }
+
+                //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
+            },
+
+            error:
+                function(data){
+
+                    console.log(data.responseText);
+                }
+        });
+
+        datePicker.on("change", function() {
+            DateRang ={
+                start:datePicker.datepicker("getDate"),
+                end:null,
+                showAll:null
+            }
+            $.ajax({
+
+                method : "POST",
+                contentType : "application/json",
+                url: '/account/partner/supplier/debt/show',
+                dataType: 'json',
+                data :JSON.stringify(DateRang),
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                },  success: function (msg){
+                    if(msg == null)
+                        $('#supplierShowDebt').empty();
+                    else
+                        partnerSuppliersDebtShow(msg);
+                    //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
+                },
+
+                error:
+                    function(data){
+
+                        console.log(data.responseText);
+                    }
+            });
         });
     });
-
 
 </script>
 </div>
@@ -3506,12 +3577,6 @@
     <div id="showDebt" >
     </div>
     <script>
-        function toDate(dateStr) {
-            var parts = dateStr.split("/");
-            var result = parts[2]+"-"+parts[0]+"-"+parts[1];
-            return new Date(result);
-        }
-
 
         $(function () {
 

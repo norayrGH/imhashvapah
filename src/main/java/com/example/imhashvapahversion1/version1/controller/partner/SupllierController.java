@@ -6,9 +6,11 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.C
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Debt;
+import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
@@ -80,17 +82,25 @@ public class SupllierController extends BaseController {
     }
     @GetMapping(value = "/debt")
     public ModelAndView partnerSupplierDebt( ModelAndView modelAndView) {
-        List<Debt> debts= new ArrayList<>();
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierFragment);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value = "/debt/show")
+    public @ResponseBody ArrayList supplierDebt(@RequestBody DateRange dateRange ) {
+        ArrayList<Debt> debts= new ArrayList<>();
         Debt debt = new Debt();
 
         List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
         List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
         List<PrivateEntrepreneurSupplier> privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
-       List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findAll();
-        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findAll();
-        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findAll();
-
+        List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStart(dateRange.getStart());
+        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStart(dateRange.getStart());
+        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStart(dateRange.getStart());
 
         for(CompanySupplier companySupplier : companySuppliers)
         {
@@ -100,8 +110,11 @@ public class SupllierController extends BaseController {
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
                     if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
-                        debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
-                }
+
+                                debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash());
+
+
+                    }
             }
             for(CashOutForSerivceProvider cashOutForSerivceProvider: cashOutForSerivceProviders){
                 if(cashOutForSerivceProvider.getCompanySupplier()!=null)
@@ -116,9 +129,8 @@ public class SupllierController extends BaseController {
                     }
             }
             debts.add(debt);
-          debt = new Debt();
+            debt = new Debt();
         }
-
         for(IndividualSupplier individualSupplier : individualSuppliers)
         {
             debt.setName(individualSupplier.getName());
@@ -129,7 +141,7 @@ public class SupllierController extends BaseController {
                     if(cashOutForGoodsProvider.getIndividualSupplier().getId()==individualSupplier.getId()){
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
 
-                }
+                    }
             }
             for(CashOutForSerivceProvider cashOutForSerivceProvider: cashOutForSerivceProviders){
                 if(cashOutForSerivceProvider.getIndividualSupplier()!=null)
@@ -146,7 +158,6 @@ public class SupllierController extends BaseController {
             debts.add(debt);
             debt = new Debt();
         }
-
         for(PrivateEntrepreneurSupplier privateEntrepreneurSupplier : privateEntrepreneurSuppliers)
         {
             debt.setName(privateEntrepreneurSupplier.getName());
@@ -173,16 +184,7 @@ public class SupllierController extends BaseController {
             debts.add(debt);
             debt = new Debt();
         }
-
-
-
-
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("debts",debts);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("fragment", this.partnerSupplierFragment);
-        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
-        return modelAndView;
+        return debts;
     }
 
     @GetMapping(value = "/edit/privateentrepreneursupplier")
