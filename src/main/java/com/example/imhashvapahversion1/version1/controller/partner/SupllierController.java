@@ -107,6 +107,8 @@ public class SupllierController extends BaseController {
             debt.setName(companySupplier.getName());
             debt.setId(companySupplier.getId());
             debt.setType("CompanySupplier");
+            debt.setDebt(companySupplier.getOpeningBalanceType().equals("debt")? Integer.parseInt(companySupplier.getOpeningBalance()):0);
+            debt.setPrepayment(companySupplier.getOpeningBalanceType().equals("prepaid")? Integer.parseInt(companySupplier.getOpeningBalance()):0);
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
                     if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
@@ -141,6 +143,9 @@ public class SupllierController extends BaseController {
             debt.setName(individualSupplier.getName());
             debt.setId(individualSupplier.getId());
             debt.setType("IndividualSupplier");
+            debt.setDebt(individualSupplier.getOpeningBalanceType().equals("debt")? Integer.parseInt(individualSupplier.getOpeningBalance()):0);
+            debt.setPrepayment(individualSupplier.getOpeningBalanceType().equals("prepaid")? Integer.parseInt(individualSupplier.getOpeningBalance()):0);
+
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getIndividualSupplier()!=null)
                     if(cashOutForGoodsProvider.getIndividualSupplier().getId()==individualSupplier.getId()){
@@ -172,6 +177,9 @@ public class SupllierController extends BaseController {
             debt.setName(privateEntrepreneurSupplier.getName());
             debt.setId(privateEntrepreneurSupplier.getId());
             debt.setType("PrivateEntrepreneurSupplier");
+            debt.setDebt(privateEntrepreneurSupplier.getOpeningBalanceType().equals("debt")? Integer.parseInt(privateEntrepreneurSupplier.getOpeningBalance()):0);
+            debt.setPrepayment(privateEntrepreneurSupplier.getOpeningBalanceType().equals("prepaid")? Integer.parseInt(privateEntrepreneurSupplier.getOpeningBalance()):0);
+
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getPrivateEntrepreneurSupplier()!=null)
                     if(cashOutForGoodsProvider.getPrivateEntrepreneurSupplier().getId()==privateEntrepreneurSupplier.getId()){
@@ -191,9 +199,14 @@ public class SupllierController extends BaseController {
                     }
             }
             if( debt.getPrepayment() - debt.getDebt() < 0 )
+            {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
-            else
+                debt.setPrepayment(0);
+            }
+            else{
                 debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
+                debt.setDebt(0);
+            }
             debts.add(debt);
             debt = new Debt();
         }
