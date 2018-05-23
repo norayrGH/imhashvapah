@@ -111,8 +111,7 @@ public class SupllierController extends BaseController {
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
                     if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
 
-                                debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash());
-
+                                debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForGoodsProvider.getWalletOut().getOutCash()));
 
                     }
             }
@@ -128,6 +127,12 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+            if( debt.getPrepayment() - debt.getDebt() < 0 )
+                debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
+            else
+                debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
+
+
             debts.add(debt);
             debt = new Debt();
         }
@@ -155,6 +160,10 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+            if( debt.getPrepayment() - debt.getDebt() < 0 )
+                debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
+            else
+                debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
             debts.add(debt);
             debt = new Debt();
         }
@@ -181,6 +190,10 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+            if( debt.getPrepayment() - debt.getDebt() < 0 )
+                debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
+            else
+                debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
             debts.add(debt);
             debt = new Debt();
         }
