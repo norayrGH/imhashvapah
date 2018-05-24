@@ -10,6 +10,8 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
@@ -818,6 +820,7 @@ public class CashController extends BaseController {
     }
 
     @GetMapping(value = "create/otherpartner")
+    /*customer coleguas*/
     public   ModelAndView cashinfrompointofsaleCreateotherPartner( ModelAndView modelAndView) {
 
         modelAndView.setViewName("app/app");
@@ -859,10 +862,40 @@ public class CashController extends BaseController {
         customerClientOrganizationRepository.save(clientOrganization);
         return  modelAndView;
     }
+    @GetMapping(value = "create/customer/customerindividual" )
+    public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+
+        modelAndView.setViewName("app/app");
+        CustomerIndividual customerIndividual = new CustomerIndividual();
+        customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("customerIndividual", customerIndividual);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.createCustomerIndividual);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return  modelAndView;
+    }
+    @PostMapping(value = "create/customer/customerindividual")
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("customerIndividual", customerIndividual);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.createCustomerIndividual);
+            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        customerIndividualRepository.save(customerIndividual);
+        return modelAndView;
+    }
 
 
 
-
+    /*other partners coleguas*/
     @GetMapping(value = "create/otherpartner/otherpartnerclientorganization" )
     public   ModelAndView otherPartnerCreateOrganization( ModelAndView modelAndView,HttpSession httpSession) {
 
@@ -877,7 +910,7 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
     @PostMapping(value = "create/otherpartner/otherpartnerclientorganization")
-   public   ModelAndView otherPartnerCreateOrganization(@Valid OtherPartnerClientOrganization otherPartnerClientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
+    public   ModelAndView otherPartnerCreateOrganization(@Valid OtherPartnerClientOrganization otherPartnerClientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("otherPartnerClientOrganization", otherPartnerClientOrganization);
@@ -894,8 +927,6 @@ public class CashController extends BaseController {
         otherPartnerClientOrganizationRepository.save(otherPartnerClientOrganization);
         return  modelAndView;
      }
-
-
     @GetMapping(value = "create/otherpartner/otherpartnerindividual" )
     public   ModelAndView otherPartnerIndividual( ModelAndView modelAndView,HttpSession httpSession) {
 
@@ -927,35 +958,68 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
 
-    @GetMapping(value = "create/customer/customerindividual" )
-    public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+
+    /*suppliers coleguas*/
+    @GetMapping(value = "create/supplier/supplierclientorganization" )
+    public   ModelAndView supplierCreateOrganization( ModelAndView modelAndView,HttpSession httpSession) {
 
         modelAndView.setViewName("app/app");
-        CustomerIndividual customerIndividual = new CustomerIndividual();
-        customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.addObject("customerIndividual", customerIndividual);
+        SupplierClientOrganization supplierClientOrganization  = new SupplierClientOrganization();
+        supplierClientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("supplierClientOrganization", supplierClientOrganization );
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.createCustomerIndividual);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        modelAndView.addObject("fragment", this.createSupplierClientOrganization);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         return  modelAndView;
     }
-    @PostMapping(value = "create/customer/customerindividual")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+    @PostMapping(value = "create/supplier/supplierclientorganization")
+    public   ModelAndView supplierCreateOrganization(@Valid SupplierClientOrganization supplierClientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("customerIndividual", customerIndividual);
+            modelAndView.addObject("otherPartnerClientOrganization", supplierClientOrganization);
             modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.createCustomerIndividual);
-            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            modelAndView.addObject("fragment", this.createSupplierClientOrganization);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+            return modelAndView;
+        }
+
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        supplierClientOrganizationRepository.save(supplierClientOrganization);
+        return  modelAndView;
+    }
+    @GetMapping(value = "create/supplier/supplierindividual" )
+    public   ModelAndView supplierIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+
+        modelAndView.setViewName("app/app");
+        SupplierIndividual supplierIndividual =new SupplierIndividual() ;
+        supplierIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("supplierIndividual", supplierIndividual);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.createSupplierIndividual);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+
+        return  modelAndView;
+    }
+    @PostMapping(value = "create/supplier/supplierindividual")
+    public   ModelAndView supplierIndividual(@Valid SupplierIndividual supplierIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("supplierIndividual", supplierIndividual);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.createSupplierIndividual);
+            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashInCreateFragment);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-        customerIndividualRepository.save(customerIndividual);
-        return modelAndView;
+        modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
+        supplierIndividualRepository.save(supplierIndividual);
+        return  modelAndView;
     }
 
 

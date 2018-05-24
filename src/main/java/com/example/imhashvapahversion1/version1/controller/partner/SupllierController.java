@@ -111,6 +111,7 @@ public class SupllierController extends BaseController {
                 debt.setPrepayment(Integer.valueOf(companySupplier.getOpeningBalance()));
             else
                 debt.setDebt(Integer.valueOf(companySupplier.getOpeningBalance()));
+
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
                     if(cashOutForGoodsProvider.getCompanySupplier().getId() == companySupplier.getId()){
