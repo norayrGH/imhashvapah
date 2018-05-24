@@ -29,7 +29,7 @@ public class IndividualSupplier implements GeneralMethods{
     private String passportViewingDate;
     private String openingBalanceType;
     private String openingBalance;
-    @NotEmpty
+    @NotEmpty(message = "Հարկավոր է ընտրել մատակարարի տեսակը")
     private String supply;
     private String address;
     private String phoneNumber;

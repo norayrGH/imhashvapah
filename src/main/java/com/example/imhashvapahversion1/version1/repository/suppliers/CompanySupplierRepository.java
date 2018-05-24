@@ -12,4 +12,12 @@ public interface CompanySupplierRepository  extends CrudRepository<CompanySuppli
     ArrayList findBySupplyGoodsAndServices();
     @Query("Select c from CompanySupplier c WHERE c.supply='Վարձակալության/ծառայություն'")
     ArrayList findBySupplyForRent();
+
+
+
+
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM CompanySupplier c WHERE c.hvhh like :hvhh" )
+    boolean existsByHvhh( @Param("hvhh")String hvhh );
+    @Query( "Select c.id from CompanySupplier c where c.hvhh like :hvhh ")
+    Long getIdByHvhh (@Param("hvhh")String hvhh );
 }

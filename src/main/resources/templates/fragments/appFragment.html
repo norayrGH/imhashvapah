@@ -1134,6 +1134,87 @@
 
 </div>
 
+/*Supplier*/
+<div class="container" th:fragment="createSupplierClientOrganization" >
+
+    <form th:object="${supplierClientOrganization}" action=" /account/cash/create/supplier/supplierclientorganization "  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+        <br />
+        <label>Անուն</label>
+        <input type="text"
+               th:name="clientOrganizationName"
+               th:field="*{clientOrganizationName}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+<div class="container" th:fragment="createSupplierIndividual" >
+
+    <form th:object="${supplierIndividual}" action="/account/cash/create/supplier/supplierindividual"  method="post" >
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <br />
+
+
+        <label>Անուն</label>
+        <input type="text"
+               th:name="firstName"
+               th:field="*{firstName}"
+
+        />
+        <br />
+        <label>Ազգանուն</label>
+        <input type="text"
+               th:name="lastName"
+               th:field="*{lastName}"
+        />
+        <br />
+        <input
+                type="hidden"
+                th:field="*{id}"
+                th:value="${id}"
+        />
+
+        <input
+                type="hidden"
+                th:field="*{organization}"
+                th:value="${organization}"
+        />
+
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+
+
+        <input type="submit" class="btn btn-default" />
+    </form >
+
+</div>
+
+
 <div class="container" th:fragment="createOtherPartnerClientOrganization" >
 
     <form th:object="${otherPartnerClientOrganization}" action="/account/cash/create/otherpartner/otherpartnerclientorganization"  method="post" >

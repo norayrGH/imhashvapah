@@ -3,12 +3,15 @@ package com.example.imhashvapahversion1.version1.Entity.partners.suppliers;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
+import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.io.Serializable;
 
 @Entity
+@EqualFields(id = "id", uniqueField = "clientOrganization",hvhh = "hvhh" ,message = "")
 public class CompanySupplier implements GeneralMethods {
 
     @Id
@@ -17,8 +20,9 @@ public class CompanySupplier implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private SupplierClientOrganization clientOrganization;
-
+    @NotEmpty(message = "Հարկավորէ մուտքագրել ՀՎՀՀ")
     private String hvhh;
+    @NotEmpty(message = "Հարկավոր է նշել հարկի տեսակը")
     private String taxType;
     private String openingBalanceType;
     private String openingBalance;

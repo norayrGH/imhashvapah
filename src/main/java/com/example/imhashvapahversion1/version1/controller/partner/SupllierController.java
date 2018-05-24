@@ -6,7 +6,11 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.C
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Debt;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
+import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
+import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
@@ -16,9 +20,7 @@ import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
-import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
-import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
-import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
+import com.example.imhashvapahversion1.version1.repository.suppliers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -47,7 +49,10 @@ public class SupllierController extends BaseController {
     @Autowired
     CashOutForRentRepository cashOutForRentRepository;
     @Autowired
-
+    SupplierClientOrganizationRepository supplierClientOrganizationRepository;
+    @Autowired
+    SupplierIndividualRepository supplierIndividualRepository;
+    @Autowired
     CashOutForGoodsProviderRepository cashOutForGoodsProviderRepository;
 
     @GetMapping(value = "")
@@ -64,20 +69,61 @@ public class SupllierController extends BaseController {
     @PostMapping(value = "/show")
     public @ResponseBody
     Set<SupplierShow> supplierPartnerShow() {
+
+        /*
+        List<GeneralMethods> temp1 = new ArrayList();
+        List<GeneralMethods> temp2 = new ArrayList();
+        Boolean temp = false;
+        PartnerCustomerShow partnerCustomerShow = null;
+        Set<PartnerCustomerShow> showResult = new HashSet();
+        temp1.addAll((ArrayList) customerClientOrganizationRepository.findAll());
+        temp1.addAll((ArrayList) customerIndividualRepository.findAll());
+
+        temp2.addAll((ArrayList) companyCustomerRepository.findAll());
+        temp2.addAll((ArrayList) individualCustomerRepository.findAll());
+        temp2.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
+
+        for(GeneralMethods each1 : temp1) {
+            for(GeneralMethods each2 : temp2) {
+                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof CustomerClientOrganization) || ( each1 instanceof CustomerIndividual && each1.getId()==each2.getIndividualId())){
+                    partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
+                    showResult.add(partnerCustomerShow);
+                    temp=true;
+                }
+            }
+            if(temp == false){
+                partnerCustomerShow = new PartnerCustomerShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
+                showResult.add(partnerCustomerShow);
+            }
+            temp=false;
+        }
+        return showResult;*/
+        List<GeneralMethods> temp1 = new ArrayList();
         List<GeneralMethods> temp2 = new ArrayList();
         Boolean temp = false;
         SupplierShow supplierShow = null;
         Set<SupplierShow> showResult = new HashSet();
+        temp1.addAll((ArrayList) supplierClientOrganizationRepository.findAll());
+        temp1.addAll((ArrayList) supplierIndividualRepository.findAll());
 
         temp2.addAll((ArrayList)privateEntrepreneurSupplierRepository.findAll());
         temp2.addAll((ArrayList)companySupplierRepository.findAll());
         temp2.addAll((ArrayList)individualSupplierRepository.findAll());
 
-        for(GeneralMethods each2 : temp2) {
-            supplierShow = new SupplierShow(new Long[]{each2.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true, each2.getClass().getSimpleName());
-            showResult.add(supplierShow);
+        for(GeneralMethods each1 : temp1) {
+            for(GeneralMethods each2 : temp2) {
+                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof SupplierClientOrganization) || ( each1 instanceof SupplierIndividual && each1.getId()==each2.getIndividualId())){
+                    supplierShow = new SupplierShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
+                    showResult.add(supplierShow);
+                    temp=true;
+                }
+            }
+            if(temp == false){
+                supplierShow = new SupplierShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
+                showResult.add(supplierShow);
+            }
+            temp=false;
         }
-
         return showResult;
     }
     @GetMapping(value = "/debt")
@@ -224,48 +270,6 @@ public class SupllierController extends BaseController {
         return debts;
     }
 
-    @GetMapping(value = "/edit/privateentrepreneursupplier")
-    public ModelAndView privateentrepreneursupplierEdit(@RequestParam("supplierId")Long supplierId, ModelAndView modelAndView, HttpSession httpSession){
-        PrivateEntrepreneurSupplier privateEntrepreneurSupplier  = new PrivateEntrepreneurSupplier();
-        privateEntrepreneurSupplier = privateEntrepreneurSupplierRepository.findOne(supplierId);
-
-        privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
-        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
-        return modelAndView;
-
-    }
-    @GetMapping(value = "/edit/individualsupplier")
-    public ModelAndView individualsupplierdit(@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView, HttpSession httpSession){
-
-        IndividualSupplier individualSupplier;
-        individualSupplier = individualSupplierRepository.findOne(supplierId);
-
-
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("individualSupplier",individualSupplier);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("fragment", this.individualSupplierCreate);
-        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
-        return modelAndView;
-
-    }
-    @GetMapping(value = "/edit/companysupplier")
-    public ModelAndView companysupplierEdit(@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView, HttpSession httpSession){
-        CompanySupplier companySupplier = companySupplierRepository.findOne(supplierId);
-
-
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("companySupplier",companySupplier);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("fragment", this.companySupplierCreate);
-        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
-
-        return modelAndView;
-    }
 
     @GetMapping( value ="/create/individualsupplier")
     public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
@@ -278,6 +282,22 @@ public class SupllierController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
 
+        return modelAndView;
+    }
+    @GetMapping(value = "/edit/individualsupplier")
+    public ModelAndView individualSupplierEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
+        IndividualSupplier individualSupplier = new IndividualSupplier();
+        if(customerId!=0)
+            individualSupplier = individualSupplierRepository.findOne(customerId);
+        else
+            individualSupplier.setIndividual(supplierIndividualRepository.findOne(customerInnerId));
+
+        individualSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("individualSupplier",individualSupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.individualSupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
     }
     @PostMapping(value ="/create/individualsupplier")
@@ -313,6 +333,22 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
+    @GetMapping(value = "/edit/companysupplier")
+    public ModelAndView companySupplierEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
+        CompanySupplier companySupplier = new CompanySupplier();
+        if(customerId!=0)
+            companySupplier = companySupplierRepository.findOne(customerId);
+        else
+            companySupplier.setClientOrganization( supplierClientOrganizationRepository.findOne(customerInnerId));
+
+        companySupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("companySupplier",companySupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.companySupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        return modelAndView;
+    }
     @PostMapping(value ="/create/companysupplier")
     public ModelAndView companySupplierCreate(@Valid CompanySupplier companySupplier, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
@@ -346,6 +382,20 @@ public class SupllierController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
         return modelAndView;
+    }
+    @GetMapping(value = "/edit/privateentrepreneursupplier")
+    public ModelAndView privateentrepreneursupplierEdit(@RequestParam("supplierId")Long supplierId, ModelAndView modelAndView, HttpSession httpSession){
+        PrivateEntrepreneurSupplier privateEntrepreneurSupplier  = new PrivateEntrepreneurSupplier();
+        privateEntrepreneurSupplier = privateEntrepreneurSupplierRepository.findOne(supplierId);
+
+        privateEntrepreneurSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        return modelAndView;
+
     }
     @PostMapping(value ="/create/privateentrepreneursupplier")
     public ModelAndView privateEntrepreneurSupplierCreate(@Valid PrivateEntrepreneurSupplier privateEntrepreneurSupplier, BindingResult bindingResult , ModelAndView modelAndView) {

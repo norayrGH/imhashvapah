@@ -8,6 +8,8 @@ import com.example.imhashvapahversion1.version1.repository.customer.CompanyCusto
 import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.CompanyOtherPartnerRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerClientOrganizationRepository;
+import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
+import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierClientOrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -37,6 +39,10 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
     OtherPartnerClientOrganizationRepository otherPartnerClientOrganizationRepository;
     @Autowired
     CompanyOtherPartnerRepository companyOtherPartnerRepository;
+    @Autowired
+    SupplierClientOrganizationRepository supplierClientOrganizationRepository;
+    @Autowired
+    private CompanySupplierRepository companySupplierRepository;
     @Override
     public void initialize(EqualFields constraint) {
         id = constraint.id();
@@ -56,7 +62,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
             matchId = getFieldValue(object, id);
             matchuniqueField = getFieldValue(object, uniqueField);
 
-                if(curentObjectName.equals("CompanyCustomer") || curentObjectName.equals("CompanyOtherPartner")){
+                if(curentObjectName.equals("CompanySupplier") || curentObjectName.equals("CompanyCustomer") || curentObjectName.equals("CompanyOtherPartner")){
 
                     hvhh = getFieldValue(object, parrentHvhh);
                 }
@@ -107,6 +113,24 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 }
 
             }
+            if(curentObjectName.equals("SupplierClientOrganization")){
+                if(companySupplierRepository.existsByHvhh( testHvhh)){
+                    if(parrentId == companySupplierRepository.getIdByHvhh( testHvhh)){
+                        validationCount=0;
+                        testHvhh="";
+                        return true;
+
+                    }else{
+                        validationCount=0;
+                        testHvhh="";
+                        if(!hvhh.equals(""))
+                            context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ-ով կազմակերպություն գոյություն ունի").addConstraintViolation();
+                        return false;
+                    }
+
+                }
+
+            }
 
         }
 
@@ -135,6 +159,18 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 return false;
             }
         }
+        if (validationCount == 0 && curentObjectName.equals("SupplierClientOrganization")) {
+
+            if (!supplierClientOrganizationRepository.existsByName((String) matchuniqueField)) {
+
+                validationCount=0;
+                return true;
+            } else {
+                validationCount=0;
+                context.buildConstraintViolationWithTemplate("նման անունով կազմակերպութույն գոյություն ունի").addConstraintViolation();
+                return false;
+            }
+        }
 
         if(hvhh!=null & matchId==null & curentObjectName.equals("CompanyCustomer"))
         { testHvhh = (String) hvhh;
@@ -154,6 +190,19 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
             if(companyOtherPartnerRepository.existsByHvhh((String) hvhh)) {
                validationCount++;
                return true;
+
+            }else{
+                accept = true;
+                validationCount++;
+                return true;
+            }
+        }
+        if(hvhh!=null & matchId==null & curentObjectName.equals("CompanySupplier"))
+        {
+            testHvhh = (String) hvhh;
+            if(companySupplierRepository.existsByHvhh((String) hvhh)) {
+                validationCount++;
+                return true;
 
             }else{
                 accept = true;

@@ -642,7 +642,7 @@ public class CashOutController extends BaseController {
             return modelAndView;
         }
 
-          modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 

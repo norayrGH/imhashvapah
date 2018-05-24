@@ -203,7 +203,7 @@ function  partnerOtherPartnerShow(partnerOtherPartner) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/otherpartner/edit/"+(item.type.includes("Individual")?'individualotherpartner/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                    {href:"/account/partner/otherpartner/edit/"+(item.type.includes("Individual")?'individualotherpartner/':'companyotherpartner/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
                         class:"glyphicon glyphicon-pencil"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -253,17 +253,19 @@ function  partnerSuppliersShow(partnerSuppliers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':item.type.includes("PrivateEntrepreneur")?'privateentrepreneursupplier/':'companysupplier')+'?'+'supplierId='+item.id[0]  ,
+                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':'companysupplier/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
                         class:"glyphicon glyphicon-pencil"}
-                        )
+                )
                 ,"&nbsp;&nbsp;&nbsp;"
                 ,$("<a />").attr(
                     {href:"/account/organization/fixedasset/delete/"+item.id ,
                         class:"glyphicon glyphicon-trash"}
-                        )
+                )
                 ,"&nbsp;&nbsp;&nbsp;"
                 ,(item.full==false)?$("<a />").attr(
-                    {class:"glyphicon glyphicon-warning-sign"}
+                    {
+                        class:"glyphicon glyphicon-warning-sign"
+                    }
                 ):""
             )
         ));
