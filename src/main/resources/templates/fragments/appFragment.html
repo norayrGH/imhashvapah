@@ -620,8 +620,8 @@
 </div>
 <div class="container" th:fragment="customerAndColleaguesCreateSupplier" >
 
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/supplier/otherpartnerclientorganization'}" >Կազմակերպություն </a>
-    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/supplier/otherpartnerindividual'}" >Անհատ </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/supplier/supplierclientorganization'}" >Կազմակերպություն </a>
+    <a class="btn btn-primary btn-lg " th:href="@{'/account/cash/create/supplier/supplierindividual'}" >Անհատ </a>
 
 </div>
 
@@ -2996,13 +2996,15 @@
         />
         <br />
         <label>Սկզբնական մնացորդի տեսակ</label>
-        <input type="date"
-               th:name="openingBalanceType"
-               th:field="*{openingBalanceType}"
-        />
+        <select th:name="openingBalanceType"
+                th:field="*{openingBalanceType}"
+        >
+            <option value="debt">Պարտք</option>
+            <option value="prepaid">Կանխավճար</option>
+        </select>
         <br />
         <label>Սկզբնական մնացորդ</label>
-        <input type="date"
+        <input type="text"
                th:name="openingBalance"
                th:field="*{openingBalance}"
         />

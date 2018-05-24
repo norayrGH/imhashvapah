@@ -859,6 +859,36 @@ public class CashController extends BaseController {
         customerClientOrganizationRepository.save(clientOrganization);
         return  modelAndView;
     }
+    @GetMapping(value = "create/customer/customerindividual" )
+    public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+
+        modelAndView.setViewName("app/app");
+        CustomerIndividual customerIndividual = new CustomerIndividual();
+        customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("customerIndividual", customerIndividual);
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.createCustomerIndividual);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+
+        return  modelAndView;
+    }
+    @PostMapping(value = "create/customer/customerindividual")
+    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("customerIndividual", customerIndividual);
+            modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("fragment", this.createCustomerIndividual);
+            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
+        customerIndividualRepository.save(customerIndividual);
+        return modelAndView;
+    }
 
 
 
@@ -927,36 +957,6 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
 
-    @GetMapping(value = "create/customer/customerindividual" )
-    public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
-
-        modelAndView.setViewName("app/app");
-        CustomerIndividual customerIndividual = new CustomerIndividual();
-        customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.addObject("customerIndividual", customerIndividual);
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.createCustomerIndividual);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-
-        return  modelAndView;
-    }
-    @PostMapping(value = "create/customer/customerindividual")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("app/app");
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("customerIndividual", customerIndividual);
-            modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.createCustomerIndividual);
-            modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-            return modelAndView;
-        }
-
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashInCreateFragment);
-        modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
-        customerIndividualRepository.save(customerIndividual);
-        return modelAndView;
-    }
 
 
  /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")

@@ -109,6 +109,7 @@ public class SupllierController extends BaseController {
             debt.setType("CompanySupplier");
             debt.setDebt(companySupplier.getOpeningBalanceType().equals("debt")? Integer.parseInt(companySupplier.getOpeningBalance()):0);
             debt.setPrepayment(companySupplier.getOpeningBalanceType().equals("prepaid")? Integer.parseInt(companySupplier.getOpeningBalance()):0);
+
             for(CashOutForGoodsProvider cashOutForGoodsProvider :cashOutForGoodsProviders){
                 if(cashOutForGoodsProvider.getCompanySupplier()!=null)
                     if(cashOutForGoodsProvider.getCompanySupplier().getId()==companySupplier.getId()){
@@ -130,13 +131,18 @@ public class SupllierController extends BaseController {
                     }
             }
             if( debt.getPrepayment() - debt.getDebt() < 0 )
+            {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
-            else
+                debt.setPrepayment(0);
+            }
+            else{
                 debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
-
+                debt.setDebt(0);
+            }
 
             debts.add(debt);
             debt = new Debt();
+
         }
         for(IndividualSupplier individualSupplier : individualSuppliers)
         {
@@ -166,9 +172,14 @@ public class SupllierController extends BaseController {
                     }
             }
             if( debt.getPrepayment() - debt.getDebt() < 0 )
+            {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
-            else
+                debt.setPrepayment(0);
+            }
+            else{
                 debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
+                debt.setDebt(0);
+            }
             debts.add(debt);
             debt = new Debt();
         }
