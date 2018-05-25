@@ -104,6 +104,11 @@ public class IndividualCustomer  implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "IndividualCustomer";
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

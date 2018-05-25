@@ -20,11 +20,13 @@ public class CompanySupplier implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private SupplierClientOrganization clientOrganization;
-    @NotEmpty(message = "Հարկավորէ մուտքագրել ՀՎՀՀ")
+    @NotEmpty(message = "ՀՎՀՀ-ն պարտադիր է:")
     private String hvhh;
-    @NotEmpty(message = "Հարկավոր է նշել հարկի տեսակը")
+    @NotEmpty(message = "Հարկման կարգը պարտադիր է:")
     private String taxType;
+    @NotEmpty(message = "Սկզբնական մնացորդի տեսակը պարտադիր է:")
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
     private String supply;
     private String bankAccount;
@@ -77,6 +79,11 @@ public class CompanySupplier implements GeneralMethods {
     @Override
     public String getHvhh() {
         return hvhh;
+    }
+
+    @Override
+    public String getType() {
+        return "CompanySupplier";
     }
 
     public void setHvhh(String hvhh) {

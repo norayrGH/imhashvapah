@@ -111,7 +111,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                     }
 
                 }
-
             }
             if(curentObjectName.equals("SupplierClientOrganization")){
                 if(companySupplierRepository.existsByHvhh( testHvhh)){
@@ -119,7 +118,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                         validationCount=0;
                         testHvhh="";
                         return true;
-
                     }else{
                         validationCount=0;
                         testHvhh="";
@@ -131,9 +129,7 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 }
 
             }
-
         }
-
         if (validationCount == 0 && curentObjectName.equals("CustomerClientOrganization")) {
 
             if (!customerClientOrganizationRepository.existsByName((String) matchuniqueField)) {
@@ -210,14 +206,12 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                 return true;
             }
         }
-
         if(matchId!=null && validationCount==0){
             testHvhh = (String) hvhh;
             parrentId = (Long) matchId;
             validationCount++;
             return true ;
         }
-
 
 return true;
     }

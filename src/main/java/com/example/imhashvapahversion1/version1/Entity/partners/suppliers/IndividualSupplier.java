@@ -159,6 +159,11 @@ public class IndividualSupplier implements GeneralMethods{
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "IndividualSupplier";
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

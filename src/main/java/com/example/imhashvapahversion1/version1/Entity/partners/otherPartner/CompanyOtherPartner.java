@@ -75,6 +75,11 @@ public class CompanyOtherPartner implements GeneralMethods{
         return hvhh;
     }
 
+    @Override
+    public String getType() {
+        return "CompanyOtherPartner";
+    }
+
     public void setHvhh(String hvhh) {
         this.hvhh = hvhh;
     }

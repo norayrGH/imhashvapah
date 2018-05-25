@@ -140,6 +140,11 @@ public class IndividualOtherPartner  implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "IndividualOtherPartner";
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

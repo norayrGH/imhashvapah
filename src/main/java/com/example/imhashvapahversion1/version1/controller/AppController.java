@@ -38,7 +38,6 @@ public class AppController extends BaseController{
     @RequestMapping(value = "/account/organization/create")
     public ModelAndView organizationCreateAction(ModelAndView modelAndView) {
 
-
         Organization organization = new Organization();
         HashMap addresses = (HashMap) Address.getAddresses();
         modelAndView.addObject("addresses", addresses);

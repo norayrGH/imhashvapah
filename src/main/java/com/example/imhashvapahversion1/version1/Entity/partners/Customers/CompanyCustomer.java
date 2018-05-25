@@ -59,6 +59,11 @@ public class CompanyCustomer  implements GeneralMethods,Serializable{
         return hvhh;
     }
 
+    @Override
+    public String getType() {
+        return "CompanyCustomer";
+    }
+
     public void setHvhh(String hvhh) {
         this.hvhh = hvhh;
     }

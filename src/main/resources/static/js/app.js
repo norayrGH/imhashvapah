@@ -253,7 +253,7 @@ function  partnerSuppliersShow(partnerSuppliers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':'companysupplier/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':'companysupplier/')+'?'+'customerId='+item.id,
                         class:"glyphicon glyphicon-pencil"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"

@@ -106,7 +106,8 @@ public class CashOutController extends BaseController {
         CashOutForTax cashOutForTax = new CashOutForTax();
         Tax tax = new Tax();
         WalletOut walletOut  =  new WalletOut();
-
+        walletOut.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        walletOut.setOutType("CashOutForTax");
         cashOutForTax.setTax(tax);
         cashOutForTax.setWalletOut(walletOut);
         cashOutForTax.setOrganization((Organization) httpSession.getAttribute("organizationId"));
@@ -145,12 +146,12 @@ public class CashOutController extends BaseController {
     public ModelAndView cashoutForGoodsProvider(ModelAndView modelAndView ,HttpSession httpSession) {
 
        suppliers = new ArrayList();
-        List<CompanySupplier> companySuppliers = new ArrayList<>();
-        companySuppliers = companySupplierRepository.findBySupplyGoodsAndServices();
-        List<IndividualSupplier> individualSuppliers = new ArrayList<>();
-        individualSuppliers = individualSupplierRepository.findBySupplyGoodsAndServices();
-        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers = new ArrayList<>();
-        privateEntrepreneurSuppliers = privateEntrepreneurSupplierRepository.findBySupplyGoodsAndServices();
+        List<CompanySupplier> companySuppliers ;
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers;
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
         for(CompanySupplier supplier:companySuppliers){
             suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
@@ -200,6 +201,8 @@ public class CashOutController extends BaseController {
         if(cashOutForGoodsProvider.getSupplierType().equals("PrivateEntrepreneurSupplier")){
             cashOutForGoodsProvider.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(cashOutForGoodsProvider.getSupplierId()));
         }
+        cashOutForGoodsProvider.getWalletOut().setOutType("CashOutForGoodsProvider");
+        cashOutForGoodsProvider.getWalletOut().setOrganization(cashOutForGoodsProvider.getOrganization());
         cashOutForGoodsProviderRepository.save(cashOutForGoodsProvider);
 
         return  modelAndView;
@@ -268,6 +271,8 @@ public class CashOutController extends BaseController {
         if(cashOutForSerivceProvider.getSupplierType().equals("PrivateEntrepreneurSupplier")){
             cashOutForSerivceProvider.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(cashOutForSerivceProvider.getSupplierId()));
         }
+      cashOutForSerivceProvider.getWalletOut().setOutType("CashOutForSerivceProvider");
+      cashOutForSerivceProvider.getWalletOut().setOrganization(cashOutForSerivceProvider.getOrganization());
       cashOutForSerivceProviderRepository.save(cashOutForSerivceProvider);
 
         return  modelAndView;
@@ -339,6 +344,8 @@ public class CashOutController extends BaseController {
             cashOutForRent.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(cashOutForRent.getSupplierId()));
         }
 
+        cashOutForRent.getWalletOut().setOutType("CashOutForRent");
+        cashOutForRent.getWalletOut().setOrganization(cashOutForRent.getOrganization());
         cashOutForRentRepository.save(cashOutForRent);
         return  modelAndView;
     }
@@ -354,6 +361,7 @@ public class CashOutController extends BaseController {
 
         CashOutForBankAccount cashOutForBankAccount  = new CashOutForBankAccount();
         WalletOut walletOut = new WalletOut();
+
         cashOutForBankAccount.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         cashOutForBankAccount.setWalletOut(walletOut);
         modelAndView.setViewName("app/app");
@@ -383,7 +391,8 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         cashOutForBankAccount.setBankAccount(bankAccountRepository.findOne(cashOutForBankAccount.getBankAccountId()));
-
+        cashOutForBankAccount.getWalletOut().setOutType("CashOutForBankAccount");
+        cashOutForBankAccount.getWalletOut().setOrganization(cashOutForBankAccount.getOrganization());
         cashOutForBankAccountRepository.save(cashOutForBankAccount);
         return  modelAndView;
     }
@@ -445,6 +454,8 @@ public class CashOutController extends BaseController {
             cashOutForCreditPayment.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForCreditPayment.getOtherPartnerId()));
         }
 
+        cashOutForCreditPayment.getWalletOut().setOutType("CashOutForCreditPayment");
+        cashOutForCreditPayment.getWalletOut().setOrganization(cashOutForCreditPayment.getOrganization());
         cashOutForCreditPaymentRepository.save(cashOutForCreditPayment);
         return  modelAndView;
     }
@@ -506,6 +517,8 @@ public class CashOutController extends BaseController {
             cashOutForRedemptionPercent.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForRedemptionPercent.getOtherPartnerId()));
         }
 
+         cashOutForRedemptionPercent.getWalletOut().setOutType("CashOutForRedemptionPercent");
+         cashOutForRedemptionPercent.getWalletOut().setOrganization(cashOutForRedemptionPercent.getOrganization());
          cashOutForRedemptionPercentRepository.save(cashOutForRedemptionPercent);
         return  modelAndView;
     }
@@ -531,6 +544,7 @@ public class CashOutController extends BaseController {
 
         CashOutForLoanPayment  cashOutForLoanPayment = new CashOutForLoanPayment();
           WalletOut walletOut = new WalletOut();
+
         cashOutForLoanPayment.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         cashOutForLoanPayment.setWalletOut(walletOut);
         modelAndView.setViewName("app/app");
@@ -566,7 +580,8 @@ public class CashOutController extends BaseController {
         if( cashOutForLoanPayment.getOtherPartnerType().equals(" PrivateEntrepreneurOtherPartner")){
             cashOutForLoanPayment.setPrivateEntrepreneurOtherPartner( privateEntrepreneurOtherPartnerRepository.findOne(cashOutForLoanPayment.getOtherPartnerId()));
         }
-
+        cashOutForLoanPayment.getWalletOut().setOutType("CashOutForLoanPayment");
+        cashOutForLoanPayment.getWalletOut().setOrganization(cashOutForLoanPayment.getOrganization());
         cashOutForRedemptionPercentRepsitory.save(cashOutForLoanPayment);
         return  modelAndView;
     }
@@ -607,7 +622,8 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
-
+        cashOutForBankSpending.getWalletOut().setOutType("CashOutForBankSpending");
+        cashOutForBankSpending.getWalletOut().setOrganization(cashOutForBankSpending.getOrganization());
         cashOutForBankSpendingRepository.save(cashOutForBankSpending);
         return  modelAndView;
     }
@@ -645,7 +661,8 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-
+        cashOutForOtherExpenses.getWalletOut().setOutType("CashOutForOtherExpenses");
+        cashOutForOtherExpenses.getWalletOut().setOrganization(cashOutForOtherExpenses.getOrganization());
 
         cashOutForOtherExpensesRepository.save(cashOutForOtherExpenses);
         return  modelAndView;

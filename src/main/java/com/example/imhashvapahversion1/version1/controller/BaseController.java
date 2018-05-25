@@ -59,6 +59,7 @@ public class BaseController {
     protected final String partnerNavBar = "partnerNavBar";
         protected final String partnerFragment = "partner";
     protected final String partnerCustomers="partnerCustomers";
+    protected final String partnerSupplierDebtDetails="partnerSupplierDebtDetails";
     protected final String partnerOtherPartner="partnerOtherPartner";
     protected final String partnerSupplier="partnerSupplier";
     protected final String partnerFragmentNavBar = "partnerFragmentNavBar";

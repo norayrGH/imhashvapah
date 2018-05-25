@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash;
 
+import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,15 +22,17 @@ public class WalletOut {
     @NotEmpty(message ="Հարկավոր է նշել Ելքի գումարը")
     private String outCash;
     private String note;
-
+    @OneToOne
+    private Organization organization;
     public WalletOut() {
     }
 
-    public WalletOut(String outType, Date outDate, String outCash, String note) {
+    public WalletOut(String outType, Date outDate, String outCash, String note, Organization organization) {
         this.outType = outType;
         this.outDate = outDate;
         this.outCash = outCash;
         this.note = note;
+        this.organization = organization;
     }
 
     public Long getId() {
@@ -70,5 +73,13 @@ public class WalletOut {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }

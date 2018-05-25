@@ -68,6 +68,11 @@ public class CustomerClientOrganization implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "CustomerClientOrganization";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

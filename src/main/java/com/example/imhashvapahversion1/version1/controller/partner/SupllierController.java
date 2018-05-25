@@ -8,12 +8,14 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.C
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Debt;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
+import com.example.imhashvapahversion1.version1.Entity.enums.DateRangByType;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.DebtDetailsShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
@@ -70,60 +72,26 @@ public class SupllierController extends BaseController {
     public @ResponseBody
     Set<SupplierShow> supplierPartnerShow() {
 
-        /*
-        List<GeneralMethods> temp1 = new ArrayList();
-        List<GeneralMethods> temp2 = new ArrayList();
-        Boolean temp = false;
-        PartnerCustomerShow partnerCustomerShow = null;
-        Set<PartnerCustomerShow> showResult = new HashSet();
-        temp1.addAll((ArrayList) customerClientOrganizationRepository.findAll());
-        temp1.addAll((ArrayList) customerIndividualRepository.findAll());
+        List<GeneralMethods> suppliers = new ArrayList();
 
-        temp2.addAll((ArrayList) companyCustomerRepository.findAll());
-        temp2.addAll((ArrayList) individualCustomerRepository.findAll());
-        temp2.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
-
-        for(GeneralMethods each1 : temp1) {
-            for(GeneralMethods each2 : temp2) {
-                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof CustomerClientOrganization) || ( each1 instanceof CustomerIndividual && each1.getId()==each2.getIndividualId())){
-                    partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
-                    showResult.add(partnerCustomerShow);
-                    temp=true;
-                }
-            }
-            if(temp == false){
-                partnerCustomerShow = new PartnerCustomerShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
-                showResult.add(partnerCustomerShow);
-            }
-            temp=false;
-        }
-        return showResult;*/
-        List<GeneralMethods> temp1 = new ArrayList();
-        List<GeneralMethods> temp2 = new ArrayList();
-        Boolean temp = false;
         SupplierShow supplierShow = null;
         Set<SupplierShow> showResult = new HashSet();
-        temp1.addAll((ArrayList) supplierClientOrganizationRepository.findAll());
-        temp1.addAll((ArrayList) supplierIndividualRepository.findAll());
 
-        temp2.addAll((ArrayList)privateEntrepreneurSupplierRepository.findAll());
-        temp2.addAll((ArrayList)companySupplierRepository.findAll());
-        temp2.addAll((ArrayList)individualSupplierRepository.findAll());
+        suppliers.addAll((ArrayList)privateEntrepreneurSupplierRepository.findAll());
+        suppliers.addAll((ArrayList)companySupplierRepository.findAll());
+        suppliers.addAll((ArrayList)individualSupplierRepository.findAll());
 
-        for(GeneralMethods each1 : temp1) {
-            for(GeneralMethods each2 : temp2) {
-                if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof SupplierClientOrganization) || ( each1 instanceof SupplierIndividual && each1.getId()==each2.getIndividualId())){
-                    supplierShow = new SupplierShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
+
+            for(GeneralMethods supplier : suppliers) {
+                if (supplier.getHvhh() != null) {
+                    supplierShow = new SupplierShow(supplier.getId(), supplier.getName(), supplier.getPhoneNumber(), supplier.getAddress(), supplier.getHvhh(), true, supplier.getClass().getSimpleName());
                     showResult.add(supplierShow);
-                    temp=true;
+                } else {
+                    supplierShow = new SupplierShow(supplier.getId(), supplier.getName(), supplier.getPhoneNumber(), supplier.getAddress(), supplier.getHvhh(), false, supplier.getClass().getSimpleName());
+                    showResult.add(supplierShow);
                 }
+
             }
-            if(temp == false){
-                supplierShow = new SupplierShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
-                showResult.add(supplierShow);
-            }
-            temp=false;
-        }
         return showResult;
     }
     @GetMapping(value = "/debt")
@@ -140,7 +108,7 @@ public class SupllierController extends BaseController {
         ArrayList<Debt> debts= new ArrayList<>();
         Debt debt = new Debt();
 
-        List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findByHvhhNotNull();
         List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
         List<PrivateEntrepreneurSupplier> privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
@@ -269,7 +237,49 @@ public class SupllierController extends BaseController {
         }
         return debts;
     }
+    @GetMapping( value ="/debt/details")
+    public ModelAndView debtDetails(@RequestParam("supplierType")String supplierType,@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if(supplierType.equals("CompanySupplier")) {
+            CompanySupplier companySupplier = companySupplierRepository.findOne(supplierId);
+            modelAndView.addObject("supplier",companySupplier);
+        }
+        if(supplierType.equals("IndividualSupplier")) {
+            IndividualSupplier individualSupplier = individualSupplierRepository.findOne(supplierId);
+            modelAndView.addObject("supplier",individualSupplier);
+        }
+        if(supplierType.equals("PrivateEntrepreneurSupplier")) {
+            PrivateEntrepreneurSupplier privateEntrepreneurSupplier = privateEntrepreneurSupplierRepository.findOne(supplierId);
+            modelAndView.addObject("supplier",privateEntrepreneurSupplier);
+        }
 
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierDebtDetails);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value = "/debt/details/show")
+    public @ResponseBody ArrayList supplierDebtDetails(@RequestBody DateRangByType dateRangByType ) {
+
+
+
+        ArrayList<Debt> debtDetails= new ArrayList<>();
+        DebtDetailsShow debtDetail = new DebtDetailsShow();
+
+
+        List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStart(dateRangByType.getStart());
+        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStart(dateRangByType.getStart());
+        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStart(dateRangByType.getStart());
+
+        for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
+
+
+        }
+
+
+
+        return null;
+    }
 
     @GetMapping( value ="/create/individualsupplier")
     public ModelAndView individualSupplierCreate(ModelAndView modelAndView, HttpSession httpSession) {
@@ -281,18 +291,12 @@ public class SupllierController extends BaseController {
         modelAndView.addObject("fragment", this.individualSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
-
         return modelAndView;
     }
     @GetMapping(value = "/edit/individualsupplier")
-    public ModelAndView individualSupplierEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
-        IndividualSupplier individualSupplier = new IndividualSupplier();
-        if(customerId!=0)
-            individualSupplier = individualSupplierRepository.findOne(customerId);
-        else
-            individualSupplier.setIndividual(supplierIndividualRepository.findOne(customerInnerId));
-
-        individualSupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+    public ModelAndView individualSupplierEdit(@RequestParam("customerId")Long customerId, ModelAndView modelAndView, HttpSession httpSession) {
+        IndividualSupplier individualSupplier ;
+        individualSupplier = individualSupplierRepository.findOne(customerId);
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualSupplier",individualSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
@@ -334,14 +338,11 @@ public class SupllierController extends BaseController {
         return modelAndView;
     }
     @GetMapping(value = "/edit/companysupplier")
-    public ModelAndView companySupplierEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
-        CompanySupplier companySupplier = new CompanySupplier();
-        if(customerId!=0)
-            companySupplier = companySupplierRepository.findOne(customerId);
-        else
-            companySupplier.setClientOrganization( supplierClientOrganizationRepository.findOne(customerInnerId));
+    public ModelAndView companySupplierEdit(@RequestParam("customerId")Long customerId , ModelAndView modelAndView, HttpSession httpSession) {
+        CompanySupplier companySupplier ;
 
-        companySupplier.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        companySupplier = companySupplierRepository.findOne(customerId);
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companySupplier",companySupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface CashOutForGoodsProviderRepository extends CrudRepository<CashOutForGoodsProvider,Long> {
-    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w WHERE w.outDate<=:startDate ")
+    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w WHERE w.outDate>=:startDate ")
     ArrayList findByRangeStart(@Param("startDate") Date startDate);
+
 }

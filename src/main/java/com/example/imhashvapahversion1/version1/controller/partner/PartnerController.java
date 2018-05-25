@@ -14,11 +14,9 @@ import com.example.imhashvapahversion1.version1.Entity.partners.Customers.Privat
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.PrivateEntrepreneurOtherPartner;
-import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
-import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
-import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+
 import com.example.imhashvapahversion1.version1.Entity.showClasses.PartnerCustomerShow;
-import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
+
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
@@ -26,9 +24,6 @@ import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServ
 import com.example.imhashvapahversion1.version1.repository.customer.*;
 
 import com.example.imhashvapahversion1.version1.repository.otherpartners.*;
-import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
-import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
-import com.example.imhashvapahversion1.version1.repository.suppliers.PrivateEntrepreneurSupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Controller;

@@ -66,6 +66,11 @@ public class CustomerIndividual implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "CustomerIndividual";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

@@ -14,7 +14,8 @@ public interface CompanySupplierRepository  extends CrudRepository<CompanySuppli
     ArrayList findBySupplyForRent();
 
 
-
+    @Query("Select c from CompanySupplier c WHERE c.hvhh is not null " )
+    ArrayList findByHvhhNotNull( );
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM CompanySupplier c WHERE c.hvhh like :hvhh" )
     boolean existsByHvhh( @Param("hvhh")String hvhh );

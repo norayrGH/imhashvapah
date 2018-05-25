@@ -56,6 +56,11 @@ public class    PrivateEntrepreneurCustomer  implements GeneralMethods {
         return hvhh;
     }
 
+    @Override
+    public String getType() {
+        return "PrivateEntrepreneurCustomer";
+    }
+
     public void setHvhh(String hvhh) {
         this.hvhh = hvhh;
     }

@@ -4,6 +4,7 @@ import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.validate.Unique;
 import com.example.imhashvapahversion1.version1.validate.test.EqualFields;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ public class SupplierClientOrganization implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty(message = "Անվանումը պարտադիր է:")
     private String clientOrganizationName;
     @ManyToOne
     private Organization organization;
@@ -62,6 +64,11 @@ public class SupplierClientOrganization implements GeneralMethods {
     @Override
     public String getHvhh() {
         return null;
+    }
+
+    @Override
+    public String getType() {
+        return "SupplierClientOrganization";
     }
 
     public void setId(Long id) {

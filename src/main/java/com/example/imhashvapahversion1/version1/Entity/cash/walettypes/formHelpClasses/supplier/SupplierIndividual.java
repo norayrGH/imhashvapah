@@ -61,6 +61,11 @@ public class SupplierIndividual implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "SupplierIndividual";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

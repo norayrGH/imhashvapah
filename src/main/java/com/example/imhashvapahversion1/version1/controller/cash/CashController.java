@@ -13,6 +13,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
@@ -24,6 +25,7 @@ import com.example.imhashvapahversion1.version1.repository.customer.CustomerIndi
 import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerIndividualRepository;
 
+import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierIndividualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,8 @@ public class CashController extends BaseController {
     @Autowired
     CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
 
-
+@Autowired
+    CompanySupplierRepository companySupplierRepository;
     @Autowired
     CustomerClientOrganizationRepository customerClientOrganizationRepository;
     @Autowired
@@ -976,7 +979,7 @@ public class CashController extends BaseController {
     public   ModelAndView supplierCreateOrganization(@Valid SupplierClientOrganization supplierClientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("otherPartnerClientOrganization", supplierClientOrganization);
+            modelAndView.addObject("supplierClientOrganization", supplierClientOrganization);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.createSupplierClientOrganization);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
@@ -988,6 +991,10 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         supplierClientOrganizationRepository.save(supplierClientOrganization);
+        CompanySupplier companySupplier = new CompanySupplier();
+        companySupplier.setClientOrganization(supplierClientOrganization);
+        companySupplier.setOrganization(supplierClientOrganization.getOrganization());
+        companySupplierRepository.save(companySupplier);
         return  modelAndView;
     }
     @GetMapping(value = "create/supplier/supplierindividual" )
@@ -1021,50 +1028,5 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
 
-
- /*  @GetMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
-     public ModelAndView cashOutForSerivceProviderCreate(ModelAndView modelAndView ,HttpSession httpSession) {
-        CashOutForSerivceProvider cashOutForTax = new CashOutForSerivceProvider();
-        Tax tax = new Tax();
-        WalletOut walletOut  =  new WalletOut();
-
-        cashOutForTax.setTax(tax);
-        cashOutForTax.setWalletOut(walletOut);
-        cashOutForTax.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("cashOutForTax",cashOutForTax);
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutForSerivceProviderCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-
-        return modelAndView;
-    }
-    @PostMapping(value = "/cashout/cashdesk/create/cashoutforserivceprovider")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CashOutForTax cashOutForTax, BindingResult bindingResult, ModelAndView modelAndView) {
-        modelAndView.setViewName("app/app");
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("cashOutForTax", cashOutForTax);
-            modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("fragment", this.cashOutForTaxCreate);
-            modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-            return modelAndView;
-        }
-
-        modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("fragment", this.cashOutCreate);
-        modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
-        cashOutForTaxRepository.save(cashOutForTax);
-        return  modelAndView;
-    }
-*/
-          /* /cashout/cashdesk/create/cashoutforgoodsprovider
-
-           /cashout/cashdesk/create/cashoutforrent
-           /cashout/cashdesk/create/cashoutforbankaccount
-           /cashout/cashdesk/create/cashoutforcreditpayment
-           /cashout/cashdesk/create/cashoutforredemptionpercent
-           /cashout/cashdesk/create/cashoutforloanpayment
-           /cashout/cashdesk/create/cashoutforbankspending
-           /cashout/cashdesk/create/cashoutforotherexpenses*/
 
 }

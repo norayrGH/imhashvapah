@@ -67,6 +67,11 @@ public class OtherPartnerClientOrganization implements GeneralMethods{
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "OtherPartnerClientOrganization";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

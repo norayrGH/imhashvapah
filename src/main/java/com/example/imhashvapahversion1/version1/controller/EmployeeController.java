@@ -41,7 +41,6 @@ public class EmployeeController extends BaseController {
 
         });
     }
-
     @GetMapping(value = "")
     public ModelAndView employee(ModelAndView modelAndView) {
 
@@ -50,11 +49,8 @@ public class EmployeeController extends BaseController {
         modelAndView.addObject("fragment", this.employeeFragment);
         modelAndView.addObject("fragmentNavBar", this.employeeFragmentNavBar);
 
-
         return modelAndView;
     }
-
-
     @GetMapping(value = "/debt")
     public ModelAndView employeeDebt( ModelAndView modelAndView) {
 
@@ -63,7 +59,6 @@ public class EmployeeController extends BaseController {
         modelAndView.addObject("navBar", this.employeeNavBar);
         modelAndView.addObject("fragment", this.employeeDebtFragment);
         modelAndView.addObject("fragmentNavBar", this.employeeDebtFragmentNavBar);
-
 
         return modelAndView;
     }

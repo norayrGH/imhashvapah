@@ -67,6 +67,11 @@ public class OtherPartnerIndividual implements GeneralMethods {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "OtherPartnerIndividual";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
