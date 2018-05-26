@@ -30,7 +30,6 @@ public class AppController extends BaseController{
         return modelAndView;
     }
 
-
     @RequestMapping(value = "/account/login/success")
     public final String loginSuccessAction() {
         return "redirect:/account";
@@ -38,7 +37,6 @@ public class AppController extends BaseController{
 
     @RequestMapping(value = "/account/organization/create")
     public ModelAndView organizationCreateAction(ModelAndView modelAndView) {
-
 
         Organization organization = new Organization();
         HashMap addresses = (HashMap) Address.getAddresses();
