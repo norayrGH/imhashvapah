@@ -140,7 +140,7 @@ public class CashController extends BaseController {
     public @ResponseBody String getBankName(@RequestBody Integer accountStartNumbers) {
 
         if (11500 >= accountStartNumbers && accountStartNumbers <= 11554)
-            return "ՀԱՅԲԻԶՆԵՍԲԱՆԿ ՓԲԸ ";
+            return "ՀԱՅԲԻԶՆԵՍԲԱՆԿ ՓԲԸ";
         if (11800 >= accountStartNumbers && accountStartNumbers <= 11817)
             return "ԱՆԵԼԻՔ ԲԱՆԿ ՓԲԸ";
         if (15100 >= accountStartNumbers && accountStartNumbers <= 15170)

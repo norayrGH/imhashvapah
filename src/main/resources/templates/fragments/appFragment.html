@@ -414,6 +414,7 @@
                th:name="bankName"
                th:field="*{bankName}"
                readonly="readonly"
+
         />
         <br />
         <label>Սկզբնական մնացորդի տեսակ</label>
@@ -477,19 +478,18 @@
                     method : "POST",
                     contentType : "application/json",
                     url: '/account/cash/bankaccount/create/getbankname',
-                    dataType: 'json',
                     data :accountStartNumbers,
                     beforeSend: function(xhr){
                         xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                     },
-                    success: function (msg){
-
-                        $("#bankName").text(msg);
-
+                    success: function(msg){
+                        alert("in succes");
+                        $("#bankName").val("dsaawd");
+                        console.log(msg);
                         },
                     error:
                         function(data){
-
+                            alert("in error");
                             console.log(data.responseText);
                         }
                 });
