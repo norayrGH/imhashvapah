@@ -260,24 +260,171 @@ public class SupllierController extends BaseController {
     }
     @PostMapping(value = "/debt/details/show")
     public @ResponseBody ArrayList supplierDebtDetails(@RequestBody DateRangByType dateRangByType ) {
-
-
-
-        ArrayList<Debt> debtDetails= new ArrayList<>();
+        ArrayList<DebtDetailsShow> debtDetails= new ArrayList<>();
         DebtDetailsShow debtDetail = new DebtDetailsShow();
 
+        List<CashOutForGoodsProvider> cashOutForGoodsProviders=null;
+        List<CashOutForSerivceProvider> cashOutForSerivceProviders=null;
+        List<CashOutForRent> cashOutForRents=null;
 
-        List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStart(dateRangByType.getStart());
-        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStart(dateRangByType.getStart());
-        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStart(dateRangByType.getStart());
+        if (dateRangByType.getStart() != null && dateRangByType.getEnd() == null) {
+            if(dateRangByType.getType().equals("CompanySupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
 
-        for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
+            }
+            if(dateRangByType.getType().equals("IndividualSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+
+            }
+            if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+
+            }
+            for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForGoodsProvider.getWalletOut().getOutDate(),
+                        cashOutForGoodsProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForGoodsProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForGoodsProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForSerivceProvider cashOutForSerivceProvider:cashOutForSerivceProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForSerivceProvider.getWalletOut().getOutDate(),
+                        cashOutForSerivceProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForSerivceProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForSerivceProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForRent cashOutForRent:cashOutForRents){
+
+                debtDetail = new DebtDetailsShow(cashOutForRent.getWalletOut().getOutDate(),
+                        cashOutForRent.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForRent.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForRent.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
 
 
+
+            return debtDetails;
+        } else if (dateRangByType.getStart() == null && dateRangByType.getEnd() != null) {
+            if(dateRangByType.getType().equals("CompanySupplier")){
+                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            if(dateRangByType.getType().equals("IndividualSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForGoodsProvider.getWalletOut().getOutDate(),
+                        cashOutForGoodsProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForGoodsProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForGoodsProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForSerivceProvider cashOutForSerivceProvider:cashOutForSerivceProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForSerivceProvider.getWalletOut().getOutDate(),
+                        cashOutForSerivceProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForSerivceProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForSerivceProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForRent cashOutForRent:cashOutForRents){
+
+                debtDetail = new DebtDetailsShow(cashOutForRent.getWalletOut().getOutDate(),
+                        cashOutForRent.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForRent.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForRent.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+
+
+            return debtDetails;
+        }else if (dateRangByType.getStart() != null && dateRangByType.getEnd() != null) {
+
+            if(dateRangByType.getType().equals("CompanySupplier")){
+                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            if(dateRangByType.getType().equals("IndividualSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
+                cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+
+            }
+            for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForGoodsProvider.getWalletOut().getOutDate(),
+                        cashOutForGoodsProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForGoodsProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForGoodsProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForSerivceProvider cashOutForSerivceProvider:cashOutForSerivceProviders){
+
+                debtDetail = new DebtDetailsShow(cashOutForSerivceProvider.getWalletOut().getOutDate(),
+                        cashOutForSerivceProvider.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForSerivceProvider.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForSerivceProvider.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+            for (CashOutForRent cashOutForRent:cashOutForRents){
+
+                debtDetail = new DebtDetailsShow(cashOutForRent.getWalletOut().getOutDate(),
+                        cashOutForRent.getWalletOut().getOutType(),
+                        Integer.parseInt(cashOutForRent.getWalletOut().getOutCash()) ,
+                        null,
+                        cashOutForRent.getId()
+                );
+                debtDetails.add(debtDetail);
+            }
+
+            return debtDetails;
         }
-
-
-
         return null;
     }
 
