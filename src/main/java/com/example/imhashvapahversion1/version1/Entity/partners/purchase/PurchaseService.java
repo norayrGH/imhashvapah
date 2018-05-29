@@ -20,6 +20,8 @@ public class PurchaseService {
     //№
     @NotEmpty(message = "Համարը պարտադիր է:")
     private String purchaseNumber;
+    @NotEmpty(message = "Ծառայությունը պարտադիր է: ")
+    private String serviceName;
 
     // Ամսաթիվ
     @Temporal(TemporalType.DATE)
@@ -44,9 +46,6 @@ public class PurchaseService {
     @NotNull(message = "Գումարը պարտադիր է:")
     private Integer amountOfReceipts;
 
-    //Վաճառքի ենթադրյալ գումար
-    @NotNull(message = "Գումարը պարտադիր է:")
-    private Integer sellingValue;
 
     //Ելք անել անձնական դրամապանակից
     private Boolean personalWalletOut;
@@ -58,7 +57,10 @@ public class PurchaseService {
     private Long supplierId;
     @Transient
     private String supplierType;
-
+    @Transient
+    private Long serviceId;
+    @Transient
+    private String serviceType;
     @ManyToOne
     private CompanySupplier companySupplier;
     @ManyToOne

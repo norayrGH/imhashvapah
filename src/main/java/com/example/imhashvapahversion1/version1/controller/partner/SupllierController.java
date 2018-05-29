@@ -13,6 +13,7 @@ import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseGoods;
+import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentArea;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
@@ -26,6 +27,7 @@ import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRen
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.*;
+import com.example.imhashvapahversion1.version1.repository.suppliers.service.PeriodicServiceRentAreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -59,6 +61,8 @@ public class SupllierController extends BaseController {
     SupplierIndividualRepository supplierIndividualRepository;
     @Autowired
     PurchaseGoodsRepository purchaseGoodsRepository;
+    @Autowired
+    PeriodicServiceRentAreaRepository periodicServiceRentAreaRepository;
     @Autowired
     CashOutForGoodsProviderRepository cashOutForGoodsProviderRepository;
 
@@ -666,6 +670,78 @@ public class SupllierController extends BaseController {
         return  modelAndView;
     }
 
+    @GetMapping(value = "/periodicservice")
+    public ModelAndView partnerSupplierPeriodicService( ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        return modelAndView;
+    }
+    @GetMapping(value = "/create/periodicservicesetype")
+    public ModelAndView partnerSupplierPeriodicServiceSelect( ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        return modelAndView;
+    }
+    @GetMapping(value = "/create/periodicservice/rent")
+    public ModelAndView partnerSupplierPeriodicServiceCreate(@RequestParam("type")String type, ModelAndView modelAndView,HttpSession httpSession) {
+        modelAndView.setViewName("app/app");
+        suppliers = new ArrayList();
+        List<CompanySupplier> companySuppliers ;
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers;
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+
+        for(CompanySupplier supplier:companySuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
+        }
+        for(IndividualSupplier supplier:individualSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualSupplier",supplier.getName()));
+        }
+        for(PrivateEntrepreneurSupplier supplier:privateEntrepreneurSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
+        }
+
+        if(type.equals("area")){
+            PeriodicServiceRentArea periodicServiceRentArea =new PeriodicServiceRentArea();
+            periodicServiceRentArea.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentAreaCreate);
+            modelAndView.addObject("periodicServiceRentArea",periodicServiceRentArea);
+
+
+        }
+        modelAndView.addObject("suppliers",suppliers);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        return modelAndView;
+    }
+    @PostMapping(value ="/create/periodicservice/periodicservicerentarea")
+    public ModelAndView partnerSupplierPeriodicServiceRentAreaCreate(@Valid PeriodicServiceRentArea periodicServiceRentArea, BindingResult bindingResult , ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if(bindingResult.hasErrors()) {
+            modelAndView.addObject("suppliers",suppliers);
+            modelAndView.addObject("periodicServiceRentArea",periodicServiceRentArea);
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentAreaCreate);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+            return  modelAndView;
+        }
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
+        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
+        periodicServiceRentAreaRepository.save(periodicServiceRentArea);
+        return  modelAndView;
+    }
 
 
 }

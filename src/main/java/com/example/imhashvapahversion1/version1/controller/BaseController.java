@@ -69,6 +69,9 @@ public class BaseController {
     protected final String partnerSupplierPurchaseType="partnerSupplierPurchaseType";
     protected final String partnerFragmentNavBar = "partnerFragmentNavBar";
     protected final String partnerSupplierFragment = "partnerSupplierFragment";
+    protected final String partnerSupplierPeriodicServiceFragment = "partnerSupplierPeriodicServiceFragment";
+    protected final String partnerSupplierPeriodicServiceSelect = "partnerSupplierPeriodicServiceSelect";
+    protected final String partnerSupplierPeriodicServiceRentAreaCreate = "partnerSupplierPeriodicServiceRentAreaCreate";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";
     protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";
