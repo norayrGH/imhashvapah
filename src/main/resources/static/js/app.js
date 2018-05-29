@@ -7,6 +7,11 @@ var stritFleet = $("#stritFleet");
 var address = {stritFleet: "", region: "", city: ""};
 var textaddress = "";
 var chashInTypes={cashinfrombankaccount:"Մուտք բանկային հաշվից",cashinfromcredit:"Վարկի ստացում",cashinfromloan:"Փոխառության ստացում",cashinfrompointofsale:"Մուտք առևտրի կետից",cashinfromsaleofgoods:"Մուտք ապրանքների իրացումից",cashinfromserviceprovision:"Մուտք ծառայության մատուցումից"};
+var chashOutTypes={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճարում մատակարարին ապրանքների համար",CashOutForSerivceProvider:" Վճարում մատակարարին ծառայության համար "
+                    ,CashOutForRent:"Վճարում վարձակալության համար",CashOutForBankAccount:"Վճարում բանկային հաշվին",
+    CashOutForRedemptionPercent:"Վարկի տոկոսի մարում",CashOutForLoanPayment:"Փոխառության մարում",
+    CashOutForBankSpending:"Բանկային ծախս",CashOutForOtherExpenses:"Այլ ծախսեր",
+    CashOutForCreditPayment:"Վարկի մարում"};
 
 if (cityes.val() != undefined) {
     $.each(addresses, function (key, value) {
@@ -275,6 +280,34 @@ function  partnerSuppliersShow(partnerSuppliers) {
 
     $('#partnerSuppliersShow').append(partnerSuppliersTable);
 
+}
+function  partnerSupplierDebtDetailsShow(supplierDebtDetails) {
+
+    $('#supplierDebtDetails').empty();
+
+    var partnerSuppliersDebtDetailsTableTh= ["Ամսաթիվ","Բովանդակություն","Կատարած Վճարում","Ձեռքբերում"];
+    var partnerSuppliersDebtDetailsTable = $("<table />")
+        .attr({id:"partnerSuppliersDebtDetailsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+   $.each(partnerSuppliersDebtDetailsTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHead.append(tHeadTr);
+    partnerSuppliersDebtDetailsTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(supplierDebtDetails, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.debtDate)
+            ,$("<td />").text(chashOutTypes[item.contents])
+            ,$("<td />").append(item.contents!="Purchase"?$("<a>").attr("href","/cashout/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
+            ,$("<td />").append(item.contents=="Purchase"?$("<a>").attr("href","partner/supplier/purchase/edit/"+item.id).text(item.purchase):"")
+        ));
+    });
+    partnerSuppliersDebtDetailsTable.append(tBody);
+     $('#supplierDebtDetails').append(partnerSuppliersDebtDetailsTable);
 }
 function  partnerSuppliersDebtShow(partnerSuppliersDebts) {
     $('#supplierShowDebt').empty();

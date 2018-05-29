@@ -62,6 +62,11 @@ public class BaseController {
     protected final String partnerSupplierDebtDetails="partnerSupplierDebtDetails";
     protected final String partnerOtherPartner="partnerOtherPartner";
     protected final String partnerSupplier="partnerSupplier";
+    protected final String partnerSupplierPurchase="partnerSupplierPurchase";
+    protected final String partnerSupplierCreatePurchaseForGoods="partnerSupplierCreatePurchaseForGoods";
+    protected final String partnerSupplierCreatePurchaseForService="partnerSupplierCreatePurchaseForService";
+    protected final String partnerSupplierCreatePurchaseForFixedasset="partnerSupplierCreatePurchaseForFixedasset";
+    protected final String partnerSupplierPurchaseType="partnerSupplierPurchaseType";
     protected final String partnerFragmentNavBar = "partnerFragmentNavBar";
     protected final String partnerSupplierFragment = "partnerSupplierFragment";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";

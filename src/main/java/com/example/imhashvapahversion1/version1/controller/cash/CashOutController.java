@@ -145,7 +145,7 @@ public class CashOutController extends BaseController {
     @GetMapping(value = "cashout/cashdesk/create/cashoutforgoodsprovider")
     public ModelAndView cashoutForGoodsProvider(ModelAndView modelAndView ,HttpSession httpSession) {
 
-       suppliers = new ArrayList();
+        suppliers = new ArrayList();
         List<CompanySupplier> companySuppliers ;
         companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
         List<IndividualSupplier> individualSuppliers;

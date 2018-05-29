@@ -18,7 +18,7 @@ public interface CashOutForGoodsProviderRepository extends CrudRepository<CashOu
     ArrayList findByRangeStartAndCompanySupplierId(@Param("startDate") Date startDate,@Param("companySupplierId") Long companySupplierId);
     @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.outDate<=:endDate AND s.id=:companySupplierId")
     ArrayList findByRangeEndAndCompanySupplierId(@Param("endDate") Date endDate,@Param("companySupplierId") Long companySupplierId);
-    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.inDate>=:startDate and w.inDate<=:endDate AND s.id=:companySupplierId")
+    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.outDate>=:startDate and w.outDate<=:endDate AND s.id=:companySupplierId")
     ArrayList findByRangeAndCompanySupplierId(@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("companySupplierId") Long companySupplierId);
 
     //IndividualSupplier
@@ -26,7 +26,7 @@ public interface CashOutForGoodsProviderRepository extends CrudRepository<CashOu
     ArrayList findByRangeStartAndIndividualSupplierId(@Param("startDate") Date startDate,@Param("individualSupplierId") Long individualSupplierId);
     @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.individualSupplier s  WHERE w.outDate<=:endDate AND s.id=:individualSupplierId")
     ArrayList findByRangeEndAndIndividualSupplierId(@Param("endDate") Date endDate,@Param("individualSupplierId") Long individualSupplierId);
-    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.individualSupplier s  WHERE w.inDate>=:startDate and w.inDate<=:endDate AND s.id=:individualSupplierId")
+    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.individualSupplier s  WHERE w.outDate>=:startDate and w.outDate<=:endDate AND s.id=:individualSupplierId")
     ArrayList findByRangeAndIndividualSupplierId(@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("individualSupplierId") Long individualSupplierId);
 
 //PrivateEntrepreneurSupplier
@@ -34,7 +34,7 @@ public interface CashOutForGoodsProviderRepository extends CrudRepository<CashOu
     ArrayList findByRangeStartAndPrivateEntrepreneurSupplierId(@Param("startDate") Date startDate,@Param("privateEntrepreneurSupplierId") Long privateEntrepreneurSupplierId);
     @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.privateEntrepreneurSupplier s  WHERE w.outDate<=:endDate AND s.id=:privateEntrepreneurSupplierId")
     ArrayList findByRangeEndAndPrivateEntrepreneurSupplierId(@Param("endDate") Date endDate,@Param("privateEntrepreneurSupplierId") Long privateEntrepreneurSupplierId);
-    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.privateEntrepreneurSupplier s  WHERE w.inDate>=:startDate and w.inDate<=:endDate AND s.id=:privateEntrepreneurSupplierId")
+    @Query("Select c from CashOutForGoodsProvider c INNER JOIN c.walletOut w INNER JOIN c.privateEntrepreneurSupplier s  WHERE w.outDate>=:startDate and w.outDate<=:endDate AND s.id=:privateEntrepreneurSupplierId")
     ArrayList findByRangeAndPrivateEntrepreneurSupplierId(@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("privateEntrepreneurSupplierId") Long privateEntrepreneurSupplierId);
 
 }

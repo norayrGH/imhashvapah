@@ -12,9 +12,11 @@ import com.example.imhashvapahversion1.version1.Entity.enums.DateRangByType;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseGoods;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Supplier;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.DebtDetailsShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
@@ -22,6 +24,7 @@ import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
+import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +58,11 @@ public class SupllierController extends BaseController {
     @Autowired
     SupplierIndividualRepository supplierIndividualRepository;
     @Autowired
+    PurchaseGoodsRepository purchaseGoodsRepository;
+    @Autowired
     CashOutForGoodsProviderRepository cashOutForGoodsProviderRepository;
+
+    private List<Supplier> suppliers=null;
 
     @GetMapping(value = "")
     public ModelAndView supplierPartner(ModelAndView modelAndView) {
@@ -426,6 +433,99 @@ public class SupllierController extends BaseController {
             return debtDetails;
         }
         return null;
+    }
+    @GetMapping( value ="/purchase")
+    public ModelAndView SupplierPurchase(ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPurchase);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+        return modelAndView;
+    }
+    @GetMapping( value ="/create/purchasechoosetype")
+    public ModelAndView SupplierPurchaseType(ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+        return modelAndView;
+    }
+    @RequestMapping( value ="/create/purchase")
+    public ModelAndView SupplierCreatePurchase(@RequestParam("type") String type, ModelAndView modelAndView,HttpSession httpSession) {
+
+        suppliers = new ArrayList();
+        List<CompanySupplier> companySuppliers ;
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers;
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+
+        for(CompanySupplier supplier:companySuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
+        }
+        for(IndividualSupplier supplier:individualSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualSupplier",supplier.getName()));
+        }
+        for(PrivateEntrepreneurSupplier supplier:privateEntrepreneurSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
+        }
+
+        modelAndView.setViewName("app/app");
+        if(type.equals("goods")){
+            PurchaseGoods  purchaseGoods = new PurchaseGoods();
+            purchaseGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+            modelAndView.addObject("purchaseGoods",purchaseGoods);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForGoods);}
+
+        if(type.equals("service")){
+
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForService);}
+
+        if(type.equals("fixedasset")){
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);}
+
+
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+        return modelAndView;
+    }
+    @PostMapping(value ="/create/purchasegoods")
+    public ModelAndView SupplierCreatePurchaseGoods(@Valid PurchaseGoods purchaseGoods, BindingResult bindingResult , ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+        if(bindingResult.hasErrors()) {
+
+            modelAndView.addObject("purchaseGoods",purchaseGoods);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("fragment", this.partnerSupplierCreatePurchaseForGoods);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+            return modelAndView;
+        }
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+        if(purchaseGoods.getSupplierType().equals("CompanySupplier")){
+            purchaseGoods.setCompanySupplier(companySupplierRepository.findOne(purchaseGoods.getSupplierId()));
+        }
+        if(purchaseGoods.getSupplierType().equals("IndividualSupplier")){
+            purchaseGoods.setIndividualSupplier(individualSupplierRepository.findOne(purchaseGoods.getSupplierId()));
+        }
+        if(purchaseGoods.getSupplierType().equals("PrivateEntrepreneurSupplier")){
+            purchaseGoods.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(purchaseGoods.getSupplierId()));
+        }
+        purchaseGoods.setPurchaseType("PurchaseGoods");
+        purchaseGoodsRepository.save(purchaseGoods);
+        return  modelAndView;
     }
 
     @GetMapping( value ="/create/individualsupplier")
