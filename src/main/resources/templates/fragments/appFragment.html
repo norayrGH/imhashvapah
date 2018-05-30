@@ -30,7 +30,7 @@
 
                 <div class="col-md-4">
                     <br />
-                    <img src="/static/img/Logo.png" />
+                    <img style="width: 255px; height: 85px" src="/static/img/Logo.png" />
                 </div>
 
                 <nav class="main_mnu clearfix">
@@ -3979,42 +3979,14 @@
     </div>
 </div>
 
-<div class="container" th:fragment="partnerSupplierPeriodicServiceRentAreaCreate" >
-
-
-  <!--  <div class="form-group row">
-        <label for="example-text-input" class="col-2 col-form-label">Text</label>
-        <div class="col-10">
-            <input class="form-control" type="text" value="Artisanal kale" id="example-text-input" />
-        </div>
-    </div>
--->
-
-
-    <!--telephone-->
- <!--   <div class="form-group row">
-        <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-        <div class="col-10">
-            <input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
-        </div>
-    </div>-->
-
-
-
-    <!--<div class="form-group row">
-        <label for="example-date-input" class="col-2 col-form-label">Date</label>
-        <div class="col-10">
-            <input class="form-control" type="date" value="2011-08-19" id="example-date-input" />
-        </div>
-    </div>
--->
+<div class="panel panel-default"  th:fragment="partnerSupplierPeriodicServiceRentAreaCreate" >
 
 
     <form th:object="${periodicServiceRentArea}" action="/account/partner/supplier/create/periodicservice/periodicservicerentarea" class="form-horizontal"  method="post" >
-        <h1>PeriodicServiceRentArea</h1>
-        <div class="form-group row ">
-            <label for="name" class="col-2 col-form-label" >Անվանում</label>
-            <div class="col-10" >
+        <div style="margin: 50px">
+            <div class="form-group row ">
+            <label for="name" class=" col-md-4 col-form-label" >Անվանում</label>
+            <div class="col-md-6" >
                 <input type="text"
                        class="form-control"
                        th:name="name"
@@ -4026,8 +3998,8 @@
         </div>
         <div class="form-group row ">
 
-                <label for="selectedSupplier"  class="col-2 col-form-label" >Մատակարար</label>
-            <div class="col-10" >
+                <label for="selectedSupplier"  class=" col-md-4 col-form-label">Մատակարար</label>
+            <div class="col-md-6" >
                 <select id="selectedSupplier"
                         class="form-control"
                         th:name="supplierIndex"
@@ -4043,6 +4015,7 @@
                 <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
 
             </div>
+
             <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
                 <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
                     <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
@@ -4050,8 +4023,8 @@
             </div>
         </div>
         <div class="form-group row ">
-                <label for="type" class="col-2 col-form-label" >Տեսակ</label>
-            <div class="col-10 form-check form-check-inline" >
+                <label for="type" class=" col-md-4 col-form-label" >Տեսակ</label>
+            <div class="col-md-8 form-check form-check-inline" >
                 <input  th:name="type"
                         th:field="*{type}"
                         type="radio"
@@ -4059,28 +4032,27 @@
                         id="type"
                         name="type"
                         th:checked="checked"
-                        value="nonPeriodically" >Ոչ պարբերական
-                </input>
-            </div>
-            <div class="col-10 form-check form-check-inline" >
+                        value="nonPeriodically" >&nbsp;Ոչ պարբերական
+                </input>&nbsp;
                 <input  th:name="type"
                         th:field="*{type}"
                         type="radio"
                         class="form-check-input"
                         id="type"
                         name="type"
-                        value="periodically" >Պարբերական ամենամսյա
+                        value="periodically" >&nbsp;Պարբերական ամենամսյա
                 </input>
+                <br />
+                <small th:if="${#fields.hasErrors('type')}" th:errors="*{type}"  class="form-text text-danger" />
             </div>
-            <small th:if="${#fields.hasErrors('type')}" th:errors="*{type}"  class="form-text text-danger" />
-
         </div>
 
 
 
+
         <div class="form-group row ">
-            <label for="startDate"  class="col-2 col-form-label" >Սկիզբ</label>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
+            <label for="startDate" class=" col-md-4 col-form-label" >Սկիզբ</label>
+            <div class="col-md-6" >
                 <input type="date"
                        class="form-control"
 
@@ -4093,8 +4065,8 @@
         </div>
         <div class="form-group row ">
 
-            <label for="startDate" class="col-sm-2 col-md-1 col-lg-1 col-xl-1 control-label" >Վերջ</label>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
+            <label for="startDate" class=" col-md-4 col-form-label" >Վերջ</label>
+            <div class="col-md-6" >
                 <input type="date"
                        class="form-control"
 
@@ -4108,10 +4080,8 @@
 
 
         <div class="form-group row ">
-            <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-                <label for="cost" class=" control-label" >Արժեք</label>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                <label for="cost" class=" col-md-4 col-form-label" >Արժեք</label>
+            <div class="col-md-6" >
                 <input type="text"
                        class="form-control"
                        id="cost"
@@ -4123,10 +4093,8 @@
             </div>
         </div>
         <div class="form-group row ">
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
-                <label for="rentAddres" class=" control-label" >Վարձակալության հասցե</label>
-            </div>
-            <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
+                <label for="rentAddres" class=" col-md-4 col-form-label">Վարձակալության հասցե</label>
+            <div class="col-md-6" >
                 <input type="text"
                        class="form-control"
                        id="rentAddres"
@@ -4139,8 +4107,8 @@
 
         <div class="form-group row ">
 
-            <label for="contractDate" class="col-sm-2 col-md-2 col-lg-2 col-xl-2 control-label" >Պայմանագրի ամսաթիվ</label>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
+            <label for="contractDate" class=" col-md-4 col-form-label" >Պայմանագրի ամսաթիվ</label>
+            <div class="col-md-6">
                 <input type="date"
                        class="form-control"
 
@@ -4155,8 +4123,8 @@
 
 
         <div class="form-group row ">
-            <label for="contractNumber" class="col-sm-2 col-md-2 col-lg-2 col-xl-2 control-label" >Պայմանագրի համար</label>
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+            <label for="contractNumber" class=" col-md-4 col-form-label" >Պայմանագրի համար</label>
+            <div class="col-md-6" >
                 <input type="text"
                        class="form-control"
                        th:name="contractNumber"
@@ -4203,6 +4171,7 @@
 
         <input type="submit" class="btn btn-default" />
 
+        </div>
     </form >
 
     <script th:inline="javascript">
@@ -4235,6 +4204,10 @@
         /*]]>*/
     </script>
 </div>
+
+
+
+
 
 
 
