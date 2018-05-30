@@ -360,7 +360,7 @@ function  showCashIn(cashIn) {
     var tHead =$("<thead />");
     var tHeadTr = $("<tr />");
     $.each(cashInTableTh, function(i, item) {
-        tHeadTr.append($("<th />").text(item));
+        tHeadTr.append($("<th />").attr({"class": "h5", "style": "font-weight:bold"}).text(item));
     });
     tHeadTr.append($("<th />").text("Գործողություն"));
     tHead.append(tHeadTr);
@@ -403,18 +403,17 @@ function showCash(cash){
     var tHead =$("<thead />");
     var tHeadTr = $("<tr />");
     $.each(cashTableTh, function(i, item) {
-        tHeadTr.append($("<th />").text(item));
+        tHeadTr.append($("<th />").attr({"class":"h5", "style":"font-weight: bold;"}).text(item));
     });
     tHeadTr.append($("<th />").text("Տեսնել"));
     tHead.append(tHeadTr);
     cashTable.append(tHead);
     var tBody = $("<tbody />");
-
     $.each(cash, function(i, item) {
 
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
-             $("<td />").text(item.name ).attr({"style":"font-weight: bold;"}),
+             $("<td />").text(item.name ).attr({"class":"h5","style":"font-weight: bold;"}),
              $("<td />").text(item.openingPalance ),
              $("<td />").text(item.in )
 
