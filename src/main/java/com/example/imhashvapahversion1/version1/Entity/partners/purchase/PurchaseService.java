@@ -70,4 +70,179 @@ public class PurchaseService {
     @ManyToOne
     private Organization organization;
 
+    public PurchaseService() {
+    }
+
+    public PurchaseService(String purchaseNumber, String serviceName, Date purchaseDate, String docType, String docNumber, Date supplerDate, Integer amountOfReceipts, Boolean personalWalletOut, String note, String purchaseType, Long supplierId, String supplierType, Long serviceId, String serviceType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
+        this.purchaseNumber = purchaseNumber;
+        this.serviceName = serviceName;
+        this.purchaseDate = purchaseDate;
+        this.docType = docType;
+        this.docNumber = docNumber;
+        this.supplerDate = supplerDate;
+        this.amountOfReceipts = amountOfReceipts;
+        this.personalWalletOut = personalWalletOut;
+        this.note = note;
+        this.purchaseType = purchaseType;
+        this.supplierId = supplierId;
+        this.supplierType = supplierType;
+        this.serviceId = serviceId;
+        this.serviceType = serviceType;
+        this.companySupplier = companySupplier;
+        this.individualSupplier = individualSupplier;
+        this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
+        this.organization = organization;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPurchaseNumber() {
+        return purchaseNumber;
+    }
+
+    public void setPurchaseNumber(String purchaseNumber) {
+        this.purchaseNumber = purchaseNumber;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
+
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
+    }
+
+    public Date getSupplerDate() {
+        return supplerDate;
+    }
+
+    public void setSupplerDate(Date supplerDate) {
+        this.supplerDate = supplerDate;
+    }
+
+    public Integer getAmountOfReceipts() {
+        return amountOfReceipts;
+    }
+
+    public void setAmountOfReceipts(Integer amountOfReceipts) {
+        this.amountOfReceipts = amountOfReceipts;
+    }
+
+    public Boolean getPersonalWalletOut() {
+        return personalWalletOut;
+    }
+
+    public void setPersonalWalletOut(Boolean personalWalletOut) {
+        this.personalWalletOut = personalWalletOut;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getPurchaseType() {
+        return purchaseType;
+    }
+
+    public void setPurchaseType(String purchaseType) {
+        this.purchaseType = purchaseType;
+    }
+
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierType() {
+        return supplierType;
+    }
+
+    public void setSupplierType(String supplierType) {
+        this.supplierType = supplierType;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public CompanySupplier getCompanySupplier() {
+        return companySupplier;
+    }
+
+    public void setCompanySupplier(CompanySupplier companySupplier) {
+        this.companySupplier = companySupplier;
+    }
+
+    public IndividualSupplier getIndividualSupplier() {
+        return individualSupplier;
+    }
+
+    public void setIndividualSupplier(IndividualSupplier individualSupplier) {
+        this.individualSupplier = individualSupplier;
+    }
+
+    public PrivateEntrepreneurSupplier getPrivateEntrepreneurSupplier() {
+        return privateEntrepreneurSupplier;
+    }
+
+    public void setPrivateEntrepreneurSupplier(PrivateEntrepreneurSupplier privateEntrepreneurSupplier) {
+        this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }

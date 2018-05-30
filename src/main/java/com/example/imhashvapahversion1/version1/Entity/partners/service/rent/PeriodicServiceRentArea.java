@@ -22,7 +22,7 @@ public class PeriodicServiceRentArea {
 
 
 
-    //Տեսակ
+    @NotEmpty(message = "Տեսակը պարտադիր է:")
     private String type;
 
     @Temporal(TemporalType.DATE)

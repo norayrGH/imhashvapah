@@ -59,7 +59,9 @@ public class PurchaseGoods {
     private Long supplierId;
     @Transient
     private String supplierType;
-
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
     @ManyToOne
     private CompanySupplier companySupplier;
     @ManyToOne
@@ -203,5 +205,13 @@ public class PurchaseGoods {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public String getSupplierIndex() {
+        return supplierIndex;
+    }
+
+    public void setSupplierIndex(String supplierIndex) {
+        this.supplierIndex = supplierIndex;
     }
 }
