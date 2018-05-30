@@ -57,6 +57,7 @@ public class OrganizationController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("organization", organization);
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.startViwFragment);
 
         return modelAndView;
@@ -68,6 +69,7 @@ public class OrganizationController extends BaseController {
         modelAndView.setViewName("app/app");
 
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.organizationDetailsFragment);
         return modelAndView;
 
@@ -78,6 +80,7 @@ public class OrganizationController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("fragment", this.organizationFixedasset);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("navBar", this.organizationNavBar);
         return modelAndView;
 
@@ -92,6 +95,7 @@ public class OrganizationController extends BaseController {
         modelAndView.addObject("fixedAsset", fixedAsset);
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("updateOrCreate", "create");
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.organizationFixedassetCreate);
         return modelAndView;
 
@@ -104,6 +108,7 @@ public class OrganizationController extends BaseController {
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
             modelAndView.addObject("fragment", this.organizationFixedassetCreate);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             modelAndView.addObject("updateOrCreate", "create");
             modelAndView.addObject("fixedAsset", fixedAsset);
@@ -114,6 +119,7 @@ public class OrganizationController extends BaseController {
         universalRepository.save(fixedAsset);
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.organizationFixedasset);
 
 
@@ -132,6 +138,7 @@ public class OrganizationController extends BaseController {
         modelAndView.addObject("fixedAsset", fixedAsset);
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("updateOrCreate", "update");
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.organizationFixedassetCreate);
         return modelAndView;
 
@@ -145,6 +152,7 @@ public class OrganizationController extends BaseController {
 
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("organization", fixedAsset.getOrganization());
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.organizationFixedassetCreate);
             modelAndView.addObject("updateOrCreate", "update");
             modelAndView.addObject("fixedAsset", fixedAsset);
@@ -155,6 +163,7 @@ public class OrganizationController extends BaseController {
         universalRepository.save(fixedAsset);
 
         modelAndView.addObject("organization", fixedAsset.getOrganization());
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.organizationFixedasset);
 
 

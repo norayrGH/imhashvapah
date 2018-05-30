@@ -79,11 +79,13 @@ public class CashOutController extends BaseController {
     private List<Supplier> suppliers=null;
 
 
+
     @GetMapping(value = "/cashout/cashdesk" )
     public ModelAndView cashOutcashDesk(ModelAndView modelAndView ) {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOut);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -93,6 +95,7 @@ public class CashOutController extends BaseController {
     public ModelAndView cashOutcashdeskCreate(ModelAndView modelAndView ) {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
@@ -114,6 +117,7 @@ public class CashOutController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashOutForTax",cashOutForTax);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutForTaxCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -125,12 +129,15 @@ public class CashOutController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("cashOutForTax", cashOutForTax);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragment", this.cashOutForTaxCreate);
+
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         cashOutForTaxRepository.save(cashOutForTax);
@@ -172,6 +179,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("cashOutForGoodsProvider", cashOutForGoodsProvider);
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutForGoodsProviderCreate );
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
     return modelAndView;
@@ -183,13 +191,16 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("cashOutForGoodsProvider", cashOutForGoodsProvider);
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragment", this.cashOutForGoodsProviderCreate );
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
+
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if(cashOutForGoodsProvider.getSupplierType().equals("CompanySupplier")){
@@ -242,6 +253,7 @@ public class CashOutController extends BaseController {
       modelAndView.addObject("cashOutForSerivceProvider", cashOutForSerivceProvider);
       modelAndView.addObject("suppliers", suppliers);
       modelAndView.addObject("navBar", this.cashNavBar);
+      modelAndView.addObject("appFragment", this.cashOutFragments);
       modelAndView.addObject("fragment", this.cashOutForSerivceProviderCreate );
       modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
       return modelAndView;
@@ -254,12 +266,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForSerivceProviderCreate );
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
+      modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if(cashOutForSerivceProvider.getSupplierType().equals("CompanySupplier")){
@@ -315,6 +329,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForRentCreate );
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
     }
@@ -326,12 +341,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForRentCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if(cashOutForRent.getSupplierType().equals("CompanySupplier")){
@@ -369,6 +386,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("bankAccounts", bankAccounts);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForBankAccountCreate);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
     }
@@ -383,12 +401,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("bankAccounts", bankAccounts);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForBankAccountCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         cashOutForBankAccount.setBankAccount(bankAccountRepository.findOne(cashOutForBankAccount.getBankAccountId()));
         cashOutForBankAccount.getWalletOut().setOutType("CashOutForBankAccount");
@@ -425,6 +445,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForCreditPaymentCreate );
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
     }
@@ -436,12 +457,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForCreditPaymentCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if( cashOutForCreditPayment.getOtherPartnerType().equals("CompanyOtherPartner")){
@@ -488,6 +511,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForRedemptionPercentCreate );
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
        return modelAndView;
     }
@@ -499,12 +523,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForRedemptionPercentCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutCreate);
+         modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if( cashOutForRedemptionPercent.getOtherPartnerType().equals("CompanyOtherPartner")){
@@ -552,6 +578,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashOutForLoanPaymentCreate );
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
     }
@@ -563,11 +590,13 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
           modelAndView.addObject("fragment", this.cashOutForLoanPaymentCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -602,6 +631,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("cashOutForBankSpending", cashOutForBankSpending);
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutForBankSpendingCreate );
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
          return modelAndView;
@@ -614,11 +644,13 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashOutForBankSpendingCreate);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -642,6 +674,7 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("cashOutForOtherExpenses", cashOutForOtherExpenses);
         modelAndView.addObject("suppliers", suppliers);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutForOtherExpensesCreate );
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         return modelAndView;
@@ -653,12 +686,14 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("cashOutForOtherExpenses", cashOutForOtherExpenses);
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragment", this.cashOutForOtherExpensesCreate);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         cashOutForOtherExpenses.getWalletOut().setOutType("CashOutForOtherExpenses");
