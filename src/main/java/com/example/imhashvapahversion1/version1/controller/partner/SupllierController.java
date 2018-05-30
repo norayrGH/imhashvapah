@@ -13,6 +13,7 @@ import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseGoods;
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseService;
 import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentArea;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
@@ -487,7 +488,9 @@ public class SupllierController extends BaseController {
             modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForGoods);}
 
         if(type.equals("service")){
-
+            PurchaseService purchaseService = new PurchaseService();
+            purchaseService.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+            modelAndView.addObject("purchaseService",purchaseService);
             modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForService);}
 
         if(type.equals("fixedasset")){
@@ -693,11 +696,11 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         suppliers = new ArrayList();
         List<CompanySupplier> companySuppliers ;
-        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findBySupplyForRent();
         List<IndividualSupplier> individualSuppliers;
-        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findBySupplyForRent();
         List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
-        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findBySupplyForRent();
 
         for(CompanySupplier supplier:companySuppliers){
             suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
@@ -735,6 +738,15 @@ public class SupllierController extends BaseController {
             return  modelAndView;
         }
 
+        if(periodicServiceRentArea.getSupplierType().equals("CompanySupplier")){
+            periodicServiceRentArea.setCompanySupplier(companySupplierRepository.findOne(periodicServiceRentArea.getSupplierId()));
+        }
+        if(periodicServiceRentArea.getSupplierType().equals("IndividualSupplier")){
+            periodicServiceRentArea.setIndividualSupplier(individualSupplierRepository.findOne(periodicServiceRentArea.getSupplierId()));
+        }
+        if(periodicServiceRentArea.getSupplierType().equals("PrivateEntrepreneurSupplier")){
+            periodicServiceRentArea.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(periodicServiceRentArea.getSupplierId()));
+        }
 
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);

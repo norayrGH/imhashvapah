@@ -480,7 +480,10 @@ $(function () {
     });
 });
 
-
+function chose(a) {
+    if(a.href== window.location.href)
+        console.log("true")
+}
 
 $(".selectWaletInType").change(function () {
     var fragmentNumber = parseInt(this.value);
