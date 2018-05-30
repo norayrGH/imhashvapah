@@ -735,7 +735,25 @@
     </form >
 
 </div>
+<div th:fragment="partnerSupplierFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
 
+        <div id="partnerSupplierFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column ">
+                <li class="nav-item"><a class="nav-link active" th:href="@{'/account/partner/supplier/debt'}" id="supplierDebt">
+                    Պարտքեր</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier/purchase'}" id="purchase">Ձեռքբերումներ</a>
+                </li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier/periodicservice'}" id="periodicService">Ծառայություններ</a>
+                </li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierPayment">Կատարված
+                    վճարումներ</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierTable">Մատակարարների
+                    ցանկ</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 /*Supplier*/
 <div class="container" th:fragment="createSupplierClientOrganization" >
 

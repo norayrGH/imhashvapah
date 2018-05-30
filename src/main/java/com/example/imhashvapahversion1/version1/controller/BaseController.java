@@ -14,6 +14,10 @@ public class BaseController {
     protected final String cashFragment = "cash";
     protected final String cashOutFragments = "cashOutFragments";
     protected final String cashInFragments = "cashInFragments";
+    protected final String otherPartnerFragments = "otherPartnerFragments";
+    protected final String customerFragments = "customerFragments";
+    protected final String supplierFragments = "supplierFragments";
+    protected final String partnerFragments = "partnerFragments";
     protected final String appFragment = "appFragment";
 
 

@@ -86,6 +86,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplier);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -123,6 +124,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplierFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
@@ -279,6 +281,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerSupplierDebtDetails);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
     }
@@ -456,6 +459,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPurchase);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -466,6 +470,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -497,15 +502,18 @@ public class SupllierController extends BaseController {
             PurchaseGoods  purchaseGoods = new PurchaseGoods();
             purchaseGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
             modelAndView.addObject("purchaseGoods",purchaseGoods);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForGoods);}
 
         if(type.equals("service")){
             PurchaseService purchaseService = new PurchaseService();
             purchaseService.setOrganization((Organization) httpSession.getAttribute("organizationId"));
             modelAndView.addObject("purchaseService",purchaseService);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForService);}
 
         if(type.equals("fixedasset")){
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);}
 
 
@@ -523,6 +531,7 @@ public class SupllierController extends BaseController {
             modelAndView.addObject("purchaseGoods",purchaseGoods);
             modelAndView.addObject("suppliers", suppliers);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment", this.partnerSupplierCreatePurchaseForGoods);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
             return modelAndView;
@@ -530,6 +539,7 @@ public class SupllierController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
@@ -554,6 +564,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualSupplier",individualSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.individualSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -566,6 +577,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualSupplier",individualSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.individualSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -577,6 +589,7 @@ public class SupllierController extends BaseController {
 
             modelAndView.addObject("individualSupplier",individualSupplier);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment", this.individualSupplierCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
             return modelAndView;
@@ -584,6 +597,7 @@ public class SupllierController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplier);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
         individualSupplierRepository.save(individualSupplier);
@@ -597,6 +611,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companySupplier",companySupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.companySupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -612,6 +627,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companySupplier",companySupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.companySupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -623,6 +639,7 @@ public class SupllierController extends BaseController {
 
             modelAndView.addObject("companySupplier",companySupplier);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment", this.companySupplierCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
             return modelAndView;
@@ -630,6 +647,7 @@ public class SupllierController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplier);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
         companySupplierRepository.save(companySupplier);
@@ -645,6 +663,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -659,6 +678,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -671,6 +691,7 @@ public class SupllierController extends BaseController {
 
             modelAndView.addObject("privateEntrepreneurSupplier",privateEntrepreneurSupplier);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
             modelAndView.addObject("fragment", this.privateEntrepreneurSupplierCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -679,6 +700,7 @@ public class SupllierController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("fragment", this.partnerSupplier);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         privateEntrepreneurSupplierRepository.save(privateEntrepreneurSupplier);
@@ -690,6 +712,7 @@ public class SupllierController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
@@ -700,6 +723,7 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
@@ -727,6 +751,7 @@ public class SupllierController extends BaseController {
 
         PeriodicService periodicService=new PeriodicService();
         periodicService.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceCreate);
         modelAndView.addObject("periodicService",periodicService);
         modelAndView.addObject("suppliers",suppliers);
@@ -778,6 +803,7 @@ public class SupllierController extends BaseController {
 
 
         }
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("suppliers",suppliers);
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
@@ -790,6 +816,7 @@ public class SupllierController extends BaseController {
             modelAndView.addObject("suppliers",suppliers);
             modelAndView.addObject("periodicServiceRentArea",periodicServiceRentArea);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.partnerFragments);
             modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentAreaCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -807,6 +834,7 @@ public class SupllierController extends BaseController {
         }
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         periodicServiceRentAreaRepository.save(periodicServiceRentArea);
@@ -819,6 +847,7 @@ public class SupllierController extends BaseController {
             modelAndView.addObject("suppliers",suppliers);
             modelAndView.addObject("periodicServiceRentCar",periodicServiceRentCar);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.partnerFragments);
             modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentCarCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
@@ -836,6 +865,7 @@ public class SupllierController extends BaseController {
         }
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         periodicServiceRentCarRepository.save(periodicServiceRentCar);
@@ -876,6 +906,7 @@ public class SupllierController extends BaseController {
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("suppliers",suppliers);
             modelAndView.addObject("periodicService",periodicService);
+            modelAndView.addObject("appFragment", this.partnerFragments);
             modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceCreate);
             modelAndView.addObject("suppliers",suppliers);
             modelAndView.addObject("navBar", this.partnerNavBar);
@@ -895,6 +926,7 @@ public class SupllierController extends BaseController {
         }
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceSelect);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         periodicServiceRepository.save(periodicService);
