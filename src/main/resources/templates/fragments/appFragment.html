@@ -294,7 +294,7 @@
             <ul class="nav nav-justified">
 
 
-                <li><a th:href="@{'/account/cash'}" id="cashResource"> Դրամական միջոցներ</a></li>
+                    <li><a th:href="@{'/account/cash'}" id="cashResource" class="routs"  > Դրամական միջոցներ</a></li>
                 <li><a th:href="@{'/account/cash/cashin/cashdesk' }" id="in"> Մուտքեր</a></li>
                 <li><a th:href="@{'/account/cash/cashout/cashdesk' }" id="out">Ելքեր</a></li>
 
@@ -3149,7 +3149,7 @@
 
 </div>
 <div class="container" th:fragment="companySupplierCreate" >
-    <form th:object="${companySupplier}" action="/account/partner/supplier/create/companysuppli er" class="form-horizontal"  method="post" >
+    <form th:object="${companySupplier}" action="/account/partner/supplier/create/companysupplier" class="form-horizontal"  method="post" >
 
             <div class="form-group row ">
                 <label for="companySupplierClientOrganizationName" class="col-sm-1 col-md-1 col-lg-1 col-xl-1 control-label" >Անվանում</label>
@@ -3231,6 +3231,7 @@
                 <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 form-check form-check-inline" >
                     <input  th:name="supply"
                             th:field="*{supply}"
+                            th:value="${supply}"
                             type="radio"
                             class="form-check-input"
                            id="supply"
@@ -3242,6 +3243,7 @@
                 <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 form-check form-check-inline" >
                     <input  th:name="supply"
                             th:field="*{supply}"
+                            th:value="${supply}"
                             type="radio"
                             class="form-check-input"
                            id="supply"
@@ -3249,6 +3251,7 @@
                            value="Վարձակալության/ծառայություն" >Վարձակալության/ծառայություն
                     </input>
                 </div>
+                <small th:if="${#fields.hasErrors('supply')}" th:errors="*{supply}"  class="form-text text-danger" />
             </div>
             <div class="form-group row ">
                 <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
@@ -3447,7 +3450,7 @@
    <div id="cashInFragmentNavBar" class="collapse navbar-collapse">
        <ul class=" nav flex-column ">
 
-           <li class="nav-item"><a class="nav-link active" th:href="@{'' }" id="wallet">
+           <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="wallet">
                Դրամապանակ </a></li>
            <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminal">Տերմինալ</a>
            </li>
@@ -3721,7 +3724,10 @@
             </div>
             <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
                 <select id="selectedSupplier"
-                        class="form-control" >
+                        class="form-control"
+                        th:name="supplierIndex"
+                        th:field="*{supplierIndex}"
+                >
                     <option value=""> __ԸՆՏՐԵԼ__ </option>
                     <option th:each="supplier,iterStat  : ${suppliers}"
                             th:value="${iterStat.index}"
@@ -3729,7 +3735,7 @@
                     />
 
                 </select>
-                <small th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}"  class="form-text text-danger" />
+                <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
 
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
@@ -3860,11 +3866,7 @@
 
 
 
-        <input
-                type="hidden"
-                th:field="*{supplierName}"
-                th:value="${supplierName}"
-        />
+
         <input
                 type="hidden"
                 th:field="*{id}"
@@ -3913,13 +3915,13 @@
                     {
                         $('input[name=supplierType]').val(suppliers[this.value].supplierType);
                         $('input[name=supplierId]').val(suppliers[this.value].id);
-                        $('input[name=supplierName]').val(suppliers[this.value].supplierName);
+
 
                     }else{
 
                         $('input[name=supplierType]').val("");
                         $('input[name=supplierId]').val("");
-                        $('input[name=supplierName]').val("");
+
 
                     }
                 })

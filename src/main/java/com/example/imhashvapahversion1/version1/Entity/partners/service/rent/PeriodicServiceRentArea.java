@@ -19,9 +19,8 @@ public class PeriodicServiceRentArea {
     private Long id;
     @NotEmpty(message = "Ծառայության անունը չի կարող լինել դատարկ:")
     private String name;
-    //Մատակարար
-    @NotEmpty(message = "Մատակարարը պարտադիր է:")
-    private String supplierName;
+
+
 
     //Տեսակ
     private String type;
@@ -59,6 +58,9 @@ public class PeriodicServiceRentArea {
     @Transient
     private String supplierType;
 
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
 
 
     @ManyToOne
@@ -73,9 +75,8 @@ public class PeriodicServiceRentArea {
     public PeriodicServiceRentArea() {
     }
 
-    public PeriodicServiceRentArea(String name, String supplierName, String type, Date startDate, Date endDate, String cost, String rentAddres, Date contractDate, String contractNumber, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
+    public PeriodicServiceRentArea(String name, String type, Date startDate, Date endDate, String cost, String rentAddres, Date contractDate, String contractNumber, Long supplierId, String supplierType, String supplierIndex, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
         this.name = name;
-        this.supplierName = supplierName;
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -85,6 +86,7 @@ public class PeriodicServiceRentArea {
         this.contractNumber = contractNumber;
         this.supplierId = supplierId;
         this.supplierType = supplierType;
+        this.supplierIndex = supplierIndex;
         this.companySupplier = companySupplier;
         this.individualSupplier = individualSupplier;
         this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
@@ -107,12 +109,12 @@ public class PeriodicServiceRentArea {
         this.name = name;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getSupplierIndex() {
+        return supplierIndex;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setSupplierIndex(String supplierindex) {
+        this.supplierIndex = supplierindex;
     }
 
     public String getType() {

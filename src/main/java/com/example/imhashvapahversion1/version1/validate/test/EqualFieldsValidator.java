@@ -88,7 +88,6 @@ public class EqualFieldsValidator implements ConstraintValidator<EqualFields, Ob
                         validationCount=0;
                         testHvhh="";
                         context.buildConstraintViolationWithTemplate("Նման ՀՎՀՀ-ով կազմակերպություն գոյություն ունի").addConstraintViolation();
-
                         return false;
                     }
                 }
