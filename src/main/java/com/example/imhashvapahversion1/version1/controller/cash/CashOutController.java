@@ -292,8 +292,6 @@ public class CashOutController extends BaseController {
         return  modelAndView;
 
     }
-
-
     /*--CashOutForSerivceProvider--*/
 
     /*CashOutForRent*/
