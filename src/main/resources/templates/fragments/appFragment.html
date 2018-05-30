@@ -300,13 +300,32 @@
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
             <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
 
-
+            <<!--div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="name" class=" col-md-4 col-form-label" >Անվանում</label>
+                    <div class="col-md-6" >
+                        <input type="text"
+                               class="form-control"
+                               th:name="name"
+                               id="name"
+                               th:field="*{name}"
+                        />
+                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"  class="form-text text-danger" />
+                    </div>
+                </div>
+-->
         </div>
-        <label>Անվանում</label>
-        <input type="text"
+        <div class="form-group row ">
+            <label for="name" class=" col-md-4 col-form-label" >Անվանում</label>
+            <div class="col-md-6" >
+                <input type="text"
                th:name="walletName"
                th:field="*{walletName}"
-        />
+                />
+                <small th:if="${#fields.hasErrors('walletName')}" th:errors="*{walletName}"  class="form-text text-danger" />
+            </div>
+        </div>
+
         <label>Սկզբնական մնացորդ</label>
         <input type="text"
                th:name="startBalance"
