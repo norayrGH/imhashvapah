@@ -24,7 +24,9 @@ public class AppController extends BaseController{
 
         List<Organization> organizationList = (List<Organization>) organizationRepository.findAll();
         modelAndView.addObject("organizationList", organizationList);
+
         modelAndView.addObject("fragment", this.startViwFragment);
+
         modelAndView.setViewName("start");
 
         return modelAndView;

@@ -12,6 +12,10 @@ public class BaseController {
 
     protected final String cashNavBar = "cashNavBar";
     protected final String cashFragment = "cash";
+    protected final String cashOutFragments = "cashOutFragments";
+    protected final String cashInFragments = "cashInFragments";
+    protected final String appFragment = "appFragment";
+
 
     protected final String cashdeskFragment = "cashdesk";
     protected final String bankaccount = "bankaccount";
@@ -72,6 +76,9 @@ public class BaseController {
     protected final String partnerSupplierPeriodicServiceFragment = "partnerSupplierPeriodicServiceFragment";
     protected final String partnerSupplierPeriodicServiceSelect = "partnerSupplierPeriodicServiceSelect";
     protected final String partnerSupplierPeriodicServiceRentAreaCreate = "partnerSupplierPeriodicServiceRentAreaCreate";
+    protected final String partnerSupplierPeriodicServiceRentCarCreate = "partnerSupplierPeriodicServiceRentCarCreate";
+    protected final String partnerSupplierPeriodicServiceRentOtherCreate = "partnerSupplierPeriodicServiceRentOtherCreate";
+    protected final String partnerSupplierPeriodicServiceCreate = "partnerSupplierPeriodicServiceCreate";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";
     protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";

@@ -3,20 +3,27 @@ package com.example.imhashvapahversion1.version1.Entity.cash;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class WalletData {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "Դրամապանակի անվան դաշտը հարկավոր է լրացնել")
+    @NotEmpty(message = "Անունը պարտադիր է։")
     private String walletName;
-    private int startBalance;
-    private int startingNumbering;
-    private int outNumbering;
-    private int cashBbookPapers;
-    private int startingNumberCashBookPapers;
+    @NotNull(message = "Սկզբնական մնացորդը պարտադիր է։")
+    private Integer startBalance;
+    @NotNull(message = "Մուտքերի համարակալման առաջին թիվը պարտադիր է։")
+    private Integer startingNumbering;
+    @NotNull(message = "Ելքերի համարակալման առաջին թիվը պարտադիր է։")
+    private Integer outNumbering;
+    private Integer cashBbookPapers;
+    @NotNull(message = "Համարակալման առաջին թիվը պարտադիր է։")
+    private Integer startingNumberCashBookPapers;
     private String notes;
     @OneToOne
     private Organization organization;
@@ -40,43 +47,43 @@ public class WalletData {
         this.walletName = walletName;
     }
 
-    public int getStartBalance() {
+    public Integer getStartBalance() {
         return startBalance;
     }
 
-    public void setStartBalance(int startBalance) {
+    public void setStartBalance(Integer startBalance) {
         this.startBalance = startBalance;
     }
 
-    public int getStartingNumbering() {
+    public Integer getStartingNumbering() {
         return startingNumbering;
     }
 
-    public void setStartingNumbering(int startingNumbering) {
+    public void setStartingNumbering(Integer startingNumbering) {
         this.startingNumbering = startingNumbering;
     }
 
-    public int getOutNumbering() {
+    public Integer getOutNumbering() {
         return outNumbering;
     }
 
-    public void setOutNumbering(int outNumbering) {
+    public void setOutNumbering(Integer outNumbering) {
         this.outNumbering = outNumbering;
     }
 
-    public int getCashBbookPapers() {
+    public Integer getCashBbookPapers() {
         return cashBbookPapers;
     }
 
-    public void setCashBbookPapers(int cashBbookPapers) {
+    public void setCashBbookPapers(Integer cashBbookPapers) {
         this.cashBbookPapers = cashBbookPapers;
     }
 
-    public int getStartingNumberCashBookPapers() {
+    public Integer getStartingNumberCashBookPapers() {
         return startingNumberCashBookPapers;
     }
 
-    public void setStartingNumberCashBookPapers(int startingNumberCashBookPapers) {
+    public void setStartingNumberCashBookPapers(Integer startingNumberCashBookPapers) {
         this.startingNumberCashBookPapers = startingNumberCashBookPapers;
     }
 

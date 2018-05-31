@@ -104,12 +104,6 @@ public class CashController extends BaseController {
         });
     }
 
- /*   @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-    }*/
 
 
     @GetMapping(value = "")
@@ -119,6 +113,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
 
@@ -180,7 +175,9 @@ public class CashController extends BaseController {
         walletData.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar", this.cashNavBar);
+
         modelAndView.addObject("fragment", this.cashdeskFragment);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
 
@@ -192,6 +189,7 @@ public class CashController extends BaseController {
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.cashNavBar);
             modelAndView.addObject("fragment", this.cashdeskFragment);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             modelAndView.addObject("walletData", walletData);
             return modelAndView;
@@ -201,6 +199,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("walletData", walletData);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashdeskFragment);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         walletDataRepository.save(walletData);
         return modelAndView;
@@ -211,6 +210,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.bankaccount);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
 
@@ -225,6 +225,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("bankAccount", bankAccount);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.bankaccountCreate);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
 
@@ -428,6 +429,7 @@ public class CashController extends BaseController {
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
             modelAndView.addObject("fragment", this.bankaccountCreate);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
             return modelAndView;
@@ -436,6 +438,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("organization",bankAccount.getOrganization());
         modelAndView.addObject( "navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.bankaccount);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         bankAccountRepository.save(bankAccount);
         return  modelAndView;
@@ -444,7 +447,9 @@ public class CashController extends BaseController {
     public ModelAndView cashIncashdesk(ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+
         modelAndView.addObject("fragment", this.cashInFragment);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return modelAndView;
     }
@@ -510,6 +515,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return modelAndView;
 
@@ -532,6 +538,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -550,6 +557,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("customerList", customerList);
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
@@ -559,6 +567,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromSaleOfGoods.getWalletIn().setInType("cashinfromsaleofgoods");
         cashInFromSaleOfGoodsRepository.save(cashInFromSaleOfGoods);
@@ -581,6 +590,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("accountList", accountList);
         modelAndView.addObject("cashInFromBankAccount", cashInFromBankAccount);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateBankAccount);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -598,6 +608,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("accountList", accountList);
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateBankAccount);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
@@ -606,6 +617,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromBankAccount.getWalletIn().setInType("cashinfrombankaccount");
@@ -627,6 +639,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("colleaguesList", colleaguesList);
         modelAndView.addObject("cashInFromLoan", cashInFromLoan);
         modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateCashInFromLoan);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
@@ -650,6 +663,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("cashInFromLoan", cashInFromLoan);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromLoan);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -659,6 +673,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromLoan.getWalletIn().setInType("cashinfromloan");
         cashInFromLoanRepository.save(cashInFromLoan);
@@ -676,6 +691,7 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateCashInFromPointOfSale);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return  modelAndView;
@@ -687,6 +703,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromPointOfSale);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
@@ -695,6 +712,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromPointOfSale.getWalletIn().setInType("cashinfrompointofsale");
@@ -716,6 +734,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("cashInFromServiceProvision", cashInFromServiceProvision);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateCashInFromServiceProvision);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return  modelAndView;
@@ -732,6 +751,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("customerList", customerList);
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromServiceProvision);
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
 
@@ -740,6 +760,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromServiceProvision.getWalletIn().setInType("cashinfromserviceprovision");
@@ -763,6 +784,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("colleaguesList", colleaguesList);
         modelAndView.addObject("cashInFromCredit", cashInFromCredit);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateCashInFromCredit);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -786,6 +808,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("cashInFromCredit", cashInFromCredit);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromCredit);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -794,6 +817,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         cashInFromCredit.getWalletIn().setInType("cashinfromcredit");
@@ -806,6 +830,7 @@ public class CashController extends BaseController {
     public   ModelAndView cashinfrompointofsaleCreateCustomer( ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.customerAndColleaguesCreate);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -816,6 +841,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.customerAndColleaguesCreateSupplier);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -827,6 +853,7 @@ public class CashController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.customerAndColleaguesCreateOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -840,6 +867,7 @@ public class CashController extends BaseController {
         customerClientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
         modelAndView.addObject("customerClientOrganization", customerClientOrganization);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createCustomerClientOrganization);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -852,6 +880,7 @@ public class CashController extends BaseController {
             modelAndView.addObject("clientOrganization", clientOrganization);
             modelAndView.addObject("organization", clientOrganization.getOrganization());
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createCustomerClientOrganization);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
@@ -859,6 +888,7 @@ public class CashController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         customerClientOrganizationRepository.save(clientOrganization);
@@ -872,6 +902,7 @@ public class CashController extends BaseController {
         customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("customerIndividual", customerIndividual);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.createCustomerIndividual);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -883,12 +914,14 @@ public class CashController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("customerIndividual", customerIndividual);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.createCustomerIndividual);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         customerIndividualRepository.save(customerIndividual);
@@ -906,6 +939,7 @@ public class CashController extends BaseController {
         otherPartnerClientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
         modelAndView.addObject("otherPartnerClientOrganization", otherPartnerClientOrganization);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createOtherPartnerClientOrganization);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -917,6 +951,7 @@ public class CashController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("otherPartnerClientOrganization", otherPartnerClientOrganization);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createOtherPartnerClientOrganization);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
@@ -924,6 +959,7 @@ public class CashController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         otherPartnerClientOrganizationRepository.save(otherPartnerClientOrganization);
@@ -937,6 +973,7 @@ public class CashController extends BaseController {
         otherPartnerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
@@ -948,12 +985,14 @@ public class CashController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("otherPartnerIndividual", otherPartnerIndividual);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createOtherPartnerIndividual);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         otherPartnerIndividualRepository.save(otherPartnerIndividual);
@@ -970,6 +1009,7 @@ public class CashController extends BaseController {
         supplierClientOrganization.setOrganization((Organization)httpSession.getAttribute("organizationId"));
         modelAndView.addObject("supplierClientOrganization", supplierClientOrganization );
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createSupplierClientOrganization);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -981,6 +1021,7 @@ public class CashController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("supplierClientOrganization", supplierClientOrganization);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createSupplierClientOrganization);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
@@ -988,6 +1029,7 @@ public class CashController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         supplierClientOrganizationRepository.save(supplierClientOrganization);
@@ -1005,6 +1047,7 @@ public class CashController extends BaseController {
         supplierIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("supplierIndividual", supplierIndividual);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createSupplierIndividual);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
@@ -1016,12 +1059,14 @@ public class CashController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("supplierIndividual", supplierIndividual);
             modelAndView.addObject("navBar", this.cashNavBar);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createSupplierIndividual);
             modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
             return modelAndView;
         }
 
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         supplierIndividualRepository.save(supplierIndividual);
