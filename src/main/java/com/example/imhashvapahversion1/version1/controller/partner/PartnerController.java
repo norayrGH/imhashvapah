@@ -94,6 +94,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.partnerCustomers);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
@@ -138,6 +139,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualCustomer",individualCustomer);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.individualCustomerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
@@ -156,6 +158,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualCustomer",individualCustomer);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.individualCustomerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -166,12 +169,14 @@ public class PartnerController extends BaseController {
         if(bindingResult.hasErrors()) {
            modelAndView.addObject("individualCustomer", individualCustomer);
            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.customerFragments);
            modelAndView.addObject("fragment", this.individualCustomerCreate);
            modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
            return modelAndView;
        }
         individualCustomer.getIndividual().setOrganization(individualCustomer.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.partnerCustomers);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         individualCustomerRepository.save(individualCustomer);
@@ -185,6 +190,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companyCustomer",companyCustomer);
          modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.companyCustomerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
@@ -202,6 +208,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companyCustomer",companyCustomer);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.companyCustomerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -213,6 +220,7 @@ public class PartnerController extends BaseController {
 
             modelAndView.addObject("companyCustomer", companyCustomer);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.customerFragments);
             modelAndView.addObject("fragment", this.companyCustomerCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
             return modelAndView;
@@ -220,6 +228,7 @@ public class PartnerController extends BaseController {
 
 
        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
        modelAndView.addObject("fragment", this.partnerCustomers);
        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
        companyCustomerRepository.save(companyCustomer);
@@ -234,6 +243,7 @@ public class PartnerController extends BaseController {
           modelAndView.setViewName("app/app");
         modelAndView.addObject("privateEntrepreneurCustomer",privateEntrepreneurCustomer);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragment", this.privateEntrepreneurCustomerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
@@ -247,6 +257,7 @@ public class PartnerController extends BaseController {
 
             modelAndView.addObject("privateEntrepreneurCustomer", privateEntrepreneurCustomer);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.customerFragments);
             modelAndView.addObject("fragment", this.privateEntrepreneurCustomerCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
             return modelAndView;
@@ -255,6 +266,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("fragment", this.partnerCustomers);
+        modelAndView.addObject("appFragment", this.customerFragments);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         privateEntrepreneurCustomerRepository.save(privateEntrepreneurCustomer);
         return  modelAndView;
@@ -270,6 +282,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
@@ -319,6 +332,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
        modelAndView.addObject("companyOtherPartner",companyOtherPartner);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.companyOtherPartnerCreate);
          modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
@@ -332,6 +346,7 @@ public class PartnerController extends BaseController {
 
             modelAndView.addObject("companyOtherPartner",companyOtherPartner);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.otherPartnerFragments);
             modelAndView.addObject("fragment", this.companyOtherPartnerCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
             return modelAndView;
@@ -339,6 +354,7 @@ public class PartnerController extends BaseController {
 
         companyOtherPartner.getClientOrganization().setOrganization(companyOtherPartner.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         companyOtherPartnerRepository.save(companyOtherPartner);
@@ -353,6 +369,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualOtherPartner",individualOtherPartner);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
@@ -370,6 +387,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualOtherPartner",individualOtherPartner);
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
@@ -383,6 +401,7 @@ public class PartnerController extends BaseController {
 
             modelAndView.addObject("individualOtherPartner",individualOtherPartner);
             modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.otherPartnerFragments);
             modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
             modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
             return modelAndView;
@@ -390,6 +409,7 @@ public class PartnerController extends BaseController {
 
         individualOtherPartner.getIndividual().setOrganization(individualOtherPartner.getOrganization());
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
         individualOtherPartnerRepository.save(individualOtherPartner);
@@ -403,6 +423,7 @@ public class PartnerController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("privateEntrepreneurOtherPartner",privateEntrepreneurOtherPartner);
          modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.privateEntrepreneurOtherPartnerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
@@ -416,6 +437,7 @@ public class PartnerController extends BaseController {
 
              modelAndView.addObject("privateEntrepreneurOtherPartner",privateEntrepreneurOtherPartner);
              modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.otherPartnerFragments);
              modelAndView.addObject("fragment", this.privateEntrepreneurOtherPartnerCreate);
              modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
             return  modelAndView;
@@ -423,6 +445,7 @@ public class PartnerController extends BaseController {
 
 
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.partnerOtherPartner);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         privateEntrepreneurOtherPartnerRepository.save(privateEntrepreneurOtherPartner);
@@ -437,6 +460,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
 
@@ -467,6 +491,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
         modelAndView.addObject("fragment", this.partnerOtherPartnerFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
