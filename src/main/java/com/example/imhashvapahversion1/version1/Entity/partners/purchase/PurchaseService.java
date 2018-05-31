@@ -60,11 +60,12 @@ public class PurchaseService {
     @Transient
     private String supplierType;
     @Transient
-
+    @NotEmpty(message = "Ծառայությունը պարտադիր է:")
     private String  serviceIndex;
     @Transient
     private Long serviceId;
     @Transient
+
     private String serviceType;
 
 

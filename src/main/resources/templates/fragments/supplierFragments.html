@@ -795,7 +795,7 @@
                             th:field="*{serviceIndex}"
                             th:name="serviceIndex"
                             class="form-control" >
-                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option value=''> __ԸՆՏՐԵԼ__ </option>
                         <option th:each="service,iterStat  : ${services}"
                                 th:value="${iterStat.index}"
                                 th:text="${service.getServiceName()}"
@@ -805,15 +805,20 @@
                     <small th:if="${#fields.hasErrors('serviceIndex')}" th:errors="*{serviceIndex}"  class="form-text text-danger" />
 
                 </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <a type="button" th:href="@{'/account/partner/supplier/create/periodicservicesetype'}" class="btn btn-default btn-sm" >
+                        <span class="glyphicon glyphicon-plus-sign"></span> Ծառայություն
+                    </a>
+                </div>
             </div>
             <div class="form-group row ">
                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
                     <label for="selectedSupplier" class=" control-label" >Մատակարար</label>
                 </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
+                <div  class="col-sm-4 col-md-3 col-lg-3  col-xl-3" >
                     <select id="selectedSupplier"
-                            th:field="*{supplierIndex}"
                             th:name="supplierIndex"
+                            th:field="*{supplierIndex}"
                             class="form-control" >
                         <option value=""> __ԸՆՏՐԵԼ__ </option>
                         <option th:each="supplier,iterStat  : ${suppliers}"
@@ -822,6 +827,7 @@
                         />
 
                     </select>
+                    <input id="selectedSupplierName" class="form-control" type="text" />
                     <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
 
                 </div>
@@ -836,8 +842,8 @@
                 <label for="purchaseDate" class="col-sm-2 col-md-2 col-lg-2 col-xl-2 control-label" >Ամսաթիվ</label>
                 <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
                     <input type="date"
-                           class="form-control"
 
+                           class="form-control"
                            th:name="purchaseDate"
                            id="purchaseDate"
                            th:field="*{purchaseDate}"
@@ -958,27 +964,56 @@
                 $(document).ready(function () {
                     var suppliers = /*[[${suppliers}]]*/ 'default';
                     var services = /*[[${services}]]*/ 'default';
-                    console.log(services);
-
+                    if($('#selectedService').val()==='') {
+                        $('#selectedSupplierName').hide();
+                        $('#selectedSupplier').show();
+                    }else
+                    {
+                        $('#selectedSupplier').hide();
+                        $('#selectedSupplierName').val(suppliers[$('#selectedSupplier').val()].supplierName).prop("disabled",true)
+                    }
                     $('#selectedSupplier').on('change', function() {
                         if(this.value!="")
                         {
                             $('input[name=supplierType]').val(suppliers[this.value].supplierType);
                             $('input[name=supplierId]').val(suppliers[this.value].id);
                         }else{
+
+                            $('input[name=supplierType]').val("");
+                            $('input[name=supplierId]').val("");
+
+                        }
+                    });
+
+
+                    $('#selectedService').on('change', function() {
+                        var supplierIndex ;
+
+                        if($('#selectedService').val()==='')
+                        {
+                            $('#selectedSupplierName').hide()
+                            $('#selectedSupplier').val('').show();
                             $('input[name=supplierType]').val("");
                             $('input[name=supplierId]').val("");
                         }
-                    });
-                    $('#selectedService').on('change', function() {
                         if(this.value!="")
                         {
-                            $('input[name=serviceType]').val(services[this.value].serviceType);
-                            $('input[name=serviceId]').val(services[this.value].id);
-                            $.each( suppliers, function( key, value ) {
-                                console.log( key + ": " + value );
-                            });
-                            $('input[name=supplierIndex]').val(services[this.value].id);
+                                $('input[name=serviceType]').val(services[this.value].serviceType);
+                                $('input[name=serviceId]').val(services[this.value].id);
+
+                                for (j = 0; j < suppliers.length; j++) {
+                                    if (services[this.value].supplierId == suppliers[j].id && services[this.value].supplierType == suppliers[j].supplierType) {
+                                        console.log("set supplier" + " " + suppliers[j].id + " " + suppliers[j].supplierType);
+                                        supplierIndex = j;
+                                    }
+                                }
+
+
+                                $('#selectedSupplier').val(supplierIndex).hide();
+                                $('#selectedSupplierName').val(suppliers[supplierIndex].supplierName).show().prop("disabled",true);
+                                $('input[name=supplierType]').val(suppliers[supplierIndex].supplierType);
+                                $('input[name=supplierId]').val(suppliers[supplierIndex].id);
+
 
                         }else{
                             $('input[name=serviceType]').val("");

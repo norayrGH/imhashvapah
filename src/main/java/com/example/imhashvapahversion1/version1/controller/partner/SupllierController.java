@@ -27,6 +27,7 @@ import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoo
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseGoodsRepository;
+import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseServiceRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.*;
 import com.example.imhashvapahversion1.version1.repository.suppliers.service.PeriodicServiceRentAreaRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.service.PeriodicServiceRentCarRepository;
@@ -63,6 +64,8 @@ public class SupllierController extends BaseController {
     SupplierClientOrganizationRepository supplierClientOrganizationRepository;
     @Autowired
     SupplierIndividualRepository supplierIndividualRepository;
+    @Autowired
+    PurchaseServiceRepository purchaseServiceRepository;
     @Autowired
     PurchaseGoodsRepository purchaseGoodsRepository;
     @Autowired
@@ -583,6 +586,56 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
+
+    @PostMapping(value ="/create/purchaseservice")
+    public ModelAndView SupplierCreatePurchase(@Valid PurchaseService purchaseService, BindingResult bindingResult , ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+
+        if(bindingResult.hasErrors()) {
+
+            modelAndView.addObject("purchaseService",purchaseService);
+            modelAndView.addObject("services",services);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForService);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+            return modelAndView;
+        }
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
+        modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+        if(purchaseService.getSupplierType().equals("CompanySupplier")){
+            purchaseService.setCompanySupplier(companySupplierRepository.findOne(purchaseService.getSupplierId()));
+        }
+        if(purchaseService.getSupplierType().equals("IndividualSupplier")){
+            purchaseService.setIndividualSupplier(individualSupplierRepository.findOne(purchaseService.getSupplierId()));
+        }
+        if(purchaseService.getSupplierType().equals("PrivateEntrepreneurSupplier")){
+            purchaseService.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(purchaseService.getSupplierId()));
+        }
+        //services
+        if(purchaseService.getServiceType().equals("PeriodicService")){
+            purchaseService.setPeriodicService(periodicServiceRepository.findOne(purchaseService.getServiceId()));
+        }
+        if(purchaseService.getServiceType().equals("PeriodicServiceRentArea")){
+            purchaseService.setPeriodicServiceRentArea(periodicServiceRentAreaRepository.findOne(purchaseService.getServiceId()));
+        }
+        if(purchaseService.getServiceType().equals("PeriodicServiceRentCar")){
+            purchaseService.setPeriodicServiceRentCar(periodicServiceRentCarRepository.findOne(purchaseService.getServiceId()));
+        }
+        if(purchaseService.getServiceType().equals("PeriodicServiceRentOther")){
+            purchaseService.setPeriodicServiceRentOther(periodicServiceRentOtherRepository.findOne(purchaseService.getServiceId()));
+        }
+
+        purchaseServiceRepository.save(purchaseService);
+        return  modelAndView;
+    }
+
     @PostMapping(value ="/create/purchasegoods")
     public ModelAndView SupplierCreatePurchaseGoods(@Valid PurchaseGoods purchaseGoods, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");

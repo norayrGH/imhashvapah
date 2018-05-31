@@ -101,6 +101,11 @@
                 });
 
                 datePickerStart.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
                     $.ajax({
                         method : "POST",
                         contentType : "application/json",
@@ -128,6 +133,11 @@
                     });
                 });
                 datePickerEnd.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
                     $.ajax({
                         method : "POST",
                         contentType : "application/json",
