@@ -349,6 +349,7 @@ function  partnerSuppliersDebtShow(partnerSuppliersDebts) {
     $("#supplierShowDebt").append(partnerSuppliersDebtTable);
 
 }
+
 function  showCashIn(cashIn) {
 
 
