@@ -289,49 +289,97 @@
         </div>
     </nav>
 </div>
-<div class="container" th:fragment="cashdesk">
+<div class="panel panel-default" th:fragment="cashdesk">
 
     <form th:object="${walletData}" action="/account/cash/cashdesk" th:name="walletDataForm" method="post">
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')} " >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-            <!--<p th:each="err : ${#fields.detailedErrors()}" th:text="${err.getFieldName()}"></p>-->
-
-        </div>
-        <label>Անվանում</label>
-        <input type="text"
+        <div style="margin: 50px">
+        <div class="form-group row ">
+            <label for="walletName" class=" col-md-4 col-form-label" >Անվանում</label>
+            <div class="col-md-6" >
+            <input id="walletName" class="form-control" type="text"
                th:name="walletName"
                th:field="*{walletName}"
-        />
-        <label>Սկզբնական մնացորդ</label>
-        <input type="text"
+            />
+                <small th:if="${#fields.hasErrors('walletName')}" th:errors="*{walletName}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="startBalance" class=" col-md-4 col-form-label" >Սկզբնական մնացորդ</label>
+            <div class="col-md-6" >
+                <input id="startBalance" class="form-control" type="text"
                th:name="startBalance"
                th:field="*{startBalance}"
         />
-        <label>Մուտքերի համարակալումը սկսել</label>
-        <input type="text"
+                <small th:if="${#fields.hasErrors('startBalance')}" th:errors="*{startBalance}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="startingNumbering" class=" col-md-4 col-form-label" >Մուտքերի համարակալումը սկսել</label>
+            <div class="col-md-4" >
+            <input id="startingNumbering" class="form-control" type="text"
                th:name="startingNumbering"
                th:field="*{startingNumbering}"
-        />
-        <label>Ելքերի համարակալումը սկսել</label>
-        <input type="text"
+            />
+            </div>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('startingNumbering')}" th:errors="*{startingNumbering}"  class="form-text text-danger" />
+        </div>
+
+        <div class="form-group row ">
+            <label for="outNumbering" class=" col-md-4 col-form-label" >Ելքերի համարակալումը սկսել</label>
+            <div class="col-md-4" >
+            <input id="outNumbering" class="form-control" type="text"
                th:name="outNumbering"
                th:field="*{outNumbering}"
-        />
-        <label>Դրամարկղի գրքի թերթերի քանակ</label>
-        <input type="text"
+            />
+            </div>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('outNumbering')}" th:errors="*{outNumbering}"  class="form-text text-danger" />
+        </div>
+
+        <div class="form-group row ">
+            <label for="cashBbookPapers" class=" col-md-4 col-form-label" >Դրամարկղի գրքի թերթերի քանակ</label>
+            <div class="col-md-4" >
+            <input id="cashBbookPapers" class="form-control" type="text"
                th:name="cashBbookPapers"
                th:field="*{cashBbookPapers}"
-        />
-        <label>Դրամարկղի գրքի թերթերի համարակալումը սկսել</label>
-        <input type="text"
+            />
+            </div>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('cashBbookPapers')}" th:errors="*{cashBbookPapers}"  class="form-text text-danger" />
+        </div>
+
+        <div class="form-group row ">
+            <label for="startingNumberCashBookPapers" class=" col-md-4 col-form-label" >Դրամարկղի գրքի թերթերի համարակալումը սկսել</label>
+            <div class="col-md-4" >
+            <input id="startingNumberCashBookPapers" class="form-control" type="text"
                th:name="startingNumberCashBookPapers"
                th:field="*{startingNumberCashBookPapers}"
-        />
-        <label>Նշումներ</label>
-        <input type="text"
+            />
+            </div>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('startingNumberCashBookPapers')}" th:errors="*{startingNumberCashBookPapers}"  class="form-text text-danger" />
+        </div>
+
+
+        <div class="form-group row ">
+            <label for="notes" class=" col-md-4 col-form-label">Նշումներ</label>
+            <div class="col-md-4">
+            <input id="notes" class="form-control" type="text"
                th:name="notes"
                th:field="*{notes}"
-        />
+            />
+            </div>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"  class="form-text text-danger" />
+        </div>
 
         <input name="csrfToken" id="csrfToken"
                type="hidden"
@@ -340,11 +388,14 @@
 
 
         <input type="submit" class="btn btn-default"/>
+
+        </div>
     </form>
 </div>
-<div class="container" th:fragment="bankaccount">
 
-    <a class="btn btn-info" role="button" th:href="@{'/account/cash/bankaccount/create/' }">Ավելացնել </a>
+<div th:fragment="bankaccount">
+    <br />
+    &nbsp;&nbsp;&nbsp;<a class="btn btn-info" role="button" th:href="@{'/account/cash/bankaccount/create/' }">Ավելացնել </a>
     <div id="showBankAccount" >
     </div>
     <script th:inline="javascript" >
@@ -375,35 +426,42 @@
         });
     </script>
 </div>
-<div class="container" th:fragment="bankaccountCreate">
-
+<div   class="panel panel-default" th:fragment="bankaccountCreate">
 
     <form th:object="${bankAccount}" action="/account/cash/bankaccount/create" id="bankAccountForm"  method="post" >
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-        </div>
-
-        <br />
-
-
-        <label>Բանկային հաշիվ</label>
-        <input type="text"
+        <div style="margin: 50px">
+        <div class="form-group row ">
+            <label for="bankAccount" class=" col-md-4 col-form-label" >Բանկային հաշիվ</label>
+            <div class="col-md-6" >
+            <input class="form-control" type="text"
                id="bankAccount"
                th:name="bankAccount"
                th:field="*{bankAccount}"
         />
-        <br />
 
-        <label>Բանկի անուն</label>
-        <input type="text"
+                <small th:if="${#fields.hasErrors('bankAccount')}" th:errors="*{bankAccount}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="bankName" class=" col-md-4 col-form-label" >Բանկի անուն</label>
+            <div class="col-md-6" >
+            <input class="form-control" type="text"
                id="bankName"
                th:name="bankName"
                th:field="*{bankName}"
                readonly="readonly"
         />
-        <br />
-        <label>Սկզբնական մնացորդի տեսակ</label>
-        <select type="text"
+
+                <small th:if="${#fields.hasErrors('bankName')}" th:errors="*{bankName}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="openingBalanceType" class=" col-md-4 col-form-label" >Սկզբնական մնացորդի տեսակ</label>
+            <div class="col-md-6" >
+            <select class="form-control" id="openingBalanceType"
+                type="text"
                th:name="openingBalanceType"
                th:field="*{openingBalanceType}" >
 
@@ -412,28 +470,48 @@
 
         </select>
 
-        <br />
-        <label>Սկզբնական մնացորդ </label>
-        <input type="text"
+                <small th:if="${#fields.hasErrors('openingBalanceType')}" th:errors="*{openingBalanceType}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="openingBalance" class=" col-md-4 col-form-label" >Սկզբնական մնացորդ </label>
+            <div class="col-md-6" >
+            <input class="form-control" id="openingBalance" type="text"
                th:name="openingBalance"
                th:field="*{openingBalance}"
         />
-        <br />
-        <label>Ելքերի համարակալումը սկսել</label>
-        <input type="text"
+
+            <small th:if="${#fields.hasErrors('openingBalance')}" th:errors="*{openingBalance}"  class="form-text text-danger" />
+             </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="startOutNumbering" class=" col-md-4 col-form-label" >Ելքերի համարակալումը սկսել</label>
+            <div class="col-md-6" >
+            <input class="form-control" id="startOutNumbering" type="text"
                text="1"
                th:name="startOutNumbering"
                th:field="*{startOutNumbering}"
         />
-        <br />
-        <label>Նշումներ</label>
-        <input th:type="hidden"
+
+                <small th:if="${#fields.hasErrors('startOutNumbering')}" th:errors="*{startOutNumbering}"  class="form-text text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <label for="nout" class=" col-md-4 col-form-label" >Նշումներ</label>
+            <div class="col-md-6" >
+        <input class="form-control" id="nout" th:type="hidden"
                 type="text"
                th:name="nout"
                th:field="*{nout}"
-
         />
-        <br />
+
+                <small th:if="${#fields.hasErrors('nout')}" th:errors="*{nout}"  class="form-text text-danger" />
+            </div>
+        </div>
+
         <input
                 type="hidden"
                 th:field="*{id}"
@@ -455,6 +533,9 @@
 
 
         <input type="submit" class="btn btn-default" />
+
+        </div>
+
     </form >
     <script>
         /*<![CDATA[*/
@@ -965,9 +1046,10 @@
    </div>
 </nav>
 </div>
-<div  th:fragment="cash">
+<div  class="panel panel-default" th:fragment="cash">
+    <br />
+    <div style="margin: 20px">
         <div class="row">
-            <br />
         <div class="container" id="datetimepicker1">
             <div class='col-md-2'>
                 <div class="form-group">
@@ -1000,7 +1082,7 @@
     </div>
         <div  id="showCash" >
         </div>
-
+    </div>
     <script th:inline="javascript" >
         /*<![CDATA[*/
         $( "#datepickerStart" ).datepicker();
