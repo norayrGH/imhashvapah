@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.service.rent;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
@@ -93,6 +94,15 @@ public class PeriodicServiceRentArea {
         this.organization = organization;
     }
 
+    public GeneralMethods getSupplier(){
+        if (companySupplier!=null)
+            return companySupplier;
+        if (individualSupplier!=null)
+            return companySupplier;
+        if (privateEntrepreneurSupplier!=null)
+            return privateEntrepreneurSupplier;
+        return null;
+    }
     public Long getId() {
         return id;
     }

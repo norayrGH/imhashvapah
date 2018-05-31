@@ -771,151 +771,139 @@
         </script>
     </div>
     <div th:fragment ="partnerSupplierCreatePurchaseForService">
-        <form th:object="${companySupplier}" action="/account/partner/supplier/create/companysupplier" class="form-horizontal"  method="post" >
-            <h1>PurchaseForService</h1>
+        <form th:object="${purchaseService}" action="/account/partner/supplier/create/purchaseservice" class="form-horizontal"  method="post" >
+            <h1>PurchaseService</h1>
             <div class="form-group row ">
-                <label for="companySupplierClientOrganizationName" class="col-sm-1 col-md-1 col-lg-1 col-xl-1 control-label" >Անվանում</label>
+                <label for="purchaseNumber" class="col-sm-1 col-md-1 col-lg-1 col-xl-1 control-label" >№</label>
+                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Ձեռք. համարը ունի 9 նիշ"
+                           th:name="purchaseNumber"
+                           id="purchaseNumber"
+                           th:field="*{purchaseNumber}"
+                    />
+                    <small th:if="${#fields.hasErrors('purchaseNumber')}" th:errors="*{purchaseNumber}"  class="form-text text-danger" />
+                </div>
+            </div>
+            <div class="form-group row ">
                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Կամզակերպության անվանում"
-                           th:name="clientOrganizationName"
-                           id="companySupplierClientOrganizationName"
-                           th:field="*{clientOrganization.clientOrganizationName}"
-                    />
-                    <small th:if="${#fields.hasErrors('clientOrganization.clientOrganizationName')}" th:errors="*{clientOrganization.clientOrganizationName}"  class="form-text text-danger" />
+                    <label for="selectedService" class=" control-label" >Ծառայություն</label>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
+                    <select id="selectedService"
+                            th:field="*{serviceIndex}"
+                            th:name="serviceIndex"
+                            class="form-control" >
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="service,iterStat  : ${services}"
+                                th:value="${iterStat.index}"
+                                th:text="${service.getServiceName()}"
+                        />
+
+                    </select>
+                    <small th:if="${#fields.hasErrors('serviceIndex')}" th:errors="*{serviceIndex}"  class="form-text text-danger" />
+
                 </div>
             </div>
             <div class="form-group row ">
-                <label for="hvhh" class="col-sm-1 col-md-1 col-lg-1 col-xl-1 control-label" >ՀՎՀՀ</label>
                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
-                    <input type="text"
-                           class="form-control"
-                           placeholder="հվհհ ունի 8 նիշ "
-                           th:name="hvhh"
-                           id="hvhh"
-                           th:field="*{hvhh}"
-                    />
-                    <small th:if="${#fields.hasErrors('hvhh')}" th:errors="*{hvhh}"  class="form-text text-danger" />
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
-                    <label for="taxType" class=" control-label" >Հարկման կարգ</label>
+                    <label for="selectedSupplier" class=" control-label" >Մատակարար</label>
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <select th:name="taxType"
-                            id="taxType"
-                            class="form-control"
-                            th:field="*{taxType}"
-                    >
-                        <option value="circleTaxPayer">Շրջանառության հարկ վճարող</option>
-                        <option value="patentFeePayer">Արտոնագրային վճար վճարող</option>
-                        <option value="fixedFeePayer">Հաստատագրված վճար վճարող</option>
-                        <option value="AddedValueTaxPayer">Ավելացված արժեքի հարկ վճարող</option>
+                    <select id="selectedSupplier"
+                            th:field="*{supplierIndex}"
+                            th:name="supplierIndex"
+                            class="form-control" >
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="supplier,iterStat  : ${suppliers}"
+                                th:value="${iterStat.index}"
+                                th:text="${supplier.getSupplierName()}"
+                        />
+
                     </select>
+                    <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
+
                 </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
-                    <label for="openingBalanceType" class=" control-label" >Սկզբնական մնացորդի տեսակ</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <select th:name="openingBalanceType"
-                            id="openingBalanceType"
-                            class="form-control"
-                            th:field="*{openingBalanceType}"
-                    >
-                        <option value="debt">Պարտք</option>
-                        <option value="prepaid">Կանխավճար</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
-                    <label for="openingBalance" class=" control-label" >Սկզբնական մնացորդ</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <input type="text"
-                           class="form-control"
-                           id="openingBalance"
-                           placeholder="Մնացորդի գումարը"
-                           th:name="openingBalance"
-                           th:field="*{openingBalance}"
-                    />
-                    <small th:if="${#fields.hasErrors('openingBalance')}" th:errors="*{openingBalance}"  class="form-text text-danger" />
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-1" >
-                    <label for="supply" class=" control-label" >Մատակարարում է</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 form-check form-check-inline" >
-                    <input  th:name="supply"
-                            th:field="*{supply}"
-                            type="radio"
-                            class="form-check-input"
-                            id="supply"
-                            name="supply"
-                            checked="checked"
-                            value="Ապրանք/Ծառայություն" >Ապրանք/Ծառայություն
-                    </input>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 form-check form-check-inline" >
-                    <input  th:name="supply"
-                            th:field="*{supply}"
-                            type="radio"
-                            class="form-check-input"
-                            id="supply"
-                            name="supply"
-                            value="Վարձակալության/ծառայություն" >Վարձակալության/ծառայություն
-                    </input>
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
-                    <label for="bankAccount" class=" control-label" >Բանկային հաշիվ</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <input type="text"
-                           class="form-control"
-                           placeholder="բանկային հաշիվ "
-                           id="bankAccount"
-                           th:name="bankAccount"
-                           th:field="*{bankAccount}"
-                    />
-                    <small th:if="${#fields.hasErrors('bankAccount')}" th:errors="*{bankAccount}"  class="form-text text-danger" />
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1" >
-                    <label for="address" class=" control-label" >Հասցե</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <input type="text"
-                           class="form-control"
-                           placeholder="մատակարարի հասցեն"
-                           id="address"
-                           th:name="address"
-                           th:field="*{address}"
-                    />
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-1" >
-                    <label for="address" class=" control-label" >Հեռախոսահամարներ</label>
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" >
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Մատակարարի հեռ."
-                           id="address"
-                           th:name="phoneNumber"
-                           th:field="*{phoneNumber}"
-                    />
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
+                        <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
+                    </a>
                 </div>
             </div>
 
+            <div class="form-group row ">
+                <label for="purchaseDate" class="col-sm-2 col-md-2 col-lg-2 col-xl-2 control-label" >Ամսաթիվ</label>
+                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" >
+                    <input type="date"
+                           class="form-control"
+
+                           th:name="purchaseDate"
+                           id="purchaseDate"
+                           th:field="*{purchaseDate}"
+                    />
+                    <small th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"  class="form-text text-danger" />
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <label for="docType" class=" control-label" >Փաստաթուղթի տեսակ</label>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <select th:name="docType"
+                            id="docType"
+                            class="form-control"
+                            th:field="*{docType}"
+                    >
+                        <option value="accountingDocument" >Հաշվարկային փաստաթուղտ</option>
+                        <option value="taxBill" >Հարկային հաշիվ</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <label for="docNumber" class=" control-label" >Փաստաթուղթ</label>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <input type="text"
+                           class="form-control"
+                           id="docNumber"
+                           placeholder="Սերիյա/Համար"
+                           th:name="docNumber"
+                           th:field="*{docNumber}"
+                    />
+                    <small th:if="${#fields.hasErrors('docNumber')}" th:errors="*{docNumber}"  class="form-text text-danger" />
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label for="amountOfReceipts" class="col-sm-2 col-md-2 col-lg-2 col-xl-2 control-label" >Ձեռքբերման գումար</label>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <input type="text"
+                           class="form-control"
+
+                           th:name="amountOfReceipts"
+                           id="amountOfReceipts"
+                           th:field="*{amountOfReceipts}"
+                    />
+                    <small th:if="${#fields.hasErrors('amountOfReceipts')}" th:errors="*{amountOfReceipts}"  class="form-text text-danger" />
+                </div>
+            </div>
+            <div class="form-group row ">
+
+                <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 form-check form-check-inline" >
+                    <input  th:name="personalWalletOut"
+                            th:field="*{personalWalletOut}"
+                            th:checked="${personalWalletOut}"
+                            type="checkbox"
+                            class="form-check-input"
+                            id="personalWalletOut"
+                    >
+                    </input>
+                </div>
+                <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9" >
+                    <label for="personalWalletOut" class=" control-label" > Նշելով կպատրաստվի դրամարկղից ելք միևնույն գումարի չափով:</label>
+                </div>
+            </div>
 
             <input
                     type="hidden"
@@ -924,14 +912,35 @@
             />
             <input
                     type="hidden"
-                    th:field="*{organization}"
-                    th:value="${organization}"
+                    th:field="*{supplierId}"
+                    th:value="${supplierId}"
             />
             <input
                     type="hidden"
-                    th:field="*{clientOrganization}"
-                    th:value="${clientOrganization}"
+                    th:field="*{supplierType}"
+                    th:value="${supplierType}"
             />
+            <input
+                    type="hidden"
+                    th:field="*{serviceId}"
+                    th:value="${serviceId}"
+            />
+            <input
+                    type="hidden"
+                    th:field="*{serviceType}"
+                    th:value="${serviceType}"
+            />
+
+
+
+            <input
+                    type="hidden"
+                    th:field="*{organization}"
+                    th:value="${organization}"
+            />
+
+
+
             <input name="csrfToken" id="csrfToken"
                    type="hidden"
                    th:name="${_csrf.parameterName}"
@@ -941,6 +950,47 @@
             <input type="submit" class="btn btn-default" />
 
         </form >
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            $(function () {
+                $(document).ready(function () {
+                    var suppliers = /*[[${suppliers}]]*/ 'default';
+                    var services = /*[[${services}]]*/ 'default';
+                    console.log(services);
+
+                    $('#selectedSupplier').on('change', function() {
+                        if(this.value!="")
+                        {
+                            $('input[name=supplierType]').val(suppliers[this.value].supplierType);
+                            $('input[name=supplierId]').val(suppliers[this.value].id);
+                        }else{
+                            $('input[name=supplierType]').val("");
+                            $('input[name=supplierId]').val("");
+                        }
+                    });
+                    $('#selectedService').on('change', function() {
+                        if(this.value!="")
+                        {
+                            $('input[name=serviceType]').val(services[this.value].serviceType);
+                            $('input[name=serviceId]').val(services[this.value].id);
+                            $.each( suppliers, function( key, value ) {
+                                console.log( key + ": " + value );
+                            });
+                            $('input[name=supplierIndex]').val(services[this.value].id);
+
+                        }else{
+                            $('input[name=serviceType]').val("");
+                            $('input[name=serviceId]').val("");
+                        }
+                    })
+
+
+                });
+            });
+            /*]]>*/
+        </script>
     </div>
     <div th:fragment ="partnerSupplierCreatePurchaseForFixedasset">
         <form th:object="${companySupplier}" action="/account/partner/supplier/create/companysupplier" class="form-horizontal"  method="post" >

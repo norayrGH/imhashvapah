@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.service;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
@@ -37,6 +38,13 @@ public class PeriodicService {
     //Cost
     private String cost;
 
+    //Պայմանագրի ամսաթիվ
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date contractDate;
+
+    //Պայմանագրի համար
+    private String contractNumber;
     @Transient
     private Long supplierId;
     @Transient
@@ -59,13 +67,15 @@ public class PeriodicService {
     public PeriodicService() {
     }
 
-    public PeriodicService(String name, String serviceType, String type, Date startDate, Date endDate, String cost, Long supplierId, String supplierType, String supplierIndex, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
+    public PeriodicService(String name, String serviceType, String type, Date startDate, Date endDate, String cost, Date contractDate, String contractNumber, Long supplierId, String supplierType, String supplierIndex, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
         this.name = name;
         this.serviceType = serviceType;
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
         this.cost = cost;
+        this.contractDate = contractDate;
+        this.contractNumber = contractNumber;
         this.supplierId = supplierId;
         this.supplierType = supplierType;
         this.supplierIndex = supplierIndex;
@@ -74,7 +84,15 @@ public class PeriodicService {
         this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
         this.organization = organization;
     }
-
+    public GeneralMethods getSupplier(){
+        if (companySupplier!=null)
+            return companySupplier;
+        if (individualSupplier!=null)
+            return companySupplier;
+        if (privateEntrepreneurSupplier!=null)
+            return privateEntrepreneurSupplier;
+        return null;
+    }
     public Long getId() {
         return id;
     }
@@ -129,6 +147,22 @@ public class PeriodicService {
 
     public void setCost(String cost) {
         this.cost = cost;
+    }
+
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
     }
 
     public Long getSupplierId() {

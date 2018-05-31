@@ -1,6 +1,10 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.purchase;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.partners.service.PeriodicService;
+import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentArea;
+import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentCar;
+import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentOther;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
@@ -20,8 +24,7 @@ public class PurchaseService {
     //№
     @NotEmpty(message = "Համարը պարտադիր է:")
     private String purchaseNumber;
-    @NotEmpty(message = "Ծառայությունը պարտադիր է: ")
-    private String serviceName;
+
 
     // Ամսաթիվ
     @Temporal(TemporalType.DATE)
@@ -36,31 +39,36 @@ public class PurchaseService {
     @NotNull(message = "սերիա-համարը պարտադիր է:")
     private String docNumber;
 
-    //Մատակարարման ամսաթիվ
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Ամսաթիվը պարտադիր է:")
-    private Date supplerDate;
 
     //Ձեռքբերման գումար
     @NotNull(message = "Գումարը պարտադիր է:")
     private Integer amountOfReceipts;
 
-
     //Ելք անել անձնական դրամապանակից
     private Boolean personalWalletOut;
-
+    //Պայմանագրի ամսաթիվ
+    private Date contractDate;
+    //Պայմանագրի համար
+    private String contractNumber;
     //Նշումներ
     private String note;
-    private String purchaseType;
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
     @Transient
     private Long supplierId;
     @Transient
     private String supplierType;
     @Transient
+
+    private String  serviceIndex;
+    @Transient
     private Long serviceId;
     @Transient
     private String serviceType;
+
+
+
     @ManyToOne
     private CompanySupplier companySupplier;
     @ManyToOne
@@ -70,28 +78,16 @@ public class PurchaseService {
     @ManyToOne
     private Organization organization;
 
-    public PurchaseService() {
-    }
+    @ManyToOne
+    private PeriodicService periodicService;
+    @ManyToOne
+    private PeriodicServiceRentArea periodicServiceRentArea;
+    @ManyToOne
+    private PeriodicServiceRentCar periodicServiceRentCar;
+    @ManyToOne
+    private PeriodicServiceRentOther periodicServiceRentOther;
 
-    public PurchaseService(String purchaseNumber, String serviceName, Date purchaseDate, String docType, String docNumber, Date supplerDate, Integer amountOfReceipts, Boolean personalWalletOut, String note, String purchaseType, Long supplierId, String supplierType, Long serviceId, String serviceType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization) {
-        this.purchaseNumber = purchaseNumber;
-        this.serviceName = serviceName;
-        this.purchaseDate = purchaseDate;
-        this.docType = docType;
-        this.docNumber = docNumber;
-        this.supplerDate = supplerDate;
-        this.amountOfReceipts = amountOfReceipts;
-        this.personalWalletOut = personalWalletOut;
-        this.note = note;
-        this.purchaseType = purchaseType;
-        this.supplierId = supplierId;
-        this.supplierType = supplierType;
-        this.serviceId = serviceId;
-        this.serviceType = serviceType;
-        this.companySupplier = companySupplier;
-        this.individualSupplier = individualSupplier;
-        this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
-        this.organization = organization;
+    public PurchaseService() {
     }
 
     public Long getId() {
@@ -108,14 +104,6 @@ public class PurchaseService {
 
     public void setPurchaseNumber(String purchaseNumber) {
         this.purchaseNumber = purchaseNumber;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 
     public Date getPurchaseDate() {
@@ -142,14 +130,6 @@ public class PurchaseService {
         this.docNumber = docNumber;
     }
 
-    public Date getSupplerDate() {
-        return supplerDate;
-    }
-
-    public void setSupplerDate(Date supplerDate) {
-        this.supplerDate = supplerDate;
-    }
-
     public Integer getAmountOfReceipts() {
         return amountOfReceipts;
     }
@@ -166,6 +146,22 @@ public class PurchaseService {
         this.personalWalletOut = personalWalletOut;
     }
 
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
     public String getNote() {
         return note;
     }
@@ -174,12 +170,12 @@ public class PurchaseService {
         this.note = note;
     }
 
-    public String getPurchaseType() {
-        return purchaseType;
+    public String getSupplierIndex() {
+        return supplierIndex;
     }
 
-    public void setPurchaseType(String purchaseType) {
-        this.purchaseType = purchaseType;
+    public void setSupplierIndex(String supplierIndex) {
+        this.supplierIndex = supplierIndex;
     }
 
     public Long getSupplierId() {
@@ -196,6 +192,14 @@ public class PurchaseService {
 
     public void setSupplierType(String supplierType) {
         this.supplierType = supplierType;
+    }
+
+    public String getServiceIndex() {
+        return serviceIndex;
+    }
+
+    public void setServiceIndex(String serviceIndex) {
+        this.serviceIndex = serviceIndex;
     }
 
     public Long getServiceId() {
@@ -244,5 +248,37 @@ public class PurchaseService {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public PeriodicService getPeriodicService() {
+        return periodicService;
+    }
+
+    public void setPeriodicService(PeriodicService periodicService) {
+        this.periodicService = periodicService;
+    }
+
+    public PeriodicServiceRentArea getPeriodicServiceRentArea() {
+        return periodicServiceRentArea;
+    }
+
+    public void setPeriodicServiceRentArea(PeriodicServiceRentArea periodicServiceRentArea) {
+        this.periodicServiceRentArea = periodicServiceRentArea;
+    }
+
+    public PeriodicServiceRentCar getPeriodicServiceRentCar() {
+        return periodicServiceRentCar;
+    }
+
+    public void setPeriodicServiceRentCar(PeriodicServiceRentCar periodicServiceRentCar) {
+        this.periodicServiceRentCar = periodicServiceRentCar;
+    }
+
+    public PeriodicServiceRentOther getPeriodicServiceRentOther() {
+        return periodicServiceRentOther;
+    }
+
+    public void setPeriodicServiceRentOther(PeriodicServiceRentOther periodicServiceRentOther) {
+        this.periodicServiceRentOther = periodicServiceRentOther;
     }
 }
