@@ -15,7 +15,7 @@ public class CashInFromServiceProvision implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
+    @NotEmpty(message = "Գնորդի անունը պարտադիր է:")
     private String customerName;
 
     @Temporal(TemporalType.DATE)

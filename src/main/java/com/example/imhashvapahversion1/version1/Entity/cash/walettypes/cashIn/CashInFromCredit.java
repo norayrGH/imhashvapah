@@ -14,7 +14,7 @@ public class CashInFromCredit implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
+    @NotEmpty(message = "Հարկավոր է ընտրել գործընկերոջը:")
     private String colleagues;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid

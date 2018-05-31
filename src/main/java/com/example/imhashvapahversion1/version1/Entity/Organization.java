@@ -19,36 +19,36 @@ public class  Organization  {
     private Long id ;
     //Անվանում
     @Column(name = "organization_name",unique = true,nullable = false)
-    @Size(min=2, max=30 , message = " Գրեք ճիշտ Անվանում ")
-    @NotEmpty(message = " Անվանում դաշտը հարկավոր է լրացնել")
+    @Size(min=2, max=30 , message = "Գրել ճիշտ Անվանում:")
+    @NotEmpty(message = "Անվանում դաշտը հարկավոր է լրացնել:")
 
     private String organizationName ;
 
     @Column(name = "organization_hch",unique = true,nullable = false)
-    @NotNull( message = "ՀՑՀ  դաշտը անպայման է լրացնելու համար ")
-    @Pattern(regexp = "([0-9]{10})" ,message = "ՀՑՀ ունի 10 Նիշ")
+    @NotNull( message = "ՀՑՀ  դաշտը անպայման է լրացնելու համար:")
+    @Pattern(regexp = "([0-9]{10})" ,message = "ՀՑՀ ունի 10 Նիշ:")
     private String hch ;
 
     //Գրանցման համար
     @Column(name = "organization_reg_number",unique = true,nullable = true)
-    @Pattern(regexp = "([0-9]{16})" , message = "Գրանցման համարը ունի 16 նիշ")
+    @Pattern(regexp = "([0-9]{16})" , message = "Գրանցման համարը ունի 16 նիշ:")
     private String registrationNumber;
 
     //Գրանցման ամսաթիվ
     @Column(name = "organization_reg_date",unique = false,nullable = false)
-    @NotNull(message = " Գրանցման ամսաթիվ դաշտը պարտադիր է լրացնել ")
+    @NotNull(message = " Գրանցման ամսաթվի դաշտը պարտադիր է լրացնել:")
     @DateTimeFormat(pattern = "yyyy-MM-dd" , iso = DateTimeFormat.ISO.DATE)
     private Date registrationDate;
 
     //Վկայականի համար
     @Column(name = "organization_certificate_num",unique = false,nullable = true)
-    @Pattern(regexp = "([0-9]{10})", message = "Վկայականի համարը ունի 10 նիշ")
+    @Pattern(regexp = "([0-9]{10})", message = "Վկայականի համարը ունի 10 նիշ:")
     private String certificateNumber;
 
     //հարկ վճարողի հաշվառման համար   ՀՎՀՀ
     @Column(name = "organization_taaxpayer_ident_num",unique = true,nullable = false)
-    @NotNull(message = "ՀՎՀՀ դաշտը պարտադիր է լրացման համար ")
-    @Pattern(regexp = "([0-9]{8})",message = "ՀՎՀՀ համարը ունի 8 նիշ")
+    @NotNull(message = "ՀՎՀՀ դաշտը պարտադիր է լրացման համար:")
+    @Pattern(regexp = "([0-9]{8})",message = "ՀՎՀՀ համարը ունի 8 նիշ:")
     private String taxpayerIdentificationNumber;
 
 
@@ -56,17 +56,17 @@ public class  Organization  {
     //Բոլոր էջերի սկզբնական մնացորդները պետք է լրացվեն ըստ այս ամսաթվի:
     @Column(name="organization_date_of_open_balances",unique = false,nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
-    @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետկ է լրացնել")
+    @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետք է լրացնել:")
     private Date dateOfOpeningBalances ;
 
     //Գործունեության հասցե
-    @NotEmpty(message = " Գործունեության հասցեն պարտադիր է լրացման համար")
+    @NotEmpty(message = " Գործունեության հասցեն պարտադիր է լրացման համար:")
     @Column(name = "organization_acting_address",unique = false,nullable = false)
-    @Size(min = 10 , message = "Գործունեության հասցեն հարկավոր է լրացնել ")
+    @Size(min = 10 , message = "Գործունեության հասցեն հարկավոր է լրացնել: ")
     private String actingAddress;
 
     //Իրավաբանական հասցե
-    @NotEmpty(message = "Իրավաբանական հասցե պարտադիր է լրացման համար ")
+    @NotEmpty(message = "Իրավաբանական հասցեն պարտադիր է լրացման համար:")
     @Column(name = "organization_juridical_address",unique = false,nullable = false)
     private String juridicalAddress;
 

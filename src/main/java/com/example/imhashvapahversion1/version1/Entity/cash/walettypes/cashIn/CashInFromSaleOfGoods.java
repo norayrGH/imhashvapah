@@ -20,7 +20,7 @@ public class CashInFromSaleOfGoods implements GetWaletIn {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty(message = "Գնորդի անունը պարտադիր է ")
+    @NotEmpty(message = "Գնորդի անունը պարտադիր է:")
     private String customerName;
 
 

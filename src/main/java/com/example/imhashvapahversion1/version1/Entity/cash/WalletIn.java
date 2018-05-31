@@ -20,11 +20,11 @@ public class WalletIn {
 
     private String inType;
 
-    @NotNull (message ="Հարկավոր է նշել մուտքի ամսաթիվը")
+    @NotNull (message ="Հարկավոր է նշել մուտքի ամսաթիվը:")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inDate ;
-    @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը ")
+    @NotEmpty(message ="Հարկավոր է նշել մուտքի գումարը:")
     private String inCash;
     private String note;
 

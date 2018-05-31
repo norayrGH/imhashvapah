@@ -13,7 +13,7 @@ public class CashInFromBankAccount implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message= "Հարկավոր է ընտրել հաշվեհամարը ")
+    @NotEmpty(message= "Հարկավոր է ընտրել հաշվեհամարը:")
     private String bankAccount;
     @ManyToOne
     private Organization organization;

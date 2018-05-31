@@ -16,13 +16,13 @@ public class CashInFromLoan implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "հարկավոր է ընտրել գործընկերոջը ")
+    @NotEmpty(message = "Հարկավոր է ընտրել գործընկերոջը:")
     private String colleagues;
-    @NotNull(message = "հարկավոր է նշել պայմանագրի ամսաթիվը ")
+    @NotNull(message = "Հարկավոր է նշել պայմանագրի ամսաթիվը:")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractDate;
-    @NotEmpty(message = "հարկավոր է նշել պայմանագրի համարը ")
+    @NotEmpty(message = "Հարկավոր է նշել պայմանագրի համարը:")
     private String forContract;
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     @Valid

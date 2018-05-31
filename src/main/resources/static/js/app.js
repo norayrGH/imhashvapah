@@ -463,7 +463,10 @@ function  showBankAccount(accounts) {
 }
 //new DATE PIKER
 
+function todayDate(element) {
+    element.val(new Date)
 
+}
 
 
 

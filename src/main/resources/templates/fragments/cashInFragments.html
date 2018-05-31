@@ -200,12 +200,6 @@
 
             <form th:object="${cashInFromPointOfSale}" action="/account/cash/cashin/cashdesk/create/cashinfrompointofsale" id="walletInCreate"  method="post" >
                 <div style="margin: 50px">
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                    </div>
-
-                    <br />
-
                     <div class="form-group row ">
                         <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
                         <div class="col-md-6" >
@@ -263,369 +257,624 @@
                 <input type="submit" class="btn btn-default" />
             </div>
         </form >
+
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
+
     </div>
-    <div class="container" th:fragment="cashInCreateBankAccount" >
+
+
+    <div class="panel panel-default" th:fragment="cashInCreateBankAccount" >
         <form th:object="${cashInFromBankAccount}" action="/account/cash/cashin/cashdesk/create/cashinfrombankaccount" id="cashInFrom"  method="post" >
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="bankAccount" class=" col-md-4 col-form-label" >Բանկային հաշիվ</label>
+                        <div class="col-md-6" >
+                            <select id="bankAccount"
+                                    class="form-control"
+                                    th:field="*{bankAccount}"
+                                    th:name="bankAccount">
+
+                                    <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                    <option th:each="account : ${accountList}"
+                                            th:value="${account.bankAccount}"
+                                            th:text= "${account.bankName + '--' + account.bankAccount}" />
+                            </select>
+                            <small th:if="${#fields.hasErrors('bankAccount')}" th:errors="*{bankAccount}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="inDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="inDate"
+                                   th:field="*{walletIn.inDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inDate')}" th:errors="*{walletIn.inDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inCash" class=" col-md-4 col-form-label">Մուտքի գումար</label>
+                        <div class="col-md-6" >
+                            <input id="inCash"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="inCash"
+                                   th:field="*{walletIn.inCash}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inCash')}" th:errors="*{walletIn.inCash}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label">Նշումներ</label>
+                        <div class="col-md-6" >
+                            <input id="note"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="note"
+                                   th:field="*{walletIn.note}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+
+                <input type="submit" class="btn btn-default" />
             </div>
-            <br />
-            <select th:field="*{bankAccount}"
-                    th:name="bankAccount"
-            >
-                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                <option th:each="account : ${accountList}"
-                        th:value="${account.bankAccount}"
-                        th:text= "${account.bankName + '--' + account.bankAccount}" />
-            </select>
-            <label>Ամսաթիվ</label>
-            <input type="date"
-                   th:name="inDate"
-                   th:field="*{walletIn.inDate}"
-            />
-            <br />
-            <label>Մուտքի գումար</label>
-            <input type="text"
-                   th:name="inCash"
-                   th:field="*{walletIn.inCash}"
-            />
-            <br />
-            <label>Նշումներ</label>
-            <input type="text"
-                   th:name="note"
-                   th:field="*{walletIn.note}"
-            />
-            <br />
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-
-            <input
-                    type="hidden"
-                    id="organizationId"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
-
-
-            <input type="submit" class="btn btn-default" />
         </form >
 
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
     </div>
-    <div class="container" th:fragment="cashInCreateCashInFromSaleOfGoods" >
+
+    <div class="panel panel-default"  th:fragment="cashInCreateCashInFromSaleOfGoods" >
 
         <form th:object="${cashInFromSaleOfGoods}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods" id="walletInCreate"  method="post" >
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="customerName" class=" col-md-4 col-form-label" >Գնորդ</label>
+                        <div class="col-md-6" >
+                            <select id="customerName" class="form-control"
+                                    th:field="*{customerName}"
+                                    th:name="customerName">
+                                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                        <option th:each="customer : ${customerList}"
+                                                th:value="${customer.id}"
+                                                th:text="${customer.getName()}" />
+                            </select>
+                            <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"  class="form-text text-danger" />
+                        </div>
+                            <div class="col-md-1">
+                                <a  type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                                    <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                                </a>
+                            </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="inDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="inDate"
+                                   th:field="*{walletIn.inDate}"
+                            />
+                                <small th:if="${#fields.hasErrors('walletIn.inDate')}" th:errors="*{walletIn.inDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="inCash" class=" col-md-4 col-form-label" >Մուտքի գումար</label>
+                        <div class="col-md-6" >
+                            <input id="inCash"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="inCash"
+                                   th:field="*{walletIn.inCash}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inCash')}" th:errors="*{walletIn.inCash}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="contractDate" class=" col-md-4 col-form-label" >Պայմանագրի ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input  id="contractDate"
+                                    class="form-control"
+                                    type="date"
+                                    th:name="contractDate"
+                                    th:field="*{contractDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('contractDate')}" th:errors="*{contractDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="contractNubmer" class=" col-md-4 col-form-label" >Պայմանագրի համար</label>
+                        <div class="col-md-6" >
+                            <input  id="contractNubmer"
+                                    class="form-control"
+                                    type="text"
+                                    th:name="contractNubmer"
+                                    th:field="*{contractNubmer}"
+                            />
+                            <small th:if="${#fields.hasErrors('contractNubmer')}" th:errors="*{contractNubmer}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label" >Նշումներ</label>
+                        <div class="col-md-6" >
+                            <input  id="note"
+                                    class="form-control"
+                                    type="text"
+                                    th:name="note"
+                                    th:field="*{walletIn.note}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+
+                <input type="submit" class="btn btn-default" />
+
             </div>
 
-            <br />
-
-            <label>Գնորդ</label>
-            <select th:field="*{customerName}"
-                    th:name="customerName"
-            >
-                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                <option th:each="customer : ${customerList}"
-                        th:value="${customer.id}"
-                        th:text="${customer.getName()}" />
-            </select>
-            <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
-            </a>
-            <br />
-            <label>Ամսաթիվ</label>
-            <input type="date"
-                   th:name="inDate"
-                   th:field="*{walletIn.inDate}"
-            />
-            <br />
-
-            <label>Մուտքի գումար</label>
-            <input type="text"
-                   th:name="inCash"
-                   th:field="*{walletIn.inCash}"
-            />
-            <br />
-
-            <label>Պայմանագրի ամսաթիվ</label>
-            <input type="date"
-                   th:name="contractDate"
-                   th:field="*{contractDate}"
-            />
-            <br />
-
-
-            <label>Պայմանագրի համար</label>
-            <input type="text"
-                   th:name="contractNubmer"
-                   th:field="*{contractNubmer}"
-            />
-            <br />
-            <label>Նշումներ</label>
-            <input type="text"
-                   th:name="note"
-                   th:field="*{walletIn.note}"
-            />
-            <br />
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-
-            <input
-                    type="hidden"
-                    id="organizationId"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
-
-
-            <input type="submit" class="btn btn-default" />
         </form >
 
-    </div>
-    <div class="container" th:fragment="cashInCreateCashInFromLoan" >
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
+
+    </div>
+
+    <div class="panel panel-default" th:fragment="cashInCreateCashInFromLoan" >
         <form th:object="${cashInFromLoan}" action="/account/cash/cashin/cashdesk/create/cashinfromloan" id="cashInFromLoanCreate"  method="post" >
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="colleagues" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                        <div class="col-md-6" >
+                            <select id="colleagues"
+                                    class="form-control"
+                                    th:field="*{colleagues}"
+                                    th:name="colleagues">
+                                <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                <option th:each="colleague : ${colleaguesList}"
+                                        th:value="${colleague.id}"
+                                        th:text="${colleague.getName()}" />
+                            </select>
+                            <small th:if="${#fields.hasErrors('colleagues')}" th:errors="*{colleagues}"  class="form-text text-danger" />
+                        </div>
+                            <div class="col-md-1">
+                                <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
+                                    <span class="glyphicon glyphicon-plus-sign"></span> Այլ գործընկեր
+                                </a>
+                            </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="inDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="inDate"
+                                   th:field="*{walletIn.inDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inDate')}" th:errors="*{walletIn.inDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inCash" class=" col-md-4 col-form-label" >Մուտքի գումար</label>
+                        <div class="col-md-6" >
+                            <input id="inCash"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="inCash"
+                                   th:field="*{walletIn.inCash}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inCash')}" th:errors="*{walletIn.inCash}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="contractDate" class=" col-md-4 col-form-label" >Պայմանագրի ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="contractDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="contractDate"
+                                   th:field="*{contractDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('contractDate')}" th:errors="*{contractDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="forContract" class=" col-md-4 col-form-label" >Պայմանագրի համար</label>
+                        <div class="col-md-6" >
+                            <input id="forContract"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="forContract"
+                                   th:field="*{forContract}"
+                            />
+                            <small th:if="${#fields.hasErrors('forContract')}" th:errors="*{forContract}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label" >Նշումներ</label>
+                    <div class="col-md-6" >
+                        <input id="note"
+                               class="form-control"
+                               type="text"
+                               th:name="note"
+                               th:field="*{walletIn.note}"
+                        />
+                        <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
+                    </div>
+                </div>
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+                <input type="submit" class="btn btn-default" />
+
             </div>
-
-            <br />
-
-            <label>Այլ Գործընկեր</label>
-            <select th:field="*{colleagues}"
-                    th:name="colleagues"
-            >
-                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                <option th:each="colleague : ${colleaguesList}"
-                        th:value="${colleague.id}"
-                        th:text="${colleague.getName()}" />
-            </select>
-            <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
-                <span class="glyphicon glyphicon-plus-sign"></span> Այլ գործընկեր
-            </a>
-            <br />
-            <label>Ամսաթիվ</label>
-            <input type="date"
-                   th:name="inDate"
-                   th:field="*{walletIn.inDate}"
-            />
-            <br />
-
-            <label>Մուտքի գումար</label>
-            <input type="text"
-                   th:name="inCash"
-                   th:field="*{walletIn.inCash}"
-            />
-            <br />
-
-
-
-            <label>Պայմանագրի ամսաթիվ</label>
-            <input type="date"
-                   th:name="contractDate"
-                   th:field="*{contractDate}"
-            />
-            <br />
-
-
-            <label>Պայմանագրի համար</label>
-            <input type="text"
-                   th:name="forContract"
-                   th:field="*{forContract}"
-            />
-            <br />
-            <label>Նշումներ</label>
-            <input type="text"
-                   th:name="note"
-                   th:field="*{walletIn.note}"
-            />
-            <br />
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-
-            <input
-                    type="hidden"
-                    id="organizationId"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
-
-
-            <input type="submit" class="btn btn-default" />
         </form >
 
-    </div>
-    <div class="container" th:fragment="cashInCreateCashInFromServiceProvision" >
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
+    </div>
+
+
+    <div class="panel panel-default" th:fragment="cashInCreateCashInFromServiceProvision" >
         <form th:object="${cashInFromServiceProvision}" action="/account/cash/cashin/cashdesk/create/cashinfromserviceprovision"   method="post" >
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="customerName" class=" col-md-4 col-form-label" >Գնորդ</label>
+                        <div class="col-md-6" >
+                            <select id="customerName"
+                                    class="form-control"
+                                    th:field="*{customerName}"
+                                    th:name="customerName">
+
+                                <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                <option th:each="customer : ${customerList}"
+                                        th:value="${customer.getName()}"
+                                        th:text="${customer.getName()}" />
+                            </select>
+                            <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"  class="form-text text-danger" />
+                        </div>
+                            <div class="col-md-1">
+                                <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                                    <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                                </a>
+                            </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="inDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="inDate"
+                                   th:field="*{walletIn.inDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inDate')}" th:errors="*{walletIn.inDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inCash" class=" col-md-4 col-form-label" >Մուտքի գումար</label>
+                        <div class="col-md-6" >
+                            <input id="inCash"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="inCash"
+                                   th:field="*{walletIn.inCash}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inCash')}" th:errors="*{walletIn.inCash}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="contractDate" class=" col-md-4 col-form-label" >Պայմանագրի ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="contractDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="contractDate"
+                                   th:field="*{contractDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('contractDate')}" th:errors="*{contractDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="contractNubmer" class=" col-md-4 col-form-label" >Պայմանագրի համար</label>
+                        <div class="col-md-6" >
+                            <input id="contractNubmer"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="contractNubmer"
+                                   th:field="*{contractNubmer}"
+                            />
+                            <small th:if="${#fields.hasErrors('contractNubmer')}" th:errors="*{contractNubmer}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label" >Նշումներ</label>
+                        <div class="col-md-6" >
+                            <input id="note"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="note"
+                                   th:field="*{walletIn.note}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+
+                <input type="submit" class="btn btn-default" />
             </div>
-
-            <br />
-
-            <label>Գնորդ</label>
-            <select th:field="*{customerName}"
-                    th:name="customerName"
-            >
-                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                <option th:each="customer : ${customerList}"
-                        th:value="${customer.getName()}"
-                        th:text="${customer.getName()}" />
-            </select>
-            <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
-            </a>
-            <br />
-            <label>Ամսաթիվ</label>
-            <input type="date"
-                   th:name="inDate"
-                   th:field="*{walletIn.inDate}"
-            />
-            <br />
-
-            <label>Մուտքի գումար</label>
-            <input type="text"
-                   th:name="inCash"
-                   th:field="*{walletIn.inCash}"
-            />
-            <br />
-
-
-
-            <label>Պայմանագրի ամսաթիվ</label>
-            <input type="date"
-                   th:name="contractDate"
-                   th:field="*{contractDate}"
-            />
-            <br />
-
-
-            <label>Պայմանագրի համար</label>
-            <input type="text"
-                   th:name="contractNubmer"
-                   th:field="*{contractNubmer}"
-            />
-            <br />
-            <label>Նշումներ</label>
-            <input type="text"
-                   th:name="note"
-                   th:field="*{walletIn.note}"
-            />
-            <br />
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-
-            <input
-                    type="hidden"
-                    id="organizationId"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
-
-
-            <input type="submit" class="btn btn-default" />
         </form >
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
     </div>
-    <div class="container" th:fragment="cashInCreateCashInFromCredit" >
-
+    <div class="panel panel-default" th:fragment="cashInCreateCashInFromCredit" >
         <form th:object="${cashInFromCredit}" action="/account/cash/cashin/cashdesk/create/cashinfromcredit" id="cashInFromCredit"  method="post" >
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="colleagues" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                        <div class="col-md-6" >
+                            <select id="colleagues"
+                                    class="form-control"
+                                    th:field="*{colleagues}"
+                                    th:name="colleagues">
+                                <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                <option th:each="colleague : ${colleaguesList}"
+                                        th:value="${colleague.id}"
+                                        th:text="${colleague.getName()}" />
+                            </select>
+                            <small th:if="${#fields.hasErrors('colleagues')}" th:errors="*{colleagues}"  class="form-text text-danger" />
+                        </div>
+                    <div class="col-md-2">
+                        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                        <div class="col-md-6" >
+                            <input id="inDate"
+                                   class="form-control"
+                                   type="date"
+                                   th:name="inDate"
+                                   th:field="*{walletIn.inDate}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inDate')}" th:errors="*{walletIn.inDate}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="inCash" class=" col-md-4 col-form-label" >Մուտքի գումար</label>
+                        <div class="col-md-6" >
+                            <input id="inCash"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="inCash"
+                                   th:field="*{walletIn.inCash}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.inCash')}" th:errors="*{walletIn.inCash}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label" >Նշումներ</label>
+                        <div class="col-md-6" >
+                            <input id="note"
+                                   class="form-control"
+                                   type="text"
+                                   th:name="note"
+                                   th:field="*{walletIn.note}"
+                            />
+                            <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
+                        </div>
+                </div>
+
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+
+                <input type="submit" class="btn btn-default" />
             </div>
-
-            <br />
-
-            <label>Այլ Գործընկեր</label>
-            <select th:field="*{colleagues}"
-                    th:name="colleagues"
-            >
-                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                <option th:each="colleague : ${colleaguesList}"
-                        th:value="${colleague.id}"
-                        th:text="${colleague.getName()}" />
-            </select>
-            <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
-            </a>
-            <br />
-            <label>Ամսաթիվ</label>
-            <input type="date"
-                   th:name="inDate"
-                   th:field="*{walletIn.inDate}"
-            />
-            <br />
-
-            <label>Մուտքի գումար</label>
-            <input type="text"
-                   th:name="inCash"
-                   th:field="*{walletIn.inCash}"
-            />
-            <br />
-            <label>Նշումներ</label>
-            <input type="text"
-                   th:name="note"
-                   th:field="*{walletIn.note}"
-            />
-            <br />
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-            <input
-                    type="hidden"
-                    id="organizationId"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
-
-
-            <input type="submit" class="btn btn-default" />
         </form >
+        <script>
+            $(document).ready(function () {
+                if($('#inDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#inDate').val(today);
+                }
+            })
+        </script>
     </div>
 
 </body >
