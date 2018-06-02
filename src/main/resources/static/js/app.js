@@ -7,11 +7,15 @@ var stritFleet = $("#stritFleet");
 var address = {stritFleet: "", region: "", city: ""};
 var textaddress = "";
 var chashInTypes={cashinfrombankaccount:"Մուտք բանկային հաշվից",cashinfromcredit:"Վարկի ստացում",cashinfromloan:"Փոխառության ստացում",cashinfrompointofsale:"Մուտք առևտրի կետից",cashinfromsaleofgoods:"Մուտք ապրանքների իրացումից",cashinfromserviceprovision:"Մուտք ծառայության մատուցումից"};
-var chashOutTypes={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճարում մատակարարին ապրանքների համար",CashOutForSerivceProvider:" Վճարում մատակարարին ծառայության համար "
+var debtDetaileType={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճարում մատակարարին ապրանքների համար",CashOutForSerivceProvider:" Վճարում մատակարարին ծառայության համար "
                     ,CashOutForRent:"Վճարում վարձակալության համար",CashOutForBankAccount:"Վճարում բանկային հաշվին",
     CashOutForRedemptionPercent:"Վարկի տոկոսի մարում",CashOutForLoanPayment:"Փոխառության մարում",
     CashOutForBankSpending:"Բանկային ծախս",CashOutForOtherExpenses:"Այլ ծախսեր",
-    CashOutForCreditPayment:"Վարկի մարում"};
+    CashOutForCreditPayment:"Վարկի մարում",
+    PurchaseFixedAsset:"Ձեռքբերում",
+    PurchaseGoods:"Ձեռքբերում",
+    PurchaseService:"Ձեռքբերում",
+};
 
 if (cityes.val() != undefined) {
     $.each(addresses, function (key, value) {
@@ -301,11 +305,12 @@ function  partnerSupplierDebtDetailsShow(supplierDebtDetails) {
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
              $("<td />").text(item.debtDate)
-            ,$("<td />").text(chashOutTypes[item.contents])
-            ,$("<td />").append(item.contents!="Purchase"?$("<a>").attr("href","/cashout/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
-            ,$("<td />").append(item.contents=="Purchase"?$("<a>").attr("href","partner/supplier/purchase/edit/"+item.id).text(item.purchase):"")
+            ,$("<td />").text(debtDetaileType[item.contents])
+            ,$("<td />").append(item.contents.slice(0,8)!="Purchase"?$("<a>").attr("href","/cashout/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
+            ,$("<td />").append(item.contents.slice(0,8)=="Purchase"?$("<a>").attr("href","partner/supplier/purchase/edit/"+item.id).text(item.purchase):"")
         ));
     });
+
     partnerSuppliersDebtDetailsTable.append(tBody);
      $('#supplierDebtDetails').append(partnerSuppliersDebtDetailsTable);
 }
@@ -415,7 +420,7 @@ function showCash(cash){
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
              $("<td />").text(item.name ).attr({"class":"h5","style":"font-weight: bold;"}),
-             $("<td />").text(item.openingPalance ),
+             $("<td />").text(item.openingBalance ),
              $("<td />").text(item.in )
 
         ));

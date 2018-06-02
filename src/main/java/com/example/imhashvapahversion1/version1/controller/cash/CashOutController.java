@@ -200,7 +200,6 @@ public class CashOutController extends BaseController {
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.cashOutFragments);
         modelAndView.addObject("fragment", this.cashOutCreate);
-
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
 
         if(cashOutForGoodsProvider.getSupplierType().equals("CompanySupplier")){

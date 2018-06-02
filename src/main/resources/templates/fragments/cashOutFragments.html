@@ -493,28 +493,30 @@
 <div class="panel panel-default" th:fragment="cashOutForGoodsProviderCreate" >
     <form th:object="${cashOutForGoodsProvider}" action="/account/cash/cashout/cashdesk/create/cashoutforgoodsprovider" id="cashInFromCredit"  method="post" >
         <div style="margin: 50px">
-            <!--<div class="form-group row ">
-
-                <label for="name" class=" col-md-4 col-form-label" >Մատակարար</label>
-                    <div class="col-md-6">
-                        &lt;!&ndash;sxal&ndash;&gt;<select id="selectedSupplier">
-
-
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                        <select id="selectedSupplier"
+                                class="form-control"
+                                th:name="supplierIndex"
+                                th:field="*{supplierIndex}"
+                        >
                             <option value=""> __ԸՆՏՐԵԼ__ </option>
                             <option th:each="supplier,iterStat  : ${suppliers}"
                                     th:value="${iterStat.index}"
                                     th:text="${supplier.getSupplierName()}"
                             />
-                        </select>
-                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"  class="form-text text-danger" />
-                    </div>
-                <div class="col-md-1">
-                    <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
-                        <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
-                    </a>
-                </div>
-            </div>-->
 
+                        </select>
+                        <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
+                    </div>
+                    <div class="col-md-1">
+                        <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
+                        </a>
+                    </div>
+                </div>
             <div class="form-group row ">
                 <label for="outDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
                     <div class="col-md-6" >
@@ -613,7 +615,6 @@
                     th:value="${supplierType}"
             />
 
-
             <input
                     type="hidden"
                     th:field="*{organization}"
@@ -627,8 +628,8 @@
             />
             <input type="submit" class="btn btn-default" />
 
+            </div>
         </div>
-
     </form>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -637,6 +638,18 @@
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
 
+
+                if($('#outDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
 
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
@@ -1017,20 +1030,22 @@
     <form th:object="${cashOutForRent}" action="/account/cash/cashout/cashdesk/create/cashoutforrent" id="cashOutForRentCredit"  method="post" >
         <div style="margin: 50px">
             <div class="form-group row ">
-                <label for="supplierName" class=" col-md-4 col-form-label" >Մատակարար</label>
-                    <div class="col-md-6" >
-                        <select id="supplierName"
-                                class="form-control"
-                                th:field="*{supplierName}"
-                                th:name="supplierName">
-                                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                                <option th:each="supplier,iterStat  : ${suppliers}"
-                                        th:value="${iterStat.index}"
-                                        th:text="${supplier.getSupplierName()}"
-                                />
-                        </select>
-                        <small th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}"  class="form-text text-danger" />
-                    </div>
+                <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <select id="selectedSupplier"
+                            class="form-control"
+                            th:name="supplierIndex"
+                            th:field="*{supplierIndex}"
+                    >
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="supplier,iterStat  : ${suppliers}"
+                                th:value="${iterStat.index}"
+                                th:text="${supplier.getSupplierName()}"
+                        />
+
+                    </select>
+                    <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
+                </div>
                     <div class="col-md-1">
                         <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
                             <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
@@ -1154,7 +1169,17 @@
         $(function () {
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
+                if($('#outDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
 
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
@@ -1191,27 +1216,28 @@
     <form th:object="${cashOutForSerivceProvider}" action="/account/cash/cashout/cashdesk/create/cashoutforserivceprovider" id="cashoutforserivceproviderCredit"  method="post" >
         <div style="margin: 50px">
             <div class="form-group row ">
-                <label for="supplierName" class=" col-md-4 col-form-label" >Մատակարար</label>
-                    <div class="col-md-6" >
-                        <select id="supplierName"
-                                class="form-control"
-                                th:field="*{supplierName}"
-                                th:name="supplierName">
-                            <option value=""> __ԸՆՏՐԵԼ__ </option>
-                            <option th:each="supplier,iterStat  : ${suppliers}"
-                                    th:value="${iterStat.index}"
-                                    th:text="${supplier.getSupplierName()}"
-                            />
-                        </select>
-                        <small th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}"  class="form-text text-danger" />
-                    </div>
+                <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <select id="selectedSupplier"
+                            class="form-control"
+                            th:name="supplierIndex"
+                            th:field="*{supplierIndex}"
+                    >
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="supplier,iterStat  : ${suppliers}"
+                                th:value="${iterStat.index}"
+                                th:text="${supplier.getSupplierName()}"
+                        />
+
+                    </select>
+                    <small th:if="${#fields.hasErrors('supplierIndex')}" th:errors="*{supplierIndex}"  class="form-text text-danger" />
+                </div>
                 <div class="col-md-1">
                     <a type="button" th:href="@{'/account/cash/create/supplier'}" class="btn btn-default btn-sm" >
                         <span class="glyphicon glyphicon-plus-sign"></span> Մատակարար
                     </a>
                 </div>
             </div>
-
             <div class="form-group row ">
                 <label for="outDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
                     <div class="col-md-6" >
@@ -1329,7 +1355,17 @@
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
 
+                if($('#outDate').val()==""){
 
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
                     {

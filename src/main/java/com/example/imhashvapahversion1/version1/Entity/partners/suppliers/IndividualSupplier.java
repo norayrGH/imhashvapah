@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -23,11 +24,17 @@ public class IndividualSupplier implements GeneralMethods{
     private Date outDate;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ծննդյան ամսաթիվը պարտադիր է:")
     private Date bDate;
+    @NotEmpty(message = " ՀԾՀ-ն պարտադիր է:")
     private String hch;
+    @NotEmpty(message = "Անձնագրի համարը պարտադիր է:")
     private String passportNumber;
+    @NotEmpty(message = "Անձնագրի ում կողմից տրված լինելը պարտադիր է:")
     private String passportViewingDate;
+    @NotEmpty(message = "Սկզբնական մնացորդի տեսակը պարտադիր է:")
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
     @NotEmpty(message = "Հարկավոր է ընտրել մատակարարի տեսակը")
     private String supply;

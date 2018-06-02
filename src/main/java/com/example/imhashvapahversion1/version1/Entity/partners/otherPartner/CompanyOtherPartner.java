@@ -76,6 +76,11 @@ public class CompanyOtherPartner implements GeneralMethods{
     }
 
     @Override
+    public String getHch() {
+        return null;
+    }
+
+    @Override
     public String getType() {
         return "CompanyOtherPartner";
     }

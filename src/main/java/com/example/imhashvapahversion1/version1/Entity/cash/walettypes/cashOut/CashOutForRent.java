@@ -5,6 +5,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class CashOutForRent {
     @Id
     @GeneratedValue
     private Long id;
-    private String supplierName;
+
     //Բանկային միջնորդավճար
     private String bankCommissions;
     //Պայմանագրի ամսաթիվ
@@ -31,6 +32,10 @@ public class CashOutForRent {
     private Long supplierId;
     @Transient
     private String supplierType;
+
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
 
     @ManyToOne
     private CompanySupplier companySupplier;
@@ -48,14 +53,15 @@ public class CashOutForRent {
     public CashOutForRent() {
     }
 
-    public CashOutForRent(String supplierName, String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
-        this.supplierName = supplierName;
+    public CashOutForRent( String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, String supplierIndex, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
+
         this.bankCommissions = bankCommissions;
         this.contractDate = contractDate;
         this.contractNumber = contractNumber;
         this.note = note;
         this.supplierId = supplierId;
         this.supplierType = supplierType;
+        this.supplierIndex = supplierIndex;
         this.companySupplier = companySupplier;
         this.individualSupplier = individualSupplier;
         this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
@@ -71,13 +77,6 @@ public class CashOutForRent {
         this.id = id;
     }
 
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
 
     public String getBankCommissions() {
         return bankCommissions;
@@ -141,6 +140,14 @@ public class CashOutForRent {
 
     public void setIndividualSupplier(IndividualSupplier individualSupplier) {
         this.individualSupplier = individualSupplier;
+    }
+
+    public String getSupplierIndex() {
+        return supplierIndex;
+    }
+
+    public void setSupplierIndex(String supplierIndex) {
+        this.supplierIndex = supplierIndex;
     }
 
     public PrivateEntrepreneurSupplier getPrivateEntrepreneurSupplier() {

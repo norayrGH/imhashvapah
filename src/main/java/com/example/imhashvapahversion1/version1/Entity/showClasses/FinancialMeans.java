@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.showClasses;
 
 public class FinancialMeans {
     String name ;
-    Long openingPalance ;
+    Long openingBalance ;
     Long in ;
     Long out ;
     Long finalBalance;
@@ -10,9 +10,9 @@ public class FinancialMeans {
     public FinancialMeans() {
     }
 
-    public FinancialMeans(String name, Long openingPalance, Long in, Long out, Long finalBalance) {
+    public FinancialMeans(String name, Long openingBalance, Long in, Long out, Long finalBalance) {
         this.name = name;
-        this.openingPalance = openingPalance;
+        this.openingBalance = openingBalance;
         this.in = in;
         this.out = out;
         this.finalBalance = finalBalance;
@@ -26,12 +26,12 @@ public class FinancialMeans {
         this.name = name;
     }
 
-    public Long getOpeningPalance() {
-        return openingPalance;
+    public Long getOpeningBalance() {
+        return openingBalance;
     }
 
-    public void setOpeningPalance(Long openingPalance) {
-        this.openingPalance = openingPalance;
+    public void setOpeningBalance(Long openingBalance) {
+        this.openingBalance = openingBalance;
     }
 
     public Long getIn() {

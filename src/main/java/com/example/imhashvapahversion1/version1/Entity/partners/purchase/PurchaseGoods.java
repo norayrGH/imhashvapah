@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.purchase;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
@@ -75,6 +76,13 @@ public class PurchaseGoods {
         return id;
     }
 
+    public GeneralMethods getSupplier(){
+        if(companySupplier!=null)
+            return companySupplier;
+        if(individualSupplier!=null)
+            return individualSupplier;
+        return privateEntrepreneurSupplier;
+    }
     public void setId(Long id) {
         this.id = id;
     }

@@ -5,6 +5,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,7 +18,6 @@ public class CashOutForSerivceProvider {
     @GeneratedValue
     private Long id;
 
-    private String supplierName;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -31,6 +31,11 @@ public class CashOutForSerivceProvider {
     private Long supplierId;
     @Transient
     private String supplierType;
+
+
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
 
     @ManyToOne
     private CompanySupplier companySupplier;
@@ -48,8 +53,8 @@ public class CashOutForSerivceProvider {
     public CashOutForSerivceProvider() {
     }
 
-    public CashOutForSerivceProvider(String supplierName, Date contractDate, String contractNumber, String bankCommissions, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
-        this.supplierName = supplierName;
+    public CashOutForSerivceProvider( Date contractDate, String contractNumber, String bankCommissions, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
+
         this.contractDate = contractDate;
         this.contractNumber = contractNumber;
         this.bankCommissions = bankCommissions;
@@ -71,13 +76,6 @@ public class CashOutForSerivceProvider {
         this.id = id;
     }
 
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
 
     public Date getContractDate() {
         return contractDate;
@@ -149,6 +147,14 @@ public class CashOutForSerivceProvider {
 
     public void setPrivateEntrepreneurSupplier(PrivateEntrepreneurSupplier privateEntrepreneurSupplier) {
         this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
+    }
+
+    public String getSupplierIndex() {
+        return supplierIndex;
+    }
+
+    public void setSupplierIndex(String supplierIndex) {
+        this.supplierIndex = supplierIndex;
     }
 
     public Organization getOrganization() {

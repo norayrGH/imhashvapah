@@ -1146,8 +1146,11 @@
                     },  success: function (msg){
                         if(msg == null)
                             $("#supplierDebtDetails").empty();
-                        else
+                        else{
+                            console.log(msg);
                             partnerSupplierDebtDetailsShow(msg);
+                        }
+
                     },
 
                     error:
@@ -1177,7 +1180,10 @@
                         if(msg == null)
                             $("#supplierDebtDetails").empty();
                         else
+                        {
+                            console.log(msg);
                             partnerSupplierDebtDetailsShow(msg);
+                        }
                     },
 
                     error:

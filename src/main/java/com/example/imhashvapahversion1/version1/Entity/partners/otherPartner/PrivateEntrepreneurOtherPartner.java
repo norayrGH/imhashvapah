@@ -73,6 +73,11 @@ public class PrivateEntrepreneurOtherPartner implements GeneralMethods {
     }
 
     @Override
+    public String getHch() {
+        return null;
+    }
+
+    @Override
     public String getType() {
         return "PrivateEntrepreneurOtherPartner";
     }

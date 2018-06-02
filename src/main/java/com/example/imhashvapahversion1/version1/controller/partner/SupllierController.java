@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.controller.partner;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
+import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForGoodsProvider;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
@@ -12,6 +13,7 @@ import com.example.imhashvapahversion1.version1.Entity.enums.DateRangByType;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
 import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseFixedAsset;
 import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseGoods;
 import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseService;
 import com.example.imhashvapahversion1.version1.Entity.partners.service.PeriodicService;
@@ -26,6 +28,7 @@ import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForSerivceProviderRepository;
+import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseFixedAssetRepository;
 import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.purchase.PurchaseServiceRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.*;
@@ -41,10 +44,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 @Controller
 @RequestMapping("account/partner/supplier")
 public class SupllierController extends BaseController {
@@ -66,6 +67,8 @@ public class SupllierController extends BaseController {
     SupplierIndividualRepository supplierIndividualRepository;
     @Autowired
     PurchaseServiceRepository purchaseServiceRepository;
+    @Autowired
+    PurchaseFixedAssetRepository purchaseFixedAssetRepository;
     @Autowired
     PurchaseGoodsRepository purchaseGoodsRepository;
     @Autowired
@@ -109,13 +112,14 @@ public class SupllierController extends BaseController {
 
 
             for(GeneralMethods supplier : suppliers) {
-                if (supplier.getHvhh() != null) {
+                if (supplier.getHvhh() != null || supplier.getHch()!=null) {
                     supplierShow = new SupplierShow(supplier.getId(), supplier.getName(), supplier.getPhoneNumber(), supplier.getAddress(), supplier.getHvhh(), true, supplier.getClass().getSimpleName());
                     showResult.add(supplierShow);
                 } else {
                     supplierShow = new SupplierShow(supplier.getId(), supplier.getName(), supplier.getPhoneNumber(), supplier.getAddress(), supplier.getHvhh(), false, supplier.getClass().getSimpleName());
                     showResult.add(supplierShow);
                 }
+
 
             }
         return showResult;
@@ -139,9 +143,13 @@ public class SupllierController extends BaseController {
         List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
         List<PrivateEntrepreneurSupplier> privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
-        List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStart(dateRange.getStart());
-        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStart(dateRange.getStart());
-        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStart(dateRange.getStart());
+        List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEnd(dateRange.getStart());
+        List<CashOutForSerivceProvider> cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEnd(dateRange.getStart());
+        List<CashOutForRent> cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEnd(dateRange.getStart());
+        //purchase
+        List<PurchaseFixedAsset>  purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeEnd(dateRange.getStart());
+        List<PurchaseGoods> purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeEnd(dateRange.getStart());
+        List<PurchaseService> purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeEnd(dateRange.getStart());
 
         for(CompanySupplier companySupplier : companySuppliers)
         {
@@ -171,6 +179,29 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+
+            //purchase
+            for(PurchaseFixedAsset purchaseFixedAsset :purchaseFixedAssets){
+                if(purchaseFixedAsset.getCompanySupplier()!=null)
+                    if(purchaseFixedAsset.getCompanySupplier().getId()==companySupplier.getId()){
+
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseFixedAsset.getAmountOfReceipts()));
+
+                    }
+            }
+            for(PurchaseGoods purchaseGoods: purchaseGoodss){
+                if(purchaseGoods.getCompanySupplier()!=null)
+                    if(purchaseGoods.getCompanySupplier().getId()==companySupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseGoods.getAmountOfReceipts()));
+                    }
+            }
+            for(PurchaseService purchaseService : purchaseServices){
+                if(purchaseService.getCompanySupplier()!=null)
+                    if(purchaseService.getCompanySupplier().getId()==companySupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseService.getAmountOfReceipts()));
+                    }
+            }
+
             if( debt.getPrepayment() - debt.getDebt() < 0 )
             {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
@@ -212,6 +243,25 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+            //purchase
+            for(PurchaseFixedAsset purchaseFixedAsset :purchaseFixedAssets){
+                if(purchaseFixedAsset.getIndividualSupplier()!=null)
+                    if(purchaseFixedAsset.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseFixedAsset.getAmountOfReceipts()));
+                    }
+            }
+            for(PurchaseGoods purchaseGoods: purchaseGoodss){
+                if(purchaseGoods.getIndividualSupplier()!=null)
+                    if(purchaseGoods.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseGoods.getAmountOfReceipts()));
+                    }
+            }
+            for(PurchaseService purchaseService : purchaseServices){
+                if(purchaseService.getIndividualSupplier()!=null)
+                    if(purchaseService.getIndividualSupplier().getId()==individualSupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseService.getAmountOfReceipts()));
+                    }
+            }
             if( debt.getPrepayment() - debt.getDebt() < 0 )
             {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
@@ -250,6 +300,28 @@ public class SupllierController extends BaseController {
                         debt.setPrepayment(debt.getPrepayment()+Integer.valueOf(cashOutForRent.getWalletOut().getOutCash()));
                     }
             }
+            //purchase
+            for(PurchaseFixedAsset purchaseFixedAsset :purchaseFixedAssets){
+                if(purchaseFixedAsset.getCompanySupplier()!=null)
+                    if(purchaseFixedAsset.getCompanySupplier().getId()==privateEntrepreneurSupplier.getId()){
+
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseFixedAsset.getAmountOfReceipts()));
+
+                    }
+            }
+            for(PurchaseGoods purchaseGoods: purchaseGoodss){
+                if(purchaseGoods.getCompanySupplier()!=null)
+                    if(purchaseGoods.getCompanySupplier().getId()==privateEntrepreneurSupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseGoods.getAmountOfReceipts()));
+                    }
+            }
+            for(PurchaseService purchaseService : purchaseServices){
+                if(purchaseService.getCompanySupplier()!=null)
+                    if(purchaseService.getCompanySupplier().getId()==privateEntrepreneurSupplier.getId()){
+                        debt.setDebt(debt.getDebt()+Integer.valueOf(purchaseService.getAmountOfReceipts()));
+                    }
+            }
+
             if( debt.getPrepayment() - debt.getDebt() < 0 )
             {
                 debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()) );
@@ -289,30 +361,70 @@ public class SupllierController extends BaseController {
     @PostMapping(value = "/debt/details/show")
     public @ResponseBody ArrayList supplierDebtDetails(@RequestBody DateRangByType dateRangByType ) {
         ArrayList<DebtDetailsShow> debtDetails= new ArrayList<>();
-        DebtDetailsShow debtDetail = new DebtDetailsShow();
+        DebtDetailsShow debtDetail ;
 
         List<CashOutForGoodsProvider> cashOutForGoodsProviders=null;
         List<CashOutForSerivceProvider> cashOutForSerivceProviders=null;
         List<CashOutForRent> cashOutForRents=null;
+        List<PurchaseFixedAsset>  purchaseFixedAssets=null;
+        List<PurchaseGoods> purchaseGoodss =null;
+        List<PurchaseService> purchaseServices=null;
+
 
         if (dateRangByType.getStart() != null && dateRangByType.getEnd() == null) {
             if(dateRangByType.getType().equals("CompanySupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
-
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeStartAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getId());
             }
             if(dateRangByType.getType().equals("IndividualSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeStartAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getId());
 
             }
             if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeStartAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getId());
 
+            }
+            for (PurchaseFixedAsset purchaseFixedAsset:purchaseFixedAssets){
+
+                debtDetail = new DebtDetailsShow(purchaseFixedAsset.getPurchaseDate(),
+                        "PurchaseFixedAsset",
+                       null ,
+                        purchaseFixedAsset.getAmountOfReceipts(),
+                        purchaseFixedAsset.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseGoods purchaseGoods:purchaseGoodss){
+
+                debtDetail = new DebtDetailsShow(purchaseGoods.getPurchaseDate(),
+                        "PurchaseGoods",
+                       null ,
+                        purchaseGoods.getAmountOfReceipts(),
+                        purchaseGoods.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseService purchaseService:purchaseServices){
+
+                debtDetail = new DebtDetailsShow(purchaseService.getPurchaseDate(),
+                        "PurchaseService",
+                       null ,
+                        purchaseService.getAmountOfReceipts(),
+                        purchaseService.getId()
+                );
+                debtDetails.add(debtDetail);
             }
             for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
 
@@ -345,27 +457,71 @@ public class SupllierController extends BaseController {
                 debtDetails.add(debtDetail);
             }
 
+            Collections.sort(debtDetails);
+
+            return debtDetails ;
+        }
 
 
-            return debtDetails;
-        } else if (dateRangByType.getStart() == null && dateRangByType.getEnd() != null) {
+
+
+
+
+        else if (dateRangByType.getStart() == null && dateRangByType.getEnd() != null) {
             if(dateRangByType.getType().equals("CompanySupplier")){
                  cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                  cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                  cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                 purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                 purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                 purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeEndAndCompanySupplierId(dateRangByType.getEnd(),dateRangByType.getId());
 
             }
             if(dateRangByType.getType().equals("IndividualSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeEndAndIndividualSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
 
             }
             if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeEndAndPrivateEntrepreneurSupplierId(dateRangByType.getEnd(),dateRangByType.getId());
 
+            }
+            for (PurchaseFixedAsset purchaseFixedAsset:purchaseFixedAssets){
+
+                debtDetail = new DebtDetailsShow(purchaseFixedAsset.getPurchaseDate(),
+                        "PurchaseFixedAsset",
+                        null ,
+                        purchaseFixedAsset.getAmountOfReceipts(),
+                        purchaseFixedAsset.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseGoods purchaseGoods:purchaseGoodss){
+
+                debtDetail = new DebtDetailsShow(purchaseGoods.getPurchaseDate(),
+                        "PurchaseGoods",
+                        null ,
+                        purchaseGoods.getAmountOfReceipts(),
+                        purchaseGoods.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseService purchaseService:purchaseServices){
+
+                debtDetail = new DebtDetailsShow(purchaseService.getPurchaseDate(),
+                        "PurchaseService",
+                        null ,
+                        purchaseService.getAmountOfReceipts(),
+                        purchaseService.getId()
+                );
+                debtDetails.add(debtDetail);
             }
             for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
 
@@ -398,7 +554,7 @@ public class SupllierController extends BaseController {
                 debtDetails.add(debtDetail);
             }
 
-
+            Collections.sort(debtDetails);
             return debtDetails;
         }else if (dateRangByType.getStart() != null && dateRangByType.getEnd() != null) {
 
@@ -406,19 +562,55 @@ public class SupllierController extends BaseController {
                  cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                  cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                  cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeAndCompanySupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
 
             }
             if(dateRangByType.getType().equals("IndividualSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeAndIndividualSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
 
             }
             if(dateRangByType.getType().equals("PrivateEntrepreneurSupplier")){
                 cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForSerivceProviders = (List<CashOutForSerivceProvider>) cashOutForSerivceProviderRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
                 cashOutForRents = (List<CashOutForRent>) cashOutForRentRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+                purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findByRangeAndPrivateEntrepreneurSupplierId(dateRangByType.getStart(),dateRangByType.getEnd(),dateRangByType.getId());
+            }
+            for (PurchaseFixedAsset purchaseFixedAsset:purchaseFixedAssets){
 
+                debtDetail = new DebtDetailsShow(purchaseFixedAsset.getPurchaseDate(),
+                        "PurchaseFixedAsset",
+                        null ,
+                        purchaseFixedAsset.getAmountOfReceipts(),
+                        purchaseFixedAsset.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseGoods purchaseGoods:purchaseGoodss){
+
+                debtDetail = new DebtDetailsShow(purchaseGoods.getPurchaseDate(),
+                        "PurchaseGoods",
+                        null ,
+                        purchaseGoods.getAmountOfReceipts(),
+                        purchaseGoods.getId()
+                );
+                debtDetails.add(debtDetail);
+            }for (PurchaseService purchaseService:purchaseServices){
+
+                debtDetail = new DebtDetailsShow(purchaseService.getPurchaseDate(),
+                        "PurchaseService",
+                        null ,
+                        purchaseService.getAmountOfReceipts(),
+                        purchaseService.getId()
+                );
+                debtDetails.add(debtDetail);
             }
             for (CashOutForGoodsProvider cashOutForGoodsProvider:cashOutForGoodsProviders){
 
@@ -450,7 +642,7 @@ public class SupllierController extends BaseController {
                 );
                 debtDetails.add(debtDetail);
             }
-
+            Collections.sort(debtDetails);
             return debtDetails;
         }
         return null;
@@ -576,8 +768,11 @@ public class SupllierController extends BaseController {
         }
 
         if(type.equals("fixedasset")){
-
-            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);}
+            PurchaseFixedAsset purchaseFixedAsset = new PurchaseFixedAsset();
+            purchaseFixedAsset.setOrganization((Organization) httpSession.getAttribute("organizationId"));
+            modelAndView.addObject("purchaseFixedAsset",purchaseFixedAsset);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);
+        }
 
         modelAndView.addObject("appFragment", this.supplierFragments);
         modelAndView.addObject("suppliers", suppliers);
@@ -587,8 +782,59 @@ public class SupllierController extends BaseController {
         return modelAndView;
     }
 
+    @PostMapping(value ="create/purchasefixedasset")
+    public ModelAndView SupplierCreatePurchaseFixedAsset(@Valid PurchaseFixedAsset purchaseFixedAsset, BindingResult bindingResult , ModelAndView modelAndView) {
+        modelAndView.setViewName("app/app");
+
+        if(bindingResult.hasErrors()) {
+
+            modelAndView.addObject("purchaseFixedAsset",purchaseFixedAsset);
+            modelAndView.addObject("suppliers", suppliers);
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.supplierFragments);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+            return modelAndView;
+        }
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.supplierFragments);
+        modelAndView.addObject("fragment", this.partnerSupplierPurchaseType);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+        if(purchaseFixedAsset.getSupplierType().equals("CompanySupplier")){
+            purchaseFixedAsset.setCompanySupplier(companySupplierRepository.findOne(purchaseFixedAsset.getSupplierId()));
+        }
+        if(purchaseFixedAsset.getSupplierType().equals("IndividualSupplier")){
+            purchaseFixedAsset.setIndividualSupplier(individualSupplierRepository.findOne(purchaseFixedAsset.getSupplierId()));
+        }
+        if(purchaseFixedAsset.getSupplierType().equals("PrivateEntrepreneurSupplier")){
+            purchaseFixedAsset.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(purchaseFixedAsset.getSupplierId()));
+        }
+        if(purchaseFixedAsset.getPersonalWalletOut()==true)
+        {
+            CashOutForGoodsProvider cashOutForGoodsProvider = new CashOutForGoodsProvider();
+            WalletOut walletOut =new WalletOut();
+            walletOut.setOrganization(purchaseFixedAsset.getOrganization());
+            walletOut.setOutType("CashOutForGoodsProvider");
+            walletOut.setOutCash(String.valueOf(purchaseFixedAsset.getAmountOfReceipts()));
+            walletOut.setOutDate(purchaseFixedAsset.getPurchaseDate());
+            cashOutForGoodsProvider.setWalletOut(walletOut);
+            cashOutForGoodsProvider.setOrganization(purchaseFixedAsset.getOrganization());
+            if(purchaseFixedAsset.getSupplier() instanceof CompanySupplier)
+            cashOutForGoodsProvider.setCompanySupplier((CompanySupplier) purchaseFixedAsset.getSupplier());
+            if(purchaseFixedAsset.getSupplier() instanceof IndividualSupplier)
+                cashOutForGoodsProvider.setIndividualSupplier((IndividualSupplier) purchaseFixedAsset.getSupplier());
+            if(purchaseFixedAsset.getSupplier() instanceof PrivateEntrepreneurSupplier)
+                cashOutForGoodsProvider.setPrivateEntrepreneurSupplier((PrivateEntrepreneurSupplier) purchaseFixedAsset.getSupplier());
+           cashOutForGoodsProviderRepository.save(cashOutForGoodsProvider);
+        }
+
+        purchaseFixedAssetRepository.save(purchaseFixedAsset);
+        return  modelAndView;
+    }
     @PostMapping(value ="/create/purchaseservice")
-    public ModelAndView SupplierCreatePurchase(@Valid PurchaseService purchaseService, BindingResult bindingResult , ModelAndView modelAndView) {
+    public ModelAndView SupplierCreatePurchaseService(@Valid PurchaseService purchaseService, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
 
         if(bindingResult.hasErrors()) {
@@ -631,11 +877,27 @@ public class SupllierController extends BaseController {
         if(purchaseService.getServiceType().equals("PeriodicServiceRentOther")){
             purchaseService.setPeriodicServiceRentOther(periodicServiceRentOtherRepository.findOne(purchaseService.getServiceId()));
         }
-
+        if(purchaseService.getPersonalWalletOut()==true)
+        {
+            CashOutForSerivceProvider cashOutForSerivceProvider = new CashOutForSerivceProvider();
+            WalletOut walletOut =new WalletOut();
+            walletOut.setOrganization(purchaseService.getOrganization());
+            walletOut.setOutType("CashOutForSerivceProvider");
+            walletOut.setOutCash(String.valueOf(purchaseService.getAmountOfReceipts()));
+            walletOut.setOutDate(purchaseService.getPurchaseDate());
+            cashOutForSerivceProvider.setWalletOut(walletOut);
+            cashOutForSerivceProvider.setOrganization(purchaseService.getOrganization());
+            if(purchaseService.getSupplier() instanceof CompanySupplier)
+                cashOutForSerivceProvider.setCompanySupplier((CompanySupplier) purchaseService.getSupplier());
+            if(purchaseService.getSupplier() instanceof IndividualSupplier)
+                cashOutForSerivceProvider.setIndividualSupplier((IndividualSupplier) purchaseService.getSupplier());
+            if(purchaseService.getSupplier() instanceof PrivateEntrepreneurSupplier)
+                cashOutForSerivceProvider.setPrivateEntrepreneurSupplier((PrivateEntrepreneurSupplier) purchaseService.getSupplier());
+            cashOutForSerivceProviderRepository.save(cashOutForSerivceProvider);
+        }
         purchaseServiceRepository.save(purchaseService);
         return  modelAndView;
     }
-
     @PostMapping(value ="/create/purchasegoods")
     public ModelAndView SupplierCreatePurchaseGoods(@Valid PurchaseGoods purchaseGoods, BindingResult bindingResult , ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
@@ -664,6 +926,24 @@ public class SupllierController extends BaseController {
         }
         if(purchaseGoods.getSupplierType().equals("PrivateEntrepreneurSupplier")){
             purchaseGoods.setPrivateEntrepreneurSupplier(privateEntrepreneurSupplierRepository.findOne(purchaseGoods.getSupplierId()));
+        }
+        if(purchaseGoods.getPersonalWalletOut()==true)
+        {
+            CashOutForGoodsProvider cashOutForGoodsProvider = new CashOutForGoodsProvider();
+            WalletOut walletOut =new WalletOut();
+            walletOut.setOrganization(purchaseGoods.getOrganization());
+            walletOut.setOutType("CashOutForGoodsProvider");
+            walletOut.setOutCash(String.valueOf(purchaseGoods.getAmountOfReceipts()));
+            walletOut.setOutDate(purchaseGoods.getPurchaseDate());
+            cashOutForGoodsProvider.setWalletOut(walletOut);
+            cashOutForGoodsProvider.setOrganization(purchaseGoods.getOrganization());
+            if(purchaseGoods.getSupplier() instanceof CompanySupplier)
+                cashOutForGoodsProvider.setCompanySupplier((CompanySupplier) purchaseGoods.getSupplier());
+            if(purchaseGoods.getSupplier() instanceof IndividualSupplier)
+                cashOutForGoodsProvider.setIndividualSupplier((IndividualSupplier) purchaseGoods.getSupplier());
+            if(purchaseGoods.getSupplier() instanceof PrivateEntrepreneurSupplier)
+                cashOutForGoodsProvider.setPrivateEntrepreneurSupplier((PrivateEntrepreneurSupplier) purchaseGoods.getSupplier());
+            cashOutForGoodsProviderRepository.save(cashOutForGoodsProvider);
         }
         purchaseGoods.setPurchaseType("PurchaseGoods");
         purchaseGoodsRepository.save(purchaseGoods);

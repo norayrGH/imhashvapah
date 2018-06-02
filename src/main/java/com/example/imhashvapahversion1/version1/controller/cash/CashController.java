@@ -14,6 +14,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
@@ -26,6 +27,7 @@ import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPa
 import com.example.imhashvapahversion1.version1.repository.otherpartners.OtherPartnerIndividualRepository;
 
 import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
+import com.example.imhashvapahversion1.version1.repository.suppliers.IndividualSupplierRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierClientOrganizationRepository;
 import com.example.imhashvapahversion1.version1.repository.suppliers.SupplierIndividualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,8 @@ public class CashController extends BaseController {
     @Autowired
     CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
 
+@Autowired
+    IndividualSupplierRepository individualSupplierRepository;
 @Autowired
     CompanySupplierRepository companySupplierRepository;
     @Autowired
@@ -126,41 +130,48 @@ public class CashController extends BaseController {
 
         ArrayList showResult = new ArrayList();
         FinancialMeans financialMeans = new FinancialMeans();
-        Long openingPalanceSum = 0L;
+        Long openingBalanceSum = 0L;
         Long inSum = 0L;
         Long outSum = 0L;
         Long finalBalanceSum = 0L;
 
+
          if (dateRange.getStart() != null && dateRange.getEnd() == null) {
-             openingPalanceSum = walletInRepository.returnSumOfInsByStart(dateRange.getStart());
+
+
+
+             /* openingPalanceSum = walletInRepository.returnSumOfInsByStart(dateRange.getStart());
              inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
 
                 financialMeans.setOpeningPalance(openingPalanceSum);
                 financialMeans.setIn(inSum);
                 financialMeans.setName("Դրամարկղ");
-             showResult.add(financialMeans);
+             showResult.add(financialMeans);*/
 
              return showResult;
+
          } else if (dateRange.getStart() == null && dateRange.getEnd() != null) {
-             openingPalanceSum = walletInRepository.returnSumOfInsByEnd(dateRange.getEnd());
+            /* openingPalanceSum = walletInRepository.returnSumOfInsByEnd(dateRange.getEnd());
              inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
 
              financialMeans.setOpeningPalance(openingPalanceSum);
              financialMeans.setIn(inSum);
              financialMeans.setName("Դրամարկղ");
-             showResult.add(financialMeans);
+             showResult.add(financialMeans);*/
 
              return showResult;
+
         }else if (dateRange.getStart() != null && dateRange.getEnd() != null) {
-             openingPalanceSum = walletInRepository.returnSumOfInsByRange(dateRange.getStart(),dateRange.getEnd());
-             inSum =walletInRepository.returnAllSumOfIns()-openingPalanceSum;
 
-             financialMeans.setOpeningPalance(openingPalanceSum);
+             openingBalanceSum = walletInRepository.returnSumOfInsForOpeningBalance(dateRange.getStart());
+              inSum = walletInRepository.returnSumOfInsByRange(dateRange.getStart(),dateRange.getEnd());
+             financialMeans.setOpeningBalance(openingBalanceSum);
              financialMeans.setIn(inSum);
              financialMeans.setName("Դրամարկղ");
              showResult.add(financialMeans);
 
              return showResult;
+
         }
 
         return showResult;
@@ -828,14 +839,18 @@ public class CashController extends BaseController {
 
     @GetMapping(value = "create/customer")
     public   ModelAndView cashinfrompointofsaleCreateCustomer( ModelAndView modelAndView) {
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("appFragment", this.appFragment);
+        modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.customerAndColleaguesCreate);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return  modelAndView;
+
     }
+
+
     @GetMapping(value = "create/supplier")
     public   ModelAndView cashCreateSupplier( ModelAndView modelAndView) {
 
@@ -1070,6 +1085,10 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashOutCreate);
         modelAndView.addObject("fragmentNavBar", this.cashOutFragmentNavBar);
         supplierIndividualRepository.save(supplierIndividual);
+        IndividualSupplier individualSupplier = new IndividualSupplier();
+        individualSupplier.setIndividual(supplierIndividual);
+        individualSupplier.setOrganization(supplierIndividual.getOrganization());
+        individualSupplierRepository.save(individualSupplier);
         return  modelAndView;
     }
 

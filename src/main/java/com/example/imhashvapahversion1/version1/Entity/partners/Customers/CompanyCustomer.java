@@ -60,6 +60,11 @@ public class CompanyCustomer  implements GeneralMethods,Serializable{
     }
 
     @Override
+    public String getHch() {
+        return null;
+    }
+
+    @Override
     public String getType() {
         return "CompanyCustomer";
     }

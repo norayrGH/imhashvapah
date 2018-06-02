@@ -68,6 +68,11 @@ public class OtherPartnerIndividual implements GeneralMethods {
     }
 
     @Override
+    public String getHch() {
+        return null;
+    }
+
+    @Override
     public String getType() {
         return "OtherPartnerIndividual";
     }

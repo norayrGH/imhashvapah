@@ -19,7 +19,6 @@ public interface WalletInRepository extends CrudRepository<WalletIn, Long> {
     @Query("Select sum(w.inCash) from WalletIn w ")
     Long returnAllSumOfIns();
 
-
-
-
+    @Query("Select sum(w.inCash) from WalletIn w where w.inDate<:startDate")
+    Long returnSumOfInsForOpeningBalance(@Param("startDate") Date startDate);
 }

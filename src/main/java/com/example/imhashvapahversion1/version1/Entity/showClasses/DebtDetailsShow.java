@@ -2,7 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.showClasses;
 
 import java.util.Date;
 
-public class DebtDetailsShow {
+public class DebtDetailsShow implements Comparable<DebtDetailsShow> {
     private Date debtDate;
     private String contents;
     private Integer payment;
@@ -58,5 +58,10 @@ public class DebtDetailsShow {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(DebtDetailsShow o) {
+        return getDebtDate().compareTo(o.getDebtDate());
     }
 }

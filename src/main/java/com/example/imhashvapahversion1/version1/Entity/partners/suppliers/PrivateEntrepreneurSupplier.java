@@ -74,6 +74,11 @@ public class PrivateEntrepreneurSupplier extends Supplier implements GeneralMeth
     }
 
     @Override
+    public String getHch() {
+        return null;
+    }
+
+    @Override
     public String getType() {
         return "PrivateEntrepreneurSupplier";
     }

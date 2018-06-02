@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.partners.purchase;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.partners.service.PeriodicService;
 import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentArea;
@@ -47,6 +48,8 @@ public class PurchaseService {
     //Ելք անել անձնական դրամապանակից
     private Boolean personalWalletOut;
     //Պայմանագրի ամսաթիվ
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractDate;
     //Պայմանագրի համար
     private String contractNumber;
@@ -99,6 +102,13 @@ public class PurchaseService {
         this.id = id;
     }
 
+    public GeneralMethods getSupplier(){
+        if(companySupplier!=null)
+            return companySupplier;
+        if(individualSupplier!=null)
+            return individualSupplier;
+        return privateEntrepreneurSupplier;
+    }
     public String getPurchaseNumber() {
         return purchaseNumber;
     }

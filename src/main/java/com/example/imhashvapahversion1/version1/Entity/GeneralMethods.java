@@ -9,5 +9,6 @@ public interface GeneralMethods {
    String getPhoneNumber();
    String getAddress();
    String getHvhh();
+   String getHch();
    String getType();
 }

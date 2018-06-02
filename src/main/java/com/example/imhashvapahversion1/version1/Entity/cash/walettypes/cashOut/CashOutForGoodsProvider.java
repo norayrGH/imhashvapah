@@ -8,6 +8,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import sun.text.SupplementaryCharacterData;
 
@@ -38,6 +39,10 @@ public class CashOutForGoodsProvider {
     @Transient
     private String supplierType;
 
+    @Transient
+    @NotEmpty(message = "Մատակարարը պարտադիր է:")
+    private String  supplierIndex;
+
     @ManyToOne
     private CompanySupplier companySupplier;
     @ManyToOne
@@ -53,14 +58,14 @@ public class CashOutForGoodsProvider {
     public CashOutForGoodsProvider() {
     }
 
-    public CashOutForGoodsProvider( String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
-
+    public CashOutForGoodsProvider(String bankCommissions, Date contractDate, String contractNumber, String note, Long supplierId, String supplierType, String supplierIndex, CompanySupplier companySupplier, IndividualSupplier individualSupplier, PrivateEntrepreneurSupplier privateEntrepreneurSupplier, Organization organization, WalletOut walletOut) {
         this.bankCommissions = bankCommissions;
         this.contractDate = contractDate;
         this.contractNumber = contractNumber;
         this.note = note;
         this.supplierId = supplierId;
         this.supplierType = supplierType;
+        this.supplierIndex = supplierIndex;
         this.companySupplier = companySupplier;
         this.individualSupplier = individualSupplier;
         this.privateEntrepreneurSupplier = privateEntrepreneurSupplier;
@@ -159,6 +164,14 @@ public class CashOutForGoodsProvider {
 
     public String getSupplierType() {
         return supplierType;
+    }
+
+    public String getSupplierIndex() {
+        return supplierIndex;
+    }
+
+    public void setSupplierIndex(String supplierIndex) {
+        this.supplierIndex = supplierIndex;
     }
 
     public GeneralMethods getSupplier(){
