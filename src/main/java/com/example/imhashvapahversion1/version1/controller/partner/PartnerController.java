@@ -116,7 +116,7 @@ public class PartnerController extends BaseController {
         temp2.addAll((ArrayList) individualCustomerRepository.findAll());
         temp2.addAll((ArrayList) privateEntrepreneurCustomerRepository.findAll());
 
-        for(GeneralMethods each1 : temp1) {
+      /*  for(GeneralMethods each1 : temp1) {
             for(GeneralMethods each2 : temp2) {
                 if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof CustomerClientOrganization) || ( each1 instanceof CustomerIndividual && each1.getId()==each2.getIndividualId())){
                     partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
@@ -129,7 +129,7 @@ public class PartnerController extends BaseController {
                 showResult.add(partnerCustomerShow);
             }
             temp=false;
-        }
+        }*/
         return showResult;
     }
     @GetMapping(value = "/customer/create/individualcustomer")
@@ -276,7 +276,6 @@ public class PartnerController extends BaseController {
 
 
     /* partner Otherpartner */
-
     @GetMapping(value = "/otherpartner")
     public ModelAndView partnersOtherPartner( ModelAndView modelAndView) {
 
@@ -288,41 +287,6 @@ public class PartnerController extends BaseController {
 
 
         return modelAndView;
-    }
-    @PostMapping("/otherpartner/show")
-    public @ResponseBody Set partnersOtherPartnerShow() {
-
-
-            List<GeneralMethods> temp1 = new ArrayList();
-            List<GeneralMethods> temp2 = new ArrayList();
-            Boolean temp = false;
-            PartnerCustomerShow partnerCustomerShow = null;
-            Set<PartnerCustomerShow> showResult = new HashSet();
-            temp1.addAll((ArrayList) otherPartnerClientOrganizationRepository.findAll());
-            temp1.addAll((ArrayList) otherPartnerIndividualRepository.findAll());
-
-            temp2.addAll((ArrayList) companyOtherPartnerRepository.findAll());
-            temp2.addAll((ArrayList) individualOtherPartnerRepository.findAll());
-            temp2.addAll((ArrayList) privateEntrepreneurOtherPartnerRepository.findAll());
-
-            for(GeneralMethods each1 : temp1) {
-                for(GeneralMethods each2 : temp2) {
-                    if((each1.getId() == each2.getClientOrganizationId() && each1 instanceof OtherPartnerClientOrganization) || ( each1 instanceof OtherPartnerIndividual && each1.getId()==each2.getIndividualId())){
-
-                        partnerCustomerShow = new PartnerCustomerShow(new Long[]{each2.getId(),each1.getId()}, each2.getName(), each2.getPhoneNumber(), each2.getAddress(), each2.getHvhh(), true,each2.getClass().getSimpleName());
-                        showResult.add(partnerCustomerShow);
-                        temp=true;
-
-                    }
-                }
-                if(temp == false){
-
-                    partnerCustomerShow = new PartnerCustomerShow(new Long[]{0L,each1.getId()}, each1.getName(), each1.getPhoneNumber(), each1.getAddress(), each1.getHvhh(), false,each1.getClass().getSimpleName());
-                    showResult.add(partnerCustomerShow);
-                }
-                temp=false;
-            }
-            return showResult;
     }
 
     @GetMapping(value = "/otherpartner/create/companyotherpartner")
@@ -451,8 +415,49 @@ public class PartnerController extends BaseController {
         privateEntrepreneurOtherPartnerRepository.save(privateEntrepreneurOtherPartner);
         return  modelAndView;
     }
-    /*--partner Otherpartner--*/
 
+    @PostMapping("/otherpartner/show")
+    public @ResponseBody Set partnersOtherPartnerShow() {
+
+        List<GeneralMethods> otherPartners = new ArrayList();
+        Boolean temp = false;
+        PartnerCustomerShow partnerCustomerShow = null;
+        Set<PartnerCustomerShow> showResult = new HashSet();
+
+        otherPartners.addAll((ArrayList) companyOtherPartnerRepository.findAll());
+        otherPartners.addAll((ArrayList) individualOtherPartnerRepository.findAll());
+        otherPartners.addAll((ArrayList) privateEntrepreneurOtherPartnerRepository.findAll());
+
+
+        for(GeneralMethods otherPartner : otherPartners) {
+            if (otherPartner.getHvhh() != null || otherPartner.getHch()!=null) {
+                partnerCustomerShow = new PartnerCustomerShow(otherPartner.getId(), otherPartner.getName(), otherPartner.getPhoneNumber(), otherPartner.getAddress(), otherPartner.getHvhh(), true, otherPartner.getClass().getSimpleName());
+                showResult.add(partnerCustomerShow);
+            } else {
+                partnerCustomerShow = new PartnerCustomerShow(otherPartner.getId(), otherPartner.getName(), otherPartner.getPhoneNumber(), otherPartner.getAddress(), otherPartner.getHvhh(), false, otherPartner.getClass().getSimpleName());
+                showResult.add(partnerCustomerShow);
+            }
+
+        }
+        return showResult;
+    }
+    @GetMapping( value = "/otherpartner/debt")
+    public ModelAndView partnerOtherPartnerDebt( ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
+        modelAndView.addObject("fragment", this.partnerOtherPartnerFragment);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+
+        return modelAndView;
+    }
+
+
+
+
+    /*--partner Otherpartner--*/
 
 
     @GetMapping(value = "/customer/debt")
@@ -486,18 +491,6 @@ public class PartnerController extends BaseController {
     }
 
 
-    @GetMapping( value = "/otherpartner/debt")
-    public ModelAndView partnerOtherPartnerDebt( ModelAndView modelAndView) {
-
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("appFragment", this.otherPartnerFragments);
-        modelAndView.addObject("fragment", this.partnerOtherPartnerFragment);
-        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
-
-
-        return modelAndView;
-    }
 
 
 }

@@ -1,7 +1,7 @@
 package com.example.imhashvapahversion1.version1.Entity.showClasses;
 
 public class PartnerCustomerShow {
-    private Long[] id;
+    private Long id;
     private String customerName;
     private String phoneNumber;
     private String address;
@@ -12,7 +12,7 @@ public class PartnerCustomerShow {
     public PartnerCustomerShow() {
     }
 
-    public PartnerCustomerShow(Long[] id, String customerName, String phoneNumber, String address, String hvhh, Boolean full, String type) {
+    public PartnerCustomerShow(Long id, String customerName, String phoneNumber, String address, String hvhh, Boolean full, String type) {
         this.id = id;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
@@ -22,11 +22,11 @@ public class PartnerCustomerShow {
         this.type = type;
     }
 
-    public Long[] getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long[] id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

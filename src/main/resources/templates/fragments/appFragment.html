@@ -775,6 +775,22 @@
     </form >
 
 </div>
+
+<div th:fragment="partnerOtherPartnerFragmentNavBar">
+    <nav role="navigation" class="navbar-justified">
+
+        <div id="partnerOtherPartnerFragmentNavBar" class="collapse navbar-collapse">
+            <ul class=" nav flex-column ">
+                <li class="nav-item"><a class="nav-link active" th:href="@{'/account/partner/otherpartner/debt'}" id="otherPartnerDebt"> Պարտքեր</a></li>
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/otherpartner/payments'}" id="otherPartnerPayment">Վճարումներ</a></li>
+                <!--<li class="nav-item"><a class="nav-item" th:href="@{''}" id="group">Խմբեր</a></li>-->
+                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/otherpartner'}" id="otherPartnerTable">Այլ
+                    գորընկերների ցանկ</a></li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
 <div class="container" th:fragment="createOtherPartnerClientOrganization" >
 
     <form th:object="${otherPartnerClientOrganization}" action="/account/cash/create/otherpartner/otherpartnerclientorganization"  method="post" >
