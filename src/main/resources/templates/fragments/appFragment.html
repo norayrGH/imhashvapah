@@ -585,43 +585,43 @@
         /*]]>*/
     </script>
 </div>
-<div class="container" th:fragment="createCustomerClientOrganization" >
-
+<div class="panel panel-default" th:fragment="createCustomerClientOrganization" >
     <form th:object="${customerClientOrganization}" action="/account/cash/create/customer/customerclientorganization"  method="post" >
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <div style="margin: 50px">
+            <div class="form-group row ">
+                <label for="clientOrganizationName" class=" col-md-2 col-form-label" >Անուն</label>
+                    <div class="col-md-8" >
+                        <input id="clientOrganizationName"
+                               class="form-control"
+                               type="text"
+                               th:name="clientOrganizationName"
+                               th:field="*{clientOrganizationName}"
+                        />
+                        <small th:if="${#fields.hasErrors('clientOrganizationName')}" th:errors="*{clientOrganizationName}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <input
+                     type="hidden"
+                     th:field="*{id}"
+                     th:value="${id}"
+            />
+
+            <input
+                     type="hidden"
+                     th:field="*{organization}"
+                     th:value="${organization}"
+            />
+
+            <input name="csrfToken" id="csrfToken"
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"
+            />
+
+
+             <input type="submit" class="btn btn-default" />
         </div>
-
-        <br />
-
-
-        <label>Անուն</label>
-        <input type="text"
-          th:name="clientOrganizationName"
-          th:field="*{clientOrganizationName}"
-        />
-        <br />
-
-        <input
-                 type="hidden"
-                 th:field="*{id}"
-                 th:value="${id}"
-        />
-
-        <input
-                 type="hidden"
-                 th:field="*{organization}"
-                 th:value="${organization}"
-        />
-
-        <input name="csrfToken" id="csrfToken"
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"
-        />
-
-
-         <input type="submit" class="btn btn-default" />
     </form >
 
 </div>
@@ -775,89 +775,98 @@
     </form >
 
 </div>
-<div class="container" th:fragment="createOtherPartnerClientOrganization" >
-
+<div class="panel panel-default" th:fragment="createOtherPartnerClientOrganization" >
     <form th:object="${otherPartnerClientOrganization}" action="/account/cash/create/otherpartner/otherpartnerclientorganization"  method="post" >
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <div style="margin: 50px">
+            <div class="form-group row ">
+                <label for="clientOrganizationName" class=" col-md-2 col-form-label" >Անուն</label>
+                    <div class="col-md-8" >
+                        <input id="clientOrganizationName"
+                               class="form-control"
+                               type="text"
+                               th:name="clientOrganizationName"
+                               th:field="*{clientOrganizationName}"
+                        />
+                    <small th:if="${#fields.hasErrors('clientOrganizationName')}" th:errors="*{clientOrganizationName}"  class="form-text text-danger" />
+                </div>
+            </div>
+
+            <input
+                    type="hidden"
+                    th:field="*{id}"
+                    th:value="${id}"
+            />
+
+            <input
+                    type="hidden"
+                    th:field="*{organization}"
+                    th:value="${organization}"
+            />
+
+            <input name="csrfToken" id="csrfToken"
+                   type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"
+            />
+
+
+            <input type="submit" class="btn btn-default" />
         </div>
-
-        <br />
-
-
-        <label>Անուն</label>
-        <input type="text"
-               th:name="clientOrganizationName"
-               th:field="*{clientOrganizationName}"
-        />
-        <br />
-
-        <input
-                type="hidden"
-                th:field="*{id}"
-                th:value="${id}"
-        />
-
-        <input
-                type="hidden"
-                th:field="*{organization}"
-                th:value="${organization}"
-        />
-
-        <input name="csrfToken" id="csrfToken"
-               type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}"
-        />
-
-
-        <input type="submit" class="btn btn-default" />
-    </form >
+    </form>
 
 </div>
-<div class="container" th:fragment="createOtherPartnerIndividual" >
 
+<div class="panel panel-default"  th:fragment="createOtherPartnerIndividual" >
     <form th:object="${otherPartnerIndividual}" action="/account/cash/create/otherpartner/otherpartnerindividual"  method="post" >
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}" >
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <div style="margin: 50px">
+            <div class="form-group row ">
+                <label for="firstName" class=" col-md-2 col-form-label" >Անուն</label>
+                    <div class="col-md-8" >
+                        <input id="firstName"
+                               class="form-control"
+                               type="text"
+                               th:name="firstName"
+                               th:field="*{firstName}"
+                        />
+                        <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="lastName" class=" col-md-2 col-form-label" >Ազգանուն</label>
+                    <div class="col-md-8" >
+                        <input id="lastName"
+                               class="form-control"
+                               type="text"
+                               th:name="lastName"
+                               th:field="*{lastName}"
+                        />
+                        <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+
+            <input
+                    type="hidden"
+                    th:field="*{id}"
+                    th:value="${id}"
+            />
+
+            <input
+                    type="hidden"
+                    th:field="*{organization}"
+                    th:value="${organization}"
+            />
+
+            <input name="csrfToken" id="csrfToken"
+                   type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"
+            />
+
+
+            <input type="submit" class="btn btn-default" />
         </div>
-
-        <br />
-
-
-        <label>Անուն</label>
-        <input type="text"
-               th:name="firstName"
-               th:field="*{firstName}"
-
-        />
-        <br />
-        <label>Ազգանուն</label>
-        <input type="text"
-               th:name="lastName"
-               th:field="*{lastName}"
-        />
-        <br />
-        <input
-                type="hidden"
-                th:field="*{id}"
-                th:value="${id}"
-        />
-
-        <input
-                type="hidden"
-                th:field="*{organization}"
-                th:value="${organization}"
-        />
-
-        <input name="csrfToken" id="csrfToken"
-               type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}"
-        />
-
-
-        <input type="submit" class="btn btn-default" />
     </form >
 
 </div>

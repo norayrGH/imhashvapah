@@ -55,11 +55,12 @@
                        th:name="${_csrf.parameterName}"
                        th:value="${_csrf.token}"
                 />
-            </div>
+
         </div>
     </div>
-    <div id="showCashOut" >
+</div>
 
+    <div id="showCashOut" >
     </div>
     <script th:inline="javascript" >
         /*<![CDATA[*/
@@ -598,12 +599,11 @@
             <div style="margin: 50px">
                 <div class="form-group row ">
                     <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <div class="col-md-6" >
                         <select id="selectedSupplier"
                                 class="form-control"
                                 th:name="supplierIndex"
-                                th:field="*{supplierIndex}"
-                        >
+                                th:field="*{supplierIndex}">
                             <option value=""> __ԸՆՏՐԵԼ__ </option>
                             <option th:each="supplier,iterStat  : ${suppliers}"
                                     th:value="${iterStat.index}"

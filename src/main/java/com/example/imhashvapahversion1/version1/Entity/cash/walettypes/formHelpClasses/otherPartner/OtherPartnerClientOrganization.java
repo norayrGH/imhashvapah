@@ -15,7 +15,7 @@ public class OtherPartnerClientOrganization implements GeneralMethods{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty(message = "հարկավոր է մուտքագրել կազմակերպության անվանումը")
+    @NotEmpty(message = "Հարկավոր է մուտքագրել կազմակերպության անվանումը:")
     private String clientOrganizationName;
     @ManyToOne
     private Organization organization;
