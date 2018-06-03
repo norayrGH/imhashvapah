@@ -68,36 +68,44 @@
 
     </div>
 </div>
+
 <div th:fragment="details" >
-
-    <ul>
-        <li th:text="${#httpSession.getAttribute('organizationId').organizationName}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').hch}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').actingAddress}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').certificateNumber}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').dateOfOpeningBalances}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').juridicalAddress}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').registrationDate}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').registrationNumber}"></li>
-        <li th:text="${#httpSession.getAttribute('organizationId').taxpayerIdentificationNumber}"></li>
-    </ul>
-
+        <ul class="list-group col-md-6">
+            <li class="list-group-item list-group-item-dark" th:text="${#httpSession.getAttribute('organizationId').organizationName}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').hch}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').actingAddress}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').certificateNumber}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').dateOfOpeningBalances}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').juridicalAddress}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').registrationDate}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').registrationNumber}"></li>
+            <li class="list-group-item" th:text="${#httpSession.getAttribute('organizationId').taxpayerIdentificationNumber}"></li>
+        </ul>
 </div>
-<div th:fragment="fixedasset" >
-
-
-
+<div class="panel panel-default"  th:fragment="fixedasset" >
+    <div style="margin: 50px">
     <div id="filterForm" class="range-picker" >
         <a class="btn btn-info" role="button"
            th:href="@{'/account/organization/fixedasset/create'}">Ավելացնել </a>
         <br/>
         <br/>
-        <label>Սկիզբ:</label>
-        <input type="text" class="datepicker from"/>
-        <label>Վերջ:</label>
-        <input type="text" class="datepicker to" />
+        <div class="form-group row ">
+            <label class=" col-md-2 col-form-label">Սկիզբ:</label>
+                <div class="col-md-6" >
+                    <input type="text" class="datepicker from form-control"/>
+                </div>
+        </div>
+
+        <div class="form-group row ">
+            <label class=" col-md-2 col-form-label">Վերջ:</label>
+                <div class="col-md-6" >
+                    <input type="text" class="datepicker to form-control"/>
+                </div>
+        </div>
+
+
         <input type="checkbox" class="range-picker" id="showAll" name="showAll" />
-        <label> Ցուցադրել բոլորը </label>
+        <label>&nbsp;Ցուցադրել բոլորը </label>
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
@@ -172,91 +180,141 @@
         });
     </script>
 </div>
-<div th:fragment="fixedassetCreate" >
+</div>
+
+<div class="panel panel-default" th:fragment="fixedassetCreate" >
+    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/create'}" id="fixedassetCreate" >
+        <div style="margin: 50px">
+            <div class="form-group row ">
+                <label for="inventoryNumber" class=" col-md-4 col-form-label" >Գույքահամար</label>
+                    <div class="col-md-6" >
+                        <input id="inventoryNumber"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('inventoryNumber') ? 'border-color: red ;' : ''}"
+                               type="text"
+                               th:name="inventoryNumber"
+                               th:field="*{inventoryNumber}"/>
+                        <small th:if="${#fields.hasErrors('inventoryNumber')}" th:errors="*{inventoryNumber}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="name" class=" col-md-4 col-form-label" >Անվանում</label>
+                    <div class="col-md-6" >
+                        <input id="name"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('name') ? 'border-color: red ;' : ''}"
+                               type="text"
+                               th:name="name"
+                               th:field="*{name}"/>
+                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="type" class=" col-md-4 col-form-label" >Տեսակ </label>
+                    <div class="col-md-6" >
+                        <input id="type"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('type') ? 'border-color: red;' : ''}"
+                               type="text"
+                               th:name="type"
+                               th:field="*{type}"
+                        />
+                        <small th:if="${#fields.hasErrors('type')}" th:errors="*{type}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="acquiringDate" class=" col-md-4 col-form-label" >Ձեռքբերման ամսաթիվ</label>
+                    <div class="col-md-6" >
+                        <input id="acquiringDate"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('acquiringDate') ? 'border-color: red;' : ''}"
+                               type="date"
+                               th:name="acquiringDate"
+                               th:field="*{acquiringDate}"
+                        />
+                        <small th:if="${#fields.hasErrors('acquiringDate')}" th:errors="*{acquiringDate}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="acquiringАmount" class=" col-md-4 col-form-label" >Ձեռքբերման գումար</label>
+                    <div class="col-md-6" >
+                        <input id="acquiringАmount"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('acquiringАmount') ? 'border-color: red;' : ''}"
+                               type="text"
+                               th:name="acquiringАmount"
+                               th:field="*{acquiringАmount}"
+                        />
+                        <small th:if="${#fields.hasErrors('acquiringАmount')}" th:errors="*{acquiringАmount}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="wear" class=" col-md-4 col-form-label" >Մաշվածք</label>
+                    <div class="col-md-6" >
+                        <input id="wear"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('wear') ? 'border-color: red;' : ''}"
+                               type="text"
+                               th:name="wear"
+                               th:field="*{wear}"
+                        />
+                        <small th:if="${#fields.hasErrors('wear')}" th:errors="*{wear}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="initialAccumulated" class=" col-md-4 col-form-label">Սկզբնական կուտակված մաշվածք</label>
+                    <div class="col-md-6" >
+                        <input id="initialAccumulated"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('initialAccumulated') ? 'border-color: red;' : ''}"
+                               type="text"
+                               th:name="initialAccumulated"
+                               th:field="*{initialAccumulated}"
+                        />
+                        <small th:if="${#fields.hasErrors('initialAccumulated')}" th:errors="*{initialAccumulated}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="nout" class=" col-md-4 col-form-label">Նշումներ</label>
+                    <div class="col-md-6" >
+                        <input id="nout"
+                               class="form-control"
+                               th:style="${#fields.hasErrors('nout') ? 'border-color: red;' : ''}"
+                               type="text"
+                               th:name="nout"
+                               th:field="*{nout}"/>
+                        <small th:if="${#fields.hasErrors('nout')}" th:errors="*{nout}"  class="form-text text-danger" />
+                    </div>
+            </div>
+
+            <input
+                    type="hidden"
+                    th:field="*{id}"
+                    th:value="*{id}"
+            />
+
+            <input
+                    type="hidden"
+                    th:field="*{organization}"
+                    th:value="${organization}"
+            />
 
 
-    <form method="post" th:object="${fixedAsset}" th:action="@{'/account/organization/fixedasset/create'}"
-          id="fixedassetCreate" >
+            <input name="csrfToken" id="csrfToken"
+                   type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
 
-        <div class="alert alert-danger" th:if=" ${ #fields.hasErrors('*') } ">
-            <p th:each=" err : ${ #fields.errors('*') }" th:text=" ${ err } "></p>
+
+            <input type="submit" class="btn btn-default"/>
         </div>
-
-        <label>Գույքահամար</label>
-        <input th:style="${#fields.hasErrors('inventoryNumber') ? 'border-color: red ;' : ''}"
-               type="text"
-               th:name="inventoryNumber"
-               th:field="*{inventoryNumber}"/>
-        <br/>
-        <label>Անվանում</label>
-        <input th:style="${#fields.hasErrors('name') ? 'border-color: red ;' : ''}"
-               type="text"
-               th:name="name"
-               th:field="*{name}"/>
-        <br/>
-        <label>Տեսակ </label>
-        <input th:style="${#fields.hasErrors('type') ? 'border-color: red;' : ''}"
-               type="text"
-               th:name="type"
-               th:field="*{type}"
-        />
-        <br/>
-        <label>Ձեռքբերման ամսաթիվ</label>
-        <input th:style="${#fields.hasErrors('acquiringDate') ? 'border-color: red;' : ''}"
-               type="date"
-               th:name="acquiringDate"
-               th:field="*{acquiringDate}"
-        />
-        <br/>
-        <label>Ձեռքբերման գումար</label>
-        <input th:style="${#fields.hasErrors('acquiringАmount') ? 'border-color: red;' : ''}"
-               type="text"
-               th:name="acquiringАmount"
-               th:field="*{acquiringАmount}"
-        />
-        <br/>
-        <label>Մաշվածք</label>
-        <input th:style="${#fields.hasErrors('wear') ? 'border-color: red;' : ''}"
-               type="text"
-               th:name="wear"
-               th:field="*{wear}"
-        />
-        <br/>
-        <label>Սկզբնական կուտակված մաշվածք</label>
-        <input th:style="${#fields.hasErrors('initialAccumulated') ? 'border-color: red;' : ''}"
-               type="text"
-               th:name="initialAccumulated"
-               th:field="*{initialAccumulated}"
-        />
-        <br/>
-        <label>Նշումներ</label>
-        <input th:style="${#fields.hasErrors('nout') ? 'border-color: red;' : ''}"
-               type="text"
-               th:name="nout"
-               th:field="*{nout}"/>
-        <br/>
-        <input
-                type="hidden"
-                th:field="*{id}"
-                th:value="*{id}"
-        />
-
-        <input
-                type="hidden"
-                th:field="*{organization}"
-                th:value="${organization}"
-        />
-
-
-        <input name="csrfToken" id="csrfToken"
-               type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}"/>
-
-
-        <input type="submit" class="btn btn-default"/>
-
-
     </form>
 
 
