@@ -6,7 +6,7 @@ var stritFleet = $("#stritFleet");
 
 var address = {stritFleet: "", region: "", city: ""};
 var textaddress = "";
-var chashInTypes={cashinfrombankaccount:"Մուտք բանկային հաշվից",cashinfromcredit:"Վարկի ստացում",cashinfromloan:"Փոխառության ստացում",cashinfrompointofsale:"Մուտք առևտրի կետից",cashinfromsaleofgoods:"Մուտք ապրանքների իրացումից",cashinfromserviceprovision:"Մուտք ծառայության մատուցումից"};
+var chashInTypes={CashInFromBankAccount:"Մուտք բանկային հաշվից",CashInFromCredit:"Վարկի ստացում",CashInFromLoan:"Փոխառության ստացում",CashInFromPointOfSale:"Մուտք առևտրի կետից",CashInFromSaleOfGoods:"Մուտք ապրանքների իրացումից",CashInFromServiceProvision:"Մուտք ծառայության մատուցումից"};
 var debtDetaileType={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճարում մատակարարին ապրանքների համար",CashOutForSerivceProvider:" Վճարում մատակարարին ծառայության համար "
                     ,CashOutForRent:"Վճարում վարձակալության համար",CashOutForBankAccount:"Վճարում բանկային հաշվին",
     CashOutForRedemptionPercent:"Վարկի տոկոսի մարում",CashOutForLoanPayment:"Փոխառության մարում",
@@ -386,9 +386,9 @@ function  showCashIn(cashIn) {
             ,$("<td />").text(test.substring(0,test.indexOf('T')))
             ,$("<td />").text(item.inCash)
             ,$("<td />").text(chashInTypes[item.inType])
-            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashdesk/edit/"+item.inType+"/"+item.id , class:"glyphicon glyphicon-pencil"})
+            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashin/cashdesk/edit?cashintype="+item.inType+"&cashinid="+item.id, class:"glyphicon glyphicon-pencil"})
                 ,"&nbsp;&nbsp;&nbsp;"
-                ,$("<a />").attr({href:"/account/cash/cashdesk/delete/"+item.inType+"/"+item.id , class:"glyphicon glyphicon-trash"}))
+                ,$("<a />").attr({href:"/account/cash/cashin/cashdesk/delete?cashintype="+item.inType+"&cashinid="+item.id, class:"glyphicon glyphicon-trash"}))
 
         ));
     });
@@ -396,6 +396,47 @@ function  showCashIn(cashIn) {
     cashInTable.append(tBody);
 
     $('#showCashIn').append(cashInTable);
+
+}
+
+function  showCashOut(cashOut) {
+
+    $('#showCashOut').empty();
+
+    var cashOutTableTh= ["№","Ամսաթիվ","Գումար","Ելքի տեսակ"];
+    var cashOutTable = $("<table />")
+        .attr({id:"showCashOutTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(cashOutTableTh, function(i, item) {
+        tHeadTr.append($("<th />").attr({"class": "h5", "style": "font-weight:bold"}).text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    cashOutTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(cashOut, function(i, item) {
+
+        var date = new Date (item.outDate);
+        date.setDate(date.getDate());
+        var test = new Date(date).toISOString();
+        console.log(test);
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text(item.id)
+            ,$("<td />").text(test.substring(0,test.indexOf('T')))
+            ,$("<td />").text(item.outCash)
+            ,$("<td />").text(debtDetaileType[item.outType])
+            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashout/cashdesk/edit?cashouttype="+item.outType+"&cashoutid="+item.id, class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/cash/cashout/cashdesk/delete?cashouttype="+item.outType+"&cashoutid="+item.id, class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+
+    cashOutTable.append(tBody);
+
+    $('#showCashOut').append(cashOutTable);
 
 }
 function showCash(cash){
@@ -421,7 +462,9 @@ function showCash(cash){
         tBody.append($("<tr />").attr({scope:"row"}).append(
              $("<td />").text(item.name ).attr({"class":"h5","style":"font-weight: bold;"}),
              $("<td />").text(item.openingBalance ),
-             $("<td />").text(item.in )
+             $("<td />").text(item.in),
+             $("<td />").text(item.out),
+             $("<td />").text(item.finalBalance)
 
         ));
     });

@@ -2,12 +2,14 @@ package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.BankAccount;
+import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletOut;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 @Entity
-public class CashOutForBankAccount {
+public class CashOutForBankAccount implements GetWaletOut {
     @Id
     @GeneratedValue
     private Long id;
@@ -71,5 +73,15 @@ public class CashOutForBankAccount {
 
     public void setWalletOut(WalletOut walletOut) {
         this.walletOut = walletOut;
+    }
+
+    @Override
+    public Long getCashOutId() {
+        return id;
+    }
+
+    @Override
+    public WalletOut getWalletOutImpl() {
+        return walletOut;
     }
 }

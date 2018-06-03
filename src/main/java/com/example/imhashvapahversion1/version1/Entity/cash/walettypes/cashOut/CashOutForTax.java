@@ -3,11 +3,12 @@ package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.Tax;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletOut;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 @Entity
-public class CashOutForTax {
+public class CashOutForTax implements GetWaletOut {
 
     @Id
     @GeneratedValue
@@ -61,5 +62,14 @@ public class CashOutForTax {
 
     public void setWalletOut(WalletOut walletOut) {
         this.walletOut = walletOut;
+    }
+    @Override
+    public Long getCashOutId() {
+        return id;
+    }
+
+    @Override
+    public WalletOut getWalletOutImpl() {
+        return walletOut;
     }
 }

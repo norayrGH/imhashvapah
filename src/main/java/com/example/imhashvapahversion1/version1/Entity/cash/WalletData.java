@@ -16,7 +16,7 @@ public class WalletData {
     @NotEmpty(message = "Անունը պարտադիր է։")
     private String walletName;
     @NotNull(message = "Սկզբնական մնացորդը պարտադիր է։")
-    private Integer startBalance;
+    private Long startBalance;
     @NotNull(message = "Մուտքերի համարակալման առաջին թիվը պարտադիր է։")
     private Integer startingNumbering;
     @NotNull(message = "Ելքերի համարակալման առաջին թիվը պարտադիր է։")
@@ -47,11 +47,11 @@ public class WalletData {
         this.walletName = walletName;
     }
 
-    public Integer getStartBalance() {
+    public Long getStartBalance() {
         return startBalance;
     }
 
-    public void setStartBalance(Integer startBalance) {
+    public void setStartBalance(Long startBalance) {
         this.startBalance = startBalance;
     }
 

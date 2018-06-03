@@ -12,6 +12,7 @@ public class BaseController {
 
     protected final String cashNavBar = "cashNavBar";
     protected final String cashFragment = "cash";
+    protected final String noWalletData = "noWalletData";
     protected final String cashOutFragments = "cashOutFragments";
     protected final String cashInFragments = "cashInFragments";
     protected final String otherPartnerFragments = "otherPartnerFragments";

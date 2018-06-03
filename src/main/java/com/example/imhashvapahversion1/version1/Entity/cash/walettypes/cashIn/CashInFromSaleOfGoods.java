@@ -83,6 +83,11 @@ public class CashInFromSaleOfGoods implements GetWaletIn {
     }
 
     @Override
+    public Long getCashInId() {
+        return id;
+    }
+
+    @Override
     public WalletIn getWalletInImpl() {
         return walletIn;
     }

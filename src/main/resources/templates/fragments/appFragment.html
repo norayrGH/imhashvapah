@@ -299,6 +299,7 @@
             <input id="walletName" class="form-control" type="text"
                th:name="walletName"
                th:field="*{walletName}"
+
             />
                 <small th:if="${#fields.hasErrors('walletName')}" th:errors="*{walletName}"  class="form-text text-danger" />
             </div>
@@ -321,6 +322,7 @@
             <input id="startingNumbering" class="form-control" type="text"
                th:name="startingNumbering"
                th:field="*{startingNumbering}"
+
             />
             </div>
             <br />
@@ -334,6 +336,7 @@
             <input id="outNumbering" class="form-control" type="text"
                th:name="outNumbering"
                th:field="*{outNumbering}"
+
             />
             </div>
             <br />
@@ -347,6 +350,7 @@
             <input id="cashBbookPapers" class="form-control" type="text"
                th:name="cashBbookPapers"
                th:field="*{cashBbookPapers}"
+
             />
             </div>
             <br />
@@ -360,6 +364,7 @@
             <input id="startingNumberCashBookPapers" class="form-control" type="text"
                th:name="startingNumberCashBookPapers"
                th:field="*{startingNumberCashBookPapers}"
+
             />
             </div>
             <br />
@@ -380,7 +385,11 @@
             <br />
             &nbsp;&nbsp;&nbsp;<small th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"  class="form-text text-danger" />
         </div>
-
+            <input
+                    type="hidden"
+                    th:field="*{organization}"
+                    th:value="${organization}"
+            />
         <input name="csrfToken" id="csrfToken"
                type="hidden"
                th:name="${_csrf.parameterName}"
@@ -681,7 +690,13 @@
         </div>
     </nav>
 </div>
-/*Supplier*/
+<div  th:fragment="noWalletData" >
+
+    <div class="alert alert-info">
+        <strong>Ուշադրություն!</strong> Կանխիկ մուտքերի և ելքերի հետ աշխատելու համար ավելացրեք դրամարկղի տվյալներն <a href="/account/cash/cashdesk" >այստեղից</a>
+    </div>
+
+</div>
 <div class="container" th:fragment="createSupplierClientOrganization" >
 
     <form th:object="${supplierClientOrganization}" action=" /account/cash/create/supplier/supplierclientorganization "  method="post" >
@@ -910,7 +925,7 @@
             <div class='col-md-2'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker7'>
-                        <input type="text" class="form-control" id="datepickerEnd" />
+                        <input type="text"  class="form-control" id="datepickerEnd" />
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

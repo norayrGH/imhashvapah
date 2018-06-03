@@ -2,20 +2,22 @@ package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletOut;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.PrivateEntrepreneurOtherPartner;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 @Entity
-public class CashOutForRedemptionPercent {
+public class CashOutForRedemptionPercent implements GetWaletOut {
 
     @Id
     @GeneratedValue
     private Long id;
-
-    private String otherPartnerName;
+    @NotEmpty(message = "Գործընկերը պարտադիր է:")
+    private String otherPartnerIndex;
 
 
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
@@ -38,8 +40,8 @@ public class CashOutForRedemptionPercent {
     public CashOutForRedemptionPercent() {
     }
 
-    public CashOutForRedemptionPercent(String otherPartnerName, WalletOut walletOut, String otherPartnerType, Long otherPartnerId, CompanyOtherPartner companyOtherPartner, IndividualOtherPartner individualOtherPartner, PrivateEntrepreneurOtherPartner privateEntrepreneurOtherPartner, Organization organization) {
-        this.otherPartnerName = otherPartnerName;
+    public CashOutForRedemptionPercent(String otherPartnerIndex, WalletOut walletOut, String otherPartnerType, Long otherPartnerId, CompanyOtherPartner companyOtherPartner, IndividualOtherPartner individualOtherPartner, PrivateEntrepreneurOtherPartner privateEntrepreneurOtherPartner, Organization organization) {
+        this.otherPartnerIndex = otherPartnerIndex;
         this.walletOut = walletOut;
         this.otherPartnerType = otherPartnerType;
         this.otherPartnerId = otherPartnerId;
@@ -57,12 +59,12 @@ public class CashOutForRedemptionPercent {
         this.id = id;
     }
 
-    public String getOtherPartnerName() {
-        return otherPartnerName;
+    public String getOtherPartnerIndex() {
+        return otherPartnerIndex;
     }
 
-    public void setOtherPartnerName(String otherPartnerName) {
-        this.otherPartnerName = otherPartnerName;
+    public void setOtherPartnerIndex(String otherPartnerIndex) {
+        this.otherPartnerIndex = otherPartnerIndex;
     }
 
     public WalletOut getWalletOut() {
@@ -119,5 +121,14 @@ public class CashOutForRedemptionPercent {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+    @Override
+    public Long getCashOutId() {
+        return id;
+    }
+
+    @Override
+    public WalletOut getWalletOutImpl() {
+        return walletOut;
     }
 }

@@ -63,6 +63,7 @@
     </div>
     <script th:inline="javascript" >
         /*<![CDATA[*/
+
         $( "#datepickerStart" ).datepicker();
         $( "#datepickerEnd" ).datepicker();
         $(document).ready(function() {
@@ -90,10 +91,8 @@
                     else
                     {
                         console.log(msg);
-                        showCashIn(msg);
+                        showCashOut(msg);
                     }
-
-
                 },
                 error:
                     function(data){
@@ -101,35 +100,12 @@
                         console.log(data.responseText);
                     }
             });
-
             datePickerStart.on("change", function() {
-                $.ajax({
-                    method : "POST",
-                    contentType : "application/json",
-                    url: '/account/cash/cashout/cashdesk/show',
-                    dataType: 'json',
-                    data :JSON.stringify(DateRang),
-                    beforeSend: function(xhr){
-                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
-                    },  success: function (msg){
-                        if(msg == null)
-                            $("#showCashOut").empty();
-                        else
-                        {
-                            console.log(msg);
-                            showCashIn(msg);
-                        }
-
-
-                    },
-                    error:
-                        function(data){
-
-                            console.log(data.responseText);
-                        }
-                });
-            });
-            datePickerEnd.on("change", function() {
+                var DateRang ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    showAll:Boolean($("#showAll").is(':checked'))
+                }
                 $.ajax({
                     method : "POST",
                     contentType : "application/json",
@@ -155,6 +131,107 @@
                             console.log(data.responseText);
                         }
                 });
+            });
+            datePickerEnd.on("change", function() {
+                var DateRang ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    showAll:Boolean($("#showAll").is(':checked'))
+                }
+                $.ajax({
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/cash/cashout/cashdesk/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRang),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $("#showCashOut").empty();
+                        else
+                        {
+                            console.log(msg);
+                            showCashOut(msg);
+                        }
+
+
+                    },
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+            });
+            $('#showAll').change(function() {
+                if(this.checked) {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/cash/cashout/cashdesk/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#showCashOut").empty();
+                            else
+                            {
+                                console.log(msg);
+                                showCashOut(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+
+                }else
+                {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/cash/cashout/cashdesk/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#showCashOut").empty();
+                            else
+                            {
+                                console.log(msg);
+                                showCashOut(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+
+                }
+
             });
         });
 
@@ -372,20 +449,20 @@
     <form th:object="${cashOutForCreditPayment}" action="/account/cash/cashout/cashdesk/create/cashoutforcreditpayment" id="cashInFromCredit"  method="post" >
         <div style="margin: 50px">
             <div class="form-group row ">
-                <label for="otherPartnerName" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                <label for="selectedSupplier" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
                     <div class="col-md-6" >
-                            <select id="otherPartnerName"
+                            <select id="selectedSupplier"
                                     class="form-control"
-                                    th:field="*{otherPartnerName}"
-                                    th:name="otherPartnerName">
+                                    th:field="*{otherPartnerIndex}"
+                                    th:name="otherPartnerIndex">
 
                                 <option value=""> __ԸՆՏՐԵԼ__ </option>
                                 <option th:each="supplier,iterStat  : ${suppliers}"
                                         th:value="${iterStat.index}"
-                                        th:text="${supplier.getSupplierName()}"
+                                        th:text="${supplier.getOtherPartnerName()}"
                                 />
                             </select>
-                        <small th:if="${#fields.hasErrors('otherPartnerName')}" th:errors="*{otherPartnerName}"  class="form-text text-danger" />
+                        <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
                     </div>
                     <div class="col-md-1">
                         <a type="button" th:href="@{'/account/cash/create/otherPartner'}" class="btn btn-default btn-sm" >
@@ -465,16 +542,41 @@
         </div>
     </form>
     <script th:inline="javascript">
-        /*<![CDATA[*/
+            /*<![CDATA[*/
+
 
         $(function () {
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
 
+                if($('#outDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
+
+                if($('#selectedSupplier').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                {
+                    console.log("in selected if ");
+
+                    $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
+                    $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
+                }else{
+                    $('input[name=otherPartnerType]').val("");
+                    $('input[name=otherPartnerId]').val("");
+                }
 
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
+
                     {
+                        console.log("inif ");
                         $('input[name=otherPartnerType]').val(suppliers[this.value].supplierType);
                         $('input[name=otherPartnerId]').val(suppliers[this.value].id);
                     }else{
@@ -675,25 +777,26 @@
     <form th:object="${cashOutForLoanPayment}" action="/account/cash/cashout/cashdesk/create/cashoutforloanpayment" id="cashOutForLoanPaymentCreate"  method="post" >
         <div style="margin: 50px">
             <div class="form-group row ">
-                <label for="otherPartnerName" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
-                    <div class="col-md-6" >
-                        <select id="otherPartnerName"
-                                class="form-control"
-                                th:field="*{otherPartnerName}"
-                                th:name="otherPartnerName">
-                            <option value=""> __ԸՆՏՐԵԼ__ </option>
-                            <option th:each="supplier,iterStat  : ${suppliers}"
-                                    th:value="${iterStat.index}"
-                                    th:text="${supplier.getSupplierName()}"
-                            />
-                        </select>
-                        <small th:if="${#fields.hasErrors('otherPartnerName')}" th:errors="*{otherPartnerName}"  class="form-text text-danger" />
-                    </div>
-                    <div class="col-md-1">
-                        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
-                            <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
-                        </a>
-                    </div>
+                <label for="selectedSupplier" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                <div class="col-md-6" >
+                    <select id="selectedSupplier"
+                            class="form-control"
+                            th:field="*{otherPartnerIndex}"
+                            th:name="otherPartnerIndex">
+
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="supplier,iterStat  : ${suppliers}"
+                                th:value="${iterStat.index}"
+                                th:text="${supplier.getOtherPartnerName()}"
+                        />
+                    </select>
+                    <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
+                </div>
+                <div class="col-md-1">
+                    <a type="button" th:href="@{'/account/cash/create/otherPartner'}" class="btn btn-default btn-sm" >
+                        <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
+                    </a>
+                </div>
             </div>
 
 
@@ -788,6 +891,29 @@
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
 
+
+                if($('#outDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
+
+                if($('#selectedSupplier').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                {
+                    console.log("in selected if ");
+
+                    $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
+                    $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
+                }else{
+                    $('input[name=otherPartnerType]').val("");
+                    $('input[name=otherPartnerId]').val("");
+                }
 
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
@@ -907,27 +1033,27 @@
     <form th:object="${cashOutForRedemptionPercent}" action="/account/cash/cashout/cashdesk/create/cashoutforredemptionpercent" id="cashOutForRedemptionPercentCredit"  method="post" >
         <div style="margin: 50px">
             <div class="form-group row ">
-                <label for="otherPartnerName" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
-                    <div class="col-md-6" >
-                        <select id="otherPartnerName"
-                                class="form-control"
-                                th:field="*{otherPartnerName}"
-                                th:name="otherPartnerName">
-                            <option value=""> __ԸՆՏՐԵԼ__ </option>
-                            <option th:each="supplier,iterStat  : ${suppliers}"
-                                    th:value="${iterStat.index}"
-                                    th:text="${supplier.getSupplierName()}"
-                            />
-                        </select>
-                        <small th:if="${#fields.hasErrors('otherPartnerName')}" th:errors="*{otherPartnerName}"  class="form-text text-danger" />
-                    </div>
-                    <div class="col-md-1">
-                        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
-                            <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
-                        </a>
-                    </div>
-            </div>
+                <label for="selectedSupplier" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                <div class="col-md-6" >
+                    <select id="selectedSupplier"
+                            class="form-control"
+                            th:field="*{otherPartnerIndex}"
+                            th:name="otherPartnerIndex">
 
+                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                        <option th:each="supplier,iterStat  : ${suppliers}"
+                                th:value="${iterStat.index}"
+                                th:text="${supplier.getSupplierName()}"
+                        />
+                    </select>
+                    <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
+                </div>
+                <div class="col-md-1">
+                    <a type="button" th:href="@{'/account/cash/create/otherPartner'}" class="btn btn-default btn-sm" >
+                        <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
+                    </a>
+                </div>
+            </div>
             <div class="form-group row ">
                 <label for="outDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
                     <div class="col-md-6" >
@@ -1004,6 +1130,30 @@
         $(function () {
             $(document).ready(function () {
                 var suppliers = /*[[${suppliers}]]*/ 'default';
+
+                if($('#outDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#outDate').val(today);
+                }
+
+                if($('#selectedSupplier').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                {
+                    console.log("in selected if ");
+
+                    $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
+                    $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
+                }else{
+                    $('input[name=otherPartnerType]').val("");
+                    $('input[name=otherPartnerId]').val("");
+                }
+
 
 
                 $('#selectedSupplier').on('change', function() {

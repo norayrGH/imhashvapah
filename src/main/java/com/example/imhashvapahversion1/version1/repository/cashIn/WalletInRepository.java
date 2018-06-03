@@ -18,7 +18,7 @@ public interface WalletInRepository extends CrudRepository<WalletIn, Long> {
     Long returnSumOfInsByEnd(@Param("endDate") Date endDate);
     @Query("Select sum(w.inCash) from WalletIn w ")
     Long returnAllSumOfIns();
-
-    @Query("Select sum(w.inCash) from WalletIn w where w.inDate<:startDate")
+    //@Query("Select c from CashOutForRent c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.outDate>=:startDate and w.outDate<=:endDate AND s.id=:companySupplierId")
+    @Query("Select  sum(w.inCash)  from WalletIn w where w.inDate<:startDate")
     Long returnSumOfInsForOpeningBalance(@Param("startDate") Date startDate);
 }

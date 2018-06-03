@@ -63,6 +63,7 @@
             /*<![CDATA[*/
             $( "#datepickerStart" ).datepicker();
             $( "#datepickerEnd" ).datepicker();
+
             $(document).ready(function() {
                 var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
                 var datePickerStart = $( "#datepickerStart.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth(),1));
@@ -99,7 +100,6 @@
                             console.log(data.responseText);
                         }
                 });
-
                 datePickerStart.on("change", function() {
                     var DateRang ={
                         start:datePickerStart.datepicker("getDate"),
@@ -163,6 +163,75 @@
                                 console.log(data.responseText);
                             }
                     });
+                });
+                $('#showAll').change(function() {
+                    if(this.checked) {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/cash/cashin/cashdesk/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#showCashIn").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    showCashIn(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }else
+                    {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/cash/cashin/cashdesk/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#showCashIn").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    showCashIn(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }
+
                 });
             });
 
@@ -527,26 +596,28 @@
     <div class="panel panel-default" th:fragment="cashInCreateCashInFromLoan" >
         <form th:object="${cashInFromLoan}" action="/account/cash/cashin/cashdesk/create/cashinfromloan" id="cashInFromLoanCreate"  method="post" >
             <div style="margin: 50px">
-                <div class="form-group row ">
-                    <label for="colleagues" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                    <div class="form-group row ">
+                        <label for="selectedOtherPartner" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
                         <div class="col-md-6" >
-                            <select id="colleagues"
+                            <select id="selectedOtherPartner"
                                     class="form-control"
-                                    th:field="*{colleagues}"
-                                    th:name="colleagues">
+                                    th:field="*{otherPartnerIndex}"
+                                    th:name="otherPartnerIndex">
+
                                 <option value=""> __ԸՆՏՐԵԼ__ </option>
-                                <option th:each="colleague : ${colleaguesList}"
-                                        th:value="${colleague.id}"
-                                        th:text="${colleague.getName()}" />
+                                <option th:each="colleague,iterStat  : ${colleaguesList}"
+                                        th:value="${iterStat.index}"
+                                        th:text="${colleague.getOtherPartnerName()}"
+                                />
                             </select>
-                            <small th:if="${#fields.hasErrors('colleagues')}" th:errors="*{colleagues}"  class="form-text text-danger" />
+                            <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
                         </div>
-                            <div class="col-md-1">
-                                <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
-                                    <span class="glyphicon glyphicon-plus-sign"></span> Այլ գործընկեր
-                                </a>
-                            </div>
-                </div>
+                        <div class="col-md-1">
+                            <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
+                                <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
+                            </a>
+                        </div>
+                    </div>
 
                 <div class="form-group row ">
                     <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
@@ -618,6 +689,18 @@
                         th:field="*{id}"
                         th:value="${id}"
                 />
+                <input
+                        type="hidden"
+                        id="otherPartnerType"
+                        th:field="*{otherPartnerType}"
+                        th:value="${otherPartnerType}"
+                />
+                <input
+                    type="hidden"
+                    id="otherPartnerId"
+                    th:field="*{otherPartnerId}"
+                    th:value="${otherPartnerId}"
+            />
 
                 <input
                         type="hidden"
@@ -625,7 +708,12 @@
                         th:field="*{organization}"
                         th:value="${organization}"
                 />
-
+                <input
+                        type="hidden"
+                        id="walletIn"
+                        th:field="*{walletIn}"
+                        th:value="${walletIn}"
+                />
                 <input name="csrfToken" id="csrfToken"
                        type="hidden"
                        th:name="${_csrf.parameterName}"
@@ -636,9 +724,11 @@
 
             </div>
         </form >
-
-        <script>
+        <script  th:inline="javascript">
+            /*<![CDATA[*/
             $(document).ready(function () {
+                var colleaguesList = /*[[${colleaguesList}]]*/ 'default';
+
                 if($('#inDate').val()==""){
 
                     var now = new Date();
@@ -650,7 +740,30 @@
 
                     $('#inDate').val(today);
                 }
+
+                if($('#selectedOtherPartner').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                {
+
+                    $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);
+                    $('input[name=otherPartnerId]').val(colleaguesList[$('#selectedOtherPartner').val()].id);
+                }else{
+                    $('input[name=otherPartnerType]').val("");
+                    $('input[name=otherPartnerId]').val("");
+                }
+
+                $('#selectedOtherPartner').on('change', function() {
+                    if(this.value!="")
+                    {
+                        $('input[name=otherPartnerType]').val(colleaguesList[this.value].otherPartnerType);
+                        $('input[name=otherPartnerId]').val(colleaguesList[this.value].id);
+                    }else{
+                        $('input[name=otherPartnerType]').val("");
+                        $('input[name=otherPartnerId]').val("");
+                    }
+                })
+
             })
+            /*]]>*/
         </script>
     </div>
 
@@ -789,22 +902,24 @@
         <form th:object="${cashInFromCredit}" action="/account/cash/cashin/cashdesk/create/cashinfromcredit" id="cashInFromCredit"  method="post" >
             <div style="margin: 50px">
                 <div class="form-group row ">
-                    <label for="colleagues" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
-                        <div class="col-md-6" >
-                            <select id="colleagues"
-                                    class="form-control"
-                                    th:field="*{colleagues}"
-                                    th:name="colleagues">
-                                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                                <option th:each="colleague : ${colleaguesList}"
-                                        th:value="${colleague.id}"
-                                        th:text="${colleague.getName()}" />
-                            </select>
-                            <small th:if="${#fields.hasErrors('colleagues')}" th:errors="*{colleagues}"  class="form-text text-danger" />
-                        </div>
-                    <div class="col-md-2">
-                        <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                    <label for="selectedOtherPartner" class=" col-md-4 col-form-label" >Այլ Գործընկեր</label>
+                    <div class="col-md-6" >
+                        <select id="selectedOtherPartner"
+                                class="form-control"
+                                th:field="*{otherPartnerIndex}"
+                                th:name="otherPartnerIndex">
+
+                            <option value=""> __ԸՆՏՐԵԼ__ </option>
+                            <option th:each="colleague,iterStat  : ${colleaguesList}"
+                                    th:value="${iterStat.index}"
+                                    th:text="${colleague.getOtherPartnerName()}"
+                            />
+                        </select>
+                        <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
+                    </div>
+                    <div class="col-md-1">
+                        <a type="button" th:href="@{'/account/cash/create/otherpartner'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Այլ Գործընկեր
                         </a>
                     </div>
                 </div>
@@ -848,7 +963,18 @@
                         </div>
                 </div>
 
-
+                <input
+                        type="hidden"
+                        id="otherPartnerType"
+                        th:field="*{otherPartnerType}"
+                        th:value="${otherPartnerType}"
+                />
+                <input
+                        type="hidden"
+                        id="otherPartnerId"
+                        th:field="*{otherPartnerId}"
+                        th:value="${otherPartnerId}"
+                />
                 <input
                         type="hidden"
                         th:field="*{id}"
@@ -860,6 +986,12 @@
                         th:field="*{organization}"
                         th:value="${organization}"
                 />
+                <input
+                        type="hidden"
+                        id="walletIn"
+                        th:field="*{walletIn}"
+                        th:value="${walletIn}"
+                />
                 <input name="csrfToken" id="csrfToken"
                        type="hidden"
                        th:name="${_csrf.parameterName}"
@@ -870,8 +1002,10 @@
                 <input type="submit" class="btn btn-default" />
             </div>
         </form >
-        <script>
+        <script  th:inline="javascript">
+            /*<![CDATA[*/
             $(document).ready(function () {
+                var colleaguesList = /*[[${colleaguesList}]]*/ 'default';
                 if($('#inDate').val()==""){
 
                     var now = new Date();
@@ -883,7 +1017,32 @@
 
                     $('#inDate').val(today);
                 }
-            })
+
+
+                if($('#selectedOtherPartner').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                {
+
+                    $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);
+                    $('input[name=otherPartnerId]').val(colleaguesList[$('#selectedOtherPartner').val()].id);
+                }else{
+                    $('input[name=otherPartnerType]').val("");
+                    $('input[name=otherPartnerId]').val("");
+                }
+
+                $('#selectedOtherPartner').on('change', function() {
+
+                    if(this.value!="")
+                    {
+                        $('input[name=otherPartnerType]').val(colleaguesList[this.value].otherPartnerType);
+                        $('input[name=otherPartnerId]').val(colleaguesList[this.value].id);
+                    }else{
+                        $('input[name=otherPartnerType]').val("");
+                        $('input[name=otherPartnerId]').val("");
+                    }
+                })
+
+            });
+            /*]]>*/
         </script>
     </div>
 

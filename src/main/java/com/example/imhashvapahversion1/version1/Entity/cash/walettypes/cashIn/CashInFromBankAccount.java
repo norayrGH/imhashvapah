@@ -49,6 +49,12 @@ public class CashInFromBankAccount implements GetWaletIn {
     public WalletIn getWalletIn() {
         return walletIn;
     }
+
+    @Override
+    public Long getCashInId() {
+        return id;
+    }
+
     @Override
     public WalletIn getWalletInImpl() {
         return walletIn;

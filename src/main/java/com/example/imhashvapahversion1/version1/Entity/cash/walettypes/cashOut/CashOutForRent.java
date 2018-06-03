@@ -2,6 +2,7 @@ package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletOut;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @Entity
-public class CashOutForRent {
+public class CashOutForRent implements GetWaletOut{
     @Id
     @GeneratedValue
     private Long id;
@@ -33,7 +34,7 @@ public class CashOutForRent {
     @Transient
     private String supplierType;
 
-    @Transient
+
     @NotEmpty(message = "Մատակարարը պարտադիր է:")
     private String  supplierIndex;
 
@@ -172,5 +173,14 @@ public class CashOutForRent {
 
     public void setWalletOut(WalletOut walletOut) {
         this.walletOut = walletOut;
+    }
+    @Override
+    public Long getCashOutId() {
+        return id;
+    }
+
+    @Override
+    public WalletOut getWalletOutImpl() {
+        return walletOut;
     }
 }

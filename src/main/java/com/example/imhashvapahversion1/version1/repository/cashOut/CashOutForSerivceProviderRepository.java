@@ -13,6 +13,10 @@ public interface CashOutForSerivceProviderRepository extends CrudRepository<Cash
     ArrayList findByRangeStart(@Param("startDate") Date startDate);
     @Query("Select c from CashOutForSerivceProvider c INNER JOIN c.walletOut w WHERE w.outDate<=:endDate ")
     ArrayList findByRangeEnd(@Param("endDate") Date endDate);
+    @Query( "Select c from CashOutForSerivceProvider c INNER JOIN c.walletOut w WHERE w.outDate BETWEEN :startDate AND :endDate  ")
+    ArrayList findByRange(@Param("startDate") Date startDate , @Param("endDate") Date endDate);
+
+
     @Query("Select c from CashOutForSerivceProvider c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.outDate>=:startDate AND s.id=:companySupplierId")
     ArrayList findByRangeStartAndCompanySupplierId(@Param("startDate") Date startDate,@Param("companySupplierId") Long companySupplierId);
     @Query("Select c from CashOutForSerivceProvider c INNER JOIN c.walletOut w INNER JOIN c.companySupplier s  WHERE w.outDate<=:endDate AND s.id=:companySupplierId")
