@@ -16,7 +16,7 @@ public class PrivateEntrepreneurOtherPartner implements GeneralMethods {
     @GeneratedValue
     private Long id ;
     private String privateEntrepreneurName ;
-    @NotEmpty(message = "հարկավոր է մուտքագրել ՀՎՀՀ-ն")
+    @NotEmpty(message = "Հարկավոր է մուտքագրել ՀՎՀՀ-ն:")
     private String hvhh;
     private String taxType;
     private String groupPayer;

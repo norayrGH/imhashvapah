@@ -11,9 +11,9 @@ public class SupplierIndividual implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty(message = "Անվան դաշտը անպայման է լրացնել ")
+    @NotEmpty(message = "Անվան դաշտը հարկավոր է լրացնել:")
     private String firstName;
-    @NotEmpty(message = "Ազգանուն դաշտը անպայման է լրացնել ")
+    @NotEmpty(message = "Ազգանվան դաշտը հարկավոր է լրացնել:")
     private String lastName;
     @ManyToOne
     private Organization organization ;

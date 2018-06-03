@@ -1188,19 +1188,19 @@
 </div>
 
 
-<div class="contaioner" th:fragment="partner">
+<div class="panel panel-default" th:fragment="partner">
+    <div style="margin: 50px">
+        <div id="filterForm" class="range-picker" >
 
+            <label>Առ:</label>
+            <input type="text" class="datepicker from" />
 
-    <div id="filterForm" class="range-picker" >
+            <input name="csrfToken" id="csrfToken"
+                   type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
 
-        <label>Առ:</label>
-        <input type="text" class="datepicker from" />
-
-        <input name="csrfToken" id="csrfToken"
-               type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}"/>
-
+        </div>
     </div>
     <div id="showDebt" >
     </div>

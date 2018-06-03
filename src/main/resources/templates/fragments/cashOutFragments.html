@@ -57,8 +57,7 @@
                 />
 
         </div>
-    </div>
-</div>
+
 
     <div id="showCashOut" >
     </div>
@@ -238,7 +237,8 @@
 
         /*]]>*/
     </script>
-
+        </div>
+    </div>
 </div>
 <div class="panel panel-default" th:fragment="cashOutCreate">
     <div style="margin: 50px">
@@ -460,7 +460,7 @@
                                 <option value=""> __ԸՆՏՐԵԼ__ </option>
                                 <option th:each="supplier,iterStat  : ${suppliers}"
                                         th:value="${iterStat.index}"
-                                        th:text="${supplier.getOtherPartnerName()}"
+                                        th:text="${supplier.getSupplierName()}"
                                 />
                             </select>
                         <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
@@ -787,7 +787,7 @@
                         <option value=""> __ԸՆՏՐԵԼ__ </option>
                         <option th:each="supplier,iterStat  : ${suppliers}"
                                 th:value="${iterStat.index}"
-                                th:text="${supplier.getOtherPartnerName()}"
+                                th:text="${supplier.getSupplierName()}"
                         />
                     </select>
                     <small th:if="${#fields.hasErrors('otherPartnerIndex')}" th:errors="*{otherPartnerIndex}"  class="form-text text-danger" />
@@ -1181,7 +1181,7 @@
         <div style="margin: 50px">
             <div class="form-group row ">
                 <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
-                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                <div class="col-md-6" >
                     <select id="selectedSupplier"
                             class="form-control"
                             th:name="supplierIndex"
@@ -1367,7 +1367,7 @@
         <div style="margin: 50px">
             <div class="form-group row ">
                 <label for="selectedSupplier" class=" col-md-4 col-form-label" >Մատակարար</label>
-                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                <div class="col-md-6" >
                     <select id="selectedSupplier"
                             class="form-control"
                             th:name="supplierIndex"

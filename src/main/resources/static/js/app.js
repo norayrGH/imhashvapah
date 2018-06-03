@@ -491,7 +491,7 @@ function showCash(cash){
     $.each(cashTableTh, function(i, item) {
         tHeadTr.append($("<th />").attr({"class":"h5", "style":"font-weight: bold;"}).text(item));
     });
-    tHeadTr.append($("<th />").text("Տեսնել"));
+    tHeadTr.append($("<th />").attr({"class":"h5", "style":"font-weight: bold;"}).text("Տեսնել"));
     tHead.append(tHeadTr);
     cashTable.append(tHead);
     var tBody = $("<tbody />");
