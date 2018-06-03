@@ -14,11 +14,14 @@ public class PrivateEntrepreneurSupplier extends Supplier implements GeneralMeth
     @Id
     @GeneratedValue
     private Long id ;
+    @NotEmpty(message = "Անվանումը պարտադիր է:")
     private String privateEntrepreneurName ;
-    @NotEmpty
+    @NotEmpty(message = "ՀՎՀՀ-ն պարտադիր է:")
     private String hvhh;
+    @NotEmpty(message = "Հարկման կարգը պարտադիր է:")
     private String taxType;
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
     private String supply;
     private String bankAccount;

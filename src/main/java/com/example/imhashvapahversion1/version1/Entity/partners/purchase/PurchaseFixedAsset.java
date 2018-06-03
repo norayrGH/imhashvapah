@@ -28,7 +28,7 @@ public class PurchaseFixedAsset {
     // Ամսաթիվ
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Ամսաթիվը պարտադիր է")
+    @NotNull(message = "Ամսաթիվը պարտադիր է:")
     private Date purchaseDate;
 
     //Փաստաթուղթ

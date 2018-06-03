@@ -20,13 +20,13 @@ public class  Organization  {
     //Անվանում
     @Column(name = "organization_name",unique = true,nullable = false)
     @Size(min=2, max=30 , message = "Գրել ճիշտ Անվանում:")
-    @NotEmpty(message = "Անվանում դաշտը հարկավոր է լրացնել:")
+    @NotEmpty(message = "Անվանումը պարտադիր է:")
 
     private String organizationName ;
 
     @Column(name = "organization_hch",unique = true,nullable = false)
-    @NotNull( message = "ՀՑՀ  դաշտը անպայման է լրացնելու համար:")
-    @Pattern(regexp = "([0-9]{10})" ,message = "ՀՑՀ ունի 10 Նիշ:")
+    @NotNull( message = "ՀՑՀ  դաշտը պարտադիր է լրացման համար:")
+    @Pattern(regexp = "([0-9]{10})" ,message = "ՀՑՀ-ն ունի 10 Նիշ:")
     private String hch ;
 
     //Գրանցման համար
@@ -36,7 +36,7 @@ public class  Organization  {
 
     //Գրանցման ամսաթիվ
     @Column(name = "organization_reg_date",unique = false,nullable = false)
-    @NotNull(message = " Գրանցման ամսաթվի դաշտը պարտադիր է լրացնել:")
+    @NotNull(message = " Գրանցման ամսաթվի դաշտը պարտադիր է լրացման համար:")
     @DateTimeFormat(pattern = "yyyy-MM-dd" , iso = DateTimeFormat.ISO.DATE)
     private Date registrationDate;
 
@@ -56,7 +56,7 @@ public class  Organization  {
     //Բոլոր էջերի սկզբնական մնացորդները պետք է լրացվեն ըստ այս ամսաթվի:
     @Column(name="organization_date_of_open_balances",unique = false,nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
-    @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետք է լրացնել:")
+    @NotNull(message = "Սկզբնական մնացորդի ամսաթիվը պետք է լրացման համար:")
     private Date dateOfOpeningBalances ;
 
     //Գործունեության հասցե

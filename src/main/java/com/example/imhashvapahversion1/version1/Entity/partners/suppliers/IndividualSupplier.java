@@ -36,7 +36,7 @@ public class IndividualSupplier implements GeneralMethods{
     private String openingBalanceType;
     @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
-    @NotEmpty(message = "Հարկավոր է ընտրել մատակարարի տեսակը")
+    @NotEmpty(message = "Հարկավոր է ընտրել մատակարարի տեսակը:")
     private String supply;
     private String address;
     private String phoneNumber;

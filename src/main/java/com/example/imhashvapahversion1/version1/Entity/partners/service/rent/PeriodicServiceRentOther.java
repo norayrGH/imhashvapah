@@ -18,7 +18,7 @@ public class PeriodicServiceRentOther {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "Ծառայության անունը չի կարող լինել դատարկ:")
+    @NotEmpty(message = "Ծառայության անվան դաշտը չի կարող լինել դատարկ:")
     private String name;
 
 
