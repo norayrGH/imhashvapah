@@ -14,7 +14,7 @@ public class SupplierClientOrganization implements GeneralMethods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty(message = "Անվանումը պարտադիր է:")
+    @NotEmpty(message = "Անվան դաշտը հարկավոր է լրացնել:")
     private String clientOrganizationName;
     @ManyToOne
     private Organization organization;

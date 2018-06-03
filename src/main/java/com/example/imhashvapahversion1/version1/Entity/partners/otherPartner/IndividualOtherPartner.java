@@ -3,10 +3,12 @@ package com.example.imhashvapahversion1.version1.Entity.partners.otherPartner;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerIndividual;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.sql.Date;
+import java.util.Date;
 @Entity
 public class IndividualOtherPartner  implements GeneralMethods {
     @Id
@@ -15,10 +17,16 @@ public class IndividualOtherPartner  implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private OtherPartnerIndividual individual;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date bDate;
+    @NotEmpty(message = "ՀԾՀ-ն պարտադիր է:")
     private String hch;
+    @NotEmpty(message = "Անձնագրի համարը պարտադիր է:")
     private String groupPayer;
+    @NotEmpty(message = "Անձնագրի ում կողմից տրված լինելը պարտադիր է:")
     private String passportNumber;
+    @NotEmpty(message = "Անձնագրի տրման ամսաթիվը պարտադիր է:")
     private String passportViewingDate;
     private String openingBalanceType;
     private String openingBalance;
