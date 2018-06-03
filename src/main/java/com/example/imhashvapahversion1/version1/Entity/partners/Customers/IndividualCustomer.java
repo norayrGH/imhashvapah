@@ -3,10 +3,12 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class IndividualCustomer  implements GeneralMethods {
@@ -16,6 +18,9 @@ public class IndividualCustomer  implements GeneralMethods {
     @OneToOne(cascade = CascadeType.ALL)
     @Valid
     private CustomerIndividual individual;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ամսաթիվը պարտադիր է:")
     private Date bDate;
     private String hch;
     private String passportNumber;

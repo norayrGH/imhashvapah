@@ -28,7 +28,7 @@ public class CompanySupplier implements GeneralMethods {
     private String openingBalanceType;
     @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
-    @NotEmpty(message = "Մատակարարման տեսակը պարտադիր է:")
+    @NotEmpty(message = "Տեսակը պարտադիր է:")
     private String supply;
     private String bankAccount;
     private String address;

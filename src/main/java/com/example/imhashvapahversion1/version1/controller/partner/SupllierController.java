@@ -1264,6 +1264,7 @@ public class SupllierController extends BaseController {
             modelAndView.addObject("periodicServiceRentOther",periodicServiceRentOther);
             modelAndView.addObject("navBar", this.partnerNavBar);
             modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentOtherCreate);
+            modelAndView.addObject("appFragment", this.partnerFragments);
             modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
 
             return  modelAndView;

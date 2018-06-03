@@ -148,9 +148,9 @@ function  partnerCustomersShow(partnerCustomers) {
     var tHead =$("<thead />");
     var tHeadTr = $("<tr />");
     $.each(partnerCustomersTableTh, function(i, item) {
-        tHeadTr.append($("<th />").text(item));
+        tHeadTr.append($("<th />").attr({style:"font-weight:bold"}).text(item));
     });
-    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHeadTr.append($("<th />").attr({style:"font-weight:bold"}).text("Գործողություն"));
     tHead.append(tHeadTr);
     partnerCustomersTable.append(tHead);
     var tBody = $("<tbody />");

@@ -18,7 +18,7 @@ public class PeriodicServiceRentCar {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "Ծառայության անունը չի կարող լինել դատարկ:")
+    @NotEmpty(message ="Ծառայության անվան դաշտը չի կարող լինել դատարկ:")
     private String name;
 
 
@@ -43,7 +43,7 @@ public class PeriodicServiceRentCar {
     @NotEmpty(message = "Մակնիշը պարտադիր է:")
     private String model;
     //Պետ. համարանիշ
-    @NotEmpty(message = "Պետ. համարանիշ պարտադիր է:")
+    @NotEmpty(message = "Պետ. համարանիշը պարտադիր է:")
     private String carNumber;
 
 

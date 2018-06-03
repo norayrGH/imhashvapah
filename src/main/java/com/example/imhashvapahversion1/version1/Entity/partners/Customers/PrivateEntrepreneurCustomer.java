@@ -14,8 +14,9 @@ public class PrivateEntrepreneurCustomer  implements GeneralMethods {
     @Id
     @GeneratedValue
     private Long id ;
+    @NotEmpty(message = "Անվանումը պարտադիր է:")
     private String privateEntrepreneurName ;
-    @NotEmpty
+    @NotEmpty(message = "ՀՎՀՀ-ն պարտադիր է:")
     private String hvhh;
     private String taxType;
     private String openingBalanceType;

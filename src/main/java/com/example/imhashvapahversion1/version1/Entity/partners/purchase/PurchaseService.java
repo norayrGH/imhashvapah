@@ -30,14 +30,14 @@ public class PurchaseService {
     // Ամսաթիվ
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Ամսաթիվը պարտադիր է")
+    @NotNull(message = "Ամսաթիվը պարտադիր է:")
     private Date purchaseDate;
 
     //Փաստաթուղթ
     private String docType;
 
     //Փաստաթուղթ
-    @NotNull(message = "սերիա-համարը պարտադիր է:")
+    @NotNull(message = "Սերիա-համարը պարտադիր է:")
     private String docNumber;
 
 
