@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
@@ -127,6 +128,13 @@ public class CashInFromCredit implements GetWaletIn{
 
     public void setPrivateEntrepreneurOtherPartner(PrivateEntrepreneurOtherPartner privateEntrepreneurOtherPartner) {
         this.privateEntrepreneurOtherPartner = privateEntrepreneurOtherPartner;
+    }
+    public GeneralMethods getSupplier(){
+        if(companyOtherPartner!=null)
+            return companyOtherPartner;
+        if(individualOtherPartner!=null)
+            return individualOtherPartner;
+        return privateEntrepreneurOtherPartner;
     }
 
     @Override

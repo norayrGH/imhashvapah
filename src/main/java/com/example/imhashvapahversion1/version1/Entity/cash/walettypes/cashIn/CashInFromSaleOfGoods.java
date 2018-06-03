@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
@@ -90,6 +91,11 @@ public class CashInFromSaleOfGoods implements GetWaletIn {
     @Override
     public WalletIn getWalletInImpl() {
         return walletIn;
+    }
+
+    @Override
+    public GeneralMethods getSupplier() {
+        return null;
     }
 
     public void setWalletIn(WalletIn walletIn) {

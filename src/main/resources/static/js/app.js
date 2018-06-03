@@ -15,6 +15,7 @@ var debtDetaileType={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճար�
     PurchaseFixedAsset:"Ձեռքբերում",
     PurchaseGoods:"Ձեռքբերում",
     PurchaseService:"Ձեռքբերում",
+    CashInFromBankAccount:"Մուտք բանկային հաշվից",CashInFromCredit:"Վարկի ստացում",CashInFromLoan:"Փոխառության ստացում",CashInFromPointOfSale:"Մուտք առևտրի կետից",CashInFromSaleOfGoods:"Մուտք ապրանքների իրացումից",CashInFromServiceProvision:"Մուտք ծառայության մատուցումից"
 };
 
 if (cityes.val() != undefined) {
@@ -212,12 +213,12 @@ function  partnerOtherPartnerShow(partnerOtherPartner) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/otherpartner/edit/"+(item.type.includes("Individual")?'individualotherpartner/':'companyotherpartner/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                    {href:"/account/partner/otherpartner/edit/?otherpartnertype="+(item.type.includes("Individual")?'IndividualOtherPartner':item.type.includes("Company")?'CompanyOtherPartner':'PrivateEntrepreneurOtherPartner')+'&'+'otherpartnerid='+item.id  ,
                         class:"glyphicon glyphicon-pencil"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"
-                ,$("<a />").attr(
-                    {href:"/account/organization/fixedasset/delete/"+item.id ,
+               ,$("<a />").attr(
+                    {href:"/account/partner/otherpartner/delete/?otherpartnertype="+(item.type.includes("Individual")?'IndividualOtherPartner':item.type.includes("Company")?'CompanyOtherPartner':'PrivateEntrepreneurOtherPartner')+'&'+'otherpartnerid='+item.id  ,
                         class:"glyphicon glyphicon-trash"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -396,6 +397,44 @@ function  showCashIn(cashIn) {
     cashInTable.append(tBody);
 
     $('#showCashIn').append(cashInTable);
+
+}
+function  showOtherPartnerPayments(otherPartnerPayments) {
+
+
+    $('#showOtherPartnerPayments').empty();
+
+    var otherPartnerPaymentsTableTh= ["№","Ամսաթիվ","Գումար","Այլ Գործընկեր","Մուտքի/Ելքի տեսակ"];
+    var otherPartnerPaymentsTable = $("<table />")
+        .attr({id:"showCashInTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(otherPartnerPaymentsTableTh, function(i, item) {
+        tHeadTr.append($("<th />").attr({"class":"h5", "style":"font-weight:bold"}).text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    otherPartnerPaymentsTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(otherPartnerPayments, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.id)
+            ,$("<td />").text(item.paymentDate)
+            ,$("<td />").text(item.paymentSum)
+            ,$("<td />").text(item.otherPartnerName)
+            ,$("<td />").text(debtDetaileType[item.cashinOrCashOut])
+            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashin/cashdesk/edit?cashintype="+"&cashinid="+item.id, class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/cash/cashin/cashdesk/delete?cashintype="+"&cashinid="+item.id, class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+
+    otherPartnerPaymentsTable.append(tBody);
+
+    $('#showOtherPartnerPayments').append(otherPartnerPaymentsTable);
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut;
 
+import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.Tax;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
@@ -71,5 +72,10 @@ public class CashOutForTax implements GetWaletOut {
     @Override
     public WalletOut getWalletOutImpl() {
         return walletOut;
+    }
+
+    @Override
+    public GeneralMethods getSupplier() {
+        return null;
     }
 }

@@ -336,6 +336,7 @@ public class SupllierController extends BaseController {
         }
         return debts;
     }
+
     @GetMapping( value ="/debt/details")
     public ModelAndView debtDetails(@RequestParam("supplierType")String supplierType,@RequestParam("supplierId")Long supplierId,ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");

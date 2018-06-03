@@ -85,7 +85,7 @@ public class BaseController {
     protected final String partnerSupplierPeriodicServiceRentOtherCreate = "partnerSupplierPeriodicServiceRentOtherCreate";
     protected final String partnerSupplierPeriodicServiceCreate = "partnerSupplierPeriodicServiceCreate";
     protected final String partnerSupplierFragmentNavBar = "partnerSupplierFragmentNavBar";
-    protected final String partnerOtherPartnerFragment = "partnerOtherPartnerFragment";
+    protected final String partnerOtherPartnerPayment = "partnerOtherPartnerPayment";
     protected final String partnerOtherPartnerFragmentNavBar = "partnerOtherPartnerFragmentNavBar";
 
     protected final String individualCustomerCreate = "individualCustomerCreate";

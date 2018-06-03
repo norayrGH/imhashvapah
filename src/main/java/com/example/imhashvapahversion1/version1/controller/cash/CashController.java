@@ -859,6 +859,8 @@ public class CashController extends BaseController {
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
             return modelAndView;
+
+
         }
 
 
@@ -866,6 +868,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
+
         if(cashInFromLoan.getOtherPartnerType().equals("CompanyOtherPartner")){
             cashInFromLoan.setCompanyOtherPartner(companyOtherPartnerRepository.findOne(cashInFromLoan.getOtherPartnerId()));
         }

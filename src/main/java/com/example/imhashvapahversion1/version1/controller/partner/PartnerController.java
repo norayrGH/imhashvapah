@@ -3,6 +3,11 @@ package com.example.imhashvapahversion1.version1.controller.partner;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForGoodsProvider;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.Debt;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
@@ -15,12 +20,25 @@ import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.Com
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.PrivateEntrepreneurOtherPartner;
 
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseFixedAsset;
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseGoods;
+import com.example.imhashvapahversion1.version1.Entity.partners.purchase.PurchaseService;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.CompanySupplier;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
+import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.CashInShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.PartnerCustomerShow;
 
+import com.example.imhashvapahversion1.version1.Entity.showClasses.PaymentShow;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
+import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromCreditRepository;
+import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromLoanRepository;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromSaleOfGoodsRepository;
 import com.example.imhashvapahversion1.version1.repository.cashIn.CashInFromServiceProvisionRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForCreditPaymentRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForLoanPaymentRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRedemptionPercentRepository;
 import com.example.imhashvapahversion1.version1.repository.customer.*;
 
 import com.example.imhashvapahversion1.version1.repository.otherpartners.*;
@@ -59,7 +77,21 @@ public class PartnerController extends BaseController {
     PrivateEntrepreneurOtherPartnerRepository privateEntrepreneurOtherPartnerRepository;
 
     @Autowired
+    CashInFromCreditRepository cashInFromCreditRepository;
+    @Autowired
+    CashInFromLoanRepository cashInFromLoanRepository;
+    @Autowired
     CashInFromSaleOfGoodsRepository cashInFromSaleOfGoodsRepository;
+    @Autowired
+    CashOutForCreditPaymentRepository cashOutForCreditPaymentRepository;
+
+
+
+    @Autowired
+    CashOutForRedemptionPercentRepository cashOutForRedemptionPercentRepository;
+    @Autowired
+    CashOutForLoanPaymentRepository cashOutForLoanPaymentRepository;
+
     @Autowired
     CashInFromServiceProvisionRepository cashInFromServiceProvisionRepository;
     @Autowired
@@ -289,6 +321,73 @@ public class PartnerController extends BaseController {
         return modelAndView;
     }
 
+
+    @GetMapping(value = "/otherpartner/edit")
+    public ModelAndView partnersOtherPartnerEdit(@RequestParam("otherpartnertype")String otherPartnerType,@RequestParam("otherpartnerid")Long otherPartnerId, ModelAndView modelAndView) {
+
+
+        modelAndView.setViewName("app/app");
+
+        if(otherPartnerType.equals("CompanyOtherPartner"))
+        {
+            CompanyOtherPartner companyOtherPartner = companyOtherPartnerRepository.findOne(otherPartnerId);
+            modelAndView.addObject("fragment", this.companyOtherPartnerCreate);
+            modelAndView.addObject("companyOtherPartner", companyOtherPartner);
+
+        }
+        if(otherPartnerType.equals("IndividualOtherPartner"))
+        {
+            IndividualOtherPartner individualOtherPartner = individualOtherPartnerRepository.findOne(otherPartnerId);
+            modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
+            modelAndView.addObject("individualOtherPartner", individualOtherPartner);
+
+        }
+        if(otherPartnerType.equals("PrivateEntrepreneurOtherPartner"))
+        {
+
+            PrivateEntrepreneurOtherPartner privateEntrepreneurOtherPartner = privateEntrepreneurOtherPartnerRepository.findOne(otherPartnerId);
+            modelAndView.addObject("fragment", this.privateEntrepreneurOtherPartnerCreate);
+            modelAndView.addObject("privateEntrepreneurOtherPartner", privateEntrepreneurOtherPartner);
+
+        }
+
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+
+        return modelAndView;
+    }
+    @GetMapping(value = "/otherpartner/delete")
+    public ModelAndView partnersOtherPartnerDelete(@RequestParam("otherpartnertype")String otherPartnerType,@RequestParam("otherpartnerid")Long otherPartnerId, ModelAndView modelAndView) {
+
+        modelAndView.setViewName("app/app");
+
+        if(otherPartnerType.equals("CompanyOtherPartner"))
+        {
+            companyOtherPartnerRepository.delete(otherPartnerId);
+
+        }
+        if(otherPartnerType.equals("IndividualOtherPartner"))
+        {
+
+            individualOtherPartnerRepository.delete(otherPartnerId);
+        }
+        if(otherPartnerType.equals("PrivateEntrepreneurOtherPartner"))
+        {
+
+            privateEntrepreneurOtherPartnerRepository.delete(otherPartnerId);
+        }
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.otherPartnerFragments);
+        modelAndView.addObject("fragment", this.partnerOtherPartner);
+        modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
+
+        return modelAndView;
+    }
     @GetMapping(value = "/otherpartner/create/companyotherpartner")
     public ModelAndView companyOtherPartnerCreate(ModelAndView modelAndView, HttpSession httpSession) {
         CompanyOtherPartner companyOtherPartner = new CompanyOtherPartner();
@@ -337,23 +436,6 @@ public class PartnerController extends BaseController {
         modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
-        return modelAndView;
-    }
-    @GetMapping(value = "/otherpartner/edit/individualotherpartner")
-    public ModelAndView individualOtherPartnerEdit(@RequestParam("customerId")Long customerId,@RequestParam("customerInnerId")Long customerInnerId , ModelAndView modelAndView, HttpSession httpSession) {
-        IndividualOtherPartner individualOtherPartner = new IndividualOtherPartner();
-        if(customerId!=0)
-            individualOtherPartner = individualOtherPartnerRepository.findOne(customerId);
-        else
-            individualOtherPartner.setIndividual(otherPartnerIndividualRepository.findOne(customerInnerId));
-
-        individualOtherPartner.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        modelAndView.setViewName("app/app");
-        modelAndView.addObject("individualOtherPartner",individualOtherPartner);
-        modelAndView.addObject("navBar", this.partnerNavBar);
-        modelAndView.addObject("appFragment", this.otherPartnerFragments);
-        modelAndView.addObject("fragment", this.individualOtherPartnerCreate);
-        modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
         return modelAndView;
     }
     @PostMapping(value = "/otherpartner/create/individualotherpartner")
@@ -441,24 +523,107 @@ public class PartnerController extends BaseController {
         }
         return showResult;
     }
-    @GetMapping( value = "/otherpartner/debt")
+    @GetMapping( value = "/otherpartner/payment")
     public ModelAndView partnerOtherPartnerDebt( ModelAndView modelAndView) {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
         modelAndView.addObject("appFragment", this.otherPartnerFragments);
-        modelAndView.addObject("fragment", this.partnerOtherPartnerFragment);
+        modelAndView.addObject("fragment", this.partnerOtherPartnerPayment);
         modelAndView.addObject("fragmentNavBar", this.partnerOtherPartnerFragmentNavBar);
 
 
         return modelAndView;
     }
 
+    @PostMapping(value = "/otherpartner/payment/show")
+    public @ResponseBody ArrayList otherpartnerPaymentShow(@RequestBody DateRange dateRange ) {
+        List<GetWaletIn> temp = new ArrayList();
+        List<GetWaletOut> temp2 = new ArrayList();
+        ArrayList<PaymentShow> showResult = new ArrayList();
+        if (dateRange.isShowAll()) {
+
+            temp.addAll((ArrayList)cashInFromCreditRepository.findAll());
+            temp.addAll((ArrayList)cashInFromLoanRepository.findAll());
+            temp2.addAll((ArrayList)cashOutForCreditPaymentRepository.findAll());
+            temp2.addAll((ArrayList)cashOutForLoanPaymentRepository.findAll());
+            temp2.addAll((ArrayList)cashOutForRedemptionPercentRepository.findAll());
+            for(GetWaletIn each:temp) {
+
+                showResult.add(new PaymentShow(each.getCashInId(),each.getWalletInImpl().getInDate(),Long.parseLong(each.getWalletInImpl().getInCash()),each.getSupplier().getName(),each.getWalletInImpl().getInType()));
+            }
+            for(GetWaletOut each:temp2) {
+
+                showResult.add(new PaymentShow(each.getCashOutId(),each.getWalletOutImpl().getOutDate(),Long.parseLong(each.getWalletOutImpl().getOutCash()),each.getSupplier().getName(),each.getWalletOutImpl().getOutType()));
+            }
+
+
+            return showResult;
+        }else
+
+        if (dateRange.getStart() != null && dateRange.getEnd() == null) {
+
+            temp.addAll(cashInFromCreditRepository.findByRangeStart(dateRange.getStart()));
+            temp.addAll(cashInFromLoanRepository.findByRangeStart(dateRange.getStart()));
+            temp2.addAll(cashOutForCreditPaymentRepository.findByRangeStart(dateRange.getStart()));
+            temp2.addAll(cashOutForLoanPaymentRepository.findByRangeStart(dateRange.getStart()));
+            temp2.addAll(cashOutForRedemptionPercentRepository.findByRangeStart(dateRange.getStart()));
+            for(GetWaletIn each:temp) {
+
+                showResult.add(new PaymentShow(each.getCashInId(),each.getWalletInImpl().getInDate(),Long.parseLong(each.getWalletInImpl().getInCash()),each.getSupplier().getName(),each.getWalletInImpl().getInType()));
+            }
+            for(GetWaletOut each:temp2) {
+
+                showResult.add(new PaymentShow(each.getCashOutId(),each.getWalletOutImpl().getOutDate(),Long.parseLong(each.getWalletOutImpl().getOutCash()),each.getSupplier().getName(),each.getWalletOutImpl().getOutType()));
+            }
+
+            return showResult;
+        }else
+        if (dateRange.getStart() == null && dateRange.getEnd() != null) {
+
+            temp.addAll(cashInFromCreditRepository.findByEnd(dateRange.getEnd()));
+            temp.addAll(cashInFromLoanRepository.findByEnd(dateRange.getEnd()));
+            temp2.addAll(cashOutForCreditPaymentRepository.findByRangeEnd(dateRange.getEnd()));
+            temp2.addAll(cashOutForLoanPaymentRepository.findByRangeEnd(dateRange.getEnd()));
+            temp2.addAll(cashOutForRedemptionPercentRepository.findByRangeEnd(dateRange.getEnd()));
+            for(GetWaletIn each:temp) {
+
+                showResult.add(new PaymentShow(each.getCashInId(),each.getWalletInImpl().getInDate(),Long.parseLong(each.getWalletInImpl().getInCash()),each.getSupplier().getName(),each.getWalletInImpl().getInType()));
+            }
+            for(GetWaletOut each:temp2) {
+
+                showResult.add(new PaymentShow(each.getCashOutId(),each.getWalletOutImpl().getOutDate(),Long.parseLong(each.getWalletOutImpl().getOutCash()),each.getSupplier().getName(),each.getWalletOutImpl().getOutType()));
+            }
+
+            return showResult;
+        }else
+        if (dateRange.getStart() != null && dateRange.getEnd() != null) {
+
+
+            temp.addAll(cashInFromCreditRepository.findByRange(dateRange.getStart(),dateRange.getEnd())) ;
+            temp.addAll(cashInFromLoanRepository.findByRange(dateRange.getStart(),dateRange.getEnd())) ;
+            temp2.addAll(cashOutForCreditPaymentRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
+            temp2.addAll(cashOutForLoanPaymentRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
+            temp2.addAll(cashOutForRedemptionPercentRepository.findByRange(dateRange.getStart(),dateRange.getEnd()));
+            for(GetWaletIn each:temp) {
+
+                showResult.add(new PaymentShow(each.getCashInId(),each.getWalletInImpl().getInDate(),Long.parseLong(each.getWalletInImpl().getInCash()),each.getSupplier().getName(),each.getWalletInImpl().getInType()));
+            }
+            for(GetWaletOut each:temp2) {
+
+                showResult.add(new PaymentShow(each.getCashOutId(),each.getWalletOutImpl().getOutDate(),Long.parseLong(each.getWalletOutImpl().getOutCash()),each.getSupplier().getName(),each.getWalletOutImpl().getOutType()));
+            }
+            return showResult;
+        }
+        return showResult;
+    }
+
+
+
 
 
 
     /*--partner Otherpartner--*/
-
 
     @GetMapping(value = "/customer/debt")
     public ModelAndView partnerCustomerDebt( ModelAndView modelAndView) {
