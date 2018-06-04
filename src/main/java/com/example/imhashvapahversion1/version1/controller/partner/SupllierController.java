@@ -140,7 +140,7 @@ public class SupllierController extends BaseController {
         Debt debt = new Debt();
 
         List<CompanySupplier> companySuppliers = (List<CompanySupplier>) companySupplierRepository.findByHvhhNotNull();
-        List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findByHchNotNull();
         List<PrivateEntrepreneurSupplier> privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
         List<CashOutForGoodsProvider> cashOutForGoodsProviders = (List<CashOutForGoodsProvider>) cashOutForGoodsProviderRepository.findByRangeEnd(dateRange.getStart());

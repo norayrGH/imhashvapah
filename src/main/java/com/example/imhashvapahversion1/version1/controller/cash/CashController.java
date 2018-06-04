@@ -932,6 +932,22 @@ public class CashController extends BaseController {
             modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromServiceProvision);
         }
+        if(cashInType.equals("CashInFromPointOfSale")){
+
+            CashInFromPointOfSale cashInFromPointOfSale = cashInFromPointOfSaleRepository.findOne(cashInId);
+
+            modelAndView.addObject("cashInFromPointOfSale",cashInFromPointOfSale);
+            modelAndView.addObject("appFragment", this.cashInFragments);
+            modelAndView.addObject("fragment", this.cashInCreateCashInFromPointOfSale);
+        }
+        if(cashInType.equals("CashInFromBankAccount")){
+
+            CashInFromBankAccount cashInFromBankAccount = cashInFromBankAccountRepository.findOne(cashInId);
+
+            modelAndView.addObject("cashInFromBankAccount",cashInFromBankAccount);
+            modelAndView.addObject("appFragment", this.cashInFragments);
+            modelAndView.addObject("fragment", this.cashInCreateBankAccount);
+        }
 
 
         modelAndView.setViewName("app/app");
@@ -1004,7 +1020,7 @@ public class CashController extends BaseController {
         }
 
 
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1077,7 +1093,7 @@ public class CashController extends BaseController {
         }
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1150,8 +1166,7 @@ public class CashController extends BaseController {
 
         }
 
-
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1191,8 +1206,6 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("appFragment", this.cashInFragments);
-        modelAndView.addObject("fragment", this.cashInCreateCashInFromPointOfSale);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return  modelAndView;
     }
@@ -1211,7 +1224,7 @@ public class CashController extends BaseController {
         }
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1281,7 +1294,7 @@ public class CashController extends BaseController {
         }
 
 
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1370,7 +1383,7 @@ public class CashController extends BaseController {
 
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("navBar", this.organizationNavBar);
+        modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
@@ -1511,14 +1524,6 @@ public class CashController extends BaseController {
        individualCustomerRepository.save(individualCustomer);
         return modelAndView;
     }
-
-
-
-
-
-
-
-
 
 
     /*other partners coleguas*/

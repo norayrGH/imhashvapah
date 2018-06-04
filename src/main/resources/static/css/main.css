@@ -110,6 +110,18 @@ body {
 	transform: scale(1.3);
 }
 
+
+
+
+
+.selectedItem{
+
+	background-color: #EFEEF0;
+}
+
+
+
+
 .main_mnu ul{
 	/* background-color: #4AAAD2;  */
 	margin: 0;

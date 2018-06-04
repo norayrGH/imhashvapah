@@ -11,4 +11,10 @@ public interface IndividualSupplierRepository extends CrudRepository<IndividualS
     ArrayList findBySupplyGoodsAndServices();
     @Query("Select c from IndividualSupplier c WHERE c.supply='Վարձակալության/ծառայություն'")
     ArrayList findBySupplyForRent();
+
+
+
+
+    @Query("Select i from IndividualSupplier i WHERE i.hch is not null " )
+    ArrayList findByHchNotNull( );
 }

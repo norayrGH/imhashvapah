@@ -603,6 +603,7 @@ public class PartnerController extends BaseController {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("activeTab", "customers");
         modelAndView.addObject("appFragment", this.partnerFragments);
         modelAndView.addObject("fragment", this.partnerCustomerDebt);
         modelAndView.addObject("fragmentNavBar", this.partnerFragmentNavBar);
