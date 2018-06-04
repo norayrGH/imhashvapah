@@ -1,11 +1,12 @@
 package com.example.imhashvapahversion1.version1.Entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_fixedAsset")
@@ -24,9 +25,12 @@ public class FixedAsset {
     @NotEmpty(message = "Հիմնական միջոցի անվանումը պարտադիր է: ")
     private String name;
     @Column(name = "fixedAsset_type", unique = false, nullable = false)
-    @NotEmpty(message = " Հիմնական միջոցի տեսակը պարտադիր  ")
+    @NotEmpty(message = " Հիմնական միջոցի տեսակը պարտադիր է:")
     private String type;
+
     @Column(name = "fixedAsset_acquiring_date", unique = false, nullable = false)
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Ամսաթիվը պարտադիր է: ")
     private Date acquiringDate;
     @Column(name = "fixedAsset_acquiring_Amount", unique = false, nullable = false)

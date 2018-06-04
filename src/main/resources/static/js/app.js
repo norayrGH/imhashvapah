@@ -107,7 +107,7 @@ function  showFixedAssets(fixedAssets) {
     var fixedAssetsTable = $("<table />")
         .attr({id:"showFixedAssetsTable",class:"table table-hover "});
     var tHead =$("<thead />");
-    var tHeadTr = $("<tr />");
+    var tHeadTr = $("<tr />").attr({class:"h5"});
     $.each(fixedAssetsTableTh, function(i, item) {
         tHeadTr.append($("<th />").text(item));
     });
