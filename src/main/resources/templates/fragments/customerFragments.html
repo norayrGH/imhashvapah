@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="panel panel-default conteiner"   th:fragment="partnerCustomers" >
+    <div class="panel panel-default "   th:fragment="partnerCustomers" >
         <div style="margin: 50px">
                 <div class="form-group row ">
                     <input class="form-control"
@@ -30,8 +30,8 @@
 
                 </div>
         </div>
-        <script>
-
+        <script th:inline="javascript" >
+            /*<![CDATA[*/
 
             $(function () {
                 $(document).ready(function () {
@@ -62,7 +62,9 @@
 
                 });
             });
+            /*]]>*/
         </script>
+
 
     </div>
     <div class="panel panel-default"  th:fragment="individualCustomerCreate" >
@@ -218,6 +220,677 @@
         </form >
 
     </div>
+    <div class="panel panel-default" th:fragment="customerSaleCreate">
+        <form th:object="${sale}" action="/account/partner/customer/create/sale" class="form-horizontal"  method="post" >
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="saleNumber" class=" col-md-4 col-form-label" >№</label>
+                    <div class="col-md-6" >
+                        <input id="saleNumber"
+                               class="form-control"
+                               type="text"
+                               placeholder="Վաճա. համարը ունի 9 նիշ"
+                               th:name="saleNumber"
+                               th:field="*{saleNumber}"
+                        />
+                        <small th:if="${#fields.hasErrors('saleNumber')}" th:errors="*{saleNumber}"  class="form-text text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="selectedCustomer" class=" col-md-4 col-form-label" >Գնորդ</label>
+                    <div class="col-md-6" >
+                        <select id="selectedCustomer"
+                                class="form-control"
+                                th:field="*{customerIndex}"
+                                th:name="customerIndex">
+
+                            <option value=''> __ԸՆՏՐԵԼ__ </option>
+                            <option th:each="customer,iterStat  : ${customerList}"
+                                    th:value="${iterStat.index}"
+                                    th:text="${customer.getCustomerName()}"
+                            />
+                        </select>
+                        <small th:if="${#fields.hasErrors('customerIndex')}" th:errors="*{customerIndex}"  class="form-text text-danger" />
+                    </div>
+                    <div class="col-md-1">
+                        <a  type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label for="typeSale" class=" col-md-4 col-form-label" >Տեսակ</label>
+                    <div class="col-md-6" >
+                        <select id="typeSale"
+                                class="form-control"
+                                th:field="*{typeSale}"
+                                th:name="typeSale">
+
+                            <option value=''> __ԸՆՏՐԵԼ__ </option>
+                            <option value="goods">Ապրանք </option>
+                            <option value="service">Ծառայություն </option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('typeSale')}" th:errors="*{typeSale}"  class="form-text text-danger" />
+                    </div>
+
+                </div>
+
+                <div class="form-group row ">
+                    <label for="saleDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
+                    <div class="col-md-6" >
+                        <input id="saleDate"
+                               class="form-control"
+                               type="date"
+                               th:name="saleDate"
+                               th:field="*{saleDate}"
+                        />
+                        <small th:if="${#fields.hasErrors('saleDate')}" th:errors="*{saleDate}"  class="form-text text-danger" />
+                    </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <label for="salesAmount" class=" col-md-4 col-form-label" >Վաճառքի գումար</label>
+                    <div class="col-md-6" >
+                        <input type="text"
+                               class="form-control"
+                               id="salesAmount"
+
+                               th:name="salesAmount"
+                               th:field="*{salesAmount}"
+                        />
+                        <small th:if="${#fields.hasErrors('salesAmount')}" th:errors="*{salesAmount}"  class="form-text text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <div class="col-md-1 form-check form-check-inline" >
+                        <input  th:name="personalWalletIn"
+                                th:field="*{personalWalletIn}"
+                                th:checked="${personalWalletIn}"
+                                type="checkbox"
+                                class="form-check-input"
+                                id="personalWalletIn"
+                        >
+                        </input>
+                    </div>
+                    <label for="personalWalletIn" class=" col-md-11 col-form-label" > Նշելով կպատրաստվի դրամարկղի մուտք միևնույն գումարի չափով:</label>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="salesAmount" class=" col-md-4 col-form-label" >Պայմանագրի համար</label>
+                    <div class="col-md-6" >
+                        <input type="text"
+                               class="form-control"
+                               id="contractNubmer"
+
+                               th:name="contractNubmer"
+                               th:field="*{contractNubmer}"
+                        />
+                        <small th:if="${#fields.hasErrors('contractNubmer')}" th:errors="*{contractNubmer}"  class="form-text text-danger" />
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label for="note" class=" col-md-4 col-form-label" >Նշումներ</label>
+                    <div class="col-md-6" >
+                        <input type="text"
+                               class="form-control"
+                               id="note"
+
+                               th:name="note"
+                               th:field="*{note}"
+                        />
+                        <small th:if="${#fields.hasErrors('note')}" th:errors="*{note}"  class="form-text text-danger" />
+                    </div>
+                </div>
+                <input
+                        type="hidden"
+                        th:field="*{customerId}"
+                        th:value="${customerId}"
+                />
+                <input
+                        type="hidden"
+                        th:field="*{customerType}"
+                        th:value="${customerType}"
+                />
+
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
+                <input
+                        type="hidden"
+                        id="organizationId"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
+
+                <input type="submit" class="btn btn-default" />
+            </div>
+        </form >
+
+        <script  th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function () {
+                var customerList = /*[[${customerList}]]*/ 'default';
+
+                if($('#saleDate').val()==""){
+
+                    var now = new Date();
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                    $('#saleDate').val(today);
+                }
+                console.log("out if");
+                if($('#selectedCustomer').val()!='' && $('input[name=customerType]').val()=="" && $('input[name=customerId]').val()=="")
+                {
+
+                    $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
+                    $('input[name=customerId]').val(customerList[$('#selectedCustomer').val()].id);
+                }
+                $('#selectedCustomer').on('change', function() {
+                    if(this.value!="")
+                    {
+                        $('input[name=customerType]').val(customerList[this.value].customerType);
+                        $('input[name=customerId]').val(customerList[this.value].id);
+                    }
+                    else{
+                        $('input[name=customerType]').val("");
+                        $('input[name=customerId]').val("");
+                    }
+                })
+            })
+            /*]]>*/
+        </script>
+    </div>
+    <div class="panel panel-default" th:fragment="partnerCustomerSale">
+        <div style="margin: 50px">
+            <div class="row">
+                <div class="container">
+                    <div class='col-md-2'>
+                        <a class="btn btn-info" role="button" th:href="@{'/account/partner/customer/create/sale/'}">Ավելացնել </a>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container" id="datetimepicker1">
+                    <div class='col-md-2'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type="text" class="form-control" id="datepickerStart" />
+                                <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-2'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type="text" class="form-control" id="datepickerEnd" />
+                                <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-3'>
+                        <div class="form-group">
+                            <div class="form-check" >
+                                <input type="checkbox" class="form-check-input" id="showAll" />
+                                <label class="form-check-label" for="showAll" >Ցուցադրել բոլորը</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input name="csrfToken" id="csrfToken"
+                           type="hidden"
+
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}"
+                    />
+                </div>
+            </div>
+            <div id="showCustomerSales" >
+
+            </div>
+
+        </div>
+        <script th:inline="javascript" >
+            /*<![CDATA[*/
+            $( "#datepickerStart" ).datepicker();
+            $( "#datepickerEnd" ).datepicker();
+
+            $(document).ready(function() {
+                var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
+                var datePickerStart = $( "#datepickerStart.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth(),1));
+                var datePickerEnd = $( "#datepickerEnd.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0));
+                var DateRang ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    showAll:Boolean($("#showAll").is(':checked'))
+                }
+                console.log(DateRang);
+
+                $.ajax({
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/partner/customer/sale/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRang),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $("#showCustomerSales").empty();
+                        else
+                        {
+                            console.log(msg);
+                            showCustomerSales(msg);
+                        }
+
+
+                    },
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+                datePickerStart.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/partner/customer/sale/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#showCustomerSales").empty();
+                            else
+                            {
+                                console.log(msg);
+                                showCustomerSales(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+                });
+                datePickerEnd.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/cash/cashin/cashdesk/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#showCashIn").empty();
+                            else
+                            {
+                                console.log(msg);
+                                showCashIn(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+                });
+                $('#showAll').change(function() {
+                    if(this.checked) {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/partner/customer/sale/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#showCustomerSales").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    showCustomerSales(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }else
+                    {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/partner/customer/sale/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#showCustomerSales").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    showCustomerSales(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }
+
+                });
+            });
+
+            /*]]>*/
+        </script>
+
+    </div>
+
+
+
+    <div class="panel panel-default" th:fragment="partnerCustomerPayment">
+        <div style="margin: 50px">
+
+            <div class="row">
+                <div class="container" id="datetimepicker1">
+                    <div class='col-md-2'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type="text" class="form-control" id="datepickerStart" />
+                                <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-2'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type="text" class="form-control" id="datepickerEnd" />
+                                <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-3'>
+                        <div class="form-group">
+                            <div class="form-check" >
+                                <input type="checkbox" class="form-check-input" id="showAll" />
+                                <label class="form-check-label" for="showAll" >Ցուցադրել բոլորը</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input name="csrfToken" id="csrfToken"
+                           type="hidden"
+
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}"
+                    />
+                </div>
+            </div>
+            <div id="customerPaymentShow" >
+
+            </div>
+
+        </div>
+        <script th:inline="javascript" >
+            /*<![CDATA[*/
+            $( "#datepickerStart" ).datepicker();
+            $( "#datepickerEnd" ).datepicker();
+
+            $(document).ready(function() {
+                var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
+                var datePickerStart = $( "#datepickerStart.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth(),1));
+                var datePickerEnd = $( "#datepickerEnd.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0));
+                var DateRang ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    showAll:Boolean($("#showAll").is(':checked'))
+                }
+                console.log(DateRang);
+
+                $.ajax({
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/partner/customer/payment/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRang),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $("#customerPaymentShow").empty();
+                        else
+                        {
+                            console.log(msg);
+                            customerPaymentShow(msg);
+                        }
+
+
+                    },
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+                datePickerStart.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    console.log(DateRang);
+
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/partner/customer/payment/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#customerPaymentShow").empty();
+                            else
+                            {
+                                console.log(msg);
+                                customerPaymentShow(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+                });
+                datePickerEnd.on("change", function() {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    console.log(DateRang);
+
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/partner/customer/payment/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#customerPaymentShow").empty();
+                            else
+                            {
+                                console.log(msg);
+                                customerPaymentShow(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+                });
+                $('#showAll').change(function() {
+                    if(this.checked) {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        console.log(DateRang);
+
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/partner/customer/payment/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#customerPaymentShow").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    customerPaymentShow(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }else
+                    {
+                        var DateRang ={
+                            start:datePickerStart.datepicker("getDate"),
+                            end:datePickerEnd.datepicker("getDate"),
+                            showAll:Boolean($("#showAll").is(':checked'))
+                        }
+                        console.log(DateRang);
+
+                        $.ajax({
+                            method : "POST",
+                            contentType : "application/json",
+                            url: '/account/partner/customer/payment/show',
+                            dataType: 'json',
+                            data :JSON.stringify(DateRang),
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                            },  success: function (msg){
+                                if(msg == null)
+                                    $("#customerPaymentShow").empty();
+                                else
+                                {
+                                    console.log(msg);
+                                    customerPaymentShow(msg);
+                                }
+
+
+                            },
+                            error:
+                                function(data){
+
+                                    console.log(data.responseText);
+                                }
+                        });
+
+                    }
+
+                });
+            });
+
+            /*]]>*/
+        </script>
+
+    </div>
+
+
 
 
     <div class="panel panel-default" th:fragment="companyCustomerCreate" >

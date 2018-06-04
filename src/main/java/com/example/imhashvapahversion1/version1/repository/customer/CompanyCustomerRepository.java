@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 
 
 public interface CompanyCustomerRepository  extends CrudRepository<CompanyCustomer,Long>{
@@ -15,4 +16,8 @@ public interface CompanyCustomerRepository  extends CrudRepository<CompanyCustom
     boolean existsByHvhh( @Param("hvhh")String hvhh );
     @Query( "Select c.id from CompanyCustomer c where c.hvhh like :hvhh ")
     Long getIdByHvhh (@Param("hvhh")String hvhh );
+
+    @Query("Select c from CompanyCustomer c WHERE c.hvhh is not null " )
+    ArrayList findByHvhhNotNull( );
+
 }

@@ -12,6 +12,7 @@ public class BaseController {
 
     protected final String cashNavBar = "cashNavBar";
     protected final String cashFragment = "cash";
+    protected final String cashDtails = "cashDtails";
     protected final String noWalletData = "noWalletData";
     protected final String cashOutFragments = "cashOutFragments";
     protected final String cashInFragments = "cashInFragments";
@@ -66,8 +67,12 @@ public class BaseController {
 
 
     protected final String partnerNavBar = "partnerNavBar";
-        protected final String partnerFragment = "partner";
+        protected final String partnerCustomerDebt = "partnerCustomerDebt";
+        protected final String partnerCustomerDebtDetails = "partnerCustomerDebtDetails";
     protected final String partnerCustomers="partnerCustomers";
+    protected final String customerSaleCreate="customerSaleCreate";
+    protected final String partnerCustomerSale="partnerCustomerSale";
+    protected final String partnerCustomerPayment="partnerCustomerPayment";
     protected final String partnerSupplierDebtDetails="partnerSupplierDebtDetails";
     protected final String partnerOtherPartner="partnerOtherPartner";
     protected final String partnerSupplier="partnerSupplier";

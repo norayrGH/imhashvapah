@@ -461,25 +461,27 @@
         <form th:object="${cashInFromSaleOfGoods}" action="/account/cash/cashin/cashdesk/create/cashinfromsaleofgoods" id="walletInCreate"  method="post" >
             <div style="margin: 50px">
                 <div class="form-group row ">
-                    <label for="customerName" class=" col-md-4 col-form-label" >Գնորդ</label>
-                        <div class="col-md-6" >
-                            <select id="customerName" class="form-control"
-                                    th:field="*{customerName}"
-                                    th:name="customerName">
-                                        <option value=""> __ԸՆՏՐԵԼ__ </option>
-                                        <option th:each="customer : ${customerList}"
-                                                th:value="${customer.id}"
-                                                th:text="${customer.getName()}" />
-                            </select>
-                            <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"  class="form-text text-danger" />
-                        </div>
-                            <div class="col-md-1">
-                                <a  type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                                    <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
-                                </a>
-                            </div>
-                </div>
+                    <label for="selectedCustomer" class=" col-md-4 col-form-label" >Գնորդ</label>
+                    <div class="col-md-6" >
+                        <select id="selectedCustomer"
+                                class="form-control"
+                                th:field="*{customerIndex}"
+                                th:name="customerIndex">
 
+                            <option value=''> __ԸՆՏՐԵԼ__ </option>
+                            <option th:each="customer,iterStat  : ${customerList}"
+                                    th:value="${iterStat.index}"
+                                    th:text="${customer.getCustomerName()}"
+                            />
+                        </select>
+                        <small th:if="${#fields.hasErrors('customerIndex')}" th:errors="*{customerIndex}"  class="form-text text-danger" />
+                    </div>
+                    <div class="col-md-1">
+                        <a  type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                        </a>
+                    </div>
+                </div>
 
                 <div class="form-group row ">
                     <label for="inDate" class=" col-md-4 col-form-label" >Ամսաթիվ</label>
@@ -551,17 +553,32 @@
 
                 <input
                         type="hidden"
+                        th:field="*{customerId}"
+                        th:value="${customerId}"
+                />
+                <input
+                        type="hidden"
+                        th:field="*{customerType}"
+                        th:value="${customerType}"
+                />
+
+                <input
+                        type="hidden"
                         th:field="*{id}"
                         th:value="${id}"
                 />
-
                 <input
                         type="hidden"
                         id="organizationId"
                         th:field="*{organization}"
                         th:value="${organization}"
                 />
-
+                <input
+                        type="hidden"
+                        id="walletIn"
+                        th:field="*{walletIn}"
+                        th:value="${walletIn}"
+                />
                 <input name="csrfToken" id="csrfToken"
                        type="hidden"
                        th:name="${_csrf.parameterName}"
@@ -575,8 +592,11 @@
 
         </form >
 
-        <script>
+        <script  th:inline="javascript">
+            /*<![CDATA[*/
             $(document).ready(function () {
+                var customerList = /*[[${customerList}]]*/ 'default';
+
                 if($('#inDate').val()==""){
 
                     var now = new Date();
@@ -588,7 +608,26 @@
 
                     $('#inDate').val(today);
                 }
+
+                if($('#selectedCustomer').val()!='' && $('input[name=customerType]').val()=="" && $('input[name=customerId]').val()=="")
+                {
+
+                   $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
+                    $('input[name=customerId]').val(customerList[$('#selectedCustomer').val()].id);
+                }
+                $('#selectedCustomer').on('change', function() {
+                    if(this.value!="")
+                    {
+                        $('input[name=customerType]').val(customerList[this.value].customerType);
+                        $('input[name=customerId]').val(customerList[this.value].id);
+                    }
+                    else{
+                        $('input[name=customerType]').val("");
+                        $('input[name=customerId]').val("");
+                    }
+                })
             })
+            /*]]>*/
         </script>
 
     </div>
@@ -741,7 +780,7 @@
                     $('#inDate').val(today);
                 }
 
-                if($('#selectedOtherPartner').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                if($('#selectedOtherPartner').val()!='' && $('input[name=otherPartnerType]').val()=="" &&  $('input[name=otherPartnerId]').val()=="")
                 {
 
                     $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);
@@ -772,25 +811,26 @@
         <form th:object="${cashInFromServiceProvision}" action="/account/cash/cashin/cashdesk/create/cashinfromserviceprovision"   method="post" >
             <div style="margin: 50px">
                 <div class="form-group row ">
-                    <label for="customerName" class=" col-md-4 col-form-label" >Գնորդ</label>
-                        <div class="col-md-6" >
-                            <select id="customerName"
-                                    class="form-control"
-                                    th:field="*{customerName}"
-                                    th:name="customerName">
+                    <label for="selectedCustomer" class=" col-md-4 col-form-label" >Գնորդ</label>
+                    <div class="col-md-6" >
+                        <select id="selectedCustomer"
+                                class="form-control"
+                                th:field="*{customerIndex}"
+                                th:name="customerIndex">
 
-                                <option value=""> __ԸՆՏՐԵԼ__ </option>
-                                <option th:each="customer : ${customerList}"
-                                        th:value="${customer.getName()}"
-                                        th:text="${customer.getName()}" />
-                            </select>
-                            <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"  class="form-text text-danger" />
-                        </div>
-                            <div class="col-md-1">
-                                <a type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
-                                    <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
-                                </a>
-                            </div>
+                            <option value=''> __ԸՆՏՐԵԼ__ </option>
+                            <option th:each="customer,iterStat  : ${customerList}"
+                                    th:value="${iterStat.index}"
+                                    th:text="${customer.getCustomerName()}"
+                            />
+                        </select>
+                        <small th:if="${#fields.hasErrors('customerIndex')}" th:errors="*{customerIndex}"  class="form-text text-danger" />
+                    </div>
+                    <div class="col-md-1">
+                        <a  type="button" th:href="@{'/account/cash/create/customer'}" class="btn btn-default btn-sm" >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Գնորդ
+                        </a>
+                    </div>
                 </div>
 
 
@@ -861,15 +901,31 @@
 
                 <input
                         type="hidden"
+                        th:field="*{customerId}"
+                        th:value="${customerId}"
+                />
+                <input
+                        type="hidden"
+                        th:field="*{customerType}"
+                        th:value="${customerType}"
+                />
+
+                <input
+                        type="hidden"
                         th:field="*{id}"
                         th:value="${id}"
                 />
-
                 <input
                         type="hidden"
                         id="organizationId"
                         th:field="*{organization}"
                         th:value="${organization}"
+                />
+                <input
+                        type="hidden"
+                        id="walletIn"
+                        th:field="*{walletIn}"
+                        th:value="${walletIn}"
                 />
 
                 <input name="csrfToken" id="csrfToken"
@@ -882,8 +938,11 @@
                 <input type="submit" class="btn btn-default" />
             </div>
         </form >
-        <script>
+        <script  th:inline="javascript">
+            /*<![CDATA[*/
             $(document).ready(function () {
+                var customerList = /*[[${customerList}]]*/ 'default';
+
                 if($('#inDate').val()==""){
 
                     var now = new Date();
@@ -895,7 +954,26 @@
 
                     $('#inDate').val(today);
                 }
+                console.log("out if");
+                if($('#selectedCustomer').val()!='' && $('input[name=customerType]').val()=="" && $('input[name=customerId]').val()=="")
+                {
+
+                    $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
+                    $('input[name=customerId]').val(customerList[$('#selectedCustomer').val()].id);
+                }
+                $('#selectedCustomer').on('change', function() {
+                    if(this.value!="")
+                    {
+                        $('input[name=customerType]').val(customerList[this.value].customerType);
+                        $('input[name=customerId]').val(customerList[this.value].id);
+                    }
+                    else{
+                        $('input[name=customerType]').val("");
+                        $('input[name=customerId]').val("");
+                    }
+                })
             })
+            /*]]>*/
         </script>
     </div>
     <div class="panel panel-default" th:fragment="cashInCreateCashInFromCredit" >
@@ -962,19 +1040,19 @@
                             <small th:if="${#fields.hasErrors('walletIn.note')}" th:errors="*{walletIn.note}"  class="form-text text-danger" />
                         </div>
                 </div>
-
-                <input
-                        type="hidden"
-                        id="otherPartnerType"
-                        th:field="*{otherPartnerType}"
-                        th:value="${otherPartnerType}"
-                />
                 <input
                         type="hidden"
                         id="otherPartnerId"
                         th:field="*{otherPartnerId}"
                         th:value="${otherPartnerId}"
                 />
+                <input
+                        type="hidden"
+                        id="otherPartnerType"
+                        th:field="*{otherPartnerType}"
+                        th:value="${otherPartnerType}"
+                />
+
                 <input
                         type="hidden"
                         th:field="*{id}"
@@ -1019,7 +1097,7 @@
                 }
 
 
-                if($('#selectedOtherPartner').val()!='' & $('input[name=otherPartnerType]').val()=="" &  $('input[name=otherPartnerId]').val()=="")
+                if($('#selectedOtherPartner').val()!='' && $('input[name=otherPartnerType]').val()=="" &&  $('input[name=otherPartnerId]').val()=="")
                 {
 
                     $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);

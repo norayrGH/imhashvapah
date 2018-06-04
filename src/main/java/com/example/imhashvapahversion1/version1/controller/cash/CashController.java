@@ -5,7 +5,7 @@ import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.*;
-import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForTax;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.*;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.otherPartner.OtherPartnerClientOrganization;
@@ -13,6 +13,7 @@ import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpC
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierClientOrganization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.supplier.SupplierIndividual;
 import com.example.imhashvapahversion1.version1.Entity.enums.DateRange;
+import com.example.imhashvapahversion1.version1.Entity.partners.Customers.*;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.CompanyOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.IndividualOtherPartner;
 import com.example.imhashvapahversion1.version1.Entity.partners.otherPartner.OtherPartner;
@@ -21,16 +22,16 @@ import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Compan
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.IndividualSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.PrivateEntrepreneurSupplier;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.Supplier;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.CashDtailsShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.CashInShow;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.DebtDetailsShow;
 import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.*;
 import com.example.imhashvapahversion1.version1.repository.cashIn.*;
-import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForTaxRepository;
+import com.example.imhashvapahversion1.version1.repository.cashOut.*;
 
-import com.example.imhashvapahversion1.version1.repository.cashOut.WalletOutRepository;
-import com.example.imhashvapahversion1.version1.repository.customer.CustomerClientOrganizationRepository;
-import com.example.imhashvapahversion1.version1.repository.customer.CustomerIndividualRepository;
+import com.example.imhashvapahversion1.version1.repository.customer.*;
 import com.example.imhashvapahversion1.version1.repository.otherpartners.*;
 
 import com.example.imhashvapahversion1.version1.repository.suppliers.CompanySupplierRepository;
@@ -71,6 +72,11 @@ public class CashController extends BaseController {
     CompanySupplierRepository companySupplierRepository;
 
             @Autowired
+    CompanyCustomerRepository companyCustomerRepository;
+            @Autowired
+    IndividualCustomerRepository individualCustomerRepository;
+
+            @Autowired
     CustomerClientOrganizationRepository customerClientOrganizationRepository;
             @Autowired
             IndividualOtherPartnerRepository individualOtherPartnerRepository;
@@ -91,6 +97,8 @@ public class CashController extends BaseController {
     @Autowired
     CashInFromServiceProvisionRepository cashInFromServiceProvisionRepository;
     @Autowired
+    PrivateEntrepreneurCustomerRepository privateEntrepreneurCustomerRepository;
+    @Autowired
     CompanyOtherPartnerRepository companyOtherPartnerRepository;
     @Autowired
     BankAccountRepository bankAccountRepository;
@@ -103,11 +111,35 @@ public class CashController extends BaseController {
     @Autowired
     WalletDataRepository walletDataRepository;
     @Autowired
+    CashOutForBankAccountRepository cashOutForBankAccountRepository;
+    @Autowired
+    CashOutForCreditPaymentRepository cashOutForCreditPaymentRepository;
+    @Autowired
+    CashOutForGoodsProviderRepository cashOutForGoodsProviderRepository;
+    @Autowired
+    CashOutForLoanPaymentRepository cashOutForLoanPaymentRepository;
+    @Autowired
+    CashOutForRedemptionPercentRepository cashOutForRedemptionPercentRepository;
+    @Autowired
     CashOutForTaxRepository cashOutForTaxRepository;
+    @Autowired
+    CashOutForRentRepository cashOutForRentRepository;
+    @Autowired
+    CashOutForSalaryRepository cashOutForSalaryRepository;
+    @Autowired
+    CashOutForSerivceProviderRepository cashOutForSerivceProviderRepository;
+    @Autowired
+    CashOutForOtherExpensesRepository cashOutForOtherExpensesRepository;
+    @Autowired
+    CashOutForBankSpendingRepository cashOutForBankSpendingRepository;
     @Autowired
     WalletInRepository walletInRepository;
 
+
+
     private List colleaguesList= new ArrayList() ;
+  private   List customerList = new ArrayList();
+
     @InitBinder()
     public void registerConversionServices(WebDataBinder dataBinder) {
         dataBinder.addCustomFormatter(new Formatter<Organization>() {
@@ -145,7 +177,209 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
         return modelAndView;
     }
+    @GetMapping(value = "/details")
+    public ModelAndView cashDetails(ModelAndView modelAndView,HttpSession httpSession) {
 
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("fragment", this.cashDtails);
+        modelAndView.addObject("appFragment", this.appFragment);
+        modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/details/show")
+    public @ResponseBody ArrayList cashDetailsShow(@RequestBody DateRange dateRang ) {
+        ArrayList<CashDtailsShow> cashDtailsShows = new ArrayList<>();
+        CashDtailsShow cashDtailsShow;
+
+        List<CashInFromBankAccount> cashInFromBankAccounts = cashInFromBankAccountRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashInFromCredit> cashInFromCredits = cashInFromCreditRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashInFromLoan> cashInFromLoans = cashInFromLoanRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashInFromPointOfSale> cashInFromPointOfSales = cashInFromPointOfSaleRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashInFromSaleOfGoods> cashInFromSaleOfGoodss = cashInFromSaleOfGoodsRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashInFromServiceProvision> cashInFromServiceProvisions = cashInFromServiceProvisionRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+
+        List<CashOutForBankAccount>       cashOutForBankAccounts=     cashOutForBankAccountRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForBankSpending>      cashOutForBankSpendings =   cashOutForBankSpendingRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForCreditPayment>     cashOutForCreditPayments=   cashOutForCreditPaymentRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForGoodsProvider>     cashOutForGoodsProviders=   cashOutForGoodsProviderRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForLoanPayment>       cashOutForLoanPayments =    cashOutForLoanPaymentRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForOtherExpenses>     cashOutForOtherExpensess=   cashOutForOtherExpensesRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForRedemptionPercent> cashOutForRedemptionPercents=cashOutForRedemptionPercentRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForRent>              cashOutForRents    =        cashOutForRentRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForSerivceProvider>   cashOutForSerivceProviders= cashOutForSerivceProviderRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+        List<CashOutForTax>               cashOutForTaxs  =           cashOutForTaxRepository.findByRange(dateRang.getStart(),dateRang.getEnd());
+
+        if (dateRang.getStart() != null && dateRang.getEnd() != null) {
+
+            for (CashInFromBankAccount cashInFromBankAccount : cashInFromBankAccounts) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromBankAccount.getWalletIn().getInDate(),
+                        cashInFromBankAccount.getId(),
+                        cashInFromBankAccount.getWalletIn().getInCash(),
+                        null,
+                        cashInFromBankAccount.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashInFromCredit cashInFromCredit : cashInFromCredits) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromCredit.getWalletIn().getInDate(),
+                        cashInFromCredit.getId(),
+                        cashInFromCredit.getWalletIn().getInCash(),
+                        null,
+                        cashInFromCredit.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashInFromLoan cashInFromLoan : cashInFromLoans) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromLoan.getWalletIn().getInDate(),
+                        cashInFromLoan.getId(),
+                        cashInFromLoan.getWalletIn().getInCash(),
+                        null,
+                        cashInFromLoan.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashInFromPointOfSale cashInFromPointOfSale : cashInFromPointOfSales) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromPointOfSale.getWalletIn().getInDate(),
+                        cashInFromPointOfSale.getId(),
+                        cashInFromPointOfSale.getWalletIn().getInCash(),
+                        null,
+                        cashInFromPointOfSale.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashInFromSaleOfGoods cashInFromSaleOfGoods : cashInFromSaleOfGoodss) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromSaleOfGoods.getWalletIn().getInDate(),
+                        cashInFromSaleOfGoods.getId(),
+                        cashInFromSaleOfGoods.getWalletIn().getInCash(),
+                        null,
+                        cashInFromSaleOfGoods.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashInFromServiceProvision cashInFromServiceProvision : cashInFromServiceProvisions) {
+
+                cashDtailsShow = new CashDtailsShow(cashInFromServiceProvision.getWalletIn().getInDate(),
+                        cashInFromServiceProvision.getId(),
+                        cashInFromServiceProvision.getWalletIn().getInCash(),
+                        null,
+                        cashInFromServiceProvision.getWalletIn().getInType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+
+            for (CashOutForBankAccount cashOutForBankAccount : cashOutForBankAccounts) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForBankAccount.getWalletOut().getOutDate(),
+                        cashOutForBankAccount.getId(),
+                       null,
+                        cashOutForBankAccount.getWalletOut().getOutCash(),
+                        cashOutForBankAccount.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashOutForBankSpending cashOutForBankSpending : cashOutForBankSpendings) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForBankSpending.getWalletOut().getOutDate(),
+                        cashOutForBankSpending.getId(),
+                       null,
+                        cashOutForBankSpending.getWalletOut().getOutCash(),
+                        cashOutForBankSpending.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForCreditPayment cashOutForCreditPayment : cashOutForCreditPayments) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForCreditPayment.getWalletOut().getOutDate(),
+                        cashOutForCreditPayment.getId(),
+                       null,
+                        cashOutForCreditPayment.getWalletOut().getOutCash(),
+                        cashOutForCreditPayment.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashOutForGoodsProvider cashOutForGoodsProvider : cashOutForGoodsProviders) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForGoodsProvider.getWalletOut().getOutDate(),
+                        cashOutForGoodsProvider.getId(),
+                       null,
+                        cashOutForGoodsProvider.getWalletOut().getOutCash(),
+                        cashOutForGoodsProvider.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForLoanPayment cashOutForLoanPayment : cashOutForLoanPayments) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForLoanPayment.getWalletOut().getOutDate(),
+                        cashOutForLoanPayment.getId(),
+                       null,
+                        cashOutForLoanPayment.getWalletOut().getOutCash(),
+                        cashOutForLoanPayment.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForOtherExpenses cashOutForOtherExpenses : cashOutForOtherExpensess) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForOtherExpenses.getWalletOut().getOutDate(),
+                        cashOutForOtherExpenses.getId(),
+                       null,
+                        cashOutForOtherExpenses.getWalletOut().getOutCash(),
+                        cashOutForOtherExpenses.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+            for (CashOutForRedemptionPercent cashOutForRedemptionPercent : cashOutForRedemptionPercents) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForRedemptionPercent.getWalletOut().getOutDate(),
+                        cashOutForRedemptionPercent.getId(),
+                       null,
+                        cashOutForRedemptionPercent.getWalletOut().getOutCash(),
+                        cashOutForRedemptionPercent.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForRent cashOutForRent : cashOutForRents) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForRent.getWalletOut().getOutDate(),
+                        cashOutForRent.getId(),
+                       null,
+                        cashOutForRent.getWalletOut().getOutCash(),
+                        cashOutForRent.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForSerivceProvider cashOutForSerivceProvider : cashOutForSerivceProviders) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForSerivceProvider.getWalletOut().getOutDate(),
+                        cashOutForSerivceProvider.getId(),
+                       null,
+                        cashOutForSerivceProvider.getWalletOut().getOutCash(),
+                        cashOutForSerivceProvider.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }for (CashOutForTax cashOutForTax : cashOutForTaxs) {
+
+                cashDtailsShow = new CashDtailsShow(cashOutForTax.getWalletOut().getOutDate(),
+                        cashOutForTax.getId(),
+                       null,
+                        cashOutForTax.getWalletOut().getOutCash(),
+                        cashOutForTax.getWalletOut().getOutType()
+                );
+                cashDtailsShows.add(cashDtailsShow);
+            }
+
+
+
+
+
+            Collections.sort(cashDtailsShows);
+            return cashDtailsShows;
+        }
+
+        return cashDtailsShows;
+    }
 
     @PostMapping(value = "/show")
     public @ResponseBody ArrayList cashShow(@RequestBody DateRange dateRange ,HttpSession httpSession) {
@@ -207,10 +441,8 @@ public class CashController extends BaseController {
         return showResult;
     }
 
-
     @GetMapping(value = "/cashdesk")
     public ModelAndView cashdesk( ModelAndView modelAndView, HttpSession httpSession) {
-
 
         WalletData walletData = new WalletData();
         modelAndView.setViewName("app/app");
@@ -634,6 +866,21 @@ public class CashController extends BaseController {
 
     @GetMapping(value = "/cashin/cashdesk/edit")
     public ModelAndView cashinEdit(@RequestParam("cashintype") String cashInType,@RequestParam("cashinid") Long cashInId, ModelAndView modelAndView, HttpSession httpSession) {
+        customerList = new ArrayList();
+        List<CompanyCustomer> companyCustomers = (List<CompanyCustomer>) companyCustomerRepository.findAll();
+        List<IndividualCustomer> individualCustomers = (List<IndividualCustomer>) individualCustomerRepository.findAll();
+        List<PrivateEntrepreneurCustomer>  privateEntrepreneurCustomers  = (List<PrivateEntrepreneurCustomer>)privateEntrepreneurCustomerRepository.findAll();
+
+
+        for(CompanyCustomer companyCustomer :companyCustomers){
+            customerList.add(new Customer(companyCustomer.getId(),"CompanyCustomer",companyCustomer.getName()));
+        }
+        for(IndividualCustomer individualCustomer :individualCustomers){
+            customerList.add(new Customer(individualCustomer.getId(),"IndividualCustomer",individualCustomer.getName()));
+        }
+        for(PrivateEntrepreneurCustomer privateEntrepreneurCustomer:privateEntrepreneurCustomers){
+            customerList.add(new Customer(privateEntrepreneurCustomer.getId(),"PrivateEntrepreneurCustomer",privateEntrepreneurCustomer.getName()));
+        }
 
         colleaguesList = new ArrayList();
         List<CompanyOtherPartner> companyOtherPartners ;
@@ -656,19 +903,37 @@ public class CashController extends BaseController {
         if(cashInType.equals("CashInFromCredit")){
 
             CashInFromCredit cashInFromCredit = cashInFromCreditRepository.findOne(cashInId);
-            modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("cashInFromCredit",cashInFromCredit);
+            modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromCredit);
         }
         if(cashInType.equals("CashInFromLoan")){
 
             CashInFromLoan cashInFromLoan = cashInFromLoanRepository.findOne(cashInId);
-            modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("cashInFromLoan",cashInFromLoan);
+            modelAndView.addObject("colleaguesList", colleaguesList);
             modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromLoan);
         }
+        if(cashInType.equals("CashInFromSaleOfGoods")){
+
+            CashInFromSaleOfGoods cashInFromSaleOfGoods = cashInFromSaleOfGoodsRepository.findOne(cashInId);
+            modelAndView.addObject("customerList", customerList);
+            modelAndView.addObject("cashInFromSaleOfGoods",cashInFromSaleOfGoods);
+            modelAndView.addObject("appFragment", this.cashInFragments);
+            modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
+        }
+        if(cashInType.equals("CashInFromServiceProvision")){
+
+            CashInFromServiceProvision cashInFromServiceProvision = cashInFromServiceProvisionRepository.findOne(cashInId);
+            modelAndView.addObject("customerList", customerList);
+            modelAndView.addObject("cashInFromServiceProvision",cashInFromServiceProvision);
+            modelAndView.addObject("appFragment", this.cashInFragments);
+            modelAndView.addObject("fragment", this.cashInCreateCashInFromServiceProvision);
+        }
+
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
@@ -687,19 +952,34 @@ public class CashController extends BaseController {
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             return modelAndView;
         }
-        List customerList = new ArrayList();
+
 
          WalletIn walletIn=new WalletIn();
         CashInFromSaleOfGoods cashInFromSaleOfGoods = new CashInFromSaleOfGoods();
         cashInFromSaleOfGoods.setWalletIn(walletIn);
         cashInFromSaleOfGoods.setOrganization((Organization) httpSession.getAttribute("organizationId"));
 
-        customerList.addAll( (ArrayList) customerClientOrganizationRepository.findAll());
-        customerList.addAll( (ArrayList) customerIndividualRepository.findAll());
+
+        customerList = new ArrayList();
+        List<CompanyCustomer> companyCustomers =(List<CompanyCustomer>) companyCustomerRepository.findAll();
+        List<IndividualCustomer> individualCustomers = (List<IndividualCustomer>) individualCustomerRepository.findAll();
+        List<PrivateEntrepreneurCustomer>  privateEntrepreneurCustomers  = (List<PrivateEntrepreneurCustomer>)privateEntrepreneurCustomerRepository.findAll();
+
+
+        for(CompanyCustomer companyCustomer :companyCustomers){
+            customerList.add(new Customer(companyCustomer.getId(),"CompanyCustomer",companyCustomer.getName()));
+        }
+        for(IndividualCustomer individualCustomer :individualCustomers){
+            customerList.add(new Customer(individualCustomer.getId(),"IndividualCustomer",individualCustomer.getName()));
+        }
+        for(PrivateEntrepreneurCustomer privateEntrepreneurCustomer:privateEntrepreneurCustomers){
+            customerList.add(new Customer(privateEntrepreneurCustomer.getId(),"PrivateEntrepreneurCustomer",privateEntrepreneurCustomer.getName()));
+        }
+
 
         modelAndView.setViewName("app/app");
-        modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
+        modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.cashInFragments);
         modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
@@ -709,16 +989,12 @@ public class CashController extends BaseController {
     }
     @PostMapping(value = "cashin/cashdesk/create/cashinfromsaleofgoods" )
     public   ModelAndView cashinfromsaleofGoodsCreate(@Valid CashInFromSaleOfGoods cashInFromSaleOfGoods ,BindingResult bindingResult,ModelAndView modelAndView  ) {
-        List customerList = new ArrayList();
+        modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-
-            customerList.addAll( (List) customerClientOrganizationRepository.findAll());
-            customerList.addAll( (List) customerIndividualRepository.findAll());
-
 
             modelAndView.addObject("cashInFromSaleOfGoods", cashInFromSaleOfGoods);
             modelAndView.addObject("customerList", customerList);
-            modelAndView.setViewName("app/app");
+
             modelAndView.addObject("navBar", this.organizationNavBar);
             modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
@@ -727,11 +1003,22 @@ public class CashController extends BaseController {
             return modelAndView;
         }
 
-        modelAndView.setViewName("app/app");
+
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
+        if(cashInFromSaleOfGoods.getCustomerType().equals("CompanyCustomer")){
+            cashInFromSaleOfGoods.setCompanyCustomer(companyCustomerRepository.findOne(cashInFromSaleOfGoods.getCustomerId()));
+        }
+        if(cashInFromSaleOfGoods.getCustomerType().equals("IndividualCustomer")){
+            cashInFromSaleOfGoods.setIndividualCustomer(individualCustomerRepository.findOne(cashInFromSaleOfGoods.getCustomerId()));
+        }
+        if(cashInFromSaleOfGoods.getCustomerType().equals("PrivateEntrepreneurCustomer")){
+            cashInFromSaleOfGoods.setPrivateEntrepreneurCustomer(privateEntrepreneurCustomerRepository.findOne(cashInFromSaleOfGoods.getCustomerId()));
+        }
+
+
         cashInFromSaleOfGoods.getWalletIn().setInType("CashInFromSaleOfGoods");
         cashInFromSaleOfGoods.getWalletIn().setOrganization(cashInFromSaleOfGoods.getOrganization());
         cashInFromSaleOfGoodsRepository.save(cashInFromSaleOfGoods);
@@ -936,8 +1223,6 @@ public class CashController extends BaseController {
 
     @GetMapping(value = "cashin/cashdesk/create/cashinfromserviceprovision")
     public   ModelAndView cashinfrompointofsaleCreate( ModelAndView modelAndView ,HttpSession httpSession) {
-
-
         if(walletDataRepository.count()<1){
             modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.cashNavBar);
@@ -946,14 +1231,31 @@ public class CashController extends BaseController {
             modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
             return modelAndView;
         }
-        List customerList = new ArrayList();
 
         WalletIn walletIn=new WalletIn();
         CashInFromServiceProvision cashInFromServiceProvision = new CashInFromServiceProvision();
         cashInFromServiceProvision.setWalletIn(walletIn);
         cashInFromServiceProvision.setOrganization((Organization) httpSession.getAttribute("organizationId"));
-        customerList.addAll( (List) customerClientOrganizationRepository.findAll());
-        customerList.addAll( (List) customerIndividualRepository.findAll());
+
+
+        customerList = new ArrayList();
+        List<CompanyCustomer> companyCustomers = (List<CompanyCustomer>) companyCustomerRepository.findAll();
+        List<IndividualCustomer> individualCustomers = (List<IndividualCustomer>) individualCustomerRepository.findAll();
+        List<PrivateEntrepreneurCustomer>  privateEntrepreneurCustomers  = (List<PrivateEntrepreneurCustomer>)privateEntrepreneurCustomerRepository.findAll();
+
+
+        for(CompanyCustomer companyCustomer :companyCustomers){
+            customerList.add(new Customer(companyCustomer.getId(),"CompanyCustomer",companyCustomer.getName()));
+        }
+        for(IndividualCustomer individualCustomer :individualCustomers){
+            customerList.add(new Customer(individualCustomer.getId(),"IndividualCustomer",individualCustomer.getName()));
+        }
+        for(PrivateEntrepreneurCustomer privateEntrepreneurCustomer:privateEntrepreneurCustomers){
+            customerList.add(new Customer(privateEntrepreneurCustomer.getId(),"PrivateEntrepreneurCustomer",privateEntrepreneurCustomer.getName()));
+        }
+
+
+
         modelAndView.setViewName("app/app");
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("cashInFromServiceProvision", cashInFromServiceProvision);
@@ -965,15 +1267,11 @@ public class CashController extends BaseController {
     }
     @PostMapping(value = "cashin/cashdesk/create/cashinfromserviceprovision" )
     public   ModelAndView cashinfrompointofsaleCreateSave(@Valid CashInFromServiceProvision cashInFromServiceProvision ,BindingResult bindingResult,ModelAndView modelAndView  ) {
-        List customerList = new ArrayList();
+        modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
-
-            customerList.addAll( (List) customerClientOrganizationRepository.findAll());
-            customerList.addAll( (List) customerIndividualRepository.findAll());
 
             modelAndView.addObject("cashInFromServiceProvision", cashInFromServiceProvision);
             modelAndView.addObject("customerList", customerList);
-            modelAndView.setViewName("app/app");
             modelAndView.addObject("navBar", this.organizationNavBar);
             modelAndView.addObject("appFragment", this.cashInFragments);
             modelAndView.addObject("fragment", this.cashInCreateCashInFromServiceProvision);
@@ -982,11 +1280,23 @@ public class CashController extends BaseController {
             return modelAndView;
         }
 
-        modelAndView.setViewName("app/app");
+
         modelAndView.addObject("navBar", this.organizationNavBar);
         modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.cashFragment);
         modelAndView.addObject("fragmentNavBar", this.cashdeskFragmentNavBar);
+
+        if(cashInFromServiceProvision.getCustomerType().equals("CompanyCustomer")){
+            cashInFromServiceProvision.setCompanyCustomer(companyCustomerRepository.findOne(cashInFromServiceProvision.getCustomerId()));
+        }
+        if(cashInFromServiceProvision.getCustomerType().equals("IndividualCustomer")){
+            cashInFromServiceProvision.setIndividualCustomer(individualCustomerRepository.findOne(cashInFromServiceProvision.getCustomerId()));
+        }
+        if(cashInFromServiceProvision.getCustomerType().equals("PrivateEntrepreneurCustomer")){
+            cashInFromServiceProvision.setPrivateEntrepreneurCustomer(privateEntrepreneurCustomerRepository.findOne(cashInFromServiceProvision.getCustomerId()));
+        }
+
+
         cashInFromServiceProvision.getWalletIn().setInType("CashInFromServiceProvision");
         cashInFromServiceProvision.getWalletIn().setOrganization(cashInFromServiceProvision.getOrganization());
 
@@ -1097,7 +1407,6 @@ public class CashController extends BaseController {
 
     }
 
-
     @GetMapping(value = "create/supplier")
     public   ModelAndView cashCreateSupplier( ModelAndView modelAndView) {
 
@@ -1121,8 +1430,13 @@ public class CashController extends BaseController {
 
         return  modelAndView;
     }
+
+
+
+
+
     @GetMapping(value = "create/customer/customerclientorganization" )
-    public   ModelAndView cashinfrompointofsaleCreateOrganization( ModelAndView modelAndView,HttpSession httpSession) {
+    public   ModelAndView customerClientOrganizationCreate( ModelAndView modelAndView,HttpSession httpSession) {
 
         modelAndView.setViewName("app/app");
         CustomerClientOrganization customerClientOrganization = new CustomerClientOrganization();
@@ -1136,7 +1450,7 @@ public class CashController extends BaseController {
         return  modelAndView;
     }
     @PostMapping(value = "create/customer/customerclientorganization")
-    public   ModelAndView cashinfrompointofsaleCreateOrganization(@Valid CustomerClientOrganization clientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
+    public   ModelAndView customerClientOrganizationCreate(@Valid CustomerClientOrganization clientOrganization, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("clientOrganization", clientOrganization);
@@ -1154,29 +1468,33 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         customerClientOrganizationRepository.save(clientOrganization);
+        CompanyCustomer companyCustomer = new CompanyCustomer();
+        companyCustomer.setOrganization(clientOrganization.getOrganization());
+        companyCustomer.setClientOrganization(clientOrganization);
+        companyCustomerRepository.save(companyCustomer);
         return  modelAndView;
     }
-    @GetMapping(value = "create/customer/customerindividual" )
-    public   ModelAndView cashinfrompointofsaleCreateIndividual( ModelAndView modelAndView,HttpSession httpSession) {
+    @GetMapping(value = "create/customer/customerindividual")
+    public   ModelAndView customerIndividualCreate( ModelAndView modelAndView,HttpSession httpSession) {
 
         modelAndView.setViewName("app/app");
         CustomerIndividual customerIndividual = new CustomerIndividual();
         customerIndividual.setOrganization((Organization) httpSession.getAttribute("organizationId"));
         modelAndView.addObject("customerIndividual", customerIndividual);
         modelAndView.addObject("navBar", this.cashNavBar);
-        modelAndView.addObject("appFragment", this.cashInFragments);
+        modelAndView.addObject("appFragment", this.appFragment);
         modelAndView.addObject("fragment", this.createCustomerIndividual);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return  modelAndView;
     }
     @PostMapping(value = "create/customer/customerindividual")
-    public   ModelAndView cashinfrompointofsaleCreateIndividual(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
+    public   ModelAndView customerIndividualCreate(@Valid CustomerIndividual customerIndividual, BindingResult bindingResult, ModelAndView modelAndView) {
         modelAndView.setViewName("app/app");
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("customerIndividual", customerIndividual);
             modelAndView.addObject("navBar", this.cashNavBar);
-            modelAndView.addObject("appFragment", this.cashInFragments);
+            modelAndView.addObject("appFragment", this.appFragment);
             modelAndView.addObject("fragment", this.createCustomerIndividual);
             modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
             return modelAndView;
@@ -1187,8 +1505,19 @@ public class CashController extends BaseController {
         modelAndView.addObject("fragment", this.cashInCreateFragment);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         customerIndividualRepository.save(customerIndividual);
+        IndividualCustomer individualCustomer = new IndividualCustomer();
+        individualCustomer.setOrganization(customerIndividual.getOrganization());
+        individualCustomer.setIndividual(customerIndividual);
+       individualCustomerRepository.save(individualCustomer);
         return modelAndView;
     }
+
+
+
+
+
+
+
 
 
 

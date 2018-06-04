@@ -123,7 +123,7 @@ public class CompanyCustomer  implements GeneralMethods,Serializable{
 
     @Override
     public String getName() {
-        return clientOrganization.getClientOrganizationName();
+        return clientOrganization.getName();
     }
 
     @Override

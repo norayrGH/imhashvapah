@@ -1,12 +1,9 @@
-package com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn;
+package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletIn;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.GetWaletIn;
-import com.example.imhashvapahversion1.version1.Entity.partners.Customers.CompanyCustomer;
-import com.example.imhashvapahversion1.version1.Entity.partners.Customers.IndividualCustomer;
-import com.example.imhashvapahversion1.version1.Entity.partners.Customers.PrivateEntrepreneurCustomer;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,26 +12,36 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @Entity
-public class CashInFromServiceProvision implements GetWaletIn {
+public class Sale implements GetWaletIn {
     @Id
     @GeneratedValue
     private Long id;
+    @NotEmpty(message = "Համարը պարտադիր է:")
+    private String saleNumber;
+
+    @NotEmpty(message = "Տեսակը պարտադիր է:")
+    private String typeSale ;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date contractDate ;
+    private Date saleDate ;
+    @NotEmpty(message = "Գումարը պարտադիր է")
+    private String salesAmount;
+
+
+    private Boolean personalWalletIn;
 
     private String contractNubmer ;
+    //Նշումներ
+    private String note;
 
-    @NotEmpty(message = "Գնորդի անունը պարտադիր է:")
-    private String  customerIndex;
     @Transient
     private Long customerId;
     @Transient
     private String customerType;
-    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
-    @Valid
-    private WalletIn walletIn;
+    @NotEmpty(message = "Գնորդի անունը պարտադիր է:")
+    private String  customerIndex;
+
     @ManyToOne
     private Organization organization;
 
@@ -46,22 +53,6 @@ public class CashInFromServiceProvision implements GetWaletIn {
     private PrivateEntrepreneurCustomer privateEntrepreneurCustomer;
 
 
-    public CashInFromServiceProvision() {
-    }
-
-    public CashInFromServiceProvision(Date contractDate, String contractNubmer, Long customerId, String customerType, String customerIndex, WalletIn walletIn, Organization organization, CompanyCustomer companyCustomer, IndividualCustomer individualCustomer, PrivateEntrepreneurCustomer privateEntrepreneurCustomer) {
-        this.contractDate = contractDate;
-        this.contractNubmer = contractNubmer;
-        this.customerId = customerId;
-        this.customerType = customerType;
-        this.customerIndex = customerIndex;
-        this.walletIn = walletIn;
-        this.organization = organization;
-        this.companyCustomer = companyCustomer;
-        this.individualCustomer = individualCustomer;
-        this.privateEntrepreneurCustomer = privateEntrepreneurCustomer;
-    }
-
     public Long getId() {
         return id;
     }
@@ -70,12 +61,44 @@ public class CashInFromServiceProvision implements GetWaletIn {
         this.id = id;
     }
 
-    public Date getContractDate() {
-        return contractDate;
+    public String getSaleNumber() {
+        return saleNumber;
     }
 
-    public void setContractDate(Date contractDate) {
-        this.contractDate = contractDate;
+    public void setSaleNumber(String saleNumber) {
+        this.saleNumber = saleNumber;
+    }
+
+    public String getTypeSale() {
+        return typeSale;
+    }
+
+    public void setTypeSale(String typeSale) {
+        this.typeSale = typeSale;
+    }
+
+    public Date getSaleDate() {
+        return saleDate;
+    }
+
+    public void setSaleDate(Date saleDate) {
+        this.saleDate = saleDate;
+    }
+
+    public String getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(String salesAmount) {
+        this.salesAmount = salesAmount;
+    }
+
+    public Boolean getPersonalWalletIn() {
+        return personalWalletIn;
+    }
+
+    public void setPersonalWalletIn(Boolean personalWalletIn) {
+        this.personalWalletIn = personalWalletIn;
     }
 
     public String getContractNubmer() {
@@ -110,12 +133,12 @@ public class CashInFromServiceProvision implements GetWaletIn {
         this.customerIndex = customerIndex;
     }
 
-    public WalletIn getWalletIn() {
-        return walletIn;
+    public String getNote() {
+        return note;
     }
 
-    public void setWalletIn(WalletIn walletIn) {
-        this.walletIn = walletIn;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Organization getOrganization() {
@@ -152,12 +175,12 @@ public class CashInFromServiceProvision implements GetWaletIn {
 
     @Override
     public Long getCashInId() {
-        return id;
+        return null;
     }
 
     @Override
     public WalletIn getWalletInImpl() {
-        return walletIn;
+        return null;
     }
 
     @Override

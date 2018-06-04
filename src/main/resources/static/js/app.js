@@ -15,6 +15,7 @@ var debtDetaileType={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճար�
     PurchaseFixedAsset:"Ձեռքբերում",
     PurchaseGoods:"Ձեռքբերում",
     PurchaseService:"Ձեռքբերում",
+    Sale:"Վաճառք",
     CashInFromBankAccount:"Մուտք բանկային հաշվից",CashInFromCredit:"Վարկի ստացում",CashInFromLoan:"Փոխառության ստացում",CashInFromPointOfSale:"Մուտք առևտրի կետից",CashInFromSaleOfGoods:"Մուտք ապրանքների իրացումից",CashInFromServiceProvision:"Մուտք ծառայության մատուցումից"
 };
 
@@ -159,18 +160,18 @@ function  partnerCustomersShow(partnerCustomers) {
     $.each(partnerCustomers, function(i, item) {
 
         tBody.append($("<tr />").attr({scope:"row"}).append(
-             $("<td />").text(item.customerName)
+             $("<td />").text(item.suplllierName)
             ,$("<td />").text(item.phoneNumber)
             ,$("<td />").text(item.address)
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/customer/edit/"+(item.type.includes("Individual")?'individualcustomer/':'companycustomer/')+'?'+'customerId='+item.id[0]+'&'+'customerInnerId='+item.id[1]  ,
+                    {href:"/account/partner/customer/edit/?customertype="+(item.type.includes("Individual")?'IndividualCustomer':item.type.includes("Company")?'CompanyCustomer':'PrivateEntrepreneurCustomer')+'&'+'customerid='+item.id ,
                         class:"glyphicon glyphicon-pencil"}
                         )
                 ,"&nbsp;&nbsp;&nbsp;"
                 ,$("<a />").attr(
-                    {href:"/account/organization/fixedasset/delete/"+item.id ,
+                    {href:"/account/partner/customer/delete/?customertype="+(item.type.includes("Individual")?'IndividualCustomer':item.type.includes("Company")?'CompanyCustomer':'PrivateEntrepreneurCustomer')+'&'+'customerid='+item.id ,
                         class:"glyphicon glyphicon-trash"}
                         )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -315,6 +316,36 @@ function  partnerSupplierDebtDetailsShow(supplierDebtDetails) {
     partnerSuppliersDebtDetailsTable.append(tBody);
      $('#supplierDebtDetails').append(partnerSuppliersDebtDetailsTable);
 }
+function  partnerCustomerDebtDetailsShow(customerDebtDetails) {
+
+    $('#customerDebtDetails').empty();
+
+    var partnercustomerDebtDetailsTableTh= ["Ամսաթիվ","Բովանդակություն","Վաճառք","Ստացված Վճարում"];
+    var partnercustomerDebtDetailsTable = $("<table />")
+        .attr({id:"partnerSuppliersDebtDetailsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+   $.each(partnercustomerDebtDetailsTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHead.append(tHeadTr);
+    partnercustomerDebtDetailsTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(customerDebtDetails, function(i, item) {
+
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text( item.debtDate )
+            ,$("<td />").text(debtDetaileType[item.contents])
+            ,$("<td />").append(item.contents.slice(0,4)=="Sale"?$("<a>").attr("href","account/partner/customer/sale/edit/"+item.id).text(item.purchase):"")
+            ,$("<td />").append(item.contents.slice(0,4)!="Sale"?$("<a>").attr("href","account/cashin/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
+
+        ));
+    });
+    partnercustomerDebtDetailsTable.append(tBody);
+     $('#customerDebtDetails').append(partnercustomerDebtDetailsTable);
+}
 function  partnerSuppliersDebtShow(partnerSuppliersDebts) {
     $('#supplierShowDebt').empty();
 
@@ -353,6 +384,105 @@ function  partnerSuppliersDebtShow(partnerSuppliersDebts) {
     partnerSuppliersDebtTable.append(tBody);
     console.log(partnerSuppliersDebtTable);
     $("#supplierShowDebt").append(partnerSuppliersDebtTable);
+
+}
+function  partnerCustomersDebtShow(partnerCustomersDebts) {
+    $('#customerShowDebt').empty();
+
+    var partnerCustomersDebtTableTh= ["Գնորդ","Պարտք","Կանխավճար"];
+    var partnerCustomersDebtTable = $("<table />")
+        .attr({id:"partnerCustomersDebtTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(partnerCustomersDebtTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Տեսնել"));
+   tHead.append(tHeadTr);
+    partnerCustomersDebtTable.append(tHead);
+     var tBody = $("<tbody />");
+
+    $.each(partnerCustomersDebts, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.name)
+            ,$("<td />").text(item.debt)
+            ,$("<td />").text(item.prepayment)
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {
+                        href:"/account/partner/customer/debt/details/?customerType="+item.type+'&'+'customerId='+item.id ,
+                        class:"glyphicon glyphicon-tasks"
+                    }
+                        )
+            )
+        ));
+    });
+
+    partnerCustomersDebtTable.append(tBody);
+    console.log(partnerCustomersDebtTable);
+    $("#customerShowDebt").append(partnerCustomersDebtTable);
+
+}
+function cashDetailsShow(cashDetails) {
+    $('#cashDetailsShow').empty();
+
+    var cashDetailsTableTh= ["Ամսաթիվ","No","Մուտք","Ելք","Տեսակ"];
+    var cashDetailsTable = $("<table />")
+        .attr({id:"cashDetailsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(cashDetailsTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+   tHead.append(tHeadTr);
+    cashDetailsTable.append(tHead);
+     var tBody = $("<tbody />");
+
+    $.each(cashDetails, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text(item.cashDate)
+            ,$("<td />").text(item.cashId)
+            ,$("<td />").append(item.type.slice(0,7)!="CashOut"?$("<a>").attr("href","account/cashin/cashdesk/edit/"+item.type.toLowerCase()+"/"+item.id).text(item.cashIn):"")
+            ,$("<td />").append(item.type.slice(0,7)=="CashOut"?$("<a>").attr("href","account/cashout/cashdesk/edit/"+item.type.toLowerCase()+"/"+item.id).text(item.cashOut):"")
+            ,$("<td />").text(debtDetaileType[item.type])
+        ));
+    });
+
+    cashDetailsTable.append(tBody);
+    console.log(cashDetailsTable);
+    $("#cashDetailsShow").append(cashDetailsTable);
+
+}
+function customerPaymentShow(customerPayments) {
+    $('#customerPaymentShow').empty();
+
+    var customerPaymentTableTh= ["No","Ամսաթիվ","Գումար","Գնորդ","Մուտքի տեսակ"];
+    var customerPaymentTable = $("<table />")
+        .attr({id:"cashDetailsTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(customerPaymentTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+   tHead.append(tHeadTr);
+    customerPaymentTable.append(tHead);
+     var tBody = $("<tbody />");
+
+    $.each(customerPayments, function(i, item) {
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text(item.id)
+            ,$("<td />").text(item.paymentDate)
+            ,$("<td />").append($("<a>").attr("href","account/cashin/cashdesk/edit?cashintype="+item.type.toLowerCase()+"&cashinid="+item.id).text(item.paymentSum))
+            ,$("<td />").text(item.customerName)
+            ,$("<td />").text(debtDetaileType[item.type])
+        ));
+    });
+
+    customerPaymentTable.append(tBody);
+    console.log(customerPaymentTable);
+    $("#customerPaymentShow").append(customerPaymentTable);
 
 }
 
@@ -399,6 +529,43 @@ function  showCashIn(cashIn) {
     $('#showCashIn').append(cashInTable);
 
 }
+function  showCustomerSales(customerSales) {
+
+
+    $('#showCustomerSales').empty();
+
+    var customerSalesTableTh= ["№","Ամսաթիվ","Վաճառքի գումար","Գնորդ"];
+    var customerSalesTable = $("<table />")
+        .attr({id:"showCustomerSalesTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(customerSalesTableTh, function(i, item) {
+        tHeadTr.append($("<th />").attr({"class": "h5", "style": "font-weight:bold"}).text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    customerSalesTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(customerSales, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.saleNumber)
+            ,$("<td />").text(item.saleDate)
+            ,$("<td />").text(item.sum)
+            ,$("<td />").text(item.customerName)
+            ,$("<td />").append($("<a />").attr({href:"/account/partner/customer/sale/edit?saleid="+item.id, class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/partner/customer/sale/delete?saleid="+item.id, class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+    console.log("in showCustomerSales");
+    customerSalesTable.append(tBody);
+
+    $('#showCustomerSales').append(customerSalesTable);
+
+}
 function  showOtherPartnerPayments(otherPartnerPayments) {
 
 
@@ -425,9 +592,7 @@ function  showOtherPartnerPayments(otherPartnerPayments) {
             ,$("<td />").text(item.paymentSum)
             ,$("<td />").text(item.otherPartnerName)
             ,$("<td />").text(debtDetaileType[item.cashinOrCashOut])
-            ,$("<td />").append($("<a />").attr({href:"/account/cash/cashin/cashdesk/edit?cashintype="+"&cashinid="+item.id, class:"glyphicon glyphicon-pencil"})
-                ,"&nbsp;&nbsp;&nbsp;"
-                ,$("<a />").attr({href:"/account/cash/cashin/cashdesk/delete?cashintype="+"&cashinid="+item.id, class:"glyphicon glyphicon-trash"}))
+            ,$("<td />").append($("<a />").attr({href:"/account/cash/"+(item.cashinOrCashOut.includes("CashIn")?'cashin':'cashout')+"/cashdesk/edit?"+(item.cashinOrCashOut.includes("CashIn")?"cashintype="+item.cashinOrCashOut+"&cashinid="+item.id:"cashoutype="+item.cashinOrCashOut+"&cashoutid="+item.id), class:"glyphicon glyphicon-pencil"}))
 
         ));
     });
@@ -503,9 +668,13 @@ function showCash(cash){
              $("<td />").text(item.openingBalance ),
              $("<td />").text(item.in),
              $("<td />").text(item.out),
-             $("<td />").text(item.finalBalance)
+             $("<td />").text(item.finalBalance),
+             $("<td />").append($("<a />").attr({href:"/account/cash/details", class:"glyphicon glyphicon-tasks"})
+             )
+            )
+        )
 
-        ));
+
     });
 
     cashTable.append(tBody);

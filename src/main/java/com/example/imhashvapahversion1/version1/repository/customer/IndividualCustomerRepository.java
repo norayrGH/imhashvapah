@@ -7,8 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IndividualCustomerRepository extends CrudRepository<IndividualCustomer,Long> {
-
+    @Query("Select c from IndividualCustomer c WHERE c.hch is not null " )
+    ArrayList findByHchNotNull( );
 }

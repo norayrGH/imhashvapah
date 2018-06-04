@@ -1188,44 +1188,87 @@
 </div>
 
 
-<div class="panel panel-default" th:fragment="partner">
+<div class="panel panel-default" th:fragment="partnerCustomerDebt">
     <div style="margin: 50px">
-        <div id="filterForm" class="range-picker" >
+        <div class="row">
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class='input-group' id='datetimepicker1' >
+                        <span class="input-group-addon" >
+                                <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <input type="text" class="form-control" id="datepicker" />
 
-            <label>Առ:</label>
-            <input type="text" class="datepicker from" />
+                        <input name="csrfToken" id="csrfToken"
+                               type="hidden"
 
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"/>
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="customerShowDebt" >
 
         </div>
+
     </div>
-    <div id="showDebt" >
-    </div>
-    <script>
 
-        $(function () {
 
-            $('.range-picker').on('change', function () {
-                var newRange = String( $(this).attr('data-range'));
-                var start="" ;
-                var end="";
-                var showAll= false ;
-                var csrf_token = $('#filterForm').find('input[name="_csrf"]').val();
-                start = newRange.substring(0, newRange.indexOf('-'));
-                start = toDate(start);
-                end = toDate(end);
+    <script type="text/javascript" >
 
-                var DateRang={
-                    start:start,
+        $(document).ready(function() {
+            var DateRang={
+                start:null,
+                end:null,
+                showAll:null
+            };
+            var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
+
+            $( "#datepicker" ).datepicker();
+            var datePicker= $( ".hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0) );
+
+            DateRang ={
+                start:datePicker.datepicker("getDate"),
+                end:null,
+                showAll:null
+            }
+            console.log(DateRang);
+            $.ajax({
+                method : "POST",
+                contentType : "application/json",
+                url: '/account/partner/customer/debt/show',
+                dataType: 'json',
+                data :JSON.stringify(DateRang),
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                },  success: function (msg){
+                    if(msg == null)
+                        $('#customerShowDebt').empty();
+                    else
+                    {
+                        console.log(msg);
+                        partnerCustomersDebtShow(msg);
+                    }
+
+
+                },
+
+                error:
+                    function(data){
+
+                        console.log(data.responseText);
+                    }
+            });
+
+            datePicker.on("change", function() {
+                DateRang ={
+                    start:datePicker.datepicker("getDate"),
                     end:null,
-                    showAll:showAll
-                };
-
+                    showAll:null
+                }
                 $.ajax({
-
                     method : "POST",
                     contentType : "application/json",
                     url: '/account/partner/customer/debt/show',
@@ -1235,10 +1278,14 @@
                         xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                     },  success: function (msg){
                         if(msg == null)
-                            $('#showFixedAssets').empty();
+                            $('#customerShowDebt').empty();
                         else
-                            showFixedAssets(msg);
-                        //paramList = "{'username':'" + data.User + "','password':'" + data.Pass + "'}";
+                        {
+                            console.log(msg);
+                            partnerCustomersDebtShow(msg);
+                        }
+
+
                     },
 
                     error:
@@ -1247,9 +1294,159 @@
                             console.log(data.responseText);
                         }
                 });
-
             });
         });
+
+    </script>
+</div>
+
+<div class="panel panel-default" th:fragment="partnerCustomerDebtDetails">
+    <div class="container" id="datetimepicker1">
+        <div class='col-md-2'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker6'>
+                    <input type="text" class="form-control" id="datepickerStart" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-2'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker7'>
+                    <input type="text" class="form-control" id="datepickerEnd" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                </div>
+            </div>
+        </div>
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+    </div>
+
+    <div id="customerDebtDetails" >
+
+    </div>
+
+    <script th:inline="javascript" >
+        /*<![CDATA[*/
+        $( "#datepickerStart" ).datepicker();
+        $( "#datepickerEnd" ).datepicker();
+        $(document).ready(function() {
+            var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
+            var customer = /*[[${customer}]]*/ 'default';
+            console.log(customer);
+            var datePickerStart = $( "#datepickerStart.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth(),1));
+            var datePickerEnd = $( "#datepickerEnd.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0));
+            var DateRangByType ={
+                start:datePickerStart.datepicker("getDate"),
+                end:datePickerEnd.datepicker("getDate"),
+                type:customer.type,
+                id:customer.id
+            }
+            console.log(DateRangByType);
+
+            $.ajax({
+                method : "POST",
+                contentType : "application/json",
+                url: '/account/partner/customer/debt/details/show',
+                dataType: 'json',
+                data :JSON.stringify(DateRangByType),
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                },  success: function (msg){
+                    if(msg == null)
+                        $("#customerDebtDetails").empty();
+                    else
+                    {
+                        console.log(msg);
+                        partnerCustomerDebtDetailsShow(msg);
+                    }
+
+
+                },
+                error:
+                    function(data){
+
+                        console.log(data.responseText);
+                    }
+            });
+
+            datePickerStart.on("change", function() {
+                var  DateRangByType ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    type:customer.type,
+                    id:customer.id
+                }
+                $.ajax({
+
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/partner/customer/debt/details/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRangByType),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $("#customerDebtDetails").empty();
+                        else{
+                            console.log(msg);
+                            partnerCustomerDebtDetailsShow(msg);
+                        }
+
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+            });
+            datePickerEnd.on("change", function() {
+                var DateRangByType ={
+                    start:datePickerStart.datepicker("getDate"),
+                    end:datePickerEnd.datepicker("getDate"),
+                    type:customer.type,
+                    id:customer.id
+                }
+                $.ajax({
+
+                    method : "POST",
+                    contentType : "application/json",
+                    url: '/account/partner/supplier/debt/details/show',
+                    dataType: 'json',
+                    data :JSON.stringify(DateRangByType),
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                    },  success: function (msg){
+                        if(msg == null)
+                            $("#customerDebtDetails").empty();
+                        else
+                        {
+                            console.log(msg);
+                            partnerCustomerDebtDetailsShow(msg);
+                        }
+                    },
+
+                    error:
+                        function(data){
+
+                            console.log(data.responseText);
+                        }
+                });
+            });
+        });
+
+        /*]]>*/
     </script>
 </div>
 
