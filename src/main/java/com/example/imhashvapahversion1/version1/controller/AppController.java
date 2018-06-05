@@ -19,7 +19,7 @@ public class AppController extends BaseController{
     @Autowired
     OrganizationRepository organizationRepository;
 
-    @RequestMapping(value = "/account")
+        @RequestMapping(value = "/account")
     public ModelAndView appAction(ModelAndView modelAndView) {
 
         List<Organization> organizationList = (List<Organization>) organizationRepository.findAll();

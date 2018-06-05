@@ -19,16 +19,27 @@ var debtDetaileType={CashOutForTax:"Հարկ",CashOutForGoodsProvider:"Վճար�
     CashInFromBankAccount:"Մուտք բանկային հաշվից",CashInFromCredit:"Վարկի ստացում",CashInFromLoan:"Փոխառության ստացում",CashInFromPointOfSale:"Մուտք առևտրի կետից",CashInFromSaleOfGoods:"Մուտք ապրանքների իրացումից",CashInFromServiceProvision:"Մուտք ծառայության մատուցումից"
 };
 
+
+
+
+
+
 if (cityes.val() != undefined) {
     $.each(addresses, function (key, value) {
         cityes.append($("<option>").attr({class: "city"}).text(key));
     });
 }
+
+
+
 function toDate(dateStr) {
     var parts = dateStr.split("/");
     console.log(new Date(parts[2] + "-" + parts[0] + "-" + parts[1]));
     return new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
 }
+
+
+
 
 $("#employee").bind('ajax:complete', function () {
 
@@ -37,9 +48,13 @@ $("#employee").bind('ajax:complete', function () {
 
 });
 
+
+
 function goBack() {
     window.history.back();
 }
+
+
 
 $("#stritFleet").focusout(function () {
 
@@ -97,6 +112,12 @@ $("#regionSelect").change(function () {
 
 
 });
+
+
+
+
+
+
 
 function  showFixedAssets(fixedAssets) {
 
@@ -720,14 +741,6 @@ function  showBankAccount(accounts) {
     $('#showBankAccount').append(bankAccountTable);
 
 }
-//new DATE PIKER
-
-function todayDate(element) {
-    element.val(new Date)
-
-}
-
-
 
 
 $(function () {
