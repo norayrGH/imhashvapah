@@ -27,26 +27,25 @@
         <div class="col-md-12">
             <div class="row">
 
-                <div class="col-md-4">
+                <div class="row">
                     <br />
                     <img style="width: 255px; height: 85px" src="/static/img/Logo.png" />
                 </div>
 
-                <nav class="main_mnu clearfix">
-                    <button class="main_mnu_button hidden-md hidden-lg">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <ul>
-                        <li class="active"><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}"><img
+                <nav class="main_mnu_in clearfix">
+
+                    <ul th:with="view=${#httpServletRequest.getServletPath()}" >
+                        <li class="active" th:classappend="${#strings.contains(view,'organization/')? 'selectedManue' : ''}" ><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}"><img
                                 src="/static/img/6.png"/></a></li>
-                        <li class="active1"><a th:href="@{'/account/cash' }"><img
+                        <li th:classappend="${#strings.contains(view,'/cash')? 'selectedManue' : ''}" class="active1"><a th:href="@{'/account/cash' }"><img
                                 src="/static/img/6 finance.png"/></a></li>
-                        <li class="active2"><a th:href="@{'/account/partner/customer/debt'}"><img
+                        <li th:classappend="${#strings.contains(view,'/partner')? 'selectedManue' : ''}" class="active2"><a th:href="@{'/account/partner/customer/debt'}"><img
                                 src="/static/img/6 hands.png"/></a></li>
-                        <li class="active3"><a th:href="@{'/account/employee'}"><img
-                                src="/static/img/6 peoples.png"/></a></li>
-                        <li class="active4"><a th:href="@{'/account/report/summary'}"><img
-                                src="/static/img/6 numbers.png"/></a></li>
+                        <!--<li th:classappend="${#strings.contains(view,'/employee')? 'selectedItem' : ''}" class="active3"><a th:href="@{'/account/employee'}"><img
+                                src="/static/img/6 peoples.png"/></a></li>-->
+                       <!-- <li th:classappend="${#strings.contains(view,'/report')? 'selectedItem' : ''}" class="active4"><a th:href="@{'/account/report/summary'}"><img
+                                src="/static/img/6 numbers.png"/></a></li>-->
+
                     </ul>
                 </nav>
             </div>
@@ -323,10 +322,10 @@
     <nav role="navigation" class="navbar-justified">
 
         <div id="organizationNavBar" class="collapse navbar-collapse">
-            <ul class="nav nav-justified">
-                <li><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}" id="current">Ընթացիկ</a></li>
-                <li><a th:href="@{'/account/organization/details'}" id="details">Տվյալներ</a></li>
-                <li><a th:href="@{'/account/organization/fixedasset'}" href="#" id="himnakan">Հիմնական
+            <ul class="nav nav-justified" th:with="view=${#httpServletRequest.getServletPath()}" >
+                <li th:classappend="${#strings.contains(view,'/organization/'+#httpSession.getAttribute('organizationId').id)? 'selectedItem' : ''}" ><a th:href="@{'/account/organization/'+${#httpSession.getAttribute('organizationId').id}}" id="current">Ընթացիկ</a></li>
+                <li th:classappend="${#strings.contains(view,'/organization/details')? 'selectedItem' : ''}" ><a th:href="@{'/account/organization/details'}" id="details">Տվյալներ</a></li>
+                <li th:classappend="${#strings.contains(view,'/organization/fixedasset')? 'selectedItem' : ''}" ><a th:href="@{'/account/organization/fixedasset'}" href="#" id="himnakan">Հիմնական
                     միջոցներ</a></li>
             </ul>
         </div>
@@ -339,7 +338,7 @@
             <ul class="nav nav-justified" th:with="view=${#httpServletRequest.getServletPath()}"  >
 
 
-                    <li th:classappend="${(view =='/account/cash') or (view =='/account/cash/cashdesk') or (view =='/account/cash/details') ? 'selectedItem' : ''}" ><a th:href="@{'/account/cash'}" id="cashResource" class="routs"  > Դրամական միջոցներ</a></li>
+                <li th:classappend="${(view =='/account/cash') or (view =='/account/cash/cashdesk') or (view =='/account/cash/details') ? 'selectedItem' : ''}" ><a th:href="@{'/account/cash'}" id="cashResource" class="routs"  > Դրամական միջոցներ</a></li>
                 <li th:classappend="${#strings.contains(view,'cashin/')? 'selectedItem' : ''}" ><a th:href="@{'/account/cash/cashin/cashdesk' }" id="in"> Մուտքեր</a></li>
                 <li th:classappend="${#strings.contains(view,'cashout/')? 'selectedItem' : ''}" ><a th:href="@{'/account/cash/cashout/cashdesk' }" id="out">Ելքեր</a></li>
 
@@ -733,16 +732,16 @@
     <nav role="navigation" class="navbar-justified">
 
         <div id="partnerSupplierFragmentNavBar" class="collapse navbar-collapse">
-            <ul class=" nav flex-column ">
-                <li class="nav-item"><a class="nav-link active" th:href="@{'/account/partner/supplier/debt'}" id="supplierDebt">
+            <ul class=" nav flex-column " th:with="view=${#httpServletRequest.getServletPath()}" >
+                <li class="nav-item" th:classappend="${#strings.contains(view,'/supplier/debt')? 'selectedItem' : ''}" ><a class="nav-link active" th:href="@{'/account/partner/supplier/debt'}" id="supplierDebt">
                     Պարտքեր</a></li>
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier/purchase'}" id="purchase">Ձեռքբերումներ</a>
+                <li class="nav-item" th:classappend="${#strings.contains(view,'/supplier/purchase')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/purchase'}" id="purchase">Ձեռքբերումներ</a>
                 </li>
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier/periodicservice'}" id="periodicService">Ծառայություններ</a>
+                <li class="nav-item" th:classappend="${#strings.contains(view,'supplier/periodicservice')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/periodicservice'}" id="periodicService">Ծառայություններ</a>
                 </li>
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierPayment">Կատարված
+                <li class="nav-item" th:classappend="${#strings.contains(view,'supplier/payments')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/payments'}" id="supplierPayment">Կատարված
                     վճարումներ</a></li>
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierTable">Մատակարարների
+                <li class="nav-item" th:classappend="${view =='/account/partner/supplier'? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierTable">Մատակարարների
                     ցանկ</a></li>
             </ul>
         </div>
@@ -849,11 +848,11 @@
     <nav role="navigation" class="navbar-justified">
 
         <div id="partnerOtherPartnerFragmentNavBar" class="collapse navbar-collapse">
-            <ul class=" nav flex-column ">
+            <ul class=" nav flex-column " th:with="view=${#httpServletRequest.getServletPath()}" >
                 <!--<li class="nav-item"><a class="nav-link active" th:href="@{'/account/partner/otherpartner/debt'}" id="otherPartnerDebt"> Պարտքեր</a></li>-->
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/otherpartner/payment'}" id="otherPartnerPayment">Վճարումներ</a></li>
+                <li class="nav-item" th:classappend="${#strings.contains(view,'/otherpartner/payment')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/otherpartner/payment'}" id="otherPartnerPayment">Վճարումներ</a></li>
                 <!--<li class="nav-item"><a class="nav-item" th:href="@{''}" id="group">Խմբեր</a></li>-->
-                <li class="nav-item"><a class="nav-item" th:href="@{'/account/partner/otherpartner'}" id="otherPartnerTable">Այլ
+                <li class="nav-item" th:classappend="${view =='/account/partner/otherpartner'? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/otherpartner'}" id="otherPartnerTable">Այլ
                     գորընկերների ցանկ</a></li>
 
             </ul>
@@ -963,10 +962,10 @@
 
            <li class="nav-item"  th:classappend="${view =='/account/cash/cashdesk'? 'selectedItem' : ''}" ><a class="nav-link active" th:href="@{'/account/cash/cashdesk'}"> Դրամապանակի
                տվյալններ </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminalData">Տերմինալի
+          <!-- <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminalData">Տերմինալի
                տվյալներ</a></li>
            <li class="nav-item"><a class="nav-item" th:href="@{'/account/cash/bankaccount'}" id="bankAccounts">Բանկային
-               հաշիվներ</a></li>
+               հաշիվներ</a></li>-->
        </ul>
    </div>
 </nav>

@@ -444,8 +444,8 @@ function cashDetailsShow(cashDetails) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
             $("<td />").text(item.cashDate)
             ,$("<td />").text(item.cashId)
-            ,$("<td />").append(item.type.slice(0,7)!="CashOut"?$("<a>").attr("href","account/cashin/cashdesk/edit/"+item.type.toLowerCase()+"/"+item.id).text(item.cashIn):"")
-            ,$("<td />").append(item.type.slice(0,7)=="CashOut"?$("<a>").attr("href","account/cashout/cashdesk/edit/"+item.type.toLowerCase()+"/"+item.id).text(item.cashOut):"")
+            ,$("<td />").append(item.type.slice(0,7)!="CashOut"?$("<a>").attr("href","/account/cash/cashin/cashdesk/edit?cashintype="+item.type+"&cashinid="+item.cashId).text(item.cashIn):"")
+            ,$("<td />").append(item.type.slice(0,7)=="CashOut"?$("<a>").attr("href","/account/cash/cashout/cashdesk/edit?cashouttype="+item.type+"&cashoutid="+item.cashId).text(item.cashOut):"")
             ,$("<td />").text(debtDetaileType[item.type])
         ));
     });
@@ -460,7 +460,7 @@ function customerPaymentShow(customerPayments) {
 
     var customerPaymentTableTh= ["No","Ամսաթիվ","Գումար","Գնորդ","Մուտքի տեսակ"];
     var customerPaymentTable = $("<table />")
-        .attr({id:"cashDetailsTable",class:"table table-hover "});
+        .attr({id:"customerPaymentTable",class:"table table-hover "});
     var tHead =$("<thead />");
     var tHeadTr = $("<tr />");
     $.each(customerPaymentTableTh, function(i, item) {
@@ -474,7 +474,7 @@ function customerPaymentShow(customerPayments) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
             $("<td />").text(item.id)
             ,$("<td />").text(item.paymentDate)
-            ,$("<td />").append($("<a>").attr("href","account/cashin/cashdesk/edit?cashintype="+item.type.toLowerCase()+"&cashinid="+item.id).text(item.paymentSum))
+            ,$("<td />").append($("<a>").attr("href","/account/cashin/cashdesk/edit?cashintype="+item.type+"&cashinid="+item.id).text(item.paymentSum))
             ,$("<td />").text(item.customerName)
             ,$("<td />").text(debtDetaileType[item.type])
         ));
@@ -579,7 +579,6 @@ function  showOtherPartnerPayments(otherPartnerPayments) {
     $.each(otherPartnerPaymentsTableTh, function(i, item) {
         tHeadTr.append($("<th />").attr({"class":"h5", "style":"font-weight:bold"}).text(item));
     });
-    tHeadTr.append($("<th />").text("Գործողություն"));
     tHead.append(tHeadTr);
     otherPartnerPaymentsTable.append(tHead);
     var tBody = $("<tbody />");
@@ -589,10 +588,13 @@ function  showOtherPartnerPayments(otherPartnerPayments) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
              $("<td />").text(item.id)
             ,$("<td />").text(item.paymentDate)
-            ,$("<td />").text(item.paymentSum)
+            ,$("<td />").append(
+                $("<a />").text(item.paymentSum).attr(
+                    {
+                        href:"/account/cash/"+(item.cashinOrCashOut.includes("CashIn")?'cashin':'cashout')+"/cashdesk/edit?"+(item.cashinOrCashOut.includes("CashIn")?"cashintype="+item.cashinOrCashOut+"&cashinid="+item.id:"cashoutype="+item.cashinOrCashOut+"&cashoutid="+item.id)
+                    }))
             ,$("<td />").text(item.otherPartnerName)
             ,$("<td />").text(debtDetaileType[item.cashinOrCashOut])
-            ,$("<td />").append($("<a />").attr({href:"/account/cash/"+(item.cashinOrCashOut.includes("CashIn")?'cashin':'cashout')+"/cashdesk/edit?"+(item.cashinOrCashOut.includes("CashIn")?"cashintype="+item.cashinOrCashOut+"&cashinid="+item.id:"cashoutype="+item.cashinOrCashOut+"&cashoutid="+item.id), class:"glyphicon glyphicon-pencil"}))
 
         ));
     });

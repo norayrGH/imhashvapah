@@ -785,9 +785,6 @@
 
                     $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);
                     $('input[name=otherPartnerId]').val(colleaguesList[$('#selectedOtherPartner').val()].id);
-                }else{
-                    $('input[name=otherPartnerType]').val("");
-                    $('input[name=otherPartnerId]').val("");
                 }
 
                 $('#selectedOtherPartner').on('change', function() {
@@ -961,6 +958,7 @@
                     $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
                     $('input[name=customerId]').val(customerList[$('#selectedCustomer').val()].id);
                 }
+
                 $('#selectedCustomer').on('change', function() {
                     if(this.value!="")
                     {
@@ -1102,9 +1100,6 @@
 
                     $('input[name=otherPartnerType]').val(colleaguesList[$('#selectedOtherPartner').val()].otherPartnerType);
                     $('input[name=otherPartnerId]').val(colleaguesList[$('#selectedOtherPartner').val()].id);
-                }else{
-                    $('input[name=otherPartnerType]').val("");
-                    $('input[name=otherPartnerId]').val("");
                 }
 
                 $('#selectedOtherPartner').on('change', function() {
