@@ -612,7 +612,7 @@
                 if($('#selectedCustomer').val()!='' && $('input[name=customerType]').val()=="" && $('input[name=customerId]').val()=="")
                 {
 
-                   $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
+                    $('input[name=customerType]').val(customerList[$('#selectedCustomer').val()].customerType);
                     $('input[name=customerId]').val(customerList[$('#selectedCustomer').val()].id);
                 }
                 $('#selectedCustomer').on('change', function() {

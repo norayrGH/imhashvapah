@@ -18,10 +18,13 @@ public class PrivateEntrepreneurCustomer  implements GeneralMethods {
     private String privateEntrepreneurName ;
     @NotEmpty(message = "ՀՎՀՀ-ն պարտադիր է:")
     private String hvhh;
+    @NotEmpty(message = "Հարկման կարգը պարտադիր է:")
     private String taxType;
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
     private String bankAccount;
+    @NotEmpty(message = "հասցեն պարտադիր է:")
     private String address;
     @ManyToOne
     private Organization organization;

@@ -29,8 +29,10 @@ public class CompanyCustomer  implements GeneralMethods,Serializable{
     @NotEmpty(message = "Հարկավոր է նշել հարկի տեսակը:")
     private String taxType;
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
     private String bankAccount;
+    @NotEmpty(message = "հասցեն պարտադիր է:")
     private String address;
     private String phoneNumber;
     @ManyToOne

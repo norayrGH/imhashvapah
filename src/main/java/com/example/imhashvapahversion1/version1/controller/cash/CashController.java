@@ -850,9 +850,17 @@ public class CashController extends BaseController {
             cashInFromCreditRepository.delete(cashInId);
         if(cashInType.equals("CashInFromLoan"))
             cashInFromLoanRepository.delete(cashInId);
+        if(cashInType.equals("CashInFromBankAccount"))
+            cashInFromBankAccountRepository.delete(cashInId);
+        if(cashInType.equals("CashInFromPointOfSale"))
+            cashInFromPointOfSaleRepository.delete(cashInId);
+        if(cashInType.equals("CashInFromSaleOfGoods"))
+            cashInFromSaleOfGoodsRepository.delete(cashInId);
+        if(cashInType.equals("CashInFromServiceProvision"))
+            cashInFromServiceProvisionRepository.delete(cashInId);
 
 
-        modelAndView.setViewName("app/app");
+
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.cashNavBar);
@@ -1206,6 +1214,8 @@ public class CashController extends BaseController {
         modelAndView.setViewName("app/app");
         modelAndView.addObject("cashInFromPointOfSale", cashInFromPointOfSale);
         modelAndView.addObject("navBar", this.cashNavBar);
+        modelAndView.addObject("appFragment", this.cashInFragments);
+        modelAndView.addObject("fragment", this.cashInCreateCashInFromPointOfSale);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
         return  modelAndView;
     }

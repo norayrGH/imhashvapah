@@ -435,51 +435,37 @@
 <div class="panel panel-default" th:fragment="individualOtherPartnerCreate" >
     <form th:object="${individualOtherPartner}" action="/account/partner/otherpartner/create/individualotherpartner"  method="post" >
         <div style="margin: 50px">
-            <div class="form-group row ">
-                <label for="firstName" class=" col-md-4 col-form-label" >Անուն</label>
+            <div style="margin: 50px">
+                <div class="form-group row ">
+                    <label for="firstName" class=" col-md-4 col-form-label" >Անուն</label>
                     <div class="col-md-6" >
                         <input id="firstName"
                                class="form-control"
                                type="text"
                                th:name="firstName"
                                th:field="*{individual.firstName}"
+                               th:value="*{individual?.firstName}"
                         />
                         <small th:if="${#fields.hasErrors('individual.firstName')}" th:errors="*{individual.firstName}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="lastName" class=" col-md-4 col-form-label" >Ազգանուն</label>
+                <div class="form-group row ">
+                    <label for="lastName" class=" col-md-4 col-form-label" >Ազգանուն</label>
                     <div class="col-md-6" >
                         <input id="lastName"
                                class="form-control"
                                type="text"
                                th:name="lastName"
                                th:field="*{individual.lastName}"
+                               th:value="*{individual?.lastName}"
                         />
                         <small th:if="${#fields.hasErrors('individual.lastName')}" th:errors="*{individual.lastName}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="groupPayer" class=" col-md-4 col-form-label" >Խումբ</label>
-                    <div class="col-md-6" >
-                        <select id="groupPayer"
-                                class="form-control"
-                                th:name="groupPayer"
-                                th:field="*{groupPayer}">
-                            <option value="">__Ընտրել__</option>
-                            <option value="shortTermCreditor">Կարճաժամկետ վարկատու</option>
-                            <option value="longTermCreditor">Երկարաժամկետ վարկատու</option>
-                            <option value="shortTermLender">Կարճաժամկետ փոխատու</option>
-                            <option value="longTermLender">Երկարաժամկետ փոխատու</option>
-                        </select>
-                        <small th:if="${#fields.hasErrors('groupPayer')}" th:errors="*{groupPayer}"  class="form-text text-danger" />
-                    </div>
-            </div>
-
-            <div class="form-group row ">
-                <label for="bDate" class=" col-md-4 col-form-label" >Ծննդյան ամսաթիվ</label>
+                <div class="form-group row ">
+                    <label for="bDate" class=" col-md-4 col-form-label" >Ծննդյան ամսաթիվ</label>
                     <div class="col-md-6" >
                         <input id="bDate"
                                class="form-control"
@@ -490,10 +476,10 @@
                         />
                         <small th:if="${#fields.hasErrors('bDate')}" th:errors="*{bDate}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="hch" class=" col-md-4 col-form-label" >ՀԾՀ</label>
+                <div class="form-group row ">
+                    <label for="hch" class=" col-md-4 col-form-label" >ՀԾՀ</label>
                     <div class="col-md-6" >
                         <input id="hch"
                                class="form-control"
@@ -503,10 +489,10 @@
                         />
                         <small th:if="${#fields.hasErrors('hch')}" th:errors="*{hch}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="passportNumber" class=" col-md-4 col-form-label" >Անձնագրի համար</label>
+                <div class="form-group row ">
+                    <label for="passportNumber" class=" col-md-4 col-form-label" >Անձնագրի համար</label>
                     <div class="col-md-6" >
                         <input id="passportNumber"
                                class="form-control"
@@ -516,49 +502,63 @@
                         />
                         <small th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="passportViewingDate" class=" col-md-4 col-form-label" >Ում կողմից է տրված</label>
+                <div class="form-group row ">
+                    <label for="passportSupplier" class=" col-md-4 col-form-label" >Ում կողմից է տրված</label>
+                    <div class="col-md-6" >
+                        <input id="passportSupplier"
+                               class="form-control"
+                               type="text"
+                               th:name="passportSupplier"
+                               th:field="*{passportSupplier}"
+                        />
+                        <small th:if="${#fields.hasErrors('passportSupplier')}" th:errors="*{passportSupplier}"  class="form-text text-danger" />
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label for="passportViewingDate" class=" col-md-4 col-form-label" >Անձնագրի տրման ամսաթիվը</label>
                     <div class="col-md-6" >
                         <input id="passportViewingDate"
                                class="form-control"
-                               type="text"
+                               type="Date"
                                th:name="passportViewingDate"
                                th:field="*{passportViewingDate}"
                         />
                         <small th:if="${#fields.hasErrors('passportViewingDate')}" th:errors="*{passportViewingDate}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="openingBalanceType" class=" col-md-4 col-form-label" >Սկզբնական մնացորդի տեսակ</label>
+                <div class="form-group row ">
+                    <label for="openingBalanceType" class=" col-md-4 col-form-label" >Սկզբնական մնացորդի տեսակ</label>
                     <div class="col-md-6" >
-                        <input id="openingBalanceType"
-                               class="form-control"
-                               type="date"
-                               th:name="openingBalanceType"
-                               th:field="*{openingBalanceType}"
-                        />
+                        <select id="openingBalanceType"
+                                class="form-control"
+                                th:name="openingBalanceType"
+                                th:field="*{openingBalanceType}">
+
+                            <option value="debt">Պարտք</option>
+                            <option value="prepaid">Կանխավճար</option>
+                        </select>
                         <small th:if="${#fields.hasErrors('openingBalanceType')}" th:errors="*{openingBalanceType}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="openingBalance" class=" col-md-4 col-form-label" >Սկզբնական մնացորդ</label>
+                <div class="form-group row ">
+                    <label for="openingBalance" class=" col-md-4 col-form-label" >Սկզբնական մնացորդ</label>
                     <div class="col-md-6" >
                         <input id="openingBalance"
                                class="form-control"
-                               type="date"
+                               type="text"
                                th:name="openingBalance"
                                th:field="*{openingBalance}"
                         />
                         <small th:if="${#fields.hasErrors('openingBalance')}" th:errors="*{openingBalance}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group row ">
-                <label for="address" class=" col-md-4 col-form-label" >Հասցե</label>
+                <div class="form-group row ">
+                    <label for="address" class=" col-md-4 col-form-label" >Հասցե</label>
                     <div class="col-md-6" >
                         <input id="address"
                                class="form-control"
@@ -568,33 +568,35 @@
                         />
                         <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}"  class="form-text text-danger" />
                     </div>
-            </div>
+                </div>
 
 
-            <input
-                    type="hidden"
-                    th:field="*{id}"
-                    th:value="${id}"
-            />
-            <input
-                    type="hidden"
-                    th:field="*{organization}"
-                    th:value="${organization}"
-            />
-            <input
-                    type="hidden"
-                    th:field="*{individual}"
-                    th:value="${individual}"
-            />
+                <input
+                        type="hidden"
+                        th:field="*{id}"
+                        th:value="${id}"
+                />
 
-            <input name="csrfToken" id="csrfToken"
-                   type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"
-            />
+                <input
+                        type="hidden"
+                        th:field="*{organization}"
+                        th:value="${organization}"
+                />
+                <input
+                        type="hidden"
+                        th:field="*{individual}"
+                        th:value="*{individual}"
+                />
+
+                <input name="csrfToken" id="csrfToken"
+                       type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"
+                />
 
 
             <input type="submit" class="btn btn-default" />
+        </div>
         </div>
     </form >
 

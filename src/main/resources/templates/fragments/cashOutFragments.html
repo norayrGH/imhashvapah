@@ -568,9 +568,6 @@
 
                     $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
                     $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
-                }else{
-                    $('input[name=otherPartnerType]').val("");
-                    $('input[name=otherPartnerId]').val("");
                 }
 
                 $('#selectedSupplier').on('change', function() {
@@ -752,6 +749,12 @@
 
                     $('#outDate').val(today);
                 }
+                if($('#selectedSupplier').val()!='' && $('input[name=supplierType]').val()=="" && $('input[name=supplierId]').val()=="")
+                {
+
+                    $('input[name=supplierType]').val(suppliers[$('#selectedSupplier').val()].supplierType);
+                    $('input[name=supplierId]').val(suppliers[$('  #selectedSupplier').val()].id);
+                }
 
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
@@ -910,9 +913,6 @@
 
                     $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
                     $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
-                }else{
-                    $('input[name=otherPartnerType]').val("");
-                    $('input[name=otherPartnerId]').val("");
                 }
 
                 $('#selectedSupplier').on('change', function() {
@@ -1023,6 +1023,7 @@
 
                 $('#inDate').val(today);
             }
+
         })
     </script>
 </div>
@@ -1149,9 +1150,6 @@
 
                     $('input[name=otherPartnerType]').val(suppliers[$('#selectedSupplier').val()].otherPartnerType);
                     $('input[name=otherPartnerId]').val(suppliers[$('#selectedSupplier').val()].id);
-                }else{
-                    $('input[name=otherPartnerType]').val("");
-                    $('input[name=otherPartnerId]').val("");
                 }
 
 
@@ -1329,6 +1327,12 @@
                     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
                     $('#outDate').val(today);
+                }
+                if($('#selectedSupplier').val()!='' && $('input[name=supplierType]').val()=="" && $('input[name=supplierId]').val()=="")
+                {
+
+                    $('input[name=supplierType]').val(suppliers[$('#selectedSupplier').val()].supplierType);
+                    $('input[name=supplierId]').val(suppliers[$('  #selectedSupplier').val()].id);
                 }
 
                 $('#selectedSupplier').on('change', function() {
@@ -1516,6 +1520,12 @@
 
                     $('#outDate').val(today);
                 }
+                if($('#selectedSupplier').val()!='' && $('input[name=supplierType]').val()=="" && $('input[name=supplierId]').val()=="")
+                {
+
+                    $('input[name=supplierType]').val(suppliers[$('#selectedSupplier').val()].supplierType);
+                    $('input[name=supplierId]').val(suppliers[$('  #selectedSupplier').val()].id);
+                }
                 $('#selectedSupplier').on('change', function() {
                     if(this.value!="")
                     {
@@ -1597,11 +1607,7 @@
                     th:field="*{id}"
                     th:value="${id}"
             />
-            <input
-                    type="hidden"
-                    th:field="*{walletOut}"
-                    th:value="${walletOut}"
-            />
+
             <input
                     type="hidden"
                     id="organizationId"

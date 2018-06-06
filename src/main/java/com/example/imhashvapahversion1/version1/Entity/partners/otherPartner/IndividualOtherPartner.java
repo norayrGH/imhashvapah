@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 @Entity
 public class IndividualOtherPartner  implements GeneralMethods {
@@ -19,17 +20,24 @@ public class IndividualOtherPartner  implements GeneralMethods {
     private OtherPartnerIndividual individual;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ծննդյան ամսաթիվը պարտադիր է:")
     private Date bDate;
     @NotEmpty(message = "ՀԾՀ-ն պարտադիր է:")
     private String hch;
-    @NotEmpty(message = "Անձնագրի համարը պարտադիր է:")
-    private String groupPayer;
-    @NotEmpty(message = "Անձնագրի ում կողմից տրված լինելը պարտադիր է:")
+    @NotEmpty(message = " Անձնագրի համարը պարտադիր է:")
     private String passportNumber;
-    @NotEmpty(message = "Անձնագրի տրման ամսաթիվը պարտադիր է:")
-    private String passportViewingDate;
+    @NotEmpty(message = " Անձնագրի ում կողմից տրված լինելը պարտադիր է:")
+    private String passportSupplier;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = " Անձնագրի տրման ամսաթիվը պարտադիր է:")
+    private Date passportViewingDate;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalanceType;
     private String openingBalance;
+    @NotEmpty(message = "հասցեն պարտադիր է:")
+
     private String address;
     private String phoneNumber;
 
@@ -38,6 +46,7 @@ public class IndividualOtherPartner  implements GeneralMethods {
 
     public IndividualOtherPartner() {
     }
+
 
     public Long getId() {
         return id;
@@ -91,8 +100,12 @@ public class IndividualOtherPartner  implements GeneralMethods {
         this.hch = hch;
     }
 
-    public String getGroupPayer() {
-        return groupPayer;
+    public String getOpeningBalanceType() {
+        return openingBalanceType;
+    }
+
+    public void setOpeningBalanceType(String openingBalanceType) {
+        this.openingBalanceType = openingBalanceType;
     }
 
     public String getPhoneNumber() {
@@ -103,9 +116,6 @@ public class IndividualOtherPartner  implements GeneralMethods {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setGroupPayer(String groupPayer) {
-        this.groupPayer = groupPayer;
-    }
 
     public String getPassportNumber() {
         return passportNumber;
@@ -115,20 +125,20 @@ public class IndividualOtherPartner  implements GeneralMethods {
         this.passportNumber = passportNumber;
     }
 
-    public String getPassportViewingDate() {
+    public String getPassportSupplier() {
+        return passportSupplier;
+    }
+
+    public void setPassportSupplier(String passportSupplier) {
+        this.passportSupplier = passportSupplier;
+    }
+
+    public Date getPassportViewingDate() {
         return passportViewingDate;
     }
 
-    public void setPassportViewingDate(String passportViewingDate) {
+    public void setPassportViewingDate(Date passportViewingDate) {
         this.passportViewingDate = passportViewingDate;
-    }
-
-    public String getOpeningBalanceType() {
-        return openingBalanceType;
-    }
-
-    public void setOpeningBalanceType(String openingBalanceType) {
-        this.openingBalanceType = openingBalanceType;
     }
 
     public String getOpeningBalance() {

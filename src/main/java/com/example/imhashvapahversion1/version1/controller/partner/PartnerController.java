@@ -752,6 +752,7 @@ public class PartnerController extends BaseController {
 
                         }
                 }
+
                 for (CashInFromServiceProvision cashInFromServiceProvision : cashInFromServiceProvisions) {
                     if (cashInFromServiceProvision.getSupplier() != null)
                         if (cashInFromServiceProvision.getSupplier().getId() == companyCustomer.getId()) {
@@ -760,6 +761,7 @@ public class PartnerController extends BaseController {
 
                         }
                 }
+
                 if (debt.getPrepayment() - debt.getDebt() < 0) {
                     debt.setDebt(Math.abs(debt.getPrepayment() - debt.getDebt()));
                     debt.setPrepayment(0);
@@ -767,7 +769,6 @@ public class PartnerController extends BaseController {
                     debt.setPrepayment(debt.getPrepayment() - debt.getDebt());
                     debt.setDebt(0);
                 }
-
                 debts.add(debt);
 
             }
@@ -782,26 +783,20 @@ public class PartnerController extends BaseController {
                 for (Sale sale : sales) {
                     if (sale.getSupplier() != null)
                         if (sale.getSupplier().getId() == individualCustomer.getId()) {
-
                             debt.setDebt(debt.getDebt() + Integer.valueOf(sale.getSalesAmount()));
-
                         }
                 }
 
                 for (CashInFromSaleOfGoods cashInFromSaleOfGood : cashInFromSaleOfGoods) {
                     if (cashInFromSaleOfGood.getSupplier() != null)
                         if (cashInFromSaleOfGood.getSupplier().getId() == individualCustomer.getId()) {
-
                             debt.setPrepayment(debt.getPrepayment() + Integer.valueOf(cashInFromSaleOfGood.getWalletIn().getInCash()));
-
                         }
                 }
                 for (CashInFromServiceProvision cashInFromServiceProvision : cashInFromServiceProvisions) {
                     if (cashInFromServiceProvision.getSupplier() != null)
                         if (cashInFromServiceProvision.getSupplier().getId() == individualCustomer.getId()) {
-
                             debt.setPrepayment(debt.getPrepayment() + Integer.valueOf(cashInFromServiceProvision.getWalletIn().getInCash()));
-
                         }
                 }
                 if (debt.getPrepayment() - debt.getDebt() < 0) {
@@ -813,7 +808,6 @@ public class PartnerController extends BaseController {
                 }
 
                 debts.add(debt);
-
             }
             for (PrivateEntrepreneurCustomer privateEntrepreneurCustomer : privateEntrepreneurCustomers) {
                 debt.setName(privateEntrepreneurCustomer.getName());

@@ -67,6 +67,7 @@
 
 
     </div>
+
     <div class="panel panel-default"  th:fragment="individualCustomerCreate" >
         <form th:object="${individualCustomer}" action="/account/partner/customer/create/individualcustomer"  method="post" >
             <div style="margin: 50px">
@@ -139,29 +140,42 @@
                 </div>
 
                 <div class="form-group row ">
-                    <label for="passportViewingDate" class=" col-md-4 col-form-label" >Ում կողմից է տրված</label>
+                    <label for="passportSupplier" class=" col-md-4 col-form-label" >Ում կողմից է տրված</label>
                         <div class="col-md-6" >
-                            <input id="passportViewingDate"
+                            <input id="passportSupplier"
                                    class="form-control"
                                    type="text"
-                                   th:name="passportViewingDate"
-                                   th:field="*{passportViewingDate}"
+                                   th:name="passportSupplier"
+                                   th:field="*{passportSupplier}"
                             />
-                            <small th:if="${#fields.hasErrors('passportViewingDate')}" th:errors="*{passportViewingDate}"  class="form-text text-danger" />
+                            <small th:if="${#fields.hasErrors('passportSupplier')}" th:errors="*{passportSupplier}"  class="form-text text-danger" />
                         </div>
+                </div>
+                <div class="form-group row ">
+                    <label for="passportViewingDate" class=" col-md-4 col-form-label" >Անձնագրի տրման ամսաթիվը</label>
+                    <div class="col-md-6" >
+                        <input id="passportViewingDate"
+                               class="form-control"
+                               type="Date"
+                               th:name="passportViewingDate"
+                               th:field="*{passportViewingDate}"
+                        />
+                        <small th:if="${#fields.hasErrors('passportViewingDate')}" th:errors="*{passportViewingDate}"  class="form-text text-danger" />
+                    </div>
                 </div>
 
                 <div class="form-group row ">
                     <label for="openingBalanceType" class=" col-md-4 col-form-label" >Սկզբնական մնացորդի տեսակ</label>
-                        <div class="col-md-6" >
-                            <input id="openingBalanceType"
-                                   class="form-control"
-                                   type="date"
-                                   th:name="openingBalanceType"
-                                   th:field="*{openingBalanceType}"
-                            />
-                            <small th:if="${#fields.hasErrors('openingBalanceType')}" th:errors="*{openingBalanceType}"  class="form-text text-danger" />
-                        </div>
+                    <div class="col-md-6" >
+                        <select id="openingBalanceType"
+                                class="form-control"
+                                th:name="openingBalanceType"
+                                th:field="*{openingBalanceType}">
+                            <option value="debt">Պարտք</option>
+                            <option value="prepaid">Կանխավճար</option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('openingBalanceType')}" th:errors="*{openingBalanceType}"  class="form-text text-danger" />
+                    </div>
                 </div>
 
                 <div class="form-group row ">
@@ -169,7 +183,7 @@
                         <div class="col-md-6" >
                             <input id="openingBalance"
                                    class="form-control"
-                                   type="date"
+                                   type="text"
                                    th:name="openingBalance"
                                    th:field="*{openingBalance}"
                             />

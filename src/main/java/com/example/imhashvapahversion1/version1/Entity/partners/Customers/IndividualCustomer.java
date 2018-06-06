@@ -3,6 +3,7 @@ package com.example.imhashvapahversion1.version1.Entity.partners.Customers;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.formHelpClasses.customer.CustomerIndividual;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -22,11 +23,20 @@ public class IndividualCustomer  implements GeneralMethods {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Ամսաթիվը պարտադիր է:")
     private Date bDate;
+    @NotEmpty(message = "ՀԾՀ-ն պարտադիր է:")
     private String hch;
+    @NotEmpty(message = "Անձնագրի համարը պարտադիր է:")
     private String passportNumber;
-    private String passportViewingDate;
+    @NotEmpty(message = " Անձնագրի ում կողմից տրված լինելը պարտադիր է:")
+    private String passportSupplier;
+    @NotNull(message = " Անձնագրի տրման ամսաթիվը պարտադիր է:")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date passportViewingDate;
     private String openingBalanceType;
+    @NotEmpty(message = "Սկզբնական մնացորդը պարտադիր է:")
     private String openingBalance;
+    @NotEmpty(message = "հասցեն պարտադիր է:")
     private String address;
     private String phoneNumber;
     @ManyToOne
@@ -60,6 +70,14 @@ public class IndividualCustomer  implements GeneralMethods {
         this.bDate = bDate;
     }
 
+    public String getPassportSupplier() {
+        return passportSupplier;
+    }
+
+    public void setPassportSupplier(String passportSupplier) {
+        this.passportSupplier = passportSupplier;
+    }
+
     public String getOpeningBalanceType() {
         return openingBalanceType;
     }
@@ -84,11 +102,11 @@ public class IndividualCustomer  implements GeneralMethods {
         this.passportNumber = passportNumber;
     }
 
-    public String getPassportViewingDate() {
+    public Date getPassportViewingDate() {
         return passportViewingDate;
     }
 
-    public void setPassportViewingDate(String passportViewingDate) {
+    public void setPassportViewingDate(Date passportViewingDate) {
         this.passportViewingDate = passportViewingDate;
     }
 

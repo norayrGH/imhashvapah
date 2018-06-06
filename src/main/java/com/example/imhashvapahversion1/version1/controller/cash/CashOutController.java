@@ -254,7 +254,6 @@ public class CashOutController extends BaseController {
             suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
         }
 
-
         if(cashOutType.equals("CashOutForBankAccount")){
 
             CashOutForBankAccount cashOutForBankAccount = cashOutForBankAccountRepository.findOne(cashOutId);
@@ -367,7 +366,7 @@ public class CashOutController extends BaseController {
             modelAndView.addObject("appFragment", this.cashOutFragments);
             modelAndView.addObject("fragment", this.cashOutForRentCreate);
 
-        }if(cashOutType.equals("CashOutForSerivceProvider")){
+            }if(cashOutType.equals("CashOutForSerivceProvider")){
 
             CashOutForSerivceProvider cashOutForSerivceProvider = cashOutForSerivceProviderRepository.findOne(cashOutId);
             modelAndView.addObject("cashOutForSerivceProvider",cashOutForSerivceProvider);

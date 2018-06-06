@@ -285,7 +285,7 @@ function  partnerSuppliersShow(partnerSuppliers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':'companysupplier/')+'?'+'customerId='+item.id,
+                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':item.type.includes("Company")?'companyotherpartner/':'privateentrepreneursupplier/')+'?'+'supplierId='+item.id,
                         class:"glyphicon glyphicon-pencil"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -329,8 +329,8 @@ function  partnerSupplierDebtDetailsShow(supplierDebtDetails) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
              $("<td />").text(item.debtDate)
             ,$("<td />").text(debtDetaileType[item.contents])
-            ,$("<td />").append(item.contents.slice(0,8)!="Purchase"?$("<a>").attr("href","/cashout/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
-            ,$("<td />").append(item.contents.slice(0,8)=="Purchase"?$("<a>").attr("href","partner/supplier/purchase/edit/"+item.id).text(item.purchase):"")
+            ,$("<td />").append(item.contents.slice(0,8)!="Purchase"?$("<a>").attr("href","/account/cash/cashout/cashdesk/edit?cashouttype="+item.contents+"&cashoutid="+item.id).text(item.payment):"")
+            ,$("<td />").append(item.contents.slice(0,8)=="Purchase"?$("<a>").attr("href","/account/partner/supplier/purchase/edit/?purchasetype="+item.contents+"&purchaseid="+item.id).text(item.purchase):"")
         ));
     });
 
@@ -755,10 +755,6 @@ $(function () {
     });
 });
 
-function chose(a) {
-    if(a.href== window.location.href)
-        console.log("true")
-}
 
 $(".selectWaletInType").change(function () {
     var fragmentNumber = parseInt(this.value);
