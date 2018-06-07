@@ -1006,7 +1006,7 @@ public class CashController extends BaseController {
         modelAndView.addObject("customerList", customerList);
         modelAndView.addObject("navBar", this.cashNavBar);
         modelAndView.addObject("appFragment", this.cashInFragments);
-        modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
+            modelAndView.addObject("fragment", this.cashInCreateFragmentSaleOfGoods);
         modelAndView.addObject("fragmentNavBar", this.cashInFragmentNavBar);
 
         return  modelAndView;

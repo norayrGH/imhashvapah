@@ -285,7 +285,7 @@ function  partnerSuppliersShow(partnerSuppliers) {
             ,$("<td />").text(item.hvhh)
             ,$("<td />").append(
                 $("<a />").attr(
-                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':item.type.includes("Company")?'companyotherpartner/':'privateentrepreneursupplier/')+'?'+'supplierId='+item.id,
+                    {href:"/account/partner/supplier/edit/"+(item.type.includes("Individual")?'individualsupplier/':item.type.includes("Company")?'companysupplier/':'privateentrepreneursupplier/')+'?'+'supplierId='+item.id,
                         class:"glyphicon glyphicon-pencil"}
                 )
                 ,"&nbsp;&nbsp;&nbsp;"
@@ -306,6 +306,56 @@ function  partnerSuppliersShow(partnerSuppliers) {
     partnerSuppliersTable.append(tBody);
 
     $('#partnerSuppliersShow').append(partnerSuppliersTable);
+
+}
+function  periodicServiceShow(periodicService) {
+
+
+    $('#periodicServiceShow').empty();
+
+    var periodicServiceTableTh= ["Ծառայություն","Սկսելու ամսաթիվը","Ամսական արժեք","Մատակարար"];
+    var periodicServiceTable = $("<table />")
+        .attr({id:"periodicServiceTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(periodicServiceTableTh, function(i, item) {
+        tHeadTr.append($("<th />").text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    periodicServiceTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(periodicService, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+            $("<td />").text(item.serviceName)
+            ,$("<td />").text(item.startDate)
+            ,$("<td />").text(item.pereodicOrNot=="periodically"?item.serviceCost:"Փոփոխական է")
+            ,$("<td />").text(item.supplierName)
+            ,$("<td />").append(
+                $("<a />").attr(
+                    {href:"/account/partner/supplier/periodicservice/edit/?serviceType="+item.serviceType+'&'+'serviceId='+item.id  ,
+                        class:"glyphicon glyphicon-pencil"}
+                )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr(
+                    {href:"/account/partner/supplier/periodicservice/delete/?serviceType="+item.serviceType+'&'+'serviceId='+item.id  ,
+                        class:"glyphicon glyphicon-trash"}
+                )
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,(item.full==false)?$("<a />").attr(
+                    {
+                        class:"glyphicon glyphicon-warning-sign"
+                    }
+                ):""
+            )
+        ));
+    });
+
+    periodicServiceTable.append(tBody);
+
+    $('#periodicServiceShow').append(periodicServiceTable);
 
 }
 function  partnerSupplierDebtDetailsShow(supplierDebtDetails) {
@@ -359,8 +409,8 @@ function  partnerCustomerDebtDetailsShow(customerDebtDetails) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
             $("<td />").text( item.debtDate )
             ,$("<td />").text(debtDetaileType[item.contents])
-            ,$("<td />").append(item.contents.slice(0,4)=="Sale"?$("<a>").attr("href","account/partner/customer/sale/edit/"+item.id).text(item.purchase):"")
-            ,$("<td />").append(item.contents.slice(0,4)!="Sale"?$("<a>").attr("href","account/cashin/cashdesk/edit/"+item.contents.toLowerCase()+"/"+item.id).text(item.payment):"")
+            ,$("<td />").append(item.contents.slice(0,4)=="Sale"?$("<a>").attr("href","/account/partner/customer/sale/edit/"+item.id).text(item.purchase):"")
+            ,$("<td />").append(item.contents.slice(0,4)!="Sale"?$("<a>").attr("href","/account/cash/cashin/cashdesk/edit?cashintype="+item.contents+"&cashinid="+item.id).text(item.payment):"")
 
         ));
     });
@@ -495,7 +545,7 @@ function customerPaymentShow(customerPayments) {
         tBody.append($("<tr />").attr({scope:"row"}).append(
             $("<td />").text(item.id)
             ,$("<td />").text(item.paymentDate)
-            ,$("<td />").append($("<a>").attr("href","/account/cashin/cashdesk/edit?cashintype="+item.type+"&cashinid="+item.id).text(item.paymentSum))
+            ,$("<td />").append($("<a>").attr("href","/account/cash/cashin/cashdesk/edit?cashintype="+item.type+"&cashinid="+item.id).text(item.paymentSum))
             ,$("<td />").text(item.customerName)
             ,$("<td />").text(debtDetaileType[item.type])
         ));
@@ -548,6 +598,43 @@ function  showCashIn(cashIn) {
     cashInTable.append(tBody);
 
     $('#showCashIn').append(cashInTable);
+
+}
+function  supplierPurchaseShow(supplierPurchase) {
+
+
+    $('#supplierPurchaseShow').empty();
+
+    var supplierPurchaseTableTh= ["№","Ամսաթիվ","Ձեռքբերման արժեք","Մատակարար"];
+    var supplierPurchaseTable = $("<table />")
+        .attr({id:"supplierPurchaseTable",class:"table table-hover "});
+    var tHead =$("<thead />");
+    var tHeadTr = $("<tr />");
+    $.each(supplierPurchaseTableTh, function(i, item) {
+        tHeadTr.append($("<th />").attr({"class": "h5", "style": "font-weight:bold"}).text(item));
+    });
+    tHeadTr.append($("<th />").text("Գործողություն"));
+    tHead.append(tHeadTr);
+    supplierPurchaseTable.append(tHead);
+    var tBody = $("<tbody />");
+
+    $.each(supplierPurchase, function(i, item) {
+
+        tBody.append($("<tr />").attr({scope:"row"}).append(
+             $("<td />").text(item.number)
+            ,$("<td />").text(item.purchaseDate)
+            ,$("<td />").text(item.purchaseCost)
+            ,$("<td />").text(item.supplierName)
+            ,$("<td />").append($("<a />").attr({href:"/account/partner/supplier/purchase/edit?purchasetype="+item.purchaseType+"&purchaseid="+item.id, class:"glyphicon glyphicon-pencil"})
+                ,"&nbsp;&nbsp;&nbsp;"
+                ,$("<a />").attr({href:"/account/partner/supplier/purchase/delete?purchasetype="+item.purchaseType+"&purchaseid="+item.id, class:"glyphicon glyphicon-trash"}))
+
+        ));
+    });
+
+    supplierPurchaseTable.append(tBody);
+
+    $('#supplierPurchaseShow').append(supplierPurchaseTable);
 
 }
 function  showCustomerSales(customerSales) {

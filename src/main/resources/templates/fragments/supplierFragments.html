@@ -936,7 +936,7 @@
                                     th:name="supplierIndex"
                                     th:field="*{supplierIndex}"
                                     class="form-control" >
-                                        <option value=""> __ԸՆՏՐԵԼ__ </option>
+                                        <option value=''> __ԸՆՏՐԵԼ__ </option>
                                         <option th:each="supplier,iterStat  : ${suppliers}"
                                                 th:value="${iterStat.index}"
                                                 th:text="${supplier.getSupplierName()}"
@@ -1086,7 +1086,7 @@
                         $('#selectedSupplierName').val(suppliers[$('#selectedSupplier').val()].supplierName).prop("disabled",true)
                     }
                     $('#selectedSupplier').on('change', function() {
-                        if(this.value!="")
+                        if(this.value!='')
                         {
                             $('input[name=supplierType]').val(suppliers[this.value].supplierType);
                             $('input[name=supplierId]').val(suppliers[this.value].id);
@@ -1109,7 +1109,7 @@
                             $('input[name=supplierType]').val("");
                             $('input[name=supplierId]').val("");
                         }
-                        if(this.value!="")
+                        if(this.value!='')
                         {
                                 $('input[name=serviceType]').val(services[this.value].serviceType);
                                 $('input[name=serviceId]').val(services[this.value].id);

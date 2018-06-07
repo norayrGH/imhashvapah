@@ -54,7 +54,7 @@ public class IndividualSupplier implements GeneralMethods{
 
     @Override
     public String getName() {
-        return individual.getFirstName()+" "+individual.getLastName();
+        return individual.getName();
     }
 
     @Override

@@ -63,7 +63,7 @@ public class PeriodicServiceRentCar {
     @Transient
     private String supplierType;
 
-    @Transient
+
     @NotEmpty(message = "Մատակարարը պարտադիր է:")
     private String  supplierIndex;
 
@@ -102,7 +102,7 @@ public class PeriodicServiceRentCar {
         if (companySupplier!=null)
             return companySupplier;
         if (individualSupplier!=null)
-            return companySupplier;
+            return individualSupplier;
         if (privateEntrepreneurSupplier!=null)
             return privateEntrepreneurSupplier;
         return null;

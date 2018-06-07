@@ -11,6 +11,8 @@ import java.util.Date;
 public interface SaleRepository extends CrudRepository<Sale,Long> {
     @Query("Select s from Sale s   WHERE s.saleDate>=:startDate ")
     ArrayList findByRangeStart(@Param("startDate") Date startDate);
+    @Query("Select s from Sale s   WHERE s.saleDate<=:startDate ")
+    ArrayList findByRangeforDebt(@Param("startDate") Date startDate);
 
     @Query( "Select s from Sale s  WHERE s.saleDate>=:startDate and s.saleDate<=:endDate ")
     ArrayList findByRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);

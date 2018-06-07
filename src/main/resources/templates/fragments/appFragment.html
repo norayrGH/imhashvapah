@@ -312,7 +312,7 @@
                    th:value="${_csrf.token}"/>
 
 
-            <input type="submit" class="btn btn-default"/>
+            <input type="submit" value="Հիշել" class="btn btn-default"/>
         </div>
     </form>
 
@@ -453,7 +453,7 @@
                th:value="${_csrf.token}"/>
 
 
-        <input type="submit" class="btn btn-default"/>
+        <input type="submit"  value="Հիշել" class="btn btn-default"/>
 
         </div>
     </form>
@@ -598,7 +598,7 @@
         />
 
 
-        <input type="submit" class="btn btn-default" />
+        <input type="submit"  value="Հիշել" class="btn btn-default" />
 
         </div>
 
@@ -677,7 +677,7 @@
             />
 
 
-             <input type="submit" class="btn btn-default" />
+             <input type="submit"  class="btn btn-default" />
         </div>
     </form >
 
@@ -739,8 +739,8 @@
                 </li>
                 <li class="nav-item" th:classappend="${#strings.contains(view,'supplier/periodicservice')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/periodicservice'}" id="periodicService">Ծառայություններ</a>
                 </li>
-                <li class="nav-item" th:classappend="${#strings.contains(view,'supplier/payments')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/payments'}" id="supplierPayment">Կատարված
-                    վճարումներ</a></li>
+                <!--<li class="nav-item" th:classappend="${#strings.contains(view,'supplier/payments')? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier/payments'}" id="supplierPayment">Կատարված
+                    վճարումներ</a></li>-->
                 <li class="nav-item" th:classappend="${view =='/account/partner/supplier'? 'selectedItem' : ''}" ><a class="nav-item" th:href="@{'/account/partner/supplier'}" id="supplierTable">Մատակարարների
                     ցանկ</a></li>
             </ul>
@@ -979,9 +979,9 @@
 
            <li class="nav-item"><a class="nav-link active" th:href="@{''}" id="wallet">
                Դրամապանակ </a></li>
-           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminal">Տերմինալ</a>
+          <!-- <li class="nav-item"><a class="nav-item" th:href="@{''}" id="terminal">Տերմինալ</a>
            </li>
-           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="bank">Բանկ</a></li>
+           <li class="nav-item"><a class="nav-item" th:href="@{''}" id="bank">Բանկ</a></li>-->
        </ul>
    </div>
 </nav>

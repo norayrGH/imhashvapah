@@ -59,7 +59,7 @@ public class PeriodicServiceRentArea {
     @Transient
     private String supplierType;
 
-    @Transient
+
     @NotEmpty(message = "Մատակարարը պարտադիր է:")
     private String  supplierIndex;
 

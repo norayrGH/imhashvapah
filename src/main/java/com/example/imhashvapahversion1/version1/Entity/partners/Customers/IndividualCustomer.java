@@ -146,7 +146,7 @@ public class IndividualCustomer  implements GeneralMethods {
 
     @Override
     public String getName() {
-        return getIndividual().getFirstName()+" "+getIndividual().getLastName();
+        return individual.getName();
     }
 
     @Override

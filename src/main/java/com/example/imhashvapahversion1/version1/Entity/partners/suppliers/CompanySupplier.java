@@ -47,7 +47,7 @@ public class CompanySupplier implements GeneralMethods {
 
     @Override
     public String getName() {
-        return clientOrganization.getClientOrganizationName();
+        return clientOrganization.getName();
     }
 
     @Override

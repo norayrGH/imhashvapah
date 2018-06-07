@@ -3,6 +3,8 @@ package com.example.imhashvapahversion1.version1.controller.partner;
 import com.example.imhashvapahversion1.version1.Entity.GeneralMethods;
 import com.example.imhashvapahversion1.version1.Entity.Organization;
 import com.example.imhashvapahversion1.version1.Entity.cash.WalletOut;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.CashInFromSaleOfGoods;
+import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashIn.CashInFromServiceProvision;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForGoodsProvider;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForRent;
 import com.example.imhashvapahversion1.version1.Entity.cash.walettypes.cashOut.CashOutForSerivceProvider;
@@ -21,9 +23,7 @@ import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.Per
 import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentCar;
 import com.example.imhashvapahversion1.version1.Entity.partners.service.rent.PeriodicServiceRentOther;
 import com.example.imhashvapahversion1.version1.Entity.partners.suppliers.*;
-import com.example.imhashvapahversion1.version1.Entity.showClasses.DebtDetailsShow;
-import com.example.imhashvapahversion1.version1.Entity.showClasses.FinancialMeans;
-import com.example.imhashvapahversion1.version1.Entity.showClasses.SupplierShow;
+import com.example.imhashvapahversion1.version1.Entity.showClasses.*;
 import com.example.imhashvapahversion1.version1.controller.BaseController;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForGoodsProviderRepository;
 import com.example.imhashvapahversion1.version1.repository.cashOut.CashOutForRentRepository;
@@ -648,8 +648,15 @@ public class SupllierController extends BaseController {
         }
         return null;
     }
+
+
+
+
+
+
+
     @GetMapping( value ="/purchase")
-    public ModelAndView SupplierPurchase(ModelAndView modelAndView) {
+    public ModelAndView supplierPurchase(ModelAndView modelAndView) {
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("navBar", this.partnerNavBar);
@@ -659,6 +666,164 @@ public class SupllierController extends BaseController {
 
         return modelAndView;
     }
+    @PostMapping(value = "/purchase/show")
+    public @ResponseBody ArrayList supplierPurchaseShow(@RequestBody DateRange dateRange ) {
+        ArrayList<PurchaseShow> purchases= new ArrayList<>();
+        PurchaseShow purchaseShow = new PurchaseShow();
+
+    if(dateRange.isShowAll()) {
+        List<PurchaseFixedAsset> purchaseFixedAssets = (List<PurchaseFixedAsset>) purchaseFixedAssetRepository.findAll();
+        List<PurchaseGoods> purchaseGoodss = (List<PurchaseGoods>) purchaseGoodsRepository.findAll();
+        List<PurchaseService> purchaseServices = (List<PurchaseService>) purchaseServiceRepository.findAll();
+
+        for(PurchaseFixedAsset each:purchaseFixedAssets){
+
+            purchases.add(new PurchaseShow(each.getPurchaseNumber(),each.getPurchaseDate(),
+                    String.valueOf(each.getAmountOfReceipts()),each.getSupplier().getName(),
+                    "PurchaseFixedAsset",each.getId()));
+        }
+        for(PurchaseGoods each:purchaseGoodss){
+
+            purchases.add(new PurchaseShow(each.getPurchaseNumber(),each.getPurchaseDate(),
+                    String.valueOf(each.getAmountOfReceipts()),each.getSupplier().getName(),
+                    "PurchaseGoods",each.getId()));
+        }
+        for(PurchaseService each:purchaseServices){
+            purchases.add(new PurchaseShow(each.getPurchaseNumber(),each.getPurchaseDate(),
+                    String.valueOf(each.getAmountOfReceipts()),each.getSupplier().getName(),
+                    "PurchaseService",each.getId()));
+        }
+
+        return purchases;
+    }
+    return purchases;
+    }
+
+
+    @GetMapping(value = "/purchase/edit")
+    public ModelAndView supplierPurchaseEdit(@RequestParam("purchasetype")String purchaseType,@RequestParam("purchaseid")Long purchaseId, ModelAndView modelAndView) {
+
+
+        modelAndView.setViewName("app/app");
+        suppliers = new ArrayList();
+        services = new ArrayList<>();
+        List<CompanySupplier> companySuppliers ;
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers;
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+
+        List<PeriodicService> periodicServices ;
+        periodicServices = (List<PeriodicService>) periodicServiceRepository.findAll();
+
+        List<PeriodicServiceRentArea> periodicServiceRentAreas ;
+        periodicServiceRentAreas = (List<PeriodicServiceRentArea>) periodicServiceRentAreaRepository.findAll();
+
+        List<PeriodicServiceRentCar> periodicServiceRentCars;
+        periodicServiceRentCars = (List<PeriodicServiceRentCar>) periodicServiceRentCarRepository.findAll();
+
+        List<PeriodicServiceRentOther>  periodicServiceRentOthers;
+        periodicServiceRentOthers = (List<PeriodicServiceRentOther>) periodicServiceRentOtherRepository.findAll();
+
+        for(CompanySupplier supplier:companySuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
+        }
+        for(IndividualSupplier supplier:individualSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualSupplier",supplier.getName()));
+        }
+        for(PrivateEntrepreneurSupplier supplier:privateEntrepreneurSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
+        }
+
+
+        for(PeriodicService periodicService:periodicServices){
+
+            services.add(new Service(
+                    periodicService.getId(),
+                    "PeriodicService",
+                    periodicService.getName(),
+                    periodicService.getContractDate(),
+                    periodicService.getContractNumber(),
+                    periodicService.getSupplier().getId(),
+                    periodicService.getSupplier().getType()
+
+            ));
+        }
+        for(PeriodicServiceRentArea  periodicServiceRentArea:periodicServiceRentAreas){
+            services.add(new Service(
+                    periodicServiceRentArea.getId(),
+                    "PeriodicServiceRentArea",
+                    periodicServiceRentArea.getName(),
+                    periodicServiceRentArea.getContractDate(),
+                    periodicServiceRentArea.getContractNumber(),
+                    periodicServiceRentArea.getSupplier().getId(),
+                    periodicServiceRentArea.getSupplier().getType()
+
+            ));
+        }
+        for(PeriodicServiceRentCar periodicServiceRentCar:periodicServiceRentCars){
+            services.add(new Service(
+                    periodicServiceRentCar.getId(),
+                    "PeriodicServiceRentCar",
+                    periodicServiceRentCar.getName(),
+                    periodicServiceRentCar.getContractDate(),
+                    periodicServiceRentCar.getContractNumber(),
+                    periodicServiceRentCar.getSupplier().getId(),
+                    periodicServiceRentCar.getSupplier().getType()
+
+            ));
+        }
+        for(PeriodicServiceRentOther periodicServiceRentOther:periodicServiceRentOthers){
+            services.add(new Service(
+                    periodicServiceRentOther.getId(),
+                    "PeriodicServiceRentOther",
+                    periodicServiceRentOther.getName(),
+                    periodicServiceRentOther.getContractDate(),
+                    periodicServiceRentOther.getContractNumber(),
+                    periodicServiceRentOther.getSupplier().getId(),
+                    periodicServiceRentOther.getSupplier().getType()
+            ));
+        }
+        if(purchaseType.equals("PurchaseFixedAsset"))
+        {
+            PurchaseFixedAsset purchaseFixedAsset = purchaseFixedAssetRepository.findOne(purchaseId);
+            modelAndView.addObject("purchaseFixedAsset",purchaseFixedAsset);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForFixedasset);
+
+        }
+        if(purchaseType.equals("PurchaseGoods"))
+        {
+            PurchaseGoods purchaseGoods = purchaseGoodsRepository.findOne(purchaseId);
+            modelAndView.addObject("purchaseGoods",purchaseGoods);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForGoods);
+
+        }if(purchaseType.equals("PurchaseService"))
+        {
+            PurchaseService purchaseService =purchaseServiceRepository.findOne(purchaseId);
+            modelAndView.addObject("purchaseService",purchaseService);
+            modelAndView.addObject("services",services);
+            modelAndView.addObject("fragment",partnerSupplierCreatePurchaseForService);
+
+        }
+
+
+
+
+        modelAndView.addObject("appFragment", this.supplierFragments);
+        modelAndView.addObject("suppliers", suppliers);
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+
+        return modelAndView;
+    }
+
+
+
+
+
+
     @GetMapping( value ="/create/purchasechoosetype")
     public ModelAndView SupplierPurchaseType(ModelAndView modelAndView) {
 
@@ -965,9 +1130,9 @@ public class SupllierController extends BaseController {
         return modelAndView;
     }
     @GetMapping(value = "/edit/individualsupplier")
-    public ModelAndView individualSupplierEdit(@RequestParam("customerId")Long customerId, ModelAndView modelAndView, HttpSession httpSession) {
+    public ModelAndView individualSupplierEdit(@RequestParam("supplierId")Long supplierId, ModelAndView modelAndView, HttpSession httpSession) {
         IndividualSupplier individualSupplier ;
-        individualSupplier = individualSupplierRepository.findOne(customerId);
+        individualSupplier = individualSupplierRepository.findOne(supplierId);
         modelAndView.setViewName("app/app");
         modelAndView.addObject("individualSupplier",individualSupplier);
         modelAndView.addObject("navBar", this.partnerNavBar);
@@ -1013,10 +1178,10 @@ public class SupllierController extends BaseController {
         return modelAndView;
     }
     @GetMapping(value = "/edit/companysupplier")
-    public ModelAndView companySupplierEdit(@RequestParam("customerId")Long customerId , ModelAndView modelAndView, HttpSession httpSession) {
+    public ModelAndView companySupplierEdit(@RequestParam("supplierId")Long supplierId , ModelAndView modelAndView, HttpSession httpSession) {
         CompanySupplier companySupplier ;
 
-        companySupplier = companySupplierRepository.findOne(customerId);
+        companySupplier = companySupplierRepository.findOne(supplierId);
 
         modelAndView.setViewName("app/app");
         modelAndView.addObject("companySupplier",companySupplier);
@@ -1110,7 +1275,170 @@ public class SupllierController extends BaseController {
         modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
+
     }
+
+    @PostMapping(value = "/periodicservice/show")
+    public @ResponseBody ArrayList partnerSupplierServiceShow( ) {
+
+        ArrayList<SupplierServiceShow> showResult = new ArrayList();
+
+
+            List<PeriodicService> periodicServices = (List<PeriodicService>) periodicServiceRepository.findAll();
+            List<PeriodicServiceRentArea>periodicServiceRentAreas = (List<PeriodicServiceRentArea>)periodicServiceRentAreaRepository.findAll();
+            List<PeriodicServiceRentCar>periodicServiceRentCars = (List<PeriodicServiceRentCar>)periodicServiceRentCarRepository.findAll();
+            List<PeriodicServiceRentOther>periodicServiceRentOthers = (List<PeriodicServiceRentOther>)periodicServiceRentOtherRepository.findAll();
+
+            for(PeriodicService each:periodicServices) {
+
+                showResult.add(new SupplierServiceShow(each.getId(),each.getName(),each.getStartDate(),each.getCost(),each.getSupplier().getName(),"PeriodicService",each.getType()));
+            }
+        for(PeriodicServiceRentArea each:periodicServiceRentAreas) {
+
+            showResult.add(new SupplierServiceShow(each.getId(),each.getName(),each.getStartDate(),each.getCost(),each.getSupplier().getName(),"PeriodicServiceRentArea",each.getType()));
+        }
+
+        for(PeriodicServiceRentCar each:periodicServiceRentCars) {
+
+            showResult.add(new SupplierServiceShow(each.getId(),each.getName(),each.getStartDate(),each.getCost(),each.getSupplier().getName(),"PeriodicServiceRentCar",each.getType()));
+        }
+
+        for(PeriodicServiceRentOther each:periodicServiceRentOthers) {
+
+            showResult.add(new SupplierServiceShow(each.getId(),each.getName(),each.getStartDate(),each.getCost(),each.getSupplier().getName(),"PeriodicServiceRentOther",each.getType()));
+        }
+
+        return showResult;
+    }
+
+
+
+
+    @GetMapping(value = "/periodicservice/edit")
+    public ModelAndView partnerSupplierServiceEdit(@RequestParam("serviceType")String serviceType,@RequestParam("serviceId")Long serviceId, ModelAndView modelAndView, HttpSession httpSession) {
+
+        suppliers = new ArrayList();
+        List<CompanySupplier> companySuppliers ;
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
+        List<IndividualSupplier> individualSuppliers;
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
+        List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
+
+        for(CompanySupplier supplier:companySuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
+        }
+        for(IndividualSupplier supplier:individualSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"IndividualSupplier",supplier.getName()));
+        }
+        for(PrivateEntrepreneurSupplier supplier:privateEntrepreneurSuppliers){
+            suppliers.add(new Supplier(supplier.getId(),"PrivateEntrepreneurSupplier",supplier.getName()));
+        }
+        modelAndView.setViewName("app/app");
+        if(serviceType.equals("PeriodicService")){
+            PeriodicService periodicService=periodicServiceRepository.findOne(serviceId);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceCreate);
+            modelAndView.addObject("periodicService",periodicService);
+            modelAndView.addObject("suppliers",suppliers);
+        }
+        if(serviceType.equals("PeriodicServiceRentArea")){
+            PeriodicServiceRentArea periodicServiceRentArea =periodicServiceRentAreaRepository.findOne(serviceId);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentAreaCreate);
+            modelAndView.addObject("periodicServiceRentArea",periodicServiceRentArea);
+            modelAndView.addObject("suppliers",suppliers);
+        }
+        if(serviceType.equals("PeriodicServiceRentCar")){
+            PeriodicServiceRentCar periodicServiceRentCar =periodicServiceRentCarRepository.findOne(serviceId);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentCarCreate);
+            modelAndView.addObject("periodicServiceRentCar",periodicServiceRentCar);
+            modelAndView.addObject("suppliers",suppliers);
+        }
+
+
+        if(serviceType.equals("PeriodicServiceRentOther")){
+            PeriodicServiceRentOther periodicServiceRentOther =periodicServiceRentOtherRepository.findOne(serviceId);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceRentOtherCreate);
+            modelAndView.addObject("periodicServiceRentOther",periodicServiceRentOther);
+            modelAndView.addObject("suppliers",suppliers);
+        }
+
+
+
+
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/periodicservice/delete")
+    public ModelAndView partnerSupplierServiceDelete(@RequestParam("serviceType")String serviceType,@RequestParam("serviceId")Long serviceId, ModelAndView modelAndView, HttpSession httpSession) {
+
+
+        modelAndView.setViewName("app/app");
+        if(serviceType.equals("PeriodicService"))
+            try {
+            periodicServiceRepository.delete(serviceId);
+            }catch (Exception e){
+                modelAndView.addObject("deleteError", "Այն ծառայությունը, որը կապված է Ձեռքբերման հետ՝ չեք կարող ջնջել :");
+                modelAndView.setViewName("app/app");
+                modelAndView.addObject("navBar", this.partnerNavBar);
+                modelAndView.addObject("appFragment", this.partnerFragments);
+                modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+                modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+            }
+        if(serviceType.equals("PeriodicServiceRentArea"))
+            try {
+                periodicServiceRentAreaRepository.delete(serviceId);
+            }catch (Exception e){
+            modelAndView.addObject("deleteError", "Այն ծառայությունը, որը կապված է Ձեռքբերման հետ՝ չեք կարող ջնջել :");
+            modelAndView.setViewName("app/app");
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        }
+        if(serviceType.equals("PeriodicServiceRentCar"))
+            try {
+                periodicServiceRentCarRepository.delete(serviceId);
+            }catch (Exception e){
+            modelAndView.addObject("deleteError", "Այն ծառայությունը, որը կապված է Ձեռքբերման հետ՝ չեք կարող ջնջել :");
+            modelAndView.setViewName("app/app");
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        }
+        if(serviceType.equals("PeriodicServiceRentOther"))
+            try {
+                periodicServiceRentOtherRepository.delete(serviceId);
+            }catch (Exception e){
+            modelAndView.addObject("deleteError", "Այն ծառայությունը, որը կապված է Ձեռքբերման հետ՝ չեք կարող ջնջել :");
+            modelAndView.setViewName("app/app");
+            modelAndView.addObject("navBar", this.partnerNavBar);
+            modelAndView.addObject("appFragment", this.partnerFragments);
+            modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+            modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+        }
+
+
+
+
+        modelAndView.setViewName("app/app");
+        modelAndView.addObject("navBar", this.partnerNavBar);
+        modelAndView.addObject("appFragment", this.partnerFragments);
+        modelAndView.addObject("fragment", this.partnerSupplierPeriodicServiceFragment);
+        modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
+
+
+        return modelAndView;
+    }
+
     @GetMapping(value = "/create/periodicservicesetype")
     public ModelAndView partnerSupplierPeriodicServiceSelect( ModelAndView modelAndView) {
 
@@ -1127,11 +1455,11 @@ public class SupllierController extends BaseController {
         modelAndView.setViewName("app/app");
         suppliers = new ArrayList();
         List<CompanySupplier> companySuppliers ;
-        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findBySupplyForRent();
+        companySuppliers = (List<CompanySupplier>) companySupplierRepository.findAll();
         List<IndividualSupplier> individualSuppliers;
-        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findBySupplyForRent();
+        individualSuppliers = (List<IndividualSupplier>) individualSupplierRepository.findAll();
         List<PrivateEntrepreneurSupplier>  privateEntrepreneurSuppliers;
-        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findBySupplyForRent();
+        privateEntrepreneurSuppliers = (List<PrivateEntrepreneurSupplier>) privateEntrepreneurSupplierRepository.findAll();
 
         for(CompanySupplier supplier:companySuppliers){
             suppliers.add(new Supplier(supplier.getId(),"CompanySupplier",supplier.getName()));
@@ -1153,6 +1481,7 @@ public class SupllierController extends BaseController {
         modelAndView.addObject("fragmentNavBar", this.partnerSupplierFragmentNavBar);
         return modelAndView;
     }
+
     @GetMapping(value = "/create/periodicservice/rent")
     public ModelAndView partnerSupplierPeriodicServiceCreate(@RequestParam("type")String type, ModelAndView modelAndView,HttpSession httpSession) {
         modelAndView.setViewName("app/app");

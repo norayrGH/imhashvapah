@@ -9,15 +9,62 @@
 
 
 
-<div class="container" th:fragment="partnerSupplierPeriodicServiceFragment" >
+<div class="panel panel-default" th:fragment="partnerSupplierPeriodicServiceFragment" >
     <br />
-    <div class="row">
-        <div class="container" >
-            <div class='col-md-2'>
-                <a class="btn btn-info" role="button" th:href="@{'/account/partner/supplier/create/periodicservicesetype' }">Ավելացնել </a>
+    <div style="margin: 50px">
+        <div class="row">
+            <div class="container" >
+                <div class='col-md-2'>
+                    <a class="btn btn-info" role="button" th:href="@{'/account/partner/supplier/create/periodicservicesetype' }">Ավելացնել </a>
+                </div>
             </div>
         </div>
+        <input name="csrfToken" id="csrfToken"
+               type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"
+        />
+        <div class="alert alert-danger" th:if="${deleteError}" th:text="${deleteError}" >
+        </div>
+        <div class="row" id="periodicServiceShow">
+        </div>
+
+
     </div>
+    <script th:inline="javascript" >
+        /*<![CDATA[*/
+
+        $(document).ready(function() {
+            var csrf_token = $('#csrfToken').val();
+
+
+
+            $.ajax({
+                method : "POST",
+                contentType : "application/json",
+                url: '/account/partner/supplier/periodicservice/show',
+                dataType: 'json',
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                },  success: function (msg){
+                    if(msg == null)
+                        $("#supplierDebtDetails").empty();
+                    else
+                    {
+                        console.log(msg);
+                        periodicServiceShow(msg);
+                    }
+                },
+                error:
+                    function(data){
+                        console.log(data.responseText);
+                    }
+            });
+
+        });
+        /*]]>*/
+    </script>
+
 </div>
 
 
@@ -917,11 +964,11 @@
                         </div>
                     </div>
                 </div>
-                <div class='col-md-2'>
+                <div class='col-md-3'>
                     <div class="form-group">
                         <div class="form-check" >
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                            <label class="form-check-label" for="exampleCheck1" >Ցուցադրել բոլորը</label>
+                            <input type="checkbox" class="form-check-input" id="showAll" />
+                            <label class="form-check-label" for="showAll" >Ցուցադրել բոլորը</label>
                         </div>
                     </div>
                 </div>
@@ -942,96 +989,178 @@
         /*<![CDATA[*/
         $( "#datepickerStart" ).datepicker();
         $( "#datepickerEnd" ).datepicker();
+
         $(document).ready(function() {
             var csrf_token = $('#datetimepicker1').find('input[name="_csrf"]').val();
-            var supplier = /*[[${supplier}]]*/ 'default';
-            console.log(supplier);
             var datePickerStart = $( "#datepickerStart.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth(),1));
             var datePickerEnd = $( "#datepickerEnd.hasDatepicker" ).datepicker("setDate",new Date( new Date().getFullYear(),new Date().getMonth()+1,0));
-            var DateRangByType ={
+            var DateRang ={
                 start:datePickerStart.datepicker("getDate"),
                 end:datePickerEnd.datepicker("getDate"),
-                type:supplier.type,
-                id:supplier.id
+                showAll:Boolean($("#showAll").is(':checked'))
             }
-            console.log(DateRangByType);
+            console.log(DateRang);
+
             $.ajax({
                 method : "POST",
                 contentType : "application/json",
-                url: '/account/partner/supplier/debt/details/show',
+                url: '/account/partner/supplier/purchase/show',
                 dataType: 'json',
-                data :JSON.stringify(DateRangByType),
+                data :JSON.stringify(DateRang),
                 beforeSend: function(xhr){
                     xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                 },  success: function (msg){
                     if(msg == null)
-                        $("#supplierDebtDetails").empty();
+                        $("#supplierPurchaseShow").empty();
                     else
                     {
                         console.log(msg);
-                        partnerSupplierDebtDetailsShow(msg);
+                        supplierPurchaseShow(msg);
                     }
+
+
                 },
                 error:
                     function(data){
+
                         console.log(data.responseText);
                     }
             });
             datePickerStart.on("change", function() {
-                var  DateRangByType ={
+                var DateRang ={
                     start:datePickerStart.datepicker("getDate"),
                     end:datePickerEnd.datepicker("getDate"),
-                    type:supplier.type,
-                    id:supplier.id
+                    showAll:Boolean($("#showAll").is(':checked'))
                 }
-                /*$.ajax({
+                $.ajax({
                     method : "POST",
                     contentType : "application/json",
-                    url: '/account/partner/supplier/debt/details/show',
+                    url: '/account/partner/supplier/purchase/show',
                     dataType: 'json',
-                    data :JSON.stringify(DateRangByType),
+                    data :JSON.stringify(DateRang),
                     beforeSend: function(xhr){
                         xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                     },  success: function (msg){
                         if(msg == null)
-                            $("#supplierDebtDetails").empty();
+                            $("#supplierPurchaseShow").empty();
                         else
-                            partnerSupplierDebtDetailsShow(msg);
+                        {
+                            console.log(msg);
+                            supplierPurchaseShow(msg);
+                        }
+
+
                     },
                     error:
                         function(data){
+
                             console.log(data.responseText);
                         }
-                });*/
+                });
             });
             datePickerEnd.on("change", function() {
-                var DateRangByType ={
+                var DateRang ={
                     start:datePickerStart.datepicker("getDate"),
                     end:datePickerEnd.datepicker("getDate"),
-                    type:supplier.type,
-                    id:supplier.id
+                    showAll:Boolean($("#showAll").is(':checked'))
                 }
-                /*$.ajax({
+                $.ajax({
                     method : "POST",
                     contentType : "application/json",
-                    url: '/account/partner/supplier/debt/details/show',
+                    url: '/account/partner/supplier/purchase/show',
                     dataType: 'json',
-                    data :JSON.stringify(DateRangByType),
+                    data :JSON.stringify(DateRang),
                     beforeSend: function(xhr){
                         xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
                     },  success: function (msg){
                         if(msg == null)
-                            $("#supplierDebtDetails").empty();
+                            $("#supplierPurchaseShow").empty();
                         else
-                            partnerSupplierDebtDetailsShow(msg);
+                        {
+                            console.log(msg);
+                            supplierPurchaseShow(msg);
+                        }
+
+
                     },
                     error:
                         function(data){
+
                             console.log(data.responseText);
                         }
-                });*/
+                });
+            });
+            $('#showAll').change(function() {
+                if(this.checked) {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/partner/supplier/purchase/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#supplierPurchaseShow").empty();
+                            else
+                            {
+                                console.log(msg);
+                                supplierPurchaseShow(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+
+                }else
+                {
+                    var DateRang ={
+                        start:datePickerStart.datepicker("getDate"),
+                        end:datePickerEnd.datepicker("getDate"),
+                        showAll:Boolean($("#showAll").is(':checked'))
+                    }
+                    $.ajax({
+                        method : "POST",
+                        contentType : "application/json",
+                        url: '/account/partner/supplier/purchase/show',
+                        dataType: 'json',
+                        data :JSON.stringify(DateRang),
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader("X-CSRF-TOKEN",  csrf_token);
+                        },  success: function (msg){
+                            if(msg == null)
+                                $("#supplierPurchaseShow").empty();
+                            else
+                            {
+                                console.log(msg);
+                                supplierPurchaseShow(msg);
+                            }
+
+
+                        },
+                        error:
+                            function(data){
+
+                                console.log(data.responseText);
+                            }
+                    });
+
+                }
+
             });
         });
+
         /*]]>*/
     </script>
 
